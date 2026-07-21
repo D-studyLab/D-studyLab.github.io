@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>まちのウェブ屋さん｜D-studyLab</title>
+<meta name="description" content="お店や個人のウェブサイトを小さく作って解決する個人の制作屋。作って動かしている実例あり。岩手から。">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://d-studylab.com/web/">
+<meta property="og:title" content="まちのウェブ屋さん｜D-studyLab">
+<meta property="og:description" content="お店や個人のウェブサイトを小さく作って解決する個人の制作屋。作例あり。岩手から。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://d-studylab.com/web/">
+<meta property="og:image" content="https://d-studylab.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root { --bg:#0f1116; --panel:#181b22; --line:#2a2f3a; --txt:#e7eaef; --sub:#98a1ad;
+          --acc:#7cc4ff; --good:#6bdf9a; --bad:#ff8f8f; --gold:#e8c35a; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f4f6f8; --panel:#fff; --line:#dde3ea; --txt:#1b2027; --sub:#5b6673;
+            --acc:#1f6fb2; --good:#1f8a52; --bad:#c0492f; --gold:#a6791b; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.85;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  h1 { font-size:24px; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:15px; margin:0 0 24px; }
+  h2 { font-size:17px; margin:30px 0 10px; padding-left:10px; border-left:3px solid var(--acc); }
+  p, li { font-size:15px; }
+  ul { padding-left:22px; } li { margin-bottom:6px; }
+  a { color:var(--acc); }
+  .examples { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:13px; margin:6px 0 4px; }
+  .ex { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px 16px 14px;
+        text-decoration:none; color:inherit; display:flex; flex-direction:column; gap:6px;
+        transition:transform .12s, border-color .12s; }
+  .ex:hover { transform:translateY(-3px); border-color:var(--acc); }
+  .ex .emj { font-size:32px; }
+  .ex .nm { font-size:15px; font-weight:bold; }
+  .ex .ds { font-size:12.5px; color:var(--sub); }
+  .steps { counter-reset:step; padding-left:0; list-style:none; }
+  .steps li { position:relative; padding-left:34px; margin-bottom:10px; }
+  .steps li::before { counter-increment:step; content:counter(step); position:absolute; left:0; top:2px;
+    width:22px; height:22px; border-radius:50%; background:var(--acc); color:#08202f; font-weight:bold;
+    font-size:12px; display:flex; align-items:center; justify-content:center; }
+  @media (prefers-color-scheme: light) { .steps li::before { color:#fff; } }
+  .status { background:color-mix(in srgb, var(--good) 12%, var(--panel)); border:1px solid var(--line);
+            border-radius:10px; padding:12px 15px; font-size:14px; margin:16px 0; }
+  .contact { display:inline-block; background:var(--acc); color:#08202f; font-weight:bold; text-decoration:none;
+             border-radius:10px; padding:11px 22px; font-size:15px; margin:8px 0 4px; }
+  @media (prefers-color-scheme: light) { .contact { color:#fff; } }
+  .foot { margin-top:44px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ まちのウェブ屋さん</div>
+  <h1>🌐 まちのウェブ屋さん</h1>
+  <p class="lead">お店や個人の「ウェブどうしよう」を、必要なぶんだけ小さく作って解決する制作屋です。</p>
+
+  <h2>できること</h2>
+  <ul>
+    <li>お店やお仕事の紹介サイトをつくる</li>
+    <li>いまあるサイトの手直し・更新のお手伝い</li>
+    <li>「まずは相談だけ」も歓迎です</li>
+  </ul>
+
+  <h2>作ってきたもの</h2>
+  <div class="examples">
+    <a class="ex" href="https://morikoboshi.pages.dev/" target="_blank" rel="noopener">
+      <div class="emj">🍶</div>
+      <div class="nm">盛りこぼし</div>
+      <div class="ds">岩手の日本酒を紹介するサイト（自分で企画・運用）</div>
+    </a>
+    <a class="ex" href="/games/">
+      <div class="emj">🧪</div>
+      <div class="nm">このサイト＆ミニゲームゲームズ</div>
+      <div class="ds">企画から公開まで、ぜんぶ自前で運用しています</div>
+    </a>
+  </div>
+  <p style="font-size:13.5px; color:var(--sub); margin-top:10px;">どちらも自分で企画して自分で運用しているサイトです。同じ作り方で、お店のサイトも作れます。</p>
+
+  <h2>進め方</h2>
+  <ol class="steps">
+    <li>X でご相談ください</li>
+    <li>内容を聞いて、できることとお見積りをご提案します</li>
+    <li>OK なら制作開始。無理な売り込みはしません</li>
+  </ol>
+
+  <div class="status">現在は準備中で、ご相談は順次お受けしています。岩手から、のんびりやっています。</div>
+
+  <h2>お問い合わせ</h2>
+  <p>まずは気軽に、X のダイレクトメッセージからどうぞ。</p>
+  <a class="contact" href="https://x.com/info_prog_study" target="_blank" rel="noopener">✕ X @info_prog_study に相談する</a>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/">D-studyLab トップ</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+</body>
+</html>

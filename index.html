@@ -3,13 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ミニゲーム屋さん D-studyLab｜ブラウザで遊べる小さなゲームたち</title>
-<meta name="description" content="3日以内に必ず公開。空間・確率・AI対戦のミニゲームを量産する個人ゲーム屋。無料・インストール不要・スマホOK">
-<meta property="og:title" content="ミニゲーム屋さん D-studyLab">
-<meta property="og:description" content="3日以内に必ず公開。空間・確率・AI対戦のミニゲームを量産する個人ゲーム屋。無料・インストール不要・スマホOK">
+<title>D-studyLab｜作って、出す個人ラボ</title>
+<meta name="description" content="研究とものづくりを行き来する個人ラボ D-studyLab。ブラウザで遊べるミニゲーム、岩手の地酒と開発のブログ、お店のウェブ制作。小さく作って、すぐ出す。">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://d-studylab.com/">
+<meta property="og:title" content="D-studyLab｜作って、出す個人ラボ">
+<meta property="og:description" content="研究とものづくりを行き来する個人ラボ。ブラウザゲーム・地酒と開発のブログ・お店のウェブ制作。小さく作って、すぐ出す。">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://d-studylab.github.io/">
-<meta property="og:image" content="https://d-studylab.github.io/og.png">
+<meta property="og:url" content="https://d-studylab.com/">
+<meta property="og:image" content="https://d-studylab.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <style>
   :root { --bg:#0f1116; --panel:#181b22; --line:#2a2f3a; --txt:#e7eaef; --sub:#98a1ad;
@@ -19,167 +21,82 @@
             --acc:#1f6fb2; --good:#1f8a52; --bad:#c0492f; --gold:#a6791b; }
   }
   * { box-sizing:border-box; }
-  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.7;
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.8;
          font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
-  .wrap { max-width:920px; margin:0 auto; padding:26px 16px 60px; }
-  header h1 { font-size:26px; margin:6px 0 4px; letter-spacing:.01em; }
-  header .lead { color:var(--sub); font-size:14px; margin-bottom:20px; }
-  .today { background:linear-gradient(135deg, color-mix(in srgb, var(--acc) 18%, var(--panel)), var(--panel));
-           border:1px solid var(--acc); border-radius:14px; padding:14px 16px; margin:0 0 22px;
-           display:flex; align-items:center; gap:14px; text-decoration:none; color:inherit; }
-  .today:hover { transform:translateY(-2px); transition:transform .12s; }
-  .today .emj { font-size:44px; line-height:1; }
-  .today .lbl { font-size:11px; font-weight:bold; color:var(--acc); letter-spacing:.14em; }
-  .today .nm { font-size:19px; font-weight:bold; }
-  .today .ds { font-size:13px; color:var(--sub); }
-  .filters { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
-  .chip { border:1px solid var(--line); background:var(--panel); color:var(--sub);
-          border-radius:20px; padding:6px 15px; font-size:13px; cursor:pointer; user-select:none;
-          font-family:inherit; }
-  .chip:hover { border-color:var(--acc); color:var(--txt); }
-  .chip.on { background:var(--acc); color:#0a0e14; border-color:var(--acc); font-weight:bold; }
-  @media (prefers-color-scheme: light) { .chip.on { color:#fff; } }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); gap:13px; }
+  .wrap { max-width:760px; margin:0 auto; padding:40px 18px 64px; }
+  .hero { padding:14px 0 6px; }
+  .hero h1 { font-size:30px; line-height:1.35; margin:0 0 12px; letter-spacing:.01em; }
+  .hero .sub { color:var(--sub); font-size:15px; margin:0; }
+  .cue { display:inline-block; margin:22px 0 6px; color:var(--acc); font-size:13px; text-decoration:none;
+         letter-spacing:.06em; }
+  h2.sec { font-size:15px; color:var(--sub); letter-spacing:.14em; margin:30px 0 14px;
+           text-transform:none; font-weight:bold; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(210px,1fr)); gap:14px; }
   .card { background:var(--panel); border:1px solid var(--line); border-radius:14px;
-          padding:16px 15px 12px; display:flex; flex-direction:column;
-          gap:7px; position:relative; transition:transform .12s, border-color .12s, box-shadow .12s; }
-  .card:hover { transform:translateY(-4px); border-color:var(--acc);
-                box-shadow:0 8px 24px rgba(0,0,0,.22); }
-  .card .play { text-decoration:none; color:inherit; display:flex; flex-direction:column; gap:7px; flex:1; }
-  .card .emj { font-size:48px; line-height:1.1; }
-  .card .nm { font-size:15px; font-weight:bold; }
-  .card .ds { font-size:12.5px; color:var(--sub); flex:1; }
-  .card .meta { display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:3px; }
-  .card .tag { font-size:11px; color:var(--sub); background:color-mix(in srgb, var(--line) 60%, transparent);
-               border-radius:5px; padding:1px 7px; }
-  .card .time { font-size:11px; color:var(--sub); margin-left:auto; }
-  .card .guide { font-size:11.5px; color:var(--acc); text-decoration:none; margin-top:7px;
-                 padding-top:7px; border-top:1px solid var(--line); display:inline-block; }
-  .card .guide:hover { text-decoration:underline; }
-  .new { position:absolute; top:10px; right:10px; background:var(--gold); color:#1b1400;
-         font-size:10px; font-weight:bold; padding:2px 7px; border-radius:20px; letter-spacing:.05em; }
-  .about { margin:34px 0 0; border-top:1px solid var(--line); padding-top:20px; }
-  .about h2 { font-size:16px; margin:0 0 8px; }
-  .about p { color:var(--sub); font-size:13.5px; margin:4px 0; }
-  .about a { color:var(--acc); }
-  footer { margin-top:26px; color:var(--sub); font-size:12px; text-align:center; line-height:2; }
+          padding:18px 17px 16px; text-decoration:none; color:inherit; display:flex; flex-direction:column;
+          gap:8px; transition:transform .12s, border-color .12s, box-shadow .12s; }
+  .card:hover { transform:translateY(-4px); border-color:var(--acc); box-shadow:0 8px 24px rgba(0,0,0,.22); }
+  .card .emj { font-size:38px; line-height:1.1; }
+  .card .nm { font-size:16px; font-weight:bold; }
+  .card .ds { font-size:13px; color:var(--sub); flex:1; }
+  .card .go { font-size:12.5px; color:var(--acc); margin-top:4px; }
+  .profile { margin:38px 0 0; background:var(--panel); border:1px solid var(--line);
+             border-radius:14px; padding:20px 20px 18px; }
+  .profile h3 { font-size:16px; margin:0 0 8px; }
+  .profile p { font-size:14px; color:var(--sub); margin:0 0 14px; }
+  .sns { display:flex; flex-wrap:wrap; gap:10px; }
+  .sns a { display:inline-flex; align-items:center; gap:6px; font-size:13px; text-decoration:none;
+           color:var(--txt); border:1px solid var(--line); border-radius:20px; padding:6px 14px; }
+  .sns a:hover { border-color:var(--acc); color:var(--acc); }
+  footer { margin-top:34px; color:var(--sub); font-size:12px; text-align:center; line-height:2; }
   footer a { color:var(--acc); }
-  .empty { color:var(--sub); font-size:14px; padding:30px 0; text-align:center; grid-column:1/-1; }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <h1>🕹️ ミニゲーム屋さん <span style="color:var(--acc)">D-studyLab</span></h1>
-    <p class="lead">3日以内に必ず公開、を繰り返す小さなゲーム屋。全部ブラウザで動く・無料・インストール不要。</p>
-  </header>
-
-  <a class="today" id="today" href="#" target="_blank" rel="noopener"></a>
-
-  <div class="filters" id="filters"></div>
-
-  <div class="grid" id="grid"></div>
-
-  <!-- AD SLOT: 審査通過後にここへ -->
-
-  <div class="about">
-    <h2>お店の口上</h2>
-    <p>むずかしい概念ほど、読むより<b>遊べる</b>ほうが早くわかる。空間認識・確率・AIとの読み合いを、3分で触れるゲームにして並べています。</p>
-    <p>1本ずつ、3日以内に必ず公開する。だから毎日ちょっとずつ増えます。</p>
-    <p>読み物 → <a href="blog/">📝 ブログ（地酒レビュー・開発環境の話）</a></p>
-    <p>作ってる人 → <a href="https://x.com/info_prog_study" target="_blank" rel="noopener">X @info_prog_study</a></p>
+  <div class="hero">
+    <h1>考えたら、作る。<br>作ったら、出す。</h1>
+    <p class="sub">D-studyLab は、研究とものづくりを行き来する個人ラボ。ブラウザゲーム・ブログ・お店のウェブサイト——ぜんぶ「小さく作ってすぐ出す」で回しています。</p>
+    <a class="cue" href="#doing">▼ やっていること</a>
   </div>
 
-  <!-- AD SLOT: 審査通過後にここへ -->
+  <h2 class="sec" id="doing">やっていること</h2>
+  <div class="grid">
+    <a class="card" href="/games/">
+      <div class="emj">🕹️</div>
+      <div class="nm">ミニゲームゲームズ</div>
+      <div class="ds">3日に1本のペースで増える、ブラウザで遊べるミニゲームの屋台。空間認識・確率・AI対戦——むずかしい概念を3分で体感できる形にしています。全部無料・インストール不要・スマホOK。現在11本。</div>
+      <div class="go">▶ 遊びに行く</div>
+    </a>
+    <a class="card" href="/blog/">
+      <div class="emj">📝</div>
+      <div class="nm">ブログ</div>
+      <div class="ds">岩手の地酒を1蔵ずつ味わうレビューと、AIと組んで1日1ゲーム作る開発環境の話。飲むもの・作るもの、どちらも「実際にやってみた」だけを書いています。</div>
+      <div class="go">▶ 読みに行く</div>
+    </a>
+    <a class="card" href="/web/">
+      <div class="emj">🌐</div>
+      <div class="nm">まちのウェブ屋さん</div>
+      <div class="ds">お店の「ウェブどうしよう」を小さく解決する制作屋。作って動かしているサイトの実例つき。難しい言葉を使わずに、必要なぶんだけ作ります。</div>
+      <div class="go">▶ 相談してみる</div>
+    </a>
+  </div>
+
+  <div class="profile">
+    <h3>D-studyLab について</h3>
+    <p>情報系の研究に携わりながら、「読むよりさわった方が早い」ものづくりを続けています。3日で1本ゲームを公開するサイクルが基本のOS。作ったものはぜんぶこのドメインの下に置いていきます。</p>
+    <div class="sns">
+      <a href="https://x.com/info_prog_study" target="_blank" rel="noopener">✕ X</a>
+      <a href="https://note.com/d_studylab" target="_blank" rel="noopener">📔 note</a>
+      <a href="https://zenn.dev/dstudylab" target="_blank" rel="noopener">📘 Zenn</a>
+      <a href="https://github.com/D-studyLab" target="_blank" rel="noopener">🐙 GitHub</a>
+    </div>
+  </div>
 
   <footer>
-    <a href="about.html">運営者情報</a> ・ <a href="privacy.html">プライバシーポリシー</a><br>
-    すべて端末内で動作・送信なし ／ © D-studyLab
+    <a href="/about.html">運営者情報</a> ・ <a href="/privacy.html">プライバシーポリシー</a><br>
+    © D-studyLab
   </footer>
 </div>
-
-<script>
-"use strict";
-const GAMES = [
-  { slug:'tsumi-battle',name:'積みバトル',               emoji:'🏗️', tags:['AI対戦','物理'],       desc:'先読みAIと崩さず積む・AIの脳内が見える',        time:'5分', added:'2026-07-21' },
-  { slug:'kage-ate',    name:'かげ当てパズル',           emoji:'🌗', tags:['空間','パズル'],       desc:'光の向きから影の形を当てろ',                    time:'3分', added:'2026-07-21' },
-  { slug:'kukan-test',  name:'空間認識偏差値テスト',     emoji:'🧠', tags:['空間','診断'],         desc:'頭の中で3Dを回せるか',                          time:'3分', added:'2026-07-20' },
-  { slug:'answer-shoot',name:'アンサーシュート',         emoji:'🎯', tags:['クイズ','アクション'], desc:'答えがわかっても届けなきゃ正解じゃない',        time:'5分', added:'2026-07-21' },
-  { slug:'yomiate',     name:'ヨミアテ',                 emoji:'🔢', tags:['推理','数字'],         desc:'情報を「買う」数字当て',                        time:'5分', added:'2026-07-21' },
-  { slug:'untetris',    name:'つみおろし',               emoji:'🧩', tags:['推理','パズル'],       desc:'逆向きテトリス、積んだ順を暴け',                time:'4分', added:'2026-07-21' },
-  { slug:'monty',       name:'モンティホール100連',      emoji:'🚪', tags:['確率','体感'],         desc:'「変える」となぜ2倍勝てるのか',                 time:'3分', added:'2026-07-21' },
-  { slug:'toru-card',   name:'そのカード、取る？',       emoji:'🃏', tags:['確率','シミュ'],       desc:'デッキ構築の直感を1万回シミュで検算',          time:'4分', added:'2026-07-21' },
-  { slug:'gacha-sim',   name:'1万人ガチャシミュレータ',  emoji:'🎰', tags:['確率','体感'],         desc:'「平均90連」の裏の地獄と天国',                  time:'3分', added:'2026-07-18' },
-  { slug:'yomikiri',    name:'ヨミキリ',                 emoji:'✂️', tags:['AI対戦'],              desc:'あなたの癖を学習する限定ジャンケン',            time:'5分', added:'2026-07-19' },
-  { slug:'damashi-ai',  name:'AIを騙せ！',               emoji:'🤖', tags:['AI対戦'],              desc:'騙すとその場で学習して強くなる',                time:'5分', added:'2026-07-19' },
-];
-const BASE = 'https://d-studylab.github.io/';
-
-// ---- FNV-1a daily seed (既存ゲームと同一方式) ----
-function dailySeed(dateStr) {
-  let h = 2166136261;
-  for (const ch of dateStr) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); }
-  return h >>> 0;
-}
-function todayStr() {
-  const d = new Date();
-  const p = n => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;
-}
-// NEW = 追加日が新しい順の上位3本 かつ 7日以内（全部NEWになる初日問題と、
-// 休業明けに古い作品へNEWが復活する問題の両方を防ぐ — サブ垢レビュー判断 2026-07-21）
-const NEW_SLUGS = new Set(
-  // ties must return 0 so the stable sort preserves GAMES order (newest-first by convention)
-  GAMES.slice().sort((a, b) => a.added < b.added ? 1 : a.added > b.added ? -1 : 0)
-    .slice(0, 3).map(g => g.slug));
-function isNew(g) {
-  const ms = Date.now() - new Date(g.added + 'T00:00:00').getTime();
-  return NEW_SLUGS.has(g.slug) && ms >= 0 && ms < 7 * 86400000;
-}
-
-// ---- タグ集合（出現順を保つ） ----
-const TAGS = [];
-for (const g of GAMES) for (const t of g.tags) if (!TAGS.includes(t)) TAGS.push(t);
-
-let activeTag = 'すべて';
-
-function render() {
-  const grid = document.getElementById('grid');
-  const sorted = GAMES.slice().sort((a, b) => a.added < b.added ? 1 : a.added > b.added ? -1 : 0);
-  const list = sorted.filter(g => activeTag === 'すべて' || g.tags.includes(activeTag));
-  grid.innerHTML = list.length ? list.map(g => `
-    <div class="card">
-      ${isNew(g) ? '<span class="new">NEW</span>' : ''}
-      <a class="play" href="${BASE}${g.slug}/" target="_blank" rel="noopener">
-        <div class="emj">${g.emoji}</div>
-        <div class="nm">${g.name}</div>
-        <div class="ds">${g.desc}</div>
-        <div class="meta">${g.tags.map(t => `<span class="tag">${t}</span>`).join('')}<span class="time">${g.time}</span></div>
-      </a>
-      <a class="guide" href="guide/${g.slug}.html">📖 遊び方と見どころ</a>
-    </div>`).join('') : '<div class="empty">このタグのゲームはまだありません</div>';
-}
-
-function renderFilters() {
-  const el = document.getElementById('filters');
-  const chips = ['すべて', ...TAGS];
-  el.innerHTML = chips.map(t => `<span class="chip${t === activeTag ? ' on' : ''}" data-tag="${t}">${t}</span>`).join('');
-  el.querySelectorAll('.chip').forEach(c => c.onclick = () => { activeTag = c.dataset.tag; renderFilters(); render(); });
-}
-
-function renderToday() {
-  const pick = GAMES[dailySeed(todayStr()) % GAMES.length];
-  const el = document.getElementById('today');
-  el.href = `${BASE}${pick.slug}/`;
-  el.innerHTML = `<div class="emj">${pick.emoji}</div>
-    <div><div class="lbl">きょうの1本</div>
-    <div class="nm">${pick.name}</div>
-    <div class="ds">${pick.desc}・${pick.time}</div></div>`;
-}
-
-renderToday();
-renderFilters();
-render();
-</script>
 </body>
 </html>
