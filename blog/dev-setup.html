@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIと1日1ゲーム作る開発環境——実際に使っている道具を全部書く｜D-studyLab ブログ</title>
+<meta name="description" content="3日以内に必ず公開を回すために組んだ最小の開発環境。Windows機・Claude Code・three.js・GitHub Pages。11本を実際に作った実運用ベースで、使っている道具を正直に紹介します。">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="AIと1日1ゲーム作る開発環境——実際に使っている道具を全部書く">
+<meta property="og:description" content="派手なツールは使っていません。11本を作った実運用の最小構成を正直に公開します。">
+<meta property="og:type" content="article">
+<style>
+  :root { --bg:#0f1116; --panel:#181b22; --line:#2a2f3a; --txt:#e7eaef; --sub:#98a1ad;
+          --acc:#7cc4ff; --good:#6bdf9a; --bad:#ff8f8f; --gold:#e8c35a; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f4f6f8; --panel:#fff; --line:#dde3ea; --txt:#1b2027; --sub:#5b6673;
+            --acc:#1f6fb2; --good:#1f8a52; --bad:#c0492f; --gold:#a6791b; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  .wrap { max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  h1 { font-size:24px; line-height:1.45; margin:4px 0 6px; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:19px; margin:34px 0 10px; padding-left:11px; border-left:4px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  code { font-family:ui-monospace,Consolas,monospace; font-size:.9em;
+         background:color-mix(in srgb, var(--line) 55%, transparent); padding:.1em .4em; border-radius:4px; }
+  a { color:var(--acc); }
+  .aff { background:color-mix(in srgb, var(--acc) 8%, var(--panel)); border:1px dashed var(--line);
+         border-radius:10px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .foot { margin-top:20px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../">🕹️ ミニゲーム屋さん</a> ／ <a href="./">ブログ</a> ／ 開発環境</div>
+  <div class="cat">🛠️ 開発環境</div>
+  <h1>AIと1日1ゲーム作る開発環境——実際に使っている道具を全部書く</h1>
+  <div class="date">2026年7月21日</div>
+
+  <p>「ミニゲーム屋さん」では、3日以内に必ず1本公開する、というサイクルでゲームを作っています。短い期間で作って出すには、道具を増やしすぎないことが何より大事でした。この記事では、実際に十本以上を作ってきた<b>いまの構成を、正直にそのまま書きます</b>。派手なものは一つも使っていません。</p>
+
+  <h2>基本の考え方——依存を減らす</h2>
+  <p>まず前提として、このお店のゲームは<b>すべてブラウザ内だけで動き、外部ライブラリをできるだけ使いません</b>。素の JavaScript で書けるものは書く。そうすると、ビルド工程がなく、ファイルを開けば動き、長く壊れずに動き続けます。個人が1人で量産するなら、この「軽さ」が回転数に直結します。</p>
+
+  <h2>1. マシン——ふつうの Windows デスクトップ</h2>
+  <p>特別なワークステーションは使っていません。ふつうの Windows デスクトップ1台です。3Dゲームも扱いますが、ここで作っているのはブラウザで軽く動く規模なので、ハイエンドGPUは必須ではありません。長時間コードと向き合うので、効いてくるのは<b>画面の広さと、キーボード・マウスの快適さ</b>のほうでした。</p>
+
+  <div class="aff">
+    <!-- AFFILIATE: 周辺機器（モニター/キーボード） -->
+    <b>［周辺機器リンク：作業用モニター・キーボードなど］</b><br>
+    長時間の作業で効いてくる周辺機器（広めのモニター・打鍵しやすいキーボード等）の紹介リンクをここに設置予定です。
+  </div>
+
+  <h2>2. AIコーディング——Claude Code</h2>
+  <p>実装の主役は AI コーディング環境の <b>Claude Code</b> です。仕様を渡すと、ロジックの実装・テストの作成・ブラウザでの動作確認までを一気に進めてくれます。私（運営者）の役割は、企画を決め、仕様書を書き、出てきたものをレビューして公開判断をすること。「1人でチームを持つ」感覚に近く、これが1日1本を可能にしている一番大きな要素です。</p>
+  <p>コツは、<b>あいまいな指示を投げないこと</b>。ルール・勝敗条件・品質ゲート（何をテストで保証するか）を最初に言語化して渡すと、手戻りが激減します。ここは AI 任せにできない、人間側の仕事です。</p>
+
+  <h2>3. 3D表示——three.js</h2>
+  <p>立体を扱うゲーム（空間認識テスト、影当て、積みバトルなど）では <b>three.js</b> を使っています。WebGL を直接書くより圧倒的に速く、それでいてブラウザだけで完結します。使うのは基本図形とライトくらいで、凝ったことはしていません。「読める・軽い」を優先しています。</p>
+  <p>three.js は日本語の情報も増えてきましたが、体系立てて学ぶなら書籍が結局いちばん早い、というのが実感です。</p>
+
+  <div class="aff">
+    <!-- AFFILIATE: 書籍（three.js / JavaScript / ゲーム開発） -->
+    <b>［書籍リンク：three.js・JavaScript・ゲーム制作の入門書］</b><br>
+    実際に手元に置いて参照している系統の技術書（three.js / モダンJavaScript / ゲームの数学）の紹介リンクをここに設置予定です。
+  </div>
+
+  <h2>4. 品質チェック——Node.js と Playwright</h2>
+  <p>「動いたつもり」で公開して壊れているのが一番こわいので、公開前に必ず自動チェックを通します。ゲームの中核ロジックは <code>three.js</code> に依存しない純粋な JavaScript として切り出し、<b>Node.js</b> でテストします。UI は <b>Playwright</b> でブラウザを自動操作し、実際にプレイして「エラーが出ないか・崩れないか・スマホで横スクロールしないか」を確認します。この2段構えで、公開してから気づく事故をだいぶ減らせました。</p>
+
+  <h2>5. 公開——GitHub Pages</h2>
+  <p>公開先は <b>GitHub Pages</b> です。作品ごとにリポジトリを分け、<code>push</code> すればそのまま世界に出ます。サーバー代はかからず、静的ファイルを置くだけ。個人が数を出すには、この「タダで・すぐ・壊れにくい」公開先が向いています。作品を並べる店頭（このサイト）もここに置いています。</p>
+
+  <h2>まとめ——道具より、回す仕組み</h2>
+  <p>並べてみると分かる通り、特別な道具は何もありません。ふつうのPC、AIコーディング、three.js、テスト、無料の公開先。むしろ大事なのは、<b>「小さく作って、必ず出して、反応を見て、ダメなら畳む」を回し続ける仕組み</b>のほうでした。道具は最小限にして、その分を「企画と公開の回数」に振り向ける——これが、AIと一緒に1日1ゲームを続けるための、いまの結論です。</p>
+
+  <div class="note-caution">
+    ※本記事のリンクにはアフィリエイトプログラムを利用したものが含まれる場合があります。紹介しているのは実際の制作で使っている・参照している系統の道具ですが、最終的な選定はご自身の用途に合わせてご判断ください。価格・仕様は各販売ページでご確認ください。
+  </div>
+
+  <div class="related">
+    <div class="rt">このお店で遊べる作品</div>
+    <a href="../">🕹️ ミニゲーム一覧</a> ／ <a href="kikunotsukasa.html">🍶 岩手の地酒レビュー</a>
+  </div>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="./">ブログ一覧</a> ／ <a href="../about.html">運営者情報</a> ／ <a href="../privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+</body>
+</html>

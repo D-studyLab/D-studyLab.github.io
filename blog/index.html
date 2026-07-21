@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ブログ｜ミニゲーム屋さん D-studyLab</title>
+<meta name="description" content="D-studyLab のブログ。岩手の地酒レビューと、AIと1日1ゲーム作る開発環境の紹介。">
+<meta name="robots" content="index,follow">
+<style>
+  :root { --bg:#0f1116; --panel:#181b22; --line:#2a2f3a; --txt:#e7eaef; --sub:#98a1ad;
+          --acc:#7cc4ff; --good:#6bdf9a; --bad:#ff8f8f; --gold:#e8c35a; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f4f6f8; --panel:#fff; --line:#dde3ea; --txt:#1b2027; --sub:#5b6673;
+            --acc:#1f6fb2; --good:#1f8a52; --bad:#c0492f; --gold:#a6791b; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.75;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  h1 { font-size:24px; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-radius:14px; padding:16px 18px; margin-bottom:14px;
+          transition:transform .12s, border-color .12s; }
+  .post:hover { transform:translateY(-3px); border-color:var(--acc); }
+  .post .cat { font-size:11px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .post .ttl { font-size:17px; font-weight:bold; margin:3px 0 4px; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin-top:6px; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../">🕹️ ミニゲーム屋さん</a> ／ ブログ</div>
+  <h1>ブログ</h1>
+  <p class="lead">岩手の地酒レビューと、AIと1日1ゲームを作る開発環境の話を書いています。</p>
+
+  <a class="post" href="kikunotsukasa.html">
+    <div class="cat">🍶 岩手の地酒</div>
+    <div class="ttl">菊の司——岩手最古級の酒蔵、250年目の引っ越し</div>
+    <div class="ex">江戸中期・安永年間創業。250年続いた盛岡の蔵が、いま雫石の新天地で新章を書き始めている。「岩手最古の蔵の、いちばん新しい酒」という飲み方ができるのは、たぶん今だけ。</div>
+    <div class="date">2026-07-21</div>
+  </a>
+
+  <a class="post" href="dev-setup.html">
+    <div class="cat">🛠️ 開発環境</div>
+    <div class="ttl">AIと1日1ゲーム作る開発環境——実際に使っている道具を全部書く</div>
+    <div class="ex">3日以内に必ず公開、を回すために組んだ最小構成。Windows機・Claude Code・three.js・GitHub Pages。派手なツールは使っていません。実際に11本を作った実運用ベースで紹介します。</div>
+    <div class="date">2026-07-21</div>
+  </a>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="../">ミニゲーム屋さんトップ</a> ／ <a href="../about.html">運営者情報</a> ／ <a href="../privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+</body>
+</html>
