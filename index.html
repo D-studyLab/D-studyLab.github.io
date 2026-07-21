@@ -116,9 +116,13 @@ function todayStr() {
   const p = n => String(n).padStart(2, '0');
   return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;
 }
-function isNew(added) {
-  const ms = Date.now() - new Date(added + 'T00:00:00').getTime();
-  return ms >= 0 && ms < 7 * 86400000;
+// NEW = 追加日が新しい順の上位3本 かつ 7日以内（全部NEWになる初日問題と、
+// 休業明けに古い作品へNEWが復活する問題の両方を防ぐ — サブ垢レビュー判断 2026-07-21）
+const NEW_SLUGS = new Set(
+  GAMES.slice().sort((a, b) => a.added < b.added ? 1 : -1).slice(0, 3).map(g => g.slug));
+function isNew(g) {
+  const ms = Date.now() - new Date(g.added + 'T00:00:00').getTime();
+  return NEW_SLUGS.has(g.slug) && ms >= 0 && ms < 7 * 86400000;
 }
 
 // ---- タグ集合（出現順を保つ） ----
@@ -133,7 +137,7 @@ function render() {
   const list = sorted.filter(g => activeTag === 'すべて' || g.tags.includes(activeTag));
   grid.innerHTML = list.length ? list.map(g => `
     <a class="card" href="${BASE}${g.slug}/" target="_blank" rel="noopener">
-      ${isNew(g.added) ? '<span class="new">NEW</span>' : ''}
+      ${isNew(g) ? '<span class="new">NEW</span>' : ''}
       <div class="emj">${g.emoji}</div>
       <div class="nm">${g.name}</div>
       <div class="ds">${g.desc}</div>
