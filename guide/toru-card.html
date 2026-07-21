@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>そのカード、取る？の遊び方と見どころ｜ミニゲーム屋さん D-studyLab</title>
+<meta name="description" content="そのカード、取る？（確率・シミュ・約4分）の遊び方・攻略のコツ・作った理由・技術的な仕掛けを解説。ブラウザで無料・インストール不要。">
+<meta name="robots" content="index,follow">
+<style>
+  :root { --bg:#0f1116; --panel:#181b22; --line:#2a2f3a; --txt:#e7eaef; --sub:#98a1ad;
+          --acc:#7cc4ff; --good:#6bdf9a; --bad:#ff8f8f; --gold:#e8c35a; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f4f6f8; --panel:#fff; --line:#dde3ea; --txt:#1b2027; --sub:#5b6673;
+            --acc:#1f6fb2; --good:#1f8a52; --bad:#c0492f; --gold:#a6791b; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.9;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .hero { display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+  .hero .emj { font-size:52px; line-height:1; }
+  h1 { font-size:23px; margin:0; }
+  .meta { color:var(--sub); font-size:13px; margin:2px 0 20px; }
+  .play { display:inline-block; background:var(--acc); color:#08202f; font-weight:bold;
+          text-decoration:none; border-radius:10px; padding:11px 22px; font-size:15px; margin:6px 0 26px; }
+  h2 { font-size:18px; margin:30px 0 8px; padding-left:11px; border-left:4px solid var(--acc); }
+  p { font-size:15.5px; }
+  a { color:var(--acc); }
+  .foot { margin-top:44px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../">🕹️ ミニゲーム屋さん</a> ／ そのカード、取る？ の遊び方</div>
+  <div class="hero"><div class="emj">🃏</div><h1>そのカード、取る？</h1></div>
+  <div class="meta">確率・シミュジャンル・所要 約4分・ブラウザで無料・インストール不要</div>
+
+  <a class="play" href="https://d-studylab.github.io/toru-card/" target="_blank" rel="noopener">▶ そのカード、取る？ を遊ぶ</a>
+
+  <h2>ルール</h2>
+  <p>デッキ構築ゲームで誰もが悩む「この強そうなカード、デッキに入れるべき？」という直感を、1万回のシミュレーションで検算するツールです。カードを追加する・スキップする、それぞれの選択が最終的な勝率にどう効くのかを、モンテカルロ法で数値化して突きつけます。『引きが弱いカードを増やすと事故が増える』『尖ったカードは平均を上げるが分散も上げる』——そんなデッキ構築の格言を、実際の数字で確かめられます。</p>
+
+  <h2>攻略のコツ</h2>
+  <p>直感が外れやすいのは『強いカード＝入れるべき』という思い込みです。単体で強くても、デッキ全体の回りを悪くするカードは勝率を下げます。追加とスキップの勝率を並べて見て、差が小さいときは『引きの安定』を優先したほうが良いことが多い——という発見を、自分の目で確かめてみてください。条件を触ると即座に再計算されるので、仮説を立てては検証する遊び方が向いています。</p>
+
+  <h2>この作品を作った理由</h2>
+  <p>デッキ構築ゲームの上達は、経験と勘に頼りがちです。でも『取るか取らないか』は本来、期待値の比較で語れる問題。その計算を1万回まわして見せれば、勘の背後にある数学が見えてくる——確率シリーズの一本として作りました。</p>
+
+  <h2>技術的な仕掛け</h2>
+  <p>方策を固定した貪欲AIどうしを、同一シードで1万回対戦させて勝率を比較します。同じシードを使うので、条件を1つだけ変えたときの差が純粋に見えるのが特徴です。実在ゲームの再現ではなく、確率の直感を鍛えるための簡略化した抽象モデルであり、計算はすべて端末内で完結します。数字を触りながら『この一枚が勝率を何パーセント動かすか』を確かめる、電卓のような使い方ができます。</p>
+
+  <div class="foot">
+    <a class="play" href="https://d-studylab.github.io/toru-card/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>
+    © D-studyLab ／ <a href="../">ミニゲーム屋さんトップへ</a> ／ <a href="../about.html">運営者情報</a> ／ <a href="../privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+</body>
+</html>

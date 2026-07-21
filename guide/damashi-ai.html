@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIを騙せ！の遊び方と見どころ｜ミニゲーム屋さん D-studyLab</title>
+<meta name="description" content="AIを騙せ！（AI対戦・約5分）の遊び方・攻略のコツ・作った理由・技術的な仕掛けを解説。ブラウザで無料・インストール不要。">
+<meta name="robots" content="index,follow">
+<style>
+  :root { --bg:#0f1116; --panel:#181b22; --line:#2a2f3a; --txt:#e7eaef; --sub:#98a1ad;
+          --acc:#7cc4ff; --good:#6bdf9a; --bad:#ff8f8f; --gold:#e8c35a; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f4f6f8; --panel:#fff; --line:#dde3ea; --txt:#1b2027; --sub:#5b6673;
+            --acc:#1f6fb2; --good:#1f8a52; --bad:#c0492f; --gold:#a6791b; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.9;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .hero { display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+  .hero .emj { font-size:52px; line-height:1; }
+  h1 { font-size:23px; margin:0; }
+  .meta { color:var(--sub); font-size:13px; margin:2px 0 20px; }
+  .play { display:inline-block; background:var(--acc); color:#08202f; font-weight:bold;
+          text-decoration:none; border-radius:10px; padding:11px 22px; font-size:15px; margin:6px 0 26px; }
+  h2 { font-size:18px; margin:30px 0 8px; padding-left:11px; border-left:4px solid var(--acc); }
+  p { font-size:15.5px; }
+  a { color:var(--acc); }
+  .foot { margin-top:44px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../">🕹️ ミニゲーム屋さん</a> ／ AIを騙せ！ の遊び方</div>
+  <div class="hero"><div class="emj">🤖</div><h1>AIを騙せ！</h1></div>
+  <div class="meta">AI対戦ジャンル・所要 約5分・ブラウザで無料・インストール不要</div>
+
+  <a class="play" href="https://d-studylab.github.io/damashi-ai/" target="_blank" rel="noopener">▶ AIを騙せ！ を遊ぶ</a>
+
+  <h2>ルール</h2>
+  <p>審判AIには「ちゃんと読める数字だ」と言わせつつ、相手AIには間違えさせる——手書き数字の心理戦バトルです。あなたが数字を手で描くと、大きくて賢い審判AIと、小さくて隙のある相手AIの2つが読み取ります。審判が『これは○だ』と認めた上で、相手AIが別の数字と誤読したら、あなたの勝ち。人間には読めるのにAIだけが騙される、絶妙な崩し方を探します。目玉は『しんかAI』——騙すと、その場でブラウザ内の本物の機械学習で特訓し、同じ技が二度と通じなくなります。</p>
+
+  <h2>攻略のコツ</h2>
+  <p>やみくもに崩すと審判にも読めなくなって失敗します。コツは『人間には○に見えるギリギリまで、別の数字に寄せる』こと。例えば9の下の棒を短くして8っぽく見せる、といった調整です。しんかAI相手では、一度成功した崩し方は学習されて封じられるので、勝ち続けるには毎回新しい騙し方を発明する必要があります。あなたの騙し技だけを食べて育つ、世界に一体の敵です。</p>
+
+  <h2>この作品を作った理由</h2>
+  <p>AIの弱点を突く体験を、攻撃側の楽しさとして遊べる形にしたくて作りました。さらに『騙されたAIがその場で学習して強くなる』を加えると、人間とAIの終わりなき創意工夫の競争になります。学習の様子（損失が下がる曲線）が目の前で見えるので、機械学習の入り口にもなります。</p>
+
+  <h2>技術的な仕掛け</h2>
+  <p>数字認識も学習も、外部ライブラリを使わず素の JavaScript で実装し、勾配計算が PyTorch と一致すること（誤差1e-9）を検証しています。ブラウザ内でリアルタイムに再学習が走り、サーバー通信は一切ありません。英語のインタラクティブ解説記事も用意しています。</p>
+
+  <div class="foot">
+    <a class="play" href="https://d-studylab.github.io/damashi-ai/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>
+    © D-studyLab ／ <a href="../">ミニゲーム屋さんトップへ</a> ／ <a href="../about.html">運営者情報</a> ／ <a href="../privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+</body>
+</html>

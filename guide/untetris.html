@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>つみおろしの遊び方と見どころ｜ミニゲーム屋さん D-studyLab</title>
+<meta name="description" content="つみおろし（推理・パズル・約4分）の遊び方・攻略のコツ・作った理由・技術的な仕掛けを解説。ブラウザで無料・インストール不要。">
+<meta name="robots" content="index,follow">
+<style>
+  :root { --bg:#0f1116; --panel:#181b22; --line:#2a2f3a; --txt:#e7eaef; --sub:#98a1ad;
+          --acc:#7cc4ff; --good:#6bdf9a; --bad:#ff8f8f; --gold:#e8c35a; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f4f6f8; --panel:#fff; --line:#dde3ea; --txt:#1b2027; --sub:#5b6673;
+            --acc:#1f6fb2; --good:#1f8a52; --bad:#c0492f; --gold:#a6791b; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.9;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .hero { display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+  .hero .emj { font-size:52px; line-height:1; }
+  h1 { font-size:23px; margin:0; }
+  .meta { color:var(--sub); font-size:13px; margin:2px 0 20px; }
+  .play { display:inline-block; background:var(--acc); color:#08202f; font-weight:bold;
+          text-decoration:none; border-radius:10px; padding:11px 22px; font-size:15px; margin:6px 0 26px; }
+  h2 { font-size:18px; margin:30px 0 8px; padding-left:11px; border-left:4px solid var(--acc); }
+  p { font-size:15.5px; }
+  a { color:var(--acc); }
+  .foot { margin-top:44px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../">🕹️ ミニゲーム屋さん</a> ／ つみおろし の遊び方</div>
+  <div class="hero"><div class="emj">🧩</div><h1>つみおろし</h1></div>
+  <div class="meta">推理・パズルジャンル・所要 約4分・ブラウザで無料・インストール不要</div>
+
+  <a class="play" href="https://d-studylab.github.io/untetris/" target="_blank" rel="noopener">▶ つみおろし を遊ぶ</a>
+
+  <h2>ルール</h2>
+  <p>「この積み上がり、どう積まれた？」——完成した山を、テトロミノ（4マスの形）に切り分ける逆向きのテトリスです。ただの形合わせではありません。形が全部合っていても、『上から落として作れる順序が実在しない切り分け』は不正解になります。落下の歴史、つまり「どのピースが、どの順で落ちてきたら、この山になるか」を推理するパズルです。</p>
+
+  <h2>攻略のコツ</h2>
+  <p>まず、いちばん最後に置かれたはずのピース（上にも横にも何も乗っていない、自由に取り出せる塊）を探すのがコツです。それを1つずつ「逆再生」で取り除いていき、最後まで矛盾なく崩せる切り分けだけが正解になります。形だけを見て埋めようとすると、正しい形なのに順序が成立せず不正解、という罠にはまります。「これは本当に、この位置に落ちてこられるか？」を毎回問うのがポイントです。</p>
+
+  <h2>この作品を作った理由</h2>
+  <p>テトリスは「上から積む」ゲームですが、その逆——完成品から過程を復元する——は、パズルとして手つかずでした。形合わせに『物理的な順序の成立性』という一段深い条件を足すと、見た目は同じでも頭の使い方がまるで変わります。その一手間が面白いと感じて作りました。</p>
+
+  <h2>技術的な仕掛け</h2>
+  <p>切り分けの正誤判定は、形の一致だけでなく「重力に従った落下順が存在するか」をアルゴリズムで検証しています。成立した瞬間、ピースが落下の逆再生で空へ帰っていく演出は、その順序が実在することの証明でもあります。ロジックは純粋な JavaScript として分離してあります。</p>
+
+  <div class="foot">
+    <a class="play" href="https://d-studylab.github.io/untetris/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>
+    © D-studyLab ／ <a href="../">ミニゲーム屋さんトップへ</a> ／ <a href="../about.html">運営者情報</a> ／ <a href="../privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+</body>
+</html>

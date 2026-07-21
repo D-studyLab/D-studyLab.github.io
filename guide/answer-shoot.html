@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>アンサーシュートの遊び方と見どころ｜ミニゲーム屋さん D-studyLab</title>
+<meta name="description" content="アンサーシュート（クイズ・アクション・約5分）の遊び方・攻略のコツ・作った理由・技術的な仕掛けを解説。ブラウザで無料・インストール不要。">
+<meta name="robots" content="index,follow">
+<style>
+  :root { --bg:#0f1116; --panel:#181b22; --line:#2a2f3a; --txt:#e7eaef; --sub:#98a1ad;
+          --acc:#7cc4ff; --good:#6bdf9a; --bad:#ff8f8f; --gold:#e8c35a; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f4f6f8; --panel:#fff; --line:#dde3ea; --txt:#1b2027; --sub:#5b6673;
+            --acc:#1f6fb2; --good:#1f8a52; --bad:#c0492f; --gold:#a6791b; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.9;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .hero { display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+  .hero .emj { font-size:52px; line-height:1; }
+  h1 { font-size:23px; margin:0; }
+  .meta { color:var(--sub); font-size:13px; margin:2px 0 20px; }
+  .play { display:inline-block; background:var(--acc); color:#08202f; font-weight:bold;
+          text-decoration:none; border-radius:10px; padding:11px 22px; font-size:15px; margin:6px 0 26px; }
+  h2 { font-size:18px; margin:30px 0 8px; padding-left:11px; border-left:4px solid var(--acc); }
+  p { font-size:15.5px; }
+  a { color:var(--acc); }
+  .foot { margin-top:44px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../">🕹️ ミニゲーム屋さん</a> ／ アンサーシュート の遊び方</div>
+  <div class="hero"><div class="emj">🎯</div><h1>アンサーシュート</h1></div>
+  <div class="meta">クイズ・アクションジャンル・所要 約5分・ブラウザで無料・インストール不要</div>
+
+  <a class="play" href="https://d-studylab.github.io/answer-shoot/" target="_blank" rel="noopener">▶ アンサーシュート を遊ぶ</a>
+
+  <h2>ルール</h2>
+  <p>「答えがわかっても、届けなきゃ正解じゃない」——知識ゲート（クイズ）とスキルゲート（解答を届けるアクション）の二段構造クイズです。問題に答えるだけでなく、正解のブロックをゴールへ物理的に届けて初めて得点になります。届け方は3モードをローテーション。射出（正解の玉を引っ張って発射）、あみだ（横線を1本足して正解へ導く）、迷路（正解の入口からなぞって脱出）。難易度は問題の難しさとアクションの複雑さの2軸で選べます。</p>
+
+  <h2>攻略のコツ</h2>
+  <p>射出モードでは、不正解の玉は「捨て駒＝道具」です。まず不正解の玉をゴールのシールドにぶつけて割り、それから正解の玉を撃ち込みます。ただし強く撃ちすぎると判定をすり抜けることがあるので、ゴール手前では少し弱めに。あみだは、正解の文字から下へ指でたどって、どこで1本足せばゴールに着くかを逆算します。迷路は制限時間内に入口から出口までなぞりますが、時間切れでも解答は保持されるので落ち着いて。</p>
+
+  <h2>この作品を作った理由</h2>
+  <p>普通のクイズは「答えを選んで終わり」です。でも、わかっているのに操作で失敗する悔しさや、届いた瞬間の達成感を足したら、同じ知識でも記憶への残り方が変わるはず——そう考えて、知識とアクションを1つにしました。本人発案のアイデアで、エンジンは今後のクイズにも流用できる設計です。</p>
+
+  <h2>技術的な仕掛け</h2>
+  <p>あみだは「素の状態では正解に届かず、1本足せば必ず届く」盤面だけを生成器が保証しています（数百パターンで検証）。迷路も全入口から出口へ到達可能なことを確認済み。射出の物理は連続シミュレーションで、当たり判定も含めてすべてブラウザ内で計算しています。</p>
+
+  <div class="foot">
+    <a class="play" href="https://d-studylab.github.io/answer-shoot/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>
+    © D-studyLab ／ <a href="../">ミニゲーム屋さんトップへ</a> ／ <a href="../about.html">運営者情報</a> ／ <a href="../privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+</body>
+</html>

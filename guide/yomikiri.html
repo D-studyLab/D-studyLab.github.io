@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ヨミキリの遊び方と見どころ｜ミニゲーム屋さん D-studyLab</title>
+<meta name="description" content="ヨミキリ（AI対戦・約5分）の遊び方・攻略のコツ・作った理由・技術的な仕掛けを解説。ブラウザで無料・インストール不要。">
+<meta name="robots" content="index,follow">
+<style>
+  :root { --bg:#0f1116; --panel:#181b22; --line:#2a2f3a; --txt:#e7eaef; --sub:#98a1ad;
+          --acc:#7cc4ff; --good:#6bdf9a; --bad:#ff8f8f; --gold:#e8c35a; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f4f6f8; --panel:#fff; --line:#dde3ea; --txt:#1b2027; --sub:#5b6673;
+            --acc:#1f6fb2; --good:#1f8a52; --bad:#c0492f; --gold:#a6791b; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.9;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .hero { display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+  .hero .emj { font-size:52px; line-height:1; }
+  h1 { font-size:23px; margin:0; }
+  .meta { color:var(--sub); font-size:13px; margin:2px 0 20px; }
+  .play { display:inline-block; background:var(--acc); color:#08202f; font-weight:bold;
+          text-decoration:none; border-radius:10px; padding:11px 22px; font-size:15px; margin:6px 0 26px; }
+  h2 { font-size:18px; margin:30px 0 8px; padding-left:11px; border-left:4px solid var(--acc); }
+  p { font-size:15.5px; }
+  a { color:var(--acc); }
+  .foot { margin-top:44px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../">🕹️ ミニゲーム屋さん</a> ／ ヨミキリ の遊び方</div>
+  <div class="hero"><div class="emj">✂️</div><h1>ヨミキリ</h1></div>
+  <div class="meta">AI対戦ジャンル・所要 約5分・ブラウザで無料・インストール不要</div>
+
+  <a class="play" href="https://d-studylab.github.io/yomikiri/" target="_blank" rel="noopener">▶ ヨミキリ を遊ぶ</a>
+
+  <h2>ルール</h2>
+  <p>あなたの癖をその場で学習してくる、カイジ風の限定ジャンケン賭博です。互いにグー・チョキ・パーを4枚ずつ、合計12枚の消費制。残り札はお互いに公開されるので、終盤は札読みの詰将棋になります。チップを賭け、勝者がポットを総取り。あいこはポット持ち越し（札だけ減る）。そして相手のAIは、あなたの打ち筋を対戦中に本物の機械学習で覚え、『あなたの次の手』を読んで潰しにきます。</p>
+
+  <h2>攻略のコツ</h2>
+  <p>人間は『ランダムに出しているつもり』でも、必ず癖が出ます。負けた直後に手を変えたくなる、同じ手を3連続で出すのが気持ち悪い——AIはそこを突いてきます。だから意識的に『自分でも予測できない出し方』を作ることが大事。残り札の公開情報を使い、相手が出せない手を数えて詰ませる終盤の読み合いも勝負どころです。AIは毎ラウンド『なぜその手を読んだか』をあなたの実際の統計で開示してくるので、それを逆手に取りましょう。</p>
+
+  <h2>この作品を作った理由</h2>
+  <p>『AIと本気で心理戦をする』体験を作りたくて生まれました。相手が固定パターンではなく、目の前で自分専用に育っていく——その怖さと面白さは、学習するAIでしか出せません。数千試合のシミュレーションでバランスを調整しています。</p>
+
+  <h2>技術的な仕掛け</h2>
+  <p>AIはあなたの手をラウンドごとにオンライン学習（勾配降下）で覚えます。さらに『後出ししているのでは』という疑いに答えるため、AIは手を選ぶ前に自分の手をSHA-256ハッシュで封印して画面に置き、後で開封して一致を検証できます（コミットメント方式）。後出しは数学的に不可能です。すべてブラウザ内・ライブラリゼロで動きます。</p>
+
+  <div class="foot">
+    <a class="play" href="https://d-studylab.github.io/yomikiri/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>
+    © D-studyLab ／ <a href="../">ミニゲーム屋さんトップへ</a> ／ <a href="../about.html">運営者情報</a> ／ <a href="../privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+</body>
+</html>

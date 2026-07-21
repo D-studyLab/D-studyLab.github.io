@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>積みバトルの遊び方と見どころ｜ミニゲーム屋さん D-studyLab</title>
+<meta name="description" content="積みバトル（AI対戦・物理・約5分）の遊び方・攻略のコツ・作った理由・技術的な仕掛けを解説。ブラウザで無料・インストール不要。">
+<meta name="robots" content="index,follow">
+<style>
+  :root { --bg:#0f1116; --panel:#181b22; --line:#2a2f3a; --txt:#e7eaef; --sub:#98a1ad;
+          --acc:#7cc4ff; --good:#6bdf9a; --bad:#ff8f8f; --gold:#e8c35a; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f4f6f8; --panel:#fff; --line:#dde3ea; --txt:#1b2027; --sub:#5b6673;
+            --acc:#1f6fb2; --good:#1f8a52; --bad:#c0492f; --gold:#a6791b; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.9;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .hero { display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+  .hero .emj { font-size:52px; line-height:1; }
+  h1 { font-size:23px; margin:0; }
+  .meta { color:var(--sub); font-size:13px; margin:2px 0 20px; }
+  .play { display:inline-block; background:var(--acc); color:#08202f; font-weight:bold;
+          text-decoration:none; border-radius:10px; padding:11px 22px; font-size:15px; margin:6px 0 26px; }
+  h2 { font-size:18px; margin:30px 0 8px; padding-left:11px; border-left:4px solid var(--acc); }
+  p { font-size:15.5px; }
+  a { color:var(--acc); }
+  .foot { margin-top:44px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../">🕹️ ミニゲーム屋さん</a> ／ 積みバトル の遊び方</div>
+  <div class="hero"><div class="emj">🏗️</div><h1>積みバトル</h1></div>
+  <div class="meta">AI対戦・物理ジャンル・所要 約5分・ブラウザで無料・インストール不要</div>
+
+  <a class="play" href="https://d-studylab.github.io/tsumi-battle/" target="_blank" rel="noopener">▶ 積みバトル を遊ぶ</a>
+
+  <h2>ルール</h2>
+  <p>先読みするAIと交互にブロックを積む3D対戦です。物理ルールはたった1つ——『支えている面の上に乗った全体の重心が、その面の外に出たら崩れる』（本の重ね置き＝オーバーハングと同じ原理）。土台の上に幅の違うブロックを左右にずらして置き、崩したほうが負けです。崩れた接触面には赤い亀裂が走り、何段目で重心が外れたかが表示されます。ブロックには通常・重り（質量2倍）・羽根（質量0.5倍）の3種があり、質量が駆け引きを生みます。</p>
+
+  <h2>攻略のコツ</h2>
+  <p>最大の武器は、自分がブロックを置く前に見える『重心メーター』です。置いた場合の全体重心と支えの余裕がバーで表示されるので、赤や黄色に近づく手は避けます。攻めるなら、自分が安定しつつ相手が次に置きにくい形へ誘導すること。重りを端に置くと小さなオーバーハングでも崩れるので、相手に重りが来るタイミングを狙って盤面を傾けておくのが上級者の一手です。難易度『鬼』は2手先まで読んでくるので、目先の安定だけでなく先の展開まで考える必要があります。</p>
+
+  <h2>この作品を作った理由</h2>
+  <p>『AIの頭の中が見える対戦』を3Dで作りたくて生まれました。AIの番には、候補手が半透明のゴーストで先読み表示され、緑（余裕）・黄（きわどい）・赤（崩れる）で明滅してから最終手を選びます。相手の思考が可視化される緊張感は、学習・先読みするAIでしか出せません。</p>
+
+  <h2>技術的な仕掛け</h2>
+  <p>安定判定を1つの関数に隔離してあるため、将来この決定論モデルを本格的な3D物理エンジンへ載せ替えても、ゲームの流れやAIはそのまま使えます。鬼AIは2手先の読み合い（ミニマックス）を、候補を絞り込んで高速に計算。質量差が転倒に効くことも数値テストで検証済みです。すべてブラウザ内で完結します。</p>
+
+  <div class="foot">
+    <a class="play" href="https://d-studylab.github.io/tsumi-battle/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>
+    © D-studyLab ／ <a href="../">ミニゲーム屋さんトップへ</a> ／ <a href="../about.html">運営者情報</a> ／ <a href="../privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+</body>
+</html>

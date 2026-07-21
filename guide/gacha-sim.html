@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1万人ガチャシミュレータの遊び方と見どころ｜ミニゲーム屋さん D-studyLab</title>
+<meta name="description" content="1万人ガチャシミュレータ（確率・体感・約3分）の遊び方・攻略のコツ・作った理由・技術的な仕掛けを解説。ブラウザで無料・インストール不要。">
+<meta name="robots" content="index,follow">
+<style>
+  :root { --bg:#0f1116; --panel:#181b22; --line:#2a2f3a; --txt:#e7eaef; --sub:#98a1ad;
+          --acc:#7cc4ff; --good:#6bdf9a; --bad:#ff8f8f; --gold:#e8c35a; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f4f6f8; --panel:#fff; --line:#dde3ea; --txt:#1b2027; --sub:#5b6673;
+            --acc:#1f6fb2; --good:#1f8a52; --bad:#c0492f; --gold:#a6791b; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.9;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .hero { display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+  .hero .emj { font-size:52px; line-height:1; }
+  h1 { font-size:23px; margin:0; }
+  .meta { color:var(--sub); font-size:13px; margin:2px 0 20px; }
+  .play { display:inline-block; background:var(--acc); color:#08202f; font-weight:bold;
+          text-decoration:none; border-radius:10px; padding:11px 22px; font-size:15px; margin:6px 0 26px; }
+  h2 { font-size:18px; margin:30px 0 8px; padding-left:11px; border-left:4px solid var(--acc); }
+  p { font-size:15.5px; }
+  a { color:var(--acc); }
+  .foot { margin-top:44px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../">🕹️ ミニゲーム屋さん</a> ／ 1万人ガチャシミュレータ の遊び方</div>
+  <div class="hero"><div class="emj">🎰</div><h1>1万人ガチャシミュレータ</h1></div>
+  <div class="meta">確率・体感ジャンル・所要 約3分・ブラウザで無料・インストール不要</div>
+
+  <a class="play" href="https://d-studylab.github.io/gacha-sim/" target="_blank" rel="noopener">▶ 1万人ガチャシミュレータ を遊ぶ</a>
+
+  <h2>ルール</h2>
+  <p>「排出率1%だから100連で出る」——この思い込みを、1万人が同時に引いた分布で打ち砕く体感ツールです。排出率と試行回数を設定すると、1万人ぶんの『出るまでに何連かかったか』の分布が一気に表示されます。ラッキーに早く出た人の山と、平均をはるかに超えても出ない悲劇の1%が、同じ画面に並びます。『平均』という言葉がいかに個人の運命を隠すかを、目で理解できます。</p>
+
+  <h2>攻略のコツ</h2>
+  <p>注目してほしいのは『平均連数』ではなく『分布の裾』です。排出率1%なら平均は約100連ですが、それは『みんなが100連で出る』という意味ではありません。半分の人はもっと早く、そして一部の人は300連を超えても出ない。この『裾の重さ』こそ、ガチャで身を滅ぼす仕組みの正体です。設定を変えて何度も引き直すと、確率の残酷さと優しさが両方見えてきます。</p>
+
+  <h2>この作品を作った理由</h2>
+  <p>『平均90連で出る』という宣伝文句の裏には、必ず平均を大きく超える不運な人がいます。その分散を隠したまま『平均』だけ語るのはフェアではない——確率を正しく怖がれるようになる教材として、原理シリーズの一本にしました。適度に楽しむガチャはエンタメですが、課金は計画的に。</p>
+
+  <h2>技術的な仕掛け</h2>
+  <p>モンテカルロ法で、1万試行それぞれを毎回独立に引き直してシミュレーションします。だから毎回わずかに違う分布が出て、確率が『固定された運命』ではなく『振れ幅のある現象』であることが実感できます。実在するゲームの確率仕様とは無関係の、確率分布を学ぶための教材デモであり、計算はすべてブラウザ内で行われ、何も外部に送信されません。排出率や試行回数を変えて、天井（一定回数で確定）の有無が分布をどう変えるかも試せます。</p>
+
+  <div class="foot">
+    <a class="play" href="https://d-studylab.github.io/gacha-sim/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>
+    © D-studyLab ／ <a href="../">ミニゲーム屋さんトップへ</a> ／ <a href="../about.html">運営者情報</a> ／ <a href="../privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+</body>
+</html>

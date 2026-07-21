@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>モンティホール100連の遊び方と見どころ｜ミニゲーム屋さん D-studyLab</title>
+<meta name="description" content="モンティホール100連（確率・体感・約3分）の遊び方・攻略のコツ・作った理由・技術的な仕掛けを解説。ブラウザで無料・インストール不要。">
+<meta name="robots" content="index,follow">
+<style>
+  :root { --bg:#0f1116; --panel:#181b22; --line:#2a2f3a; --txt:#e7eaef; --sub:#98a1ad;
+          --acc:#7cc4ff; --good:#6bdf9a; --bad:#ff8f8f; --gold:#e8c35a; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f4f6f8; --panel:#fff; --line:#dde3ea; --txt:#1b2027; --sub:#5b6673;
+            --acc:#1f6fb2; --good:#1f8a52; --bad:#c0492f; --gold:#a6791b; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.9;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .hero { display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+  .hero .emj { font-size:52px; line-height:1; }
+  h1 { font-size:23px; margin:0; }
+  .meta { color:var(--sub); font-size:13px; margin:2px 0 20px; }
+  .play { display:inline-block; background:var(--acc); color:#08202f; font-weight:bold;
+          text-decoration:none; border-radius:10px; padding:11px 22px; font-size:15px; margin:6px 0 26px; }
+  h2 { font-size:18px; margin:30px 0 8px; padding-left:11px; border-left:4px solid var(--acc); }
+  p { font-size:15.5px; }
+  a { color:var(--acc); }
+  .foot { margin-top:44px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../">🕹️ ミニゲーム屋さん</a> ／ モンティホール100連 の遊び方</div>
+  <div class="hero"><div class="emj">🚪</div><h1>モンティホール100連</h1></div>
+  <div class="meta">確率・体感ジャンル・所要 約3分・ブラウザで無料・インストール不要</div>
+
+  <a class="play" href="https://d-studylab.github.io/monty/" target="_blank" rel="noopener">▶ モンティホール100連 を遊ぶ</a>
+
+  <h2>ルール</h2>
+  <p>有名な「モンティ・ホール問題」を、100連の試行で体で納得するゲームです。3つのドアのうち1つに車、2つにヤギ。あなたが1つ選んだあと、司会者が残りからハズレのドアを1つ開けて聞きます——「変えますか？」。直感では確率は五分に見えますが、実は『変えたほうが2倍勝てる』。手動でもボタン一発の連続試行でも試せて、勝率が理論値に近づいていく様子を目の当たりにできます。</p>
+
+  <h2>攻略のコツ</h2>
+  <p>納得のカギは、司会者が『答えを知っていて、必ずハズレを開ける』という点です。この行動によって、残った1枚のドアに「最初に選ばなかった2枚ぶんの確率（2/3）」が集約されます。つまり『変える』とは、『最初の自分は外れていた』という3分の2の確率に賭けること。頭で納得できなくても、100連ボタンを何度か押せば、変えた場合の勝率がはっきり2/3に寄っていくのが見えます。まず体で納得してください。</p>
+
+  <h2>この作品を作った理由</h2>
+  <p>モンティ・ホール問題は、数学者ポール・エルデシュですらシミュレーションを見るまで納得しなかったと言われる、直感が裏切られる代表例です。だからこそ『理屈で説得する』より『1万回引かせて見せる』ほうが早い。確率の直感の落とし穴を体で知る教材として作りました。</p>
+
+  <h2>技術的な仕掛け</h2>
+  <p>連続試行はモンテカルロ法で、変える戦略・変えない戦略を同じ条件で走らせて勝率を比較します。計算はすべてブラウザ内。実在の番組やゲームの再現ではなく、確率の原理を体感するための抽象モデルです。</p>
+
+  <div class="foot">
+    <a class="play" href="https://d-studylab.github.io/monty/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>
+    © D-studyLab ／ <a href="../">ミニゲーム屋さんトップへ</a> ／ <a href="../about.html">運営者情報</a> ／ <a href="../privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+</body>
+</html>

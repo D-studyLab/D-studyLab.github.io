@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ヨミアテの遊び方と見どころ｜ミニゲーム屋さん D-studyLab</title>
+<meta name="description" content="ヨミアテ（推理・数字・約5分）の遊び方・攻略のコツ・作った理由・技術的な仕掛けを解説。ブラウザで無料・インストール不要。">
+<meta name="robots" content="index,follow">
+<style>
+  :root { --bg:#0f1116; --panel:#181b22; --line:#2a2f3a; --txt:#e7eaef; --sub:#98a1ad;
+          --acc:#7cc4ff; --good:#6bdf9a; --bad:#ff8f8f; --gold:#e8c35a; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f4f6f8; --panel:#fff; --line:#dde3ea; --txt:#1b2027; --sub:#5b6673;
+            --acc:#1f6fb2; --good:#1f8a52; --bad:#c0492f; --gold:#a6791b; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.9;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .hero { display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+  .hero .emj { font-size:52px; line-height:1; }
+  h1 { font-size:23px; margin:0; }
+  .meta { color:var(--sub); font-size:13px; margin:2px 0 20px; }
+  .play { display:inline-block; background:var(--acc); color:#08202f; font-weight:bold;
+          text-decoration:none; border-radius:10px; padding:11px 22px; font-size:15px; margin:6px 0 26px; }
+  h2 { font-size:18px; margin:30px 0 8px; padding-left:11px; border-left:4px solid var(--acc); }
+  p { font-size:15.5px; }
+  a { color:var(--acc); }
+  .foot { margin-top:44px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../">🕹️ ミニゲーム屋さん</a> ／ ヨミアテ の遊び方</div>
+  <div class="hero"><div class="emj">🔢</div><h1>ヨミアテ</h1></div>
+  <div class="meta">推理・数字ジャンル・所要 約5分・ブラウザで無料・インストール不要</div>
+
+  <a class="play" href="https://d-studylab.github.io/yomiate/" target="_blank" rel="noopener">▶ ヨミアテ を遊ぶ</a>
+
+  <h2>ルール</h2>
+  <p>「推理は、情報の買い物だ」——数字当て（ヒット&ブロー）に、ヒント購入と残り候補数メーターを足した推理ゲームです。隠された数字（各桁が重複なし）を当てます。予想するとH（数字も位置も一致）とB（数字は合うが位置違い）が返ります。さらにヒントを「買う」ことができ（合計は？偶数は何個？など・1回買うと1手消費）、上部のメーターには「今の情報と矛盾しない答えが残り何通りか」が常に表示されます。桁数は4桁・5桁・6桁（鬼）から選べ、デイリーは全員同じ問題です。</p>
+
+  <h2>攻略のコツ</h2>
+  <p>最初の1手は当てにいかず、情報を最大化する手を打つのがコツです。バラバラの数字を4つ入れて、Hと候補数の減り方を見ます。ヒント購入は「1手」を消費するので、それに見合うだけ候補が減るかを考えて買うこと。残り候補メーターが『5040→1440→369…』と一気に減る手が「良い質問」です。この数字の減り方こそ、情報理論でいう情報量そのものを体感できる部分です。</p>
+
+  <h2>この作品を作った理由</h2>
+  <p>ヌメロン（数字当て）は面白いですが、上級者と初心者の差が「勘」に見えてしまいます。そこに『残り候補数』を見える化すれば、自分の一手が何通りを消したかが分かり、上達が可視化される——本人発案の『ヒントを買えるヌメロン』というアイデアを、情報量の教材にまで育てました。</p>
+
+  <h2>技術的な仕掛け</h2>
+  <p>推理エンジンは全候補（4桁なら5040通り）を保持し、毎手すべての情報と矛盾しない候補だけを残して数えます。この計算がゲームの候補数表示と一致することを1000局で検証済み。デイリー問題は日付から決まる固定シード方式で、全員が同じ盤面を、ネタバレなしの絞り込み履歴つきで共有できます。</p>
+
+  <div class="foot">
+    <a class="play" href="https://d-studylab.github.io/yomiate/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>
+    © D-studyLab ／ <a href="../">ミニゲーム屋さんトップへ</a> ／ <a href="../about.html">運営者情報</a> ／ <a href="../privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+</body>
+</html>
