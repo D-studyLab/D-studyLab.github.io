@@ -13,68 +13,97 @@
 <link rel="canonical" href="https://d-studylab.com/games/">
 <meta name="twitter:card" content="summary_large_image">
 <style>
-  :root { --bg:#0f1116; --panel:#181b22; --line:#2a2f3a; --txt:#e7eaef; --sub:#98a1ad;
-          --acc:#7cc4ff; --good:#6bdf9a; --bad:#ff8f8f; --gold:#e8c35a; }
+  @font-face {
+    font-family:"DotGothic16"; font-style:normal; font-weight:400;
+    font-display:swap; src:url("/assets/fonts/DotGothic16-subset.woff2") format("woff2");
+  }
+  :root { --bg:#0c0f1a; --panel:#141a2b; --panel2:#1b2238; --line:#2c3654; --txt:#e7ecfb; --sub:#93a0c4;
+          --acc:#4af; --acc-mg:#ff5db1; --acc-yl:#ffd23f; --gold:#ffd23f; }
   @media (prefers-color-scheme: light) {
-    :root { --bg:#f4f6f8; --panel:#fff; --line:#dde3ea; --txt:#1b2027; --sub:#5b6673;
-            --acc:#1f6fb2; --good:#1f8a52; --bad:#c0492f; --gold:#a6791b; }
+    /* ゲームボーイ風 淡緑グレー */
+    :root { --bg:#c7d0bd; --panel:#dbe2cf; --panel2:#e6ebda; --line:#8a9679; --txt:#20281a; --sub:#4c5a3d;
+            --acc:#2b6d8f; --acc-mg:#a83b73; --acc-yl:#7a6410; --gold:#7a6410; }
   }
   * { box-sizing:border-box; }
   body { margin:0; background:var(--bg); color:var(--txt); line-height:1.7;
          font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
-  .wrap { max-width:920px; margin:0 auto; padding:26px 16px 60px; }
+  .pix, header h1, .about h2, .chip, .card .nm, .today .lbl, .today .nm, .new, .empty {
+    font-family:"DotGothic16","Hiragino Kaku Gothic ProN",monospace; letter-spacing:.01em; }
+  /* CRT scanline overlay（静的テクスチャ扱い） */
+  #scan { position:fixed; inset:0; z-index:9; pointer-events:none;
+          background:repeating-linear-gradient(0deg, rgba(0,0,0,.05), rgba(0,0,0,.05) 1px, transparent 1px, transparent 3px);
+          mix-blend-mode:multiply; }
+  @media (prefers-color-scheme: light) { #scan { opacity:.5; } }
+  /* 電源ON風フラッシュ（0.4秒・以後静止） */
+  #boot { position:fixed; inset:0; z-index:20; pointer-events:none; background:var(--acc);
+          animation:boot .42s ease-out forwards; }
+  @keyframes boot { 0%{opacity:.0} 12%{opacity:.55} 100%{opacity:0; visibility:hidden;} }
+  .wrap { position:relative; z-index:1; max-width:920px; margin:0 auto; padding:26px 16px 60px; }
   .crumb { font-size:13px; color:var(--sub); margin-bottom:12px; }
   .crumb a { color:var(--acc); text-decoration:none; }
-  header h1 { font-size:26px; margin:6px 0 4px; letter-spacing:.01em; }
+  header h1 { font-size:26px; margin:6px 0 4px; letter-spacing:.02em; }
   header .lead { color:var(--sub); font-size:14px; margin-bottom:20px; }
-  .today { background:linear-gradient(135deg, color-mix(in srgb, var(--acc) 18%, var(--panel)), var(--panel));
-           border:1px solid var(--acc); border-radius:14px; padding:14px 16px; margin:0 0 22px;
-           display:flex; align-items:center; gap:14px; text-decoration:none; color:inherit; }
-  .today:hover { transform:translateY(-2px); transition:transform .12s; }
+  /* 筐体マーキー風「きょうの1本」 */
+  .today { background:var(--panel); border:2px solid var(--acc);
+           box-shadow:0 0 0 2px var(--bg), 0 0 0 4px var(--line);
+           padding:14px 16px; margin:4px 0 24px; display:flex; align-items:center; gap:14px;
+           text-decoration:none; color:inherit; position:relative; }
+  .today:hover { transform:translateY(-3px); transition:transform .1s steps(2); }
   .today .emj { font-size:44px; line-height:1; }
-  .today .lbl { font-size:11px; font-weight:bold; color:var(--acc); letter-spacing:.14em; }
+  .today .lbl { font-size:12px; font-weight:bold; color:var(--acc-yl); letter-spacing:.16em;
+                animation:blink 1s steps(1) 2; }
+  @keyframes blink { 50%{opacity:.15} }
   .today .nm { font-size:19px; font-weight:bold; }
   .today .ds { font-size:13px; color:var(--sub); }
   .filters { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
-  .chip { border:1px solid var(--line); background:var(--panel); color:var(--sub);
-          border-radius:20px; padding:6px 15px; font-size:13px; cursor:pointer; user-select:none;
-          font-family:inherit; }
+  .chip { border:2px solid var(--line); background:var(--panel); color:var(--sub);
+          border-radius:0; padding:5px 14px; font-size:13px; cursor:pointer; user-select:none; }
   .chip:hover { border-color:var(--acc); color:var(--txt); }
-  .chip.on { background:var(--acc); color:#0a0e14; border-color:var(--acc); font-weight:bold; }
-  @media (prefers-color-scheme: light) { .chip.on { color:#fff; } }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); gap:13px; }
-  .card { background:var(--panel); border:1px solid var(--line); border-radius:14px;
-          padding:16px 15px 12px; display:flex; flex-direction:column;
-          gap:7px; position:relative; transition:transform .12s, border-color .12s, box-shadow .12s; }
-  .card:hover { transform:translateY(-4px); border-color:var(--acc);
-                box-shadow:0 8px 24px rgba(0,0,0,.22); }
+  .chip.on { background:var(--acc); color:#04101d; border-color:var(--acc); font-weight:bold; }
+  @media (prefers-color-scheme: light) { .chip.on { color:#e6ebda; } }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); gap:14px; }
+  /* ファミコンウィンドウ風 角ばった二重ボーダー */
+  .card { background:var(--panel); border:2px solid var(--line); border-radius:0;
+          box-shadow:inset 0 0 0 2px var(--panel), 0 3px 0 var(--line);
+          padding:14px 13px 11px; display:flex; flex-direction:column; gap:7px; position:relative;
+          transition:transform .08s steps(2), border-color .1s; }
+  .card:hover { transform:translateY(-4px); border-color:var(--acc); }
   .card .play { text-decoration:none; color:inherit; display:flex; flex-direction:column; gap:7px; flex:1; }
   .card .emj { font-size:48px; line-height:1.1; }
   .card .nm { font-size:15px; font-weight:bold; }
   .card .ds { font-size:12.5px; color:var(--sub); flex:1; }
   .card .meta { display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:3px; }
-  .card .tag { font-size:11px; color:var(--sub); background:color-mix(in srgb, var(--line) 60%, transparent);
-               border-radius:5px; padding:1px 7px; }
+  .card .tag { font-size:11px; color:var(--sub); background:var(--panel2); border:1px solid var(--line);
+               border-radius:0; padding:1px 7px; }
   .card .time { font-size:11px; color:var(--sub); margin-left:auto; }
   .card .guide { font-size:11.5px; color:var(--acc); text-decoration:none; margin-top:7px;
                  padding-top:7px; border-top:1px solid var(--line); display:inline-block; }
   .card .guide:hover { text-decoration:underline; }
-  .new { position:absolute; top:10px; right:10px; background:var(--gold); color:#1b1400;
-         font-size:10px; font-weight:bold; padding:2px 7px; border-radius:20px; letter-spacing:.05em; }
-  .about { margin:34px 0 0; border-top:1px solid var(--line); padding-top:20px; }
+  /* ドット調の旗 NEW */
+  .new { position:absolute; top:-2px; right:-2px; background:var(--acc-mg); color:#fff;
+         font-size:10px; font-weight:bold; padding:2px 8px 3px; border-radius:0; letter-spacing:.08em;
+         box-shadow:-2px 2px 0 rgba(0,0,0,.3); }
+  .about { margin:34px 0 0; border-top:2px solid var(--line); padding-top:20px; }
   .about h2 { font-size:16px; margin:0 0 8px; }
   .about p { color:var(--sub); font-size:13.5px; margin:4px 0; }
   .about a { color:var(--acc); }
   footer { margin-top:26px; color:var(--sub); font-size:12px; text-align:center; line-height:2; }
   footer a { color:var(--acc); }
   .empty { color:var(--sub); font-size:14px; padding:30px 0; text-align:center; grid-column:1/-1; }
+  @media (prefers-reduced-motion: reduce) {
+    #boot { display:none; }
+    .today .lbl { animation:none; }
+    .today:hover, .card:hover { transition:none; }
+  }
 </style>
 </head>
 <body>
+<div id="boot" aria-hidden="true"></div>
+<div id="scan" aria-hidden="true"></div>
 <div class="wrap">
   <header>
     <div class="crumb"><a href="/">← D-studyLab トップ</a></div>
-    <h1>🕹️ ミニゲームゲームズ</h1>
+    <h1 class="pix">🕹 ミニゲームゲームズ</h1>
     <p class="lead">3日に1本のペースで増える、ブラウザで遊べるミニゲームの屋台。全部無料・インストール不要・スマホOK。</p>
   </header>
 
@@ -87,7 +116,7 @@
   <!-- AD SLOT: 審査通過後にここへ -->
 
   <div class="about">
-    <h2>お店の口上</h2>
+    <h2 class="pix">お店の口上</h2>
     <p>むずかしい概念ほど、読むより<b>遊べる</b>ほうが早くわかる。空間認識・確率・AIとの読み合いを、3分で触れるゲームにして並べています。</p>
     <p>1本ずつ、3日以内に必ず公開する。だから毎日ちょっとずつ増えます。</p>
     <p>読み物 → <a href="/blog/">📝 ブログ（地酒レビュー・開発環境の話）</a></p>
