@@ -7,30 +7,56 @@
 <meta name="description" content="D-studyLab のブログ。岩手の地酒レビューと、AIと1日1ゲーム作る開発環境の紹介。">
 <meta name="robots" content="index,follow">
 <style>
-  :root { --bg:#0f1116; --panel:#181b22; --line:#2a2f3a; --txt:#e7eaef; --sub:#98a1ad;
-          --acc:#7cc4ff; --good:#6bdf9a; --bad:#ff8f8f; --gold:#e8c35a; }
-  @media (prefers-color-scheme: light) {
-    :root { --bg:#f4f6f8; --panel:#fff; --line:#dde3ea; --txt:#1b2027; --sub:#5b6673;
-            --acc:#1f6fb2; --good:#1f8a52; --bad:#c0492f; --gold:#a6791b; }
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8a5320; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#e0a94a; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
   }
   * { box-sizing:border-box; }
-  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.75;
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
          font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
-  .wrap { max-width:760px; margin:0 auto; padding:26px 18px 70px; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
   .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
   .crumb a { color:var(--acc); text-decoration:none; }
-  h1 { font-size:24px; margin:4px 0 6px; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:25px; line-height:1.45; margin:4px 0 6px; }
   .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:19px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
   .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
-          border:1px solid var(--line); border-radius:14px; padding:16px 18px; margin-bottom:14px;
-          transition:transform .12s, border-color .12s; }
-  .post:hover { transform:translateY(-3px); border-color:var(--acc); }
-  .post .cat { font-size:11px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
-  .post .ttl { font-size:17px; font-weight:bold; margin:3px 0 4px; }
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:18px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
   .post .ex { font-size:13.5px; color:var(--sub); }
-  .post .date { font-size:12px; color:var(--sub); margin-top:6px; }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
   .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
   .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
 </style>
 </head>
 <body>
