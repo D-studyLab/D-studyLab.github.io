@@ -7,11 +7,16 @@
 <meta name="description" content="つみおろし（推理・パズル・約4分）の遊び方・攻略のコツ・作った理由・技術的な仕掛けを解説。ブラウザで無料・インストール不要。">
 <meta name="robots" content="index,follow">
 <style>
-  :root { --bg:#0f1116; --panel:#181b22; --line:#2a2f3a; --txt:#e7eaef; --sub:#98a1ad;
-          --acc:#7cc4ff; --good:#6bdf9a; --bad:#ff8f8f; --gold:#e8c35a; }
+  @font-face {
+    font-family:"DotGothic16"; font-style:normal; font-weight:400;
+    font-display:swap; src:url("/assets/fonts/DotGothic16-subset.woff2") format("woff2");
+  }
+  :root { --bg:#0c0f1a; --panel:#141a2b; --line:#2c3654; --txt:#e7ecfb; --sub:#93a0c4;
+          --acc:#4af; --good:#6bdf9a; --bad:#ff5db1; --gold:#ffd23f; }
   @media (prefers-color-scheme: light) {
-    :root { --bg:#f4f6f8; --panel:#fff; --line:#dde3ea; --txt:#1b2027; --sub:#5b6673;
-            --acc:#1f6fb2; --good:#1f8a52; --bad:#c0492f; --gold:#a6791b; }
+    /* ゲームボーイ風 淡緑グレー（games世界観の軽量版） */
+    :root { --bg:#c7d0bd; --panel:#dbe2cf; --line:#8a9679; --txt:#20281a; --sub:#4c5a3d;
+            --acc:#2b6d8f; --good:#1f8a52; --bad:#a83b73; --gold:#7a6410; }
   }
   * { box-sizing:border-box; }
   body { margin:0; background:var(--bg); color:var(--txt); line-height:1.9;
@@ -30,6 +35,14 @@
   a { color:var(--acc); }
   .foot { margin-top:44px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
   .foot a { color:var(--acc); }
+  .crumb, h1, h2 { font-family:"DotGothic16","Hiragino Kaku Gothic ProN",monospace; letter-spacing:.01em; }
+  body::before { content:""; position:fixed; inset:0; z-index:9; pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,.05), rgba(0,0,0,.05) 1px, transparent 1px, transparent 3px);
+    mix-blend-mode:multiply; }
+  @media (prefers-color-scheme: light) { body::before { opacity:.5; } }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; } }
+  a.play { color:#04101d !important; }
+  @media (prefers-color-scheme: light) { a.play { color:#eef4ff !important; } }
 </style>
 </head>
 <body>
