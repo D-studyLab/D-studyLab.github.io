@@ -92,6 +92,7 @@
 <script>
 "use strict";
 const GAMES = [
+  { slug:'tsumi-battle',name:'積みバトル',               emoji:'🏗️', tags:['AI対戦','物理'],       desc:'先読みAIと崩さず積む・AIの脳内が見える',        time:'5分', added:'2026-07-21' },
   { slug:'kage-ate',    name:'かげ当てパズル',           emoji:'🌗', tags:['空間','パズル'],       desc:'光の向きから影の形を当てろ',                    time:'3分', added:'2026-07-21' },
   { slug:'kukan-test',  name:'空間認識偏差値テスト',     emoji:'🧠', tags:['空間','診断'],         desc:'頭の中で3Dを回せるか',                          time:'3分', added:'2026-07-20' },
   { slug:'answer-shoot',name:'アンサーシュート',         emoji:'🎯', tags:['クイズ','アクション'], desc:'答えがわかっても届けなきゃ正解じゃない',        time:'5分', added:'2026-07-21' },
@@ -119,7 +120,9 @@ function todayStr() {
 // NEW = 追加日が新しい順の上位3本 かつ 7日以内（全部NEWになる初日問題と、
 // 休業明けに古い作品へNEWが復活する問題の両方を防ぐ — サブ垢レビュー判断 2026-07-21）
 const NEW_SLUGS = new Set(
-  GAMES.slice().sort((a, b) => a.added < b.added ? 1 : -1).slice(0, 3).map(g => g.slug));
+  // ties must return 0 so the stable sort preserves GAMES order (newest-first by convention)
+  GAMES.slice().sort((a, b) => a.added < b.added ? 1 : a.added > b.added ? -1 : 0)
+    .slice(0, 3).map(g => g.slug));
 function isNew(g) {
   const ms = Date.now() - new Date(g.added + 'T00:00:00').getTime();
   return NEW_SLUGS.has(g.slug) && ms >= 0 && ms < 7 * 86400000;
