@@ -4,40 +4,77 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>運営者情報｜D-studyLab</title>
-<meta name="description" content="個人開発ユニット D-studyLab の運営者情報。ミニゲーム・ブログ・ウェブ制作を「小さく作ってすぐ出す」で運営しています。方針と連絡先。">
+<meta name="description" content="個人ラボ D-studyLab の運営者情報。研究とものづくりを行き来しながら、ミニゲーム・ブログ・ウェブ制作を「小さく作ってすぐ出す」で運営しています。経歴と方針、連絡先。">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://d-studylab.com/about.html">
 <style>
-  :root { --bg:#0f1116; --panel:#181b22; --line:#2a2f3a; --txt:#e7eaef; --sub:#98a1ad;
-          --acc:#7cc4ff; --good:#6bdf9a; --bad:#ff8f8f; --gold:#e8c35a; }
+  @font-face {
+    font-family:"Space Grotesk"; font-style:normal; font-weight:400 700;
+    font-display:swap; src:url("/assets/fonts/SpaceGrotesk-subset.woff2") format("woff2");
+  }
+  :root { --bg:#0c0e13; --panel:#171b24; --line:#272d39; --txt:#e8ebf1; --sub:#9aa3b0;
+          --acc:#7cc4ff; --acc2:#8b7cff; --gold:#e8c35a; }
   @media (prefers-color-scheme: light) {
-    :root { --bg:#f4f6f8; --panel:#fff; --line:#dde3ea; --txt:#1b2027; --sub:#5b6673;
-            --acc:#1f6fb2; --good:#1f8a52; --bad:#c0492f; --gold:#a6791b; }
+    :root { --bg:#eef1f6; --panel:#ffffff; --line:#d9dfe8; --txt:#1a2028; --sub:#586172;
+            --acc:#1f6fb2; --acc2:#5a4fcf; --gold:#a6791b; }
   }
   * { box-sizing:border-box; }
   body { margin:0; background:var(--bg); color:var(--txt); line-height:1.85;
          font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
-  .wrap { max-width:760px; margin:0 auto; padding:26px 18px 70px; }
+  .wrap { max-width:760px; margin:0 auto; padding:26px 20px 72px; }
   .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
   .crumb a { color:var(--acc); text-decoration:none; }
-  h1 { font-size:24px; margin:4px 0 6px; }
-  h2 { font-size:17px; margin:30px 0 8px; padding-left:10px; border-left:3px solid var(--acc); }
+  .mark { font-family:"Space Grotesk",-apple-system,sans-serif; font-weight:700; letter-spacing:.02em;
+          font-size:13px; color:var(--acc); display:inline-block; margin-bottom:10px;
+          padding:3px 11px; border:1px solid var(--line); border-radius:20px; background:var(--panel); }
+  h1 { font-size:25px; margin:2px 0 6px; }
+  .intro { color:var(--sub); font-size:15px; margin:0 0 6px; }
+  h2 { font-size:16px; margin:36px 0 12px; letter-spacing:.02em; padding-left:11px; border-left:3px solid var(--acc); }
   p, li { font-size:15px; }
-  ul { padding-left:22px; }
   a { color:var(--acc); }
+  /* 経歴タイムライン（ルート簡素版・詳細） */
+  .timeline { position:relative; margin:4px 0 0; padding-left:26px; }
+  .timeline::before { content:""; position:absolute; left:6px; top:6px; bottom:6px; width:2px;
+      background:linear-gradient(var(--acc),var(--acc2)); opacity:.5; }
+  .tl { position:relative; margin-bottom:24px; }
+  .tl::before { content:""; position:absolute; left:-26px; top:5px; width:12px; height:12px; border-radius:50%;
+      background:var(--bg); border:2px solid var(--acc); }
+  .tl .k { font-size:12.5px; color:var(--acc); font-weight:bold; letter-spacing:.08em; margin-bottom:2px; }
+  .tl .h { font-size:16px; font-weight:bold; margin:0 0 4px; }
+  .tl .p { font-size:14.5px; color:var(--sub); margin:0; }
+  ul { padding-left:22px; } li { margin-bottom:8px; }
   table { border-collapse:collapse; width:100%; font-size:14px; margin:8px 0; }
-  th,td { border-bottom:1px solid var(--line); padding:8px 10px; text-align:left; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
   th { color:var(--sub); white-space:nowrap; width:130px; }
-  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot { margin-top:44px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
   .foot a { color:var(--acc); }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ 運営者情報</div>
+  <div class="crumb"><a href="/">D-studyLab</a> ／ 運営者情報</div>
+  <span class="mark">D-studyLab</span>
   <h1>運営者情報</h1>
+  <p class="intro"><b>D-studyLab</b> は、研究とものづくりを行き来しながら一人で運営している個人ラボです。「読んで理解するより、さわったほうが早い」を軸に、ブラウザで遊べるミニゲーム、読み物のブログ、お店のウェブ制作を、同じドメイン（d-studylab.com）の下でまとめて運営しています。</p>
 
-  <p><b>D-studyLab</b> は、一人で運営している個人開発ユニットです。「読んで理解するより、さわったほうが早い」ものづくりを軸に、ブラウザで遊べるミニゲーム、読み物のブログ、お店のウェブ制作を、同じドメイン（d-studylab.com）の下でまとめて運営しています。</p>
+  <h2>経歴</h2>
+  <div class="timeline">
+    <div class="tl">
+      <div class="k">いま</div>
+      <p class="h">個人ラボ D-studyLab として活動中</p>
+      <p class="p">ミニゲームを3日に1本公開するサイクルを基本のOSにしながら、お店のウェブ制作「まちのウェブ屋さん」、地酒と開発のブログを運営しています。かたわら、塾講師として数学や情報を教えています。作ったものはぜんぶ、このドメインの下に置いていきます。</p>
+    </div>
+    <div class="tl">
+      <div class="k">研究</div>
+      <p class="h">岩手大学大学院で情報系の研究（修士・工学）</p>
+      <p class="p">文化財（古代瓦）を3Dスキャンした点群データから、形の類似を数理的に測る研究に取り組んでいます。ばらばらな点の集まりから「かたち」をどう捉え、どう比べるか——という問いが中心です。学会発表や論文の執筆も継続しています。トップページの背景で点がただよっているのは、この研究へのささやかな目配せです。</p>
+    </div>
+    <div class="tl">
+      <div class="k">原点</div>
+      <p class="h">「読むよりさわった方が早い」</p>
+      <p class="p">むずかしい概念ほど、説明を読むより、遊べる・動くかたちにしたほうが早くわかる——という実感が出発点です。研究も、ゲームも、ウェブサイトも、根っこはこの一点でつながっています。だから作るものは、いつも「さわって確かめられる」ことを大事にしています。</p>
+    </div>
+  </div>
 
   <h2>やっていること</h2>
   <p>このサイトは、大きく3つの活動の入り口になっています。</p>
@@ -59,6 +96,7 @@
   <table>
     <tr><th>サイト名</th><td>D-studyLab（d-studylab.com）</td></tr>
     <tr><th>運営</th><td>D-studyLab（個人）</td></tr>
+    <tr><th>拠点</th><td>岩手</td></tr>
     <tr><th>連絡先</th><td>X（旧Twitter）<a href="https://x.com/info_prog_study" target="_blank" rel="noopener">@info_prog_study</a></td></tr>
     <tr><th>プライバシー</th><td><a href="/privacy.html">プライバシーポリシー</a></td></tr>
   </table>
