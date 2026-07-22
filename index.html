@@ -119,6 +119,24 @@
   .peek-w { right:6%; --pr:-5deg; }
   .peek.vis { transform:translateY(38%) rotate(var(--pr)); }
   @media (max-width:700px) { .peek { width:86px; } }
+  /* フッターの小ペンギン（上端をとことこ・20秒/往復・ホバーで立ち止まりこちらを見る） */
+  footer { position:relative; }
+  .walker { position:absolute; top:-53px; left:2%; width:50px; cursor:pointer;
+            animation:pg-walk 20s linear infinite; }
+  .walker svg { width:100%; height:auto; display:block; animation:pg-face 20s steps(1) infinite; }
+  @keyframes pg-walk { 0%{left:2%} 50%{left:calc(98% - 50px)} 100%{left:2%} }
+  @keyframes pg-face { 0%,100%{transform:scaleX(1)} 50%{transform:scaleX(-1)} }
+  .walker .pgw, .walker .ftL, .walker .ftR, .walker .pu { transform-box:fill-box; }
+  .walker .pgw { transform-origin:50% 92%; animation:pg-rock .56s steps(1) infinite; }
+  @keyframes pg-rock { 0%,100%{transform:rotate(2.5deg)} 50%{transform:rotate(-2.5deg)} }
+  .walker .ftL { animation:pg-stepA .56s steps(1) infinite; }
+  .walker .ftR { animation:pg-stepB .56s steps(1) infinite; }
+  @keyframes pg-stepA { 0%,100%{transform:translateY(-7px)} 50%{transform:translateY(0)} }
+  @keyframes pg-stepB { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+  .walker .pu { transform:translateX(3.5px); transition:transform .2s; }
+  .walker:hover, .walker:hover svg, .walker:hover .pgw,
+  .walker:hover .ftL, .walker:hover .ftR { animation-play-state:paused; }
+  .walker:hover .pu { transform:none; }
 
   h2.sec { font-size:clamp(22px,3.4vw,28px); margin:0 0 6px; letter-spacing:.02em; }
   .sec-en { font-family:"Unbounded",-apple-system,sans-serif; font-size:11px; letter-spacing:.22em;
@@ -459,6 +477,23 @@
 
 <!-- 6. フッター -->
 <footer>
+  <!-- とことこ歩く小ペンギン -->
+  <div class="walker" aria-hidden="true">
+    <svg viewBox="0 0 200 232" focusable="false">
+      <g class="pgw">
+        <g><ellipse class="ftL" cx="76" cy="216" rx="23" ry="10" fill="#E8A33D"/>
+           <ellipse class="ftR" cx="124" cy="216" rx="23" ry="10" fill="#E8A33D"/></g>
+        <ellipse cx="33" cy="142" rx="15" ry="42" fill="#16181F" transform="rotate(16 36 104)"/>
+        <ellipse cx="167" cy="142" rx="15" ry="42" fill="#16181F" transform="rotate(-16 164 104)"/>
+        <ellipse cx="100" cy="148" rx="63" ry="70" fill="#16181F"/>
+        <ellipse cx="100" cy="158" rx="45" ry="54" fill="#E9E4D8"/>
+        <circle cx="100" cy="66" r="50" fill="#16181F"/>
+        <g><circle cx="81" cy="60" r="12.5" fill="#E9E4D8"/><g class="pu"><circle cx="81" cy="61" r="6" fill="#16181F"/><circle cx="83" cy="58.6" r="1.9" fill="#E9E4D8"/></g></g>
+        <g><circle cx="119" cy="60" r="12.5" fill="#E9E4D8"/><g class="pu"><circle cx="119" cy="61" r="6" fill="#16181F"/><circle cx="121" cy="58.6" r="1.9" fill="#E9E4D8"/></g></g>
+        <path d="M88 77h24l-9 12.5a4 4 0 0 1-6 0Z" fill="#E8A33D"/>
+      </g>
+    </svg>
+  </div>
   <div class="in">
     <div class="fmap">
       <div class="col">
