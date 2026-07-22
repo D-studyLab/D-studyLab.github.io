@@ -15,11 +15,15 @@
     font-family:"Unbounded"; font-style:normal; font-weight:700;
     font-display:swap; src:url("/assets/fonts/Unbounded-subset.woff2") format("woff2");
   }
-  :root { --bg:#0c0e13; --panel:#171b24; --line:#272d39; --txt:#e8ebf1; --sub:#9aa3b0;
-          --acc:#7cc4ff; --acc2:#8b7cff; --gold:#e8c35a; }
+  @font-face {
+    font-family:"Zen Kaku Gothic New"; font-style:normal; font-weight:700;
+    font-display:swap; src:url("/assets/fonts/ZenKakuGothicNew-700-subset.woff2") format("woff2");
+  }
+  :root { --bg:#0C0D12; --panel:#14161D; --line:#262A35; --txt:#EDEBE6; --sub:#9A9890;
+          --acc:#E8A33D; --acc2:#E9E4D8; --gold:#E8A33D; }
   @media (prefers-color-scheme: light) {
-    :root { --bg:#eef1f6; --panel:#ffffff; --line:#d9dfe8; --txt:#1a2028; --sub:#586172;
-            --acc:#1f6fb2; --acc2:#5a4fcf; --gold:#a6791b; }
+    :root { --bg:#F5F2EA; --panel:#FDFBF4; --line:#E1DCCE; --txt:#22211D; --sub:#6E6A5E;
+            --acc:#B87A1F; --acc2:#4C483E; --gold:#B87A1F; }
   }
   * { box-sizing:border-box; }
   body { margin:0; background:var(--bg); color:var(--txt); line-height:1.85;
@@ -30,9 +34,9 @@
   .mark { font-family:"Unbounded",-apple-system,sans-serif; font-weight:700; letter-spacing:.02em;
           font-size:13px; color:var(--acc); display:inline-block; margin-bottom:10px;
           padding:3px 11px; border:1px solid var(--line); border-radius:20px; background:var(--panel); }
-  h1 { font-size:25px; margin:2px 0 6px; }
+  h1 { font-size:26px; margin:2px 0 6px; font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; font-weight:700; }
   .intro { color:var(--sub); font-size:15px; margin:0 0 6px; }
-  h2 { font-size:16px; margin:36px 0 12px; letter-spacing:.02em; padding-left:11px; border-left:3px solid var(--acc); }
+  h2 { font-size:17px; margin:36px 0 12px; letter-spacing:.02em; padding-left:11px; border-left:3px solid var(--acc); font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; font-weight:700; }
   p, li { font-size:15px; }
   a { color:var(--acc); }
   /* 経歴タイムライン（ルート簡素版・詳細） */
@@ -70,7 +74,7 @@
     <div class="tl">
       <div class="k">研究</div>
       <p class="h">岩手大学大学院で情報系の研究（修士・工学）</p>
-      <p class="p">文化財（古代瓦）を3Dスキャンした点群データから、形の類似を数理的に測る研究に取り組んでいます。ばらばらな点の集まりから「かたち」をどう捉え、どう比べるか——という問いが中心です。学会発表や論文の執筆も継続しています。トップページの背景で点がただよっているのは、この研究へのささやかな目配せです。</p>
+      <p class="p">文化財（古代瓦）を3Dスキャンした点群データから、形の類似を数理的に測る研究に取り組んでいます。ばらばらな点の集まりから「かたち」をどう捉え、どう比べるか——という問いが中心です。学会発表や論文の執筆も継続しています。トップページでくるくる回せる点群のペンギンは、この研究へのささやかな目配せです。</p>
     </div>
     <div class="tl">
       <div class="k">原点</div>
