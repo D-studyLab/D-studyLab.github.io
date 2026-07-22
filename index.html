@@ -87,56 +87,53 @@
     .hero h1 { font-size:clamp(34px,9.2vw,56px); }
   }
 
-  /* ---- マスコットペンギン（自作インラインSVG・v3.4） ---- */
-  .hero-pg { min-width:0; padding:4px 10px; }
-  .hero-pg svg { width:100%; height:auto; display:block; cursor:pointer;
+  /* ---- マスコットペンギン（本人生成画像・ポーズ切替・v3.8） ---- */
+  .hero-pg { min-width:0; position:relative; display:flex; align-items:flex-end; justify-content:center; }
+  .hero-pg .tiltbox { will-change:transform; transform-origin:50% 92%; }
+  .hero-pg img { height:min(46vw,350px); width:auto; display:block; cursor:pointer;
+                 user-select:none; -webkit-user-drag:none;
                  animation:pg-breathe 4s ease-in-out infinite; }
-  @keyframes pg-breathe { 0%,100%{transform:translateY(0)} 50%{transform:translateY(2px)} }
-  #pgAll, #head, #eyeL, #eyeR, #flipperL, #flipperR, .pu { transform-box:fill-box; }
-  #pgAll { transform-origin:50% 100%; }
-  .jump #pgAll { animation:pg-jump .5s cubic-bezier(.3,.7,.4,1); }
+  @keyframes pg-breathe { 0%,100%{transform:translateY(0)} 50%{transform:translateY(3px)} }
+  .hero-pg.jump img { animation:pg-jump .55s cubic-bezier(.3,.7,.4,1); }
   @keyframes pg-jump {
-    0%,100% { transform:translateY(0) }
-    14% { transform:translateY(3px) scale(1.04,.95) }
-    45% { transform:translateY(-30px) scale(.97,1.05) }
-    74% { transform:translateY(0) scale(1.06,.94) }
-    88% { transform:translateY(0) scale(.98,1.02) }
+    0%,100% { transform:translateY(0) scale(1,1) }
+    16% { transform:translateY(4px) scale(1.07,.92) }
+    48% { transform:translateY(-30px) scale(.96,1.06) }
+    76% { transform:translateY(0) scale(1.08,.92) }
+    90% { transform:translateY(0) scale(.98,1.02) }
   }
-  #head { transform-origin:50% 88%; transition:transform .35s ease; }
-  .tilt #head { transform:rotate(7deg); }
-  #eyeL, #eyeR { transform-origin:50% 50%; }
-  .blink #eyeL, .blink #eyeR { transform:scaleY(.1); }
-  #flipperL { transform-origin:80% 8%; } #flipperR { transform-origin:20% 8%; }
-  .flap #flipperL { animation:pg-flapL .6s linear; } .flap #flipperR { animation:pg-flapR .6s linear; }
-  @keyframes pg-flapL { 0%,50%,100%{transform:rotate(0)} 25%,75%{transform:rotate(-42deg)} }
-  @keyframes pg-flapR { 0%,50%,100%{transform:rotate(0)} 25%,75%{transform:rotate(42deg)} }
-  /* 覗きペンギン（事業帯・帯ごとに持ち物違い・スクロールで一度だけスライドイン0.5秒） */
-  .peek { position:absolute; bottom:-2px; width:112px; pointer-events:none;
-          transform:translateY(103%); transition:transform .5s cubic-bezier(.33,1.3,.5,1); }
-  .peek svg { width:100%; height:auto; display:block; }
-  .peek-g { right:4%; --pr:-7deg; }
-  .peek-b { left:4%; --pr:6deg; }
-  .peek-w { right:6%; --pr:-5deg; }
-  .peek.vis { transform:translateY(38%) rotate(var(--pr)); }
-  @media (max-width:700px) { .peek { width:86px; } }
-  /* フッターの小ペンギン（上端をとことこ・20秒/往復・ホバーで立ち止まりこちらを見る） */
-  footer { position:relative; }
-  .walker { position:absolute; top:-53px; left:2%; width:50px; cursor:pointer;
-            animation:pg-walk 20s linear infinite; }
-  .walker svg { width:100%; height:auto; display:block; animation:pg-face 20s steps(1) infinite; }
-  @keyframes pg-walk { 0%{left:2%} 50%{left:calc(98% - 50px)} 100%{left:2%} }
-  @keyframes pg-face { 0%,100%{transform:scaleX(1)} 50%{transform:scaleX(-1)} }
-  .walker .pgw, .walker .ftL, .walker .ftR, .walker .pu { transform-box:fill-box; }
-  .walker .pgw { transform-origin:50% 92%; animation:pg-rock .56s steps(1) infinite; }
-  @keyframes pg-rock { 0%,100%{transform:rotate(2.5deg)} 50%{transform:rotate(-2.5deg)} }
-  .walker .ftL { animation:pg-stepA .56s steps(1) infinite; }
-  .walker .ftR { animation:pg-stepB .56s steps(1) infinite; }
-  @keyframes pg-stepA { 0%,100%{transform:translateY(-7px)} 50%{transform:translateY(0)} }
-  @keyframes pg-stepB { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
-  .walker .pu { transform:translateX(3.5px); transition:transform .2s; }
-  .walker:hover, .walker:hover svg, .walker:hover .pgw,
-  .walker:hover .ftL, .walker:hover .ftR { animation-play-state:paused; }
-  .walker:hover .pu { transform:none; }
+  .hero-pg.asleep img { height:auto; width:min(52vw,300px); animation:pg-doze 5s ease-in-out infinite; }
+  @keyframes pg-doze { 0%,100%{transform:scale(1,1)} 50%{transform:scale(1.015,.985)} }
+  .hero-pg .zzz { position:absolute; right:14%; top:6%; opacity:0; transition:opacity .6s;
+                  color:var(--porcelain); font-weight:bold; pointer-events:none; }
+  .hero-pg.asleep .zzz { opacity:.9; }
+  .hero-pg .zzz span { display:inline-block; animation:pg-zzz 2.4s ease-in-out infinite; }
+  .hero-pg .zzz span:nth-child(1) { font-size:13px; }
+  .hero-pg .zzz span:nth-child(2) { font-size:17px; animation-delay:.8s; }
+  .hero-pg .zzz span:nth-child(3) { font-size:22px; animation-delay:1.6s; }
+  @keyframes pg-zzz { 0%,100%{transform:translateY(0); opacity:.4} 50%{transform:translateY(-9px); opacity:1} }
+  /* 足跡ペタペタ（G1・琥珀2色濃淡・1個ずつ出現） */
+  .tracks { position:absolute; top:10px; left:4%; right:4%; height:26px; pointer-events:none; }
+  .tracks svg { position:absolute; width:15px; height:15px; opacity:0; transform:scale(.5);
+                transition:opacity .18s ease-out, transform .18s cubic-bezier(.34,1.6,.6,1); }
+  .tracks.on svg { opacity:.85; transform:scale(1); }
+  /* トボガン滑走（G3・初回1回） */
+  .tobo { position:absolute; top:-34px; left:-14%; width:96px; pointer-events:none; z-index:2; }
+  .tobo img { width:100%; display:block; transform:scaleX(-1); }
+  .tobo .trail { position:absolute; top:26px; right:96px; width:0; height:5px; border-radius:3px;
+                 background:linear-gradient(90deg, transparent, rgba(255,255,255,.85)); }
+  .tobo.go { animation:tobo-run 1.2s cubic-bezier(.25,.6,.35,1) forwards; }
+  .tobo.go .trail { animation:tobo-trail 1.5s ease-out forwards; }
+  @keyframes tobo-run { to { left:88%; } }
+  @keyframes tobo-trail { 0%{width:0; opacity:1} 60%{width:26vw; opacity:.9} 100%{width:34vw; opacity:0} }
+  .tobo.bye { transition:opacity .4s; opacity:0; }
+  .tobo.stand img { transform:none; }
+  /* フッターとことこ（G6・JS駆動・たまにトボガン） */
+  .walker { position:absolute; top:-56px; left:2%; width:46px; cursor:pointer; }
+  .walker img { width:100%; display:block; animation:pg-rock .5s ease-in-out infinite; transform-origin:50% 94%; }
+  @keyframes pg-rock { 0%,100%{transform:rotate(3.5deg)} 50%{transform:rotate(-3.5deg)} }
+  .walker.sliding { width:78px; top:-40px; }
+  .walker.sliding img, .walker.still img { animation:none; }
 
   h2.sec { font-size:clamp(22px,3.4vw,28px); margin:0 0 6px; letter-spacing:.02em; }
   .sec-en { font-family:"Unbounded",-apple-system,sans-serif; font-size:11px; letter-spacing:.22em;
@@ -258,19 +255,16 @@
   .reveal { opacity:0; transform:translateY(12px); transition:opacity .5s ease, transform .5s ease; }
   .reveal.vis { opacity:1; transform:none; }
   /* タブ非表示時=マスコットのCSSアニメも停止（JSがhtmlに.pausedを付与） */
-  .paused .hero-pg svg, .paused #pgAll, .paused #flipperL, .paused #flipperR,
-  .paused .walker, .paused .walker svg, .paused .walker .pgw,
-  .paused .walker .ftL, .paused .walker .ftR { animation-play-state:paused !important; }
+  .paused .hero-pg img, .paused .walker img, .paused .tobo { animation-play-state:paused !important; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior:auto; }
     .fade, .reveal { opacity:1 !important; transform:none !important; animation:none !important; transition:none !important; }
     nav .lk::after { transition:none; }
-    /* マスコット=全静止（立ち姿1枚・覗きは出た状態で固定・歩行なし・瞳追従なしはJS側） */
-    .hero-pg svg, #pgAll, #head, #flipperL, #flipperR,
-    .walker, .walker svg, .walker .pgw, .walker .ftL, .walker .ftR { animation:none !important; transition:none !important; }
-    .walker { left:8% !important; }
-    .walker .pu { transform:none !important; }
-    .peek { transition:none !important; transform:translateY(38%) rotate(var(--pr)) !important; }
+    /* マスコット=全静止（正面立ちのみ・足跡は全表示・トボガン非表示・歩行なし） */
+    .hero-pg img, .walker img { animation:none !important; }
+    .tracks svg { opacity:.85 !important; transform:scale(1) !important; transition:none !important; }
+    .tobo { display:none !important; }
+    .hero-pg .zzz { display:none; }
   }
 </style>
 </head>
@@ -297,28 +291,9 @@
       <p class="sub fade">研究とものづくりを行き来する、岩手の個人ラボ。ブラウザゲーム・地酒と開発のブログ・お店のウェブ制作——ぜんぶ「小さく作ってすぐ出す」で回しています。</p>
     </div>
     <div class="hero-pg" id="heroPg" aria-hidden="true">
-      <!-- マスコットペンギン（自作SVG・体=黒鉛/腹=白磁/嘴と足=琥珀） -->
-      <svg viewBox="0 0 200 232" focusable="false">
-        <g id="pgAll">
-          <g id="feet">
-            <ellipse class="ftL" cx="76" cy="216" rx="23" ry="10" fill="#E8A33D"/>
-            <ellipse class="ftR" cx="124" cy="216" rx="23" ry="10" fill="#E8A33D"/>
-          </g>
-          <g id="flipperL"><ellipse cx="33" cy="142" rx="15" ry="42" fill="#16181F" transform="rotate(16 36 104)"/></g>
-          <g id="flipperR"><ellipse cx="167" cy="142" rx="15" ry="42" fill="#16181F" transform="rotate(-16 164 104)"/></g>
-          <g id="body">
-            <ellipse cx="100" cy="148" rx="63" ry="70" fill="#16181F"/>
-            <ellipse id="belly" cx="100" cy="158" rx="45" ry="54" fill="#E9E4D8"/>
-          </g>
-          <g id="head">
-            <circle cx="100" cy="66" r="50" fill="#16181F"/>
-            <g id="eyeL"><circle cx="81" cy="60" r="12.5" fill="#E9E4D8"/><g class="pu"><circle cx="81" cy="61" r="6" fill="#16181F"/><circle cx="83" cy="58.6" r="1.9" fill="#E9E4D8"/></g></g>
-            <g id="eyeR"><circle cx="119" cy="60" r="12.5" fill="#E9E4D8"/><g class="pu"><circle cx="119" cy="61" r="6" fill="#16181F"/><circle cx="121" cy="58.6" r="1.9" fill="#E9E4D8"/></g></g>
-            <path id="beak" d="M88 77h24l-9 12.5a4 4 0 0 1-6 0Z" fill="#E8A33D"/>
-          </g>
-        </g>
-      </svg>
-    </div>
+      <!-- マスコット（本人生成画像・ポーズ切替はJS） -->
+      <div class="tiltbox" id="pgTilt"><img id="pgImg" src="/assets/mascot/hero.webp" alt="" width="465" height="720" decoding="async"></div>
+      <div class="zzz" id="pgZzz"><span>z</span><span>z</span><span>z</span></div>    </div>
   </div>
 </section>
 
@@ -340,7 +315,8 @@
 </section>
 
 <!-- 3. D-studyLabとは -->
-<section class="about" id="about" data-acc="#E9E4D8" data-k="">
+<section class="about" id="about" data-acc="#E9E4D8" data-k="" style="position:relative">
+  <div class="tracks" aria-hidden="true"></div>
   <div class="in">
     <span class="sec-en">ABOUT</span>
     <h2 class="sec jp-head reveal">D-studyLabとは</h2>
@@ -355,7 +331,9 @@
 
 <!-- 4. 事業紹介（帯×3） -->
 <div id="business">
-  <div class="biz-head">
+  <div class="biz-head" style="position:relative">
+    <div class="tracks" aria-hidden="true"></div>
+    <div class="tobo" id="tobo" aria-hidden="true"><img src="/assets/mascot/slide1.webp" alt="" loading="lazy" decoding="async"><div class="trail"></div></div>
     <div class="in">
       <span class="sec-en">SERVICES</span>
       <h2 class="sec jp-head reveal">事業紹介</h2>
@@ -372,23 +350,6 @@
       </div>
       <div class="pv reveal" aria-hidden="true"><div class="px"></div></div>
     </div>
-    <!-- 覗きペンギン: ゲームパッド -->
-    <div class="peek peek-g" aria-hidden="true">
-      <svg viewBox="0 0 200 232" focusable="false"><g>
-        <ellipse cx="33" cy="142" rx="15" ry="42" fill="#16181F" transform="rotate(16 36 104)"/>
-        <ellipse cx="167" cy="142" rx="15" ry="42" fill="#16181F" transform="rotate(-16 164 104)"/>
-        <ellipse cx="100" cy="148" rx="63" ry="70" fill="#16181F"/>
-        <ellipse cx="100" cy="158" rx="45" ry="54" fill="#E9E4D8"/>
-        <circle cx="100" cy="66" r="50" fill="#16181F"/>
-        <circle cx="81" cy="60" r="12.5" fill="#E9E4D8"/><circle cx="81" cy="62.5" r="6" fill="#16181F"/><circle cx="83" cy="60.1" r="1.9" fill="#E9E4D8"/>
-        <circle cx="119" cy="60" r="12.5" fill="#E9E4D8"/><circle cx="119" cy="62.5" r="6" fill="#16181F"/><circle cx="121" cy="60.1" r="1.9" fill="#E9E4D8"/>
-        <path d="M88 77h24l-9 12.5a4 4 0 0 1-6 0Z" fill="#E8A33D"/>
-        <rect x="60" y="106" width="80" height="34" rx="16" fill="#332B44"/>
-        <rect x="72" y="119" width="16" height="5" rx="2.5" fill="#EFEAF6"/><rect x="77.5" y="113.5" width="5" height="16" rx="2.5" fill="#EFEAF6"/>
-        <circle cx="115" cy="117" r="4.5" fill="#FFD644"/><circle cx="126" cy="126" r="4.5" fill="#FF4D9D"/>
-        <ellipse cx="58" cy="123" rx="10" ry="8" fill="#16181F"/><ellipse cx="142" cy="123" rx="10" ry="8" fill="#16181F"/>
-      </g></svg>
-    </div>
   </section>
   <section class="band band-b" data-acc="#C08A55" data-k="business">
     <div class="in">
@@ -400,23 +361,6 @@
       </div>
       <div class="pv reveal" aria-hidden="true"><div class="paper-pv"></div></div>
     </div>
-    <!-- 覗きペンギン: 本を読む -->
-    <div class="peek peek-b" aria-hidden="true">
-      <svg viewBox="0 0 200 232" focusable="false"><g>
-        <ellipse cx="33" cy="142" rx="15" ry="42" fill="#16181F" transform="rotate(16 36 104)"/>
-        <ellipse cx="167" cy="142" rx="15" ry="42" fill="#16181F" transform="rotate(-16 164 104)"/>
-        <ellipse cx="100" cy="148" rx="63" ry="70" fill="#16181F"/>
-        <ellipse cx="100" cy="158" rx="45" ry="54" fill="#E9E4D8"/>
-        <circle cx="100" cy="66" r="50" fill="#16181F"/>
-        <circle cx="81" cy="60" r="12.5" fill="#E9E4D8"/><circle cx="81" cy="64.5" r="6" fill="#16181F"/><circle cx="83" cy="62.1" r="1.9" fill="#E9E4D8"/>
-        <circle cx="119" cy="60" r="12.5" fill="#E9E4D8"/><circle cx="119" cy="64.5" r="6" fill="#16181F"/><circle cx="121" cy="62.1" r="1.9" fill="#E9E4D8"/>
-        <path d="M88 77h24l-9 12.5a4 4 0 0 1-6 0Z" fill="#E8A33D"/>
-        <path d="M100 112c-10-7-26-8-36-3v30c10-5 26-4 36 3c10-7 26-8 36-3v-30c-10-5-26-4-36 3Z" fill="#FBF8F0" stroke="#8A5A33" stroke-width="3" stroke-linejoin="round"/>
-        <path d="M100 112v30" stroke="#8A5A33" stroke-width="2.5"/>
-        <path d="M73 119c8-3 15-3 20 0M73 127c8-3 15-3 20 0M107 119c8-3 15-3 20 0M107 127c8-3 15-3 20 0" stroke="#D9CDB4" stroke-width="2" fill="none"/>
-        <ellipse cx="62" cy="132" rx="10" ry="8" fill="#16181F"/><ellipse cx="138" cy="132" rx="10" ry="8" fill="#16181F"/>
-      </g></svg>
-    </div>
   </section>
   <section class="band band-w" data-acc="#35A574" data-k="business">
     <div class="in">
@@ -427,24 +371,6 @@
         <a class="cta" href="/web/">▶ 相談してみる</a>
       </div>
       <div class="pv reveal" aria-hidden="true"><div class="win"></div></div>
-    </div>
-    <!-- 覗きペンギン: ノートPCを抱える -->
-    <div class="peek peek-w" aria-hidden="true">
-      <svg viewBox="0 0 200 232" focusable="false"><g>
-        <ellipse cx="33" cy="142" rx="15" ry="42" fill="#16181F" transform="rotate(16 36 104)"/>
-        <ellipse cx="167" cy="142" rx="15" ry="42" fill="#16181F" transform="rotate(-16 164 104)"/>
-        <ellipse cx="100" cy="148" rx="63" ry="70" fill="#16181F"/>
-        <ellipse cx="100" cy="158" rx="45" ry="54" fill="#E9E4D8"/>
-        <circle cx="100" cy="66" r="50" fill="#16181F"/>
-        <circle cx="81" cy="60" r="12.5" fill="#E9E4D8"/><circle cx="81" cy="62.5" r="6" fill="#16181F"/><circle cx="83" cy="60.1" r="1.9" fill="#E9E4D8"/>
-        <circle cx="119" cy="60" r="12.5" fill="#E9E4D8"/><circle cx="119" cy="62.5" r="6" fill="#16181F"/><circle cx="121" cy="60.1" r="1.9" fill="#E9E4D8"/>
-        <path d="M88 77h24l-9 12.5a4 4 0 0 1-6 0Z" fill="#E8A33D"/>
-        <rect x="64" y="100" width="72" height="42" rx="5" fill="#156B4A"/>
-        <rect x="69" y="105" width="62" height="32" rx="3" fill="#EAF2EC"/>
-        <rect x="75" y="111" width="34" height="5" rx="2.5" fill="#A56A35"/><rect x="75" y="121" width="46" height="5" rx="2.5" fill="#CBDCD2"/>
-        <rect x="58" y="140" width="84" height="8" rx="4" fill="#0E4A33"/>
-        <ellipse cx="58" cy="126" rx="10" ry="8" fill="#16181F"/><ellipse cx="142" cy="126" rx="10" ry="8" fill="#16181F"/>
-      </g></svg>
     </div>
   </section>
 </div>
@@ -477,23 +403,8 @@
 
 <!-- 6. フッター -->
 <footer>
-  <!-- とことこ歩く小ペンギン -->
-  <div class="walker" aria-hidden="true">
-    <svg viewBox="0 0 200 232" focusable="false">
-      <g class="pgw">
-        <g><ellipse class="ftL" cx="76" cy="216" rx="23" ry="10" fill="#E8A33D"/>
-           <ellipse class="ftR" cx="124" cy="216" rx="23" ry="10" fill="#E8A33D"/></g>
-        <ellipse cx="33" cy="142" rx="15" ry="42" fill="#16181F" transform="rotate(16 36 104)"/>
-        <ellipse cx="167" cy="142" rx="15" ry="42" fill="#16181F" transform="rotate(-16 164 104)"/>
-        <ellipse cx="100" cy="148" rx="63" ry="70" fill="#16181F"/>
-        <ellipse cx="100" cy="158" rx="45" ry="54" fill="#E9E4D8"/>
-        <circle cx="100" cy="66" r="50" fill="#16181F"/>
-        <g><circle cx="81" cy="60" r="12.5" fill="#E9E4D8"/><g class="pu"><circle cx="81" cy="61" r="6" fill="#16181F"/><circle cx="83" cy="58.6" r="1.9" fill="#E9E4D8"/></g></g>
-        <g><circle cx="119" cy="60" r="12.5" fill="#E9E4D8"/><g class="pu"><circle cx="119" cy="61" r="6" fill="#16181F"/><circle cx="121" cy="58.6" r="1.9" fill="#E9E4D8"/></g></g>
-        <path d="M88 77h24l-9 12.5a4 4 0 0 1-6 0Z" fill="#E8A33D"/>
-      </g>
-    </svg>
-  </div>
+  <!-- とことこ歩く小ペンギン（G6・たまにトボガン） -->
+  <div class="walker" id="walker" aria-hidden="true"><img id="walkerImg" src="/assets/mascot/walk.webp" alt="" loading="lazy" decoding="async"></div>
   <div class="in">
     <div class="fmap">
       <div class="col">
@@ -535,58 +446,147 @@
 
 <script>
 "use strict";
-// ---- マスコットペンギン（自作SVG・瞳追従/瞬き/跳ね/首かしげ/覗き/歩行・依存ゼロ） ----
+// ---- マスコット（本人生成画像・ポーズ切替・依存ゼロ・v3.8） ----
 (function () {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const svg = document.querySelector('#heroPg svg');
-  // 事業帯の覗きペンギン: スクロールで一度だけスライドイン（reduced=出た状態で固定）
-  const peeks = document.querySelectorAll('.peek');
-  if (reduce) peeks.forEach(p => p.classList.add('vis'));
-  else {
-    // 覗き自身はoverflow:hiddenで帯外にクリップされIOに映らないため、親の帯を監視する
+  const A = '/assets/mascot/';
+
+  // --- G1 足跡ペタペタ: セクション境界を歩幅どおり横断（初回のみ・0.15秒間隔） ---
+  const FOOT = '<svg viewBox="0 0 20 20" fill="FILL" aria-hidden="true">' +
+    '<ellipse cx="10" cy="12.5" rx="5.6" ry="4.6"/>' +
+    '<ellipse cx="4.6" cy="7.2" rx="2.2" ry="3.2" transform="rotate(20 4.6 7.2)"/>' +
+    '<ellipse cx="10" cy="5.6" rx="2.2" ry="3.4"/>' +
+    '<ellipse cx="15.4" cy="7.2" rx="2.2" ry="3.2" transform="rotate(-20 15.4 7.2)"/></svg>';
+  document.querySelectorAll('.tracks').forEach(tr => {
+    const N = 12;
+    let html = '';
+    for (let i = 0; i < N; i++) {                              // 左右交互の歩幅・進行方向=右
+      const col = i % 2 ? '#B87A1F' : '#E8A33D';
+      html += FOOT.replace('FILL', col).replace('aria-hidden', 'style="left:' +
+        (i * 100 / N) + '%;top:' + (i % 2 ? 11 : 0) + 'px;transition-delay:' +
+        (i * .15) + 's;rotate:' + (90 + (i % 2 ? -16 : 16)) + 'deg" aria-hidden');
+    }
+    tr.innerHTML = html;
+    if (reduce) { tr.classList.add('on'); return; }
+    const io = new IntersectionObserver((ents, o) => {
+      for (const en of ents) if (en.isIntersecting) { tr.classList.add('on'); o.disconnect(); }
+    }, { threshold: 0 });
+    io.observe(tr);
+  });
+
+  // --- G3 トボガン滑走: 事業紹介の開始境界を初回1回だけ滑る→立ち上がって消える ---
+  const tobo = document.getElementById('tobo');
+  if (tobo && !reduce) {
     const io = new IntersectionObserver((ents, o) => {
       for (const en of ents) if (en.isIntersecting) {
-        en.target.querySelector('.peek').classList.add('vis'); o.unobserve(en.target);
+        o.disconnect();
+        tobo.classList.add('go');
+        setTimeout(() => {                                     // 右端で立ち上がる
+          tobo.classList.add('stand');
+          tobo.querySelector('img').src = A + 'front.webp';
+          tobo.style.width = '42px'; tobo.style.top = '-56px';
+        }, 1250);
+        setTimeout(() => tobo.classList.add('bye'), 1750);
+        setTimeout(() => tobo.remove(), 2250);
       }
-    }, { threshold: .3 });
-    peeks.forEach(p => io.observe(p.closest('.band')));
+    }, { threshold: .5 });
+    io.observe(tobo.parentElement);
+  } else if (tobo) tobo.remove();
+
+  // --- ヒーロー主役: 呼吸(CSS)・瞬き・微傾き・クリック=跳ね→挨拶・60秒放置で眠る ---
+  const wrap = document.getElementById('heroPg'), tilt = document.getElementById('pgTilt'),
+        img = document.getElementById('pgImg');
+  // --- G6 フッターとことこ（＋30秒に1回トボガン往復） ---
+  const wk = document.getElementById('walker'), wi = document.getElementById('walkerImg');
+  if (reduce) {                                                // reduced=正面立ちで全静止
+    wi.src = A + 'front.webp'; wk.classList.add('still'); wk.style.left = '8%';
+    return;
   }
-  if (reduce || !svg) return;                                  // reduced=立ち姿で全静止（CSS側で停止済み）
-  const pupils = [...svg.querySelectorAll('.pu')];
-  let tx = 0, ty = 0, px = 0, py = 0, raf = 0, blT = 0;
-  function loop() {                                            // 瞳のイージング追従のみrAF
-    px += (tx - px) * .12; py += (ty - py) * .12;
-    const t = 'translate(' + px.toFixed(2) + 'px,' + py.toFixed(2) + 'px)';
-    for (const p of pupils) p.style.transform = t;
-    raf = requestAnimationFrame(loop);
-  }
-  function schedBlink() {                                      // 瞬き=3〜7秒ランダム
+  ['blink', 'tilt', 'greet', 'sleep', 'front', 'slide1'].forEach(n => {
+    const p = new Image(); p.src = A + n + '.webp';            // 先読み=切替を瞬時に
+  });
+  let cur = 'hero', busy = false, asleep = false;
+  let rot = 0, rotT = 0, blT = 0, idleT = 0, tiltUntil = 0, raf = 0, last = 0;
+  const setPose = n => { cur = n; img.src = A + n + '.webp'; };
+  function schedBlink() {
+    clearTimeout(blT);
     blT = setTimeout(() => {
-      svg.classList.add('blink');
-      setTimeout(() => svg.classList.remove('blink'), 130);
+      if (!busy && !asleep && cur === 'hero') {
+        setPose('blink'); setTimeout(() => { if (cur === 'blink') setPose('hero'); }, 130);
+      }
       schedBlink();
     }, 3000 + Math.random() * 4000);
   }
+  function fallAsleep() { if (busy) return; asleep = true; wrap.classList.add('asleep'); setPose('sleep'); }
+  function wake() {
+    clearTimeout(idleT); idleT = setTimeout(fallAsleep, 60000);
+    if (asleep) { asleep = false; wrap.classList.remove('asleep'); setPose('hero'); }
+  }
   addEventListener('pointermove', e => {
-    const r = svg.getBoundingClientRect();
-    const dx = e.clientX - (r.x + r.width / 2), dy = e.clientY - (r.y + r.height * .28);
-    const L = Math.hypot(dx, dy) || 1, m = Math.min(1, L / (r.width * .7));
-    tx = dx / L * 4 * m; ty = dy / L * 4 * m;                  // 最大4 ≈ 白目半径12.5の30%
-    svg.classList.toggle('tilt', L < r.width * .55);           // 接近→首をかしげる
+    wake();
+    const r = wrap.getBoundingClientRect(), cx = r.x + r.width / 2, cy = r.y + r.height / 2;
+    rotT = Math.max(-4, Math.min(4, (e.clientX - cx) / r.width * 6));     // 体全体の微傾き±4°
+    const now = performance.now();
+    if (!busy && !asleep && cur === 'hero' && now > tiltUntil + 4000 &&
+        Math.hypot(e.clientX - cx, e.clientY - cy) < r.width * .62) {     // 接近→首をかしげる0.6秒
+      tiltUntil = now + 600; setPose('tilt');
+      setTimeout(() => { if (cur === 'tilt') setPose('hero'); }, 600);
+    }
   }, { passive: true });
-  document.documentElement.addEventListener('mouseleave', () => { tx = 0; ty = 0; svg.classList.remove('tilt'); });
-  svg.addEventListener('click', () => {                        // クリック/タップ=ぴょこん+パタパタ
-    if (svg.classList.contains('jump')) return;
-    svg.classList.add('jump', 'flap');
-    setTimeout(() => svg.classList.remove('jump', 'flap'), 650);
+  document.documentElement.addEventListener('mouseleave', () => { rotT = 0; });
+  ['pointerdown', 'scroll', 'keydown', 'touchstart'].forEach(ev =>
+    addEventListener(ev, wake, { passive: true }));
+  img.addEventListener('click', () => {                        // クリック=跳ね→着地で挨拶0.8秒
+    wake();
+    if (busy) return;
+    busy = true; wrap.classList.add('jump');
+    setTimeout(() => { wrap.classList.remove('jump'); setPose('greet'); }, 550);
+    setTimeout(() => { setPose('hero'); busy = false; }, 1350);
   });
-  document.addEventListener('visibilitychange', () => {        // hidden=rAF・CSSアニメとも停止
+
+  let wx = .02, wdir = 1, wmode = 'walk', whover = false, lastSlide = performance.now();
+  wk.addEventListener('pointerenter', () => {                  // ホバー=立ち止まりこちらを見る
+    whover = true; wk.classList.add('still'); wi.src = A + 'front.webp';
+  });
+  wk.addEventListener('pointerleave', () => {
+    whover = false; wk.classList.remove('still');
+    wi.src = A + (wmode === 'slide' ? 'slide1' : 'walk') + '.webp';
+  });
+  function frame(now) {
+    const dt = Math.min(.05, (now - last) / 1000); last = now;
+    // ヒーロー微傾き（イージング）
+    rot += (rotT - rot) * .08;
+    tilt.style.transform = 'rotate(' + rot.toFixed(2) + 'deg)';
+    // フッター歩行
+    if (!whover) {
+      if (wmode === 'walk' && now - lastSlide > 30000) {       // 30秒に1回トボガンに切替
+        wmode = 'slide'; wk.classList.add('sliding'); wi.src = A + 'slide1.webp';
+      }
+      wx += dt * .1 * (wmode === 'slide' ? 4 : 1) * wdir;
+      if (wx >= 1 || wx <= 0) {
+        wx = Math.max(0, Math.min(1, wx)); wdir *= -1;
+        if (wmode === 'slide') {                               // 片道滑ったら歩きに戻る
+          wmode = 'walk'; wk.classList.remove('sliding'); wi.src = A + 'walk.webp';
+          lastSlide = now;
+        }
+      }
+      const fw = wk.parentElement.clientWidth, ww = wk.clientWidth;
+      wk.style.left = (fw * .02 + wx * (fw * .96 - ww)) + 'px';
+      // 素材は左向き→右進行時は反転
+      wk.style.transform = wdir > 0 ? 'scaleX(-1)' : '';
+    }
+    raf = requestAnimationFrame(frame);
+  }
+  document.addEventListener('visibilitychange', () => {        // hidden=全停止
     document.documentElement.classList.toggle('paused', document.hidden);
-    if (document.hidden) { cancelAnimationFrame(raf); raf = 0; clearTimeout(blT); }
-    else { raf = requestAnimationFrame(loop); schedBlink(); }
+    if (document.hidden) {
+      cancelAnimationFrame(raf); raf = 0; clearTimeout(blT); clearTimeout(idleT);
+    } else if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); schedBlink(); wake(); }
   });
-  raf = requestAnimationFrame(loop);
+  last = performance.now();
+  raf = requestAnimationFrame(frame);
   schedBlink();
+  wake();
 })();
 // ---- 固定ナビ: スクロールで背景・下線色をセクションに同期 ----
 (function () {
