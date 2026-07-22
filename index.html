@@ -543,10 +543,13 @@
   const peeks = document.querySelectorAll('.peek');
   if (reduce) peeks.forEach(p => p.classList.add('vis'));
   else {
+    // 覗き自身はoverflow:hiddenで帯外にクリップされIOに映らないため、親の帯を監視する
     const io = new IntersectionObserver((ents, o) => {
-      for (const en of ents) if (en.isIntersecting) { en.target.classList.add('vis'); o.unobserve(en.target); }
-    }, { threshold: .1 });
-    peeks.forEach(p => io.observe(p));
+      for (const en of ents) if (en.isIntersecting) {
+        en.target.querySelector('.peek').classList.add('vis'); o.unobserve(en.target);
+      }
+    }, { threshold: .3 });
+    peeks.forEach(p => io.observe(p.closest('.band')));
   }
   if (reduce || !svg) return;                                  // reduced=立ち姿で全静止（CSS側で停止済み）
   const pupils = [...svg.querySelectorAll('.pu')];
