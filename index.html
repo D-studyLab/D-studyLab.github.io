@@ -18,38 +18,59 @@
     font-family:"Unbounded"; font-style:normal; font-weight:700;
     font-display:swap; src:url("/assets/fonts/Unbounded-subset.woff2") format("woff2");
   }
+  @font-face {
+    font-family:"Zen Kaku Gothic New"; font-style:normal; font-weight:700;
+    font-display:swap; src:url("/assets/fonts/ZenKakuGothicNew-700-subset.woff2") format("woff2");
+  }
   :root {
-    --bg:#0c0e13; --bg2:#0f1219; --panel:#171b24; --line:#272d39; --txt:#e8ebf1;
-    --sub:#9aa3b0; --acc:#7cc4ff; --acc2:#8b7cff; --gold:#e8c35a;
+    --bg:#0C0D12; --panel:#14161D; --line:#262A35; --txt:#EDEBE6;
+    --sub:#9A9890; --acc:#E8A33D; --acc-hover:#F5B95C; --porcelain:#E9E4D8;
+    --pc-a:#E8A33D; --pc-b:#E9E4D8; --glow:rgba(232,163,61,.12);
   }
   @media (prefers-color-scheme: light) {
     :root {
-      --bg:#eef1f6; --bg2:#e7ebf2; --panel:#ffffff; --line:#d9dfe8; --txt:#1a2028;
-      --sub:#586172; --acc:#1f6fb2; --acc2:#5a4fcf; --gold:#a6791b;
+      --bg:#F5F2EA; --panel:#FDFBF4; --line:#E1DCCE; --txt:#22211D;
+      --sub:#6E6A5E; --acc:#B87A1F; --acc-hover:#9A6519; --porcelain:#4C483E;
+      --pc-a:#B87A1F; --pc-b:#6B6455; --glow:rgba(184,122,31,.10);
     }
   }
   * { box-sizing:border-box; }
   html { scroll-behavior:smooth; }
   body { margin:0; background:var(--bg); color:var(--txt); line-height:1.8;
          font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
-         overflow-x:hidden; }
-  #bg { position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; }
-  .wrap { position:relative; z-index:1; max-width:820px; margin:0 auto; padding:56px 20px 72px; }
+         overflow-x:hidden;
+         background-image:radial-gradient(1100px 620px at 72% -12%, var(--glow), transparent 62%); }
+  /* 极薄ノイズ（静的・アニメなし） */
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:860px; margin:0 auto; padding:56px 20px 72px; }
+  .jp-head { font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; font-weight:700; }
 
-  /* ---- hero ---- */
-  .hero { padding:26px 0 10px; }
-  .mark { font-family:"Unbounded",-apple-system,sans-serif; font-weight:700; letter-spacing:.02em;
-          font-size:15px; color:var(--acc); display:inline-block; margin-bottom:20px;
-          padding:4px 12px; border:1px solid var(--line); border-radius:20px; background:var(--panel); }
-  .hero h1 { font-size:clamp(34px,7vw,56px); line-height:1.28; margin:0 0 16px; letter-spacing:.005em; font-weight:800; }
-  .hero h1 .l { display:block; }
+  /* ---- hero（左テキスト×右 点群ディスク） ---- */
+  .hero { display:grid; grid-template-columns:minmax(0,1fr) minmax(220px,300px); gap:8px 28px;
+          align-items:center; padding:20px 0 6px; }
+  .hero-tx { min-width:0; container-type:inline-size; }
+  .mark { font-family:"Unbounded",-apple-system,sans-serif; font-weight:700; letter-spacing:.05em;
+          font-size:14px; color:var(--acc); display:inline-block; margin-bottom:22px;
+          padding:5px 14px; border:1px solid var(--line); border-radius:20px; background:var(--panel); }
+  .hero h1 { font-size:clamp(38px,min(8vw,12.2cqw),64px); line-height:1.25; margin:0 0 16px; letter-spacing:.01em; }
+  .hero h1 .l { display:block; white-space:nowrap; }
   .hero .sub { color:var(--sub); font-size:15.5px; margin:0; max-width:34em; }
   .cue { display:inline-block; margin:26px 0 0; color:var(--acc); font-size:13px; text-decoration:none; letter-spacing:.06em; }
-  .cue:hover { opacity:.75; }
+  .cue:hover { color:var(--acc-hover); }
+  .disk-box { position:relative; aspect-ratio:1; min-width:0; }
+  #disk { width:100%; height:100%; display:block; touch-action:pan-y; }
+  @media (max-width:760px) {
+    .hero { grid-template-columns:1fr; }
+    .disk-box { max-width:300px; margin:6px auto 0; width:78%; }
+    .hero h1 { font-size:clamp(34px,9.2vw,56px); }
+  }
 
-  h2.sec { font-size:12px; color:var(--sub); letter-spacing:.18em; margin:52px 0 16px; font-weight:bold; }
+  h2.sec { font-size:13px; color:var(--sub); letter-spacing:.2em; margin:56px 0 16px; }
+  h2.sec::before { content:""; display:inline-block; width:18px; height:2px; background:var(--acc);
+                   vertical-align:middle; margin-right:10px; }
 
-  /* ---- business cards (world previews) ---- */
+  /* ---- business cards (world previews / v3配色) ---- */
   .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(230px,1fr)); gap:16px; }
   .card { border:1px solid var(--line); border-radius:16px; padding:0; text-decoration:none; color:inherit;
           display:flex; flex-direction:column; overflow:hidden;
@@ -57,35 +78,35 @@
   .card:hover { transform:translateY(-5px); border-color:var(--acc); box-shadow:0 12px 34px rgba(0,0,0,.28); }
   .card .prev { height:78px; display:flex; align-items:center; justify-content:center; position:relative; }
   .card .body { background:var(--panel); padding:15px 17px 17px; flex:1; display:flex; flex-direction:column; gap:7px; }
-  .card .nm { font-size:16px; font-weight:bold; }
+  .card .nm { font-size:16px; }
   .card .ds { font-size:13px; color:var(--sub); flex:1; }
   .card .go { font-size:12.5px; color:var(--acc); margin-top:5px; }
-  /* games preview = pixel */
+  /* games preview = 夜のアーケード（紫黒×マゼンタ） */
   .prev-games { background:
-      repeating-linear-gradient(0deg,#12151d,#12151d 6px,#161a24 6px,#161a24 12px),
-      repeating-linear-gradient(90deg,transparent,transparent 11px,rgba(124,196,255,.06) 11px,rgba(124,196,255,.06) 12px); }
-  .prev-games .px { width:14px; height:14px; box-shadow:
-      0 0 0 0 #4af, 16px 0 0 0 #ff5db1, 0 16px 0 0 #ffd23f, 16px 16px 0 0 #4af; background:#4af; image-rendering:pixelated; }
-  /* blog preview = cream paper + mincho */
-  .prev-blog { background:#f7f3ea; }
-  .prev-blog .mj { color:#3a3128; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-size:26px; letter-spacing:.1em; }
-  /* web preview = clean white grid */
-  .prev-web { background:#ffffff; }
-  .prev-web .win { width:120px; height:44px; border:1.5px solid #1a2b4a; border-radius:5px; position:relative; background:#fff; }
+      repeating-linear-gradient(0deg,#131019,#131019 6px,#1C1727 6px,#1C1727 12px),
+      repeating-linear-gradient(90deg,transparent,transparent 11px,rgba(255,77,157,.07) 11px,rgba(255,77,157,.07) 12px); }
+  .prev-games .px { width:14px; height:14px; background:#FF4D9D; image-rendering:pixelated; box-shadow:
+      0 0 0 0 #FF4D9D, 16px 0 0 0 #FFD644, 0 16px 0 0 #FFD644, 16px 16px 0 0 #FF4D9D; }
+  /* blog preview = 生成り×胡桃×明朝 */
+  .prev-blog { background:#F5F0E4; }
+  .prev-blog .mj { color:#8A5A33; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-size:26px; letter-spacing:.1em; }
+  /* web preview = 暖白×常磐緑 */
+  .prev-web { background:#FAFAF6; }
+  .prev-web .win { width:120px; height:44px; border:1.5px solid #156B4A; border-radius:5px; position:relative; background:#FAFAF6; }
   .prev-web .win::before { content:""; position:absolute; left:0; right:0; top:0; height:11px;
-      background:#1a2b4a; border-radius:3px 3px 0 0; }
+      background:#156B4A; border-radius:3px 3px 0 0; }
   .prev-web .win::after { content:""; position:absolute; left:10px; top:20px; width:56px; height:5px;
-      background:#c7d2e2; box-shadow:0 9px 0 #d9e1ec, 0 18px 0 #e3e9f2; border-radius:3px; }
+      background:#CBDCD2; box-shadow:0 9px 0 #DCE8E0, 0 18px 0 #A56A35; border-radius:3px; }
 
   /* ---- timeline ---- */
   .timeline { position:relative; margin:4px 0 0; padding-left:26px; }
   .timeline::before { content:""; position:absolute; left:6px; top:6px; bottom:6px; width:2px;
-      background:linear-gradient(var(--acc),var(--acc2)); opacity:.5; }
+      background:linear-gradient(var(--acc),var(--porcelain)); opacity:.45; }
   .tl { position:relative; margin-bottom:26px; }
   .tl::before { content:""; position:absolute; left:-26px; top:5px; width:12px; height:12px; border-radius:50%;
       background:var(--bg); border:2px solid var(--acc); }
   .tl .k { font-size:12.5px; color:var(--acc); font-weight:bold; letter-spacing:.08em; margin-bottom:2px; }
-  .tl .h { font-size:16px; font-weight:bold; margin:0 0 4px; }
+  .tl .h { font-size:16.5px; margin:0 0 4px; }
   .tl .p { font-size:14px; color:var(--sub); margin:0; }
 
   /* ---- activity log ---- */
@@ -93,7 +114,7 @@
   .log a { display:flex; align-items:center; gap:12px; padding:12px 16px; text-decoration:none; color:inherit;
            border-bottom:1px solid var(--line); transition:background .14s; }
   .log a:last-child { border-bottom:0; }
-  .log a:hover { background:color-mix(in srgb, var(--acc) 8%, var(--panel)); }
+  .log a:hover { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); }
   .log .ic { flex:none; width:22px; height:22px; color:var(--acc); }
   .log .ic svg { width:22px; height:22px; display:block; }
   .log .tt { flex:1; font-size:14px; }
@@ -110,7 +131,7 @@
   footer { margin-top:44px; color:var(--sub); font-size:12px; text-align:center; line-height:2.1; }
   footer a { color:var(--acc); }
 
-  /* ---- entry & scroll animations ---- */
+  /* ---- entry & scroll animations（合計≤1秒で静止） ---- */
   .fade { opacity:0; transform:translateY(14px); }
   .hero .fade { animation:up .5s ease forwards; }
   .hero .mark { animation-delay:0s; } .hero h1 { animation-delay:.12s; }
@@ -125,22 +146,24 @@
 </style>
 </head>
 <body>
-<canvas id="bg" aria-hidden="true"></canvas>
 <div class="wrap">
 
   <div class="hero">
-    <span class="mark fade">D-studyLab</span>
-    <h1><span class="l fade">考えたら、作る。</span><span class="l fade">作ったら、出す。</span></h1>
-    <p class="sub fade">研究とものづくりを行き来する、岩手の個人ラボ。ブラウザゲーム・地酒と開発のブログ・お店のウェブ制作——ぜんぶ「小さく作ってすぐ出す」で回しています。</p>
-    <a class="cue fade" href="#doing">▼ やっていること</a>
+    <div class="hero-tx">
+      <span class="mark fade">D-studyLab</span>
+      <h1 class="jp-head"><span class="l fade">考えたら、作る。</span><span class="l fade">作ったら、出す。</span></h1>
+      <p class="sub fade">研究とものづくりを行き来する、岩手の個人ラボ。ブラウザゲーム・地酒と開発のブログ・お店のウェブ制作——ぜんぶ「小さく作ってすぐ出す」で回しています。</p>
+      <a class="cue fade" href="#doing">▼ やっていること</a>
+    </div>
+    <div class="disk-box" aria-hidden="true"><canvas id="disk"></canvas></div>
   </div>
 
-  <h2 class="sec reveal" id="doing">やっていること</h2>
+  <h2 class="sec jp-head reveal" id="doing">やっていること</h2>
   <div class="grid">
     <a class="card reveal" href="/games/">
       <div class="prev prev-games"><div class="px"></div></div>
       <div class="body">
-        <div class="nm">ミニゲームゲームズ</div>
+        <div class="nm jp-head">ミニゲームゲームズ</div>
         <div class="ds">3日に1本のペースで増える、ブラウザで遊べるミニゲームの屋台。空間認識・確率・AI対戦を、3分で体感できる形に。全部無料・インストール不要・スマホOK。現在11本。</div>
         <div class="go">▶ 遊びに行く</div>
       </div>
@@ -148,7 +171,7 @@
     <a class="card reveal" href="/blog/">
       <div class="prev prev-blog"><span class="mj">酒と、道具</span></div>
       <div class="body">
-        <div class="nm">ブログ</div>
+        <div class="nm jp-head">ブログ</div>
         <div class="ds">岩手の地酒を1蔵ずつ味わうレビューと、AIと組んで1日1ゲーム作る開発環境の話。飲むもの・作るもの、どちらも「実際にやってみた」だけを書いています。</div>
         <div class="go">▶ 読みに行く</div>
       </div>
@@ -156,34 +179,34 @@
     <a class="card reveal" href="/web/">
       <div class="prev prev-web"><div class="win"></div></div>
       <div class="body">
-        <div class="nm">まちのウェブ屋さん</div>
+        <div class="nm jp-head">まちのウェブ屋さん</div>
         <div class="ds">お店の「ウェブどうしよう」を小さく解決する制作屋。作って動かしているサイトの実例つき。難しい言葉を使わずに、必要なぶんだけ作ります。</div>
         <div class="go">▶ 相談してみる</div>
       </div>
     </a>
   </div>
 
-  <h2 class="sec reveal">プロフィール</h2>
+  <h2 class="sec jp-head reveal">プロフィール</h2>
   <div class="timeline">
     <div class="tl reveal">
       <div class="k">いま</div>
-      <p class="h">個人ラボ D-studyLab として活動中</p>
+      <p class="h jp-head">個人ラボ D-studyLab として活動中</p>
       <p class="p">ミニゲームを3日に1本公開するサイクル／お店のウェブ制作「まちのウェブ屋さん」／地酒と開発のブログ。かたわら塾講師として数学や情報を教えています。</p>
     </div>
     <div class="tl reveal">
       <div class="k">研究</div>
-      <p class="h">岩手大学大学院で情報系の研究（修士・工学）</p>
+      <p class="h jp-head">岩手大学大学院で情報系の研究（修士・工学）</p>
       <p class="p">文化財（古代瓦）を3Dスキャンした点群データから、形の類似を数理的に測る研究。学会発表・論文執筆も継続中です。</p>
     </div>
     <div class="tl reveal">
       <div class="k">原点</div>
-      <p class="h">「読むよりさわった方が早い」</p>
+      <p class="h jp-head">「読むよりさわった方が早い」</p>
       <p class="p">むずかしい概念を、遊べる・動くかたちにして理解する。研究も、ゲームも、ウェブサイトも、根っこは同じです。</p>
     </div>
   </div>
   <p style="font-size:13px;color:var(--sub);margin:2px 0 0;" class="reveal">→ もう少しくわしく：<a href="/about.html" style="color:var(--acc);">運営者情報</a></p>
 
-  <h2 class="sec reveal">最近つくったもの・書いたもの</h2>
+  <h2 class="sec jp-head reveal">最近つくったもの・書いたもの</h2>
   <div class="log reveal">
     <a href="/">
       <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 4v5"/></svg></span>
@@ -219,7 +242,7 @@
     </a>
   </div>
 
-  <h2 class="sec reveal">つながる</h2>
+  <h2 class="sec jp-head reveal">つながる</h2>
   <div class="sns reveal">
     <a href="https://x.com/info_prog_study" target="_blank" rel="noopener" aria-label="X">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2.5h3.3l-7.2 8.2 8.5 11.3h-6.7l-5.2-6.9-6 6.9H1.5l7.7-8.8L1 2.5h6.8l4.7 6.3zm-1.2 17.8h1.8L7.1 4.4H5.2z"/></svg>
@@ -247,44 +270,81 @@
 
 <script>
 "use strict";
-// ---- 点群風パーティクル背景（研究=3D点群へのさりげない目配せ） ----
+// ---- 回転する3D点群ディスク（canvas 2D・依存ゼロ・同心円+放射の粗密） ----
 (function () {
-  const c = document.getElementById('bg'), x = c.getContext('2d');
+  const c = document.getElementById('disk'), x = c.getContext('2d');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let w, h, pts = [], mx = -999, my = -999, raf = 0;
-  function resize() {
-    w = c.width = innerWidth; h = c.height = innerHeight;
-    const n = Math.min(180, Math.round(w * h / 12000));
-    pts = Array.from({ length: n }, () => ({
-      x: Math.random() * w, y: Math.random() * h,
-      vx: (Math.random() - .5) * .18, vy: (Math.random() - .5) * .18,
-      r: Math.random() * 1.6 + .6
-    }));
-  }
-  function draw() {
-    x.clearRect(0, 0, w, h);
-    const col = getComputedStyle(document.body).color;
-    for (const p of pts) {
-      if (!reduce) {
-        p.x += p.vx; p.y += p.vy;
-        const dx = p.x - mx, dy = p.y - my, d2 = dx * dx + dy * dy;
-        if (d2 < 9000) { p.x += dx / d2 * 6; p.y += dy / d2 * 6; }
-        if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
-        if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
-      }
-      x.globalAlpha = 0.22; x.fillStyle = col;
-      x.beginPath(); x.arc(p.x, p.y, p.r, 0, 7); x.fill();
+  const rand = (() => { let s = 20260722; return () => (s = s * 1664525 + 1013904223 >>> 0) / 4294967296; })();
+  // 点群生成: 同心円リング(6本)+放射スポーク(16本)+中心の飾り(中房)+散布 ≈1200点
+  const P = [];
+  for (let k = 0; k < 6; k++) {                       // 同心円: 外周ほど点を増やす
+    const r = 0.30 + k * 0.14, n = Math.round(46 + k * 22);
+    for (let i = 0; i < n; i++) {
+      const a = i / n * Math.PI * 2 + rand() * .04;
+      P.push({ r: r + (rand() - .5) * .022, a, y: (rand() - .5) * .03 });
     }
   }
-  function loop() { draw(); raf = requestAnimationFrame(loop); }
-  addEventListener('resize', resize);
-  addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; }, { passive: true });
+  for (let s = 0; s < 16; s++)                        // 放射スポーク
+    for (let i = 0; i < 14; i++) {
+      const r = 0.30 + i / 13 * 0.70;
+      P.push({ r: r + (rand() - .5) * .015, a: s / 16 * Math.PI * 2 + (rand() - .5) * .02, y: (rand() - .5) * .03 });
+    }
+  for (let i = 0; i < 90; i++)                        // 中心の房（密）
+    P.push({ r: Math.sqrt(rand()) * .17, a: rand() * Math.PI * 2, y: (rand() - .5) * .05 });
+  for (let i = 0; i < 130; i++)                       // 全体に薄く散布
+    P.push({ r: Math.sqrt(rand()) * .99, a: rand() * Math.PI * 2, y: (rand() - .5) * .03 });
+  for (const p of P) p.t = Math.min(1, Math.max(0, p.r * .75 + rand() * .35)); // 色相ミックス係数
+  // テーマの2色（琥珀→白磁）を読み、8段の色バケツを作る
+  let cols = [];
+  function palette() {
+    const cs = getComputedStyle(document.documentElement);
+    const pa = cs.getPropertyValue('--pc-a').trim(), pb = cs.getPropertyValue('--pc-b').trim();
+    const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+    const A = hex(pa), B = hex(pb);
+    cols = Array.from({ length: 8 }, (_, i) => {
+      const t = i / 7, m = A.map((v, j) => Math.round(v + (B[j] - v) * t));
+      return `rgb(${m[0]},${m[1]},${m[2]})`;
+    });
+  }
+  let W = 0, H = 0, raf = 0, tx = 0, ty = 0, cx2 = 0, cy2 = 0; // 目標傾き/現在傾き(慣性)
+  function resize() {
+    const d = Math.min(devicePixelRatio || 1, 2), r = c.parentElement.getBoundingClientRect();
+    W = c.width = Math.round(r.width * d); H = c.height = Math.round(r.height * d);
+  }
+  function draw(ang) {
+    x.clearRect(0, 0, W, H);
+    const R = W * .46, f = 3.2, tilt = 1.05 + cy2, roll = cx2;
+    const st = Math.sin(tilt), ct = Math.cos(tilt), sr = Math.sin(roll), cr = Math.cos(roll);
+    for (const p of P) {
+      const a = p.a + ang;
+      let px = Math.cos(a) * p.r, pz = Math.sin(a) * p.r, py = p.y;
+      let y1 = py * ct - pz * st, z1 = py * st + pz * ct;             // X軸回り（傾き）
+      let x2 = px * cr - y1 * sr, y2 = px * sr + y1 * cr;             // Z軸回り（ポインタ）
+      const s = f / (f + z1);
+      const sx = W / 2 + x2 * s * R, sy = H / 2 + y2 * s * R;
+      const depth = (1 - z1) * .5;                                    // 手前=1 奥=0
+      x.globalAlpha = .25 + .65 * depth;
+      x.fillStyle = cols[Math.round(p.t * 7)];
+      const rad = (.9 + depth * 1.5) * (W / 680 + .55);
+      x.fillRect(sx - rad / 2, sy - rad / 2, rad, rad);
+    }
+  }
+  function loop(t) {
+    cx2 += (tx - cx2) * .06; cy2 += (ty - cy2) * .06;                 // 慣性
+    draw(t / 8000 * Math.PI * 2);                                     // 8秒/周
+    raf = requestAnimationFrame(loop);
+  }
+  addEventListener('pointermove', e => {
+    tx = (e.clientX / innerWidth - .5) * .5; ty = (e.clientY / innerHeight - .5) * .45;
+  }, { passive: true });
+  addEventListener('resize', () => { resize(); if (reduce) draw(.9); });
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) { cancelAnimationFrame(raf); raf = 0; }
-    else if (!reduce && !raf) loop();
+    else if (!reduce && !raf) raf = requestAnimationFrame(loop);
   });
-  resize();
-  if (reduce) draw(); else loop();
+  matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => { palette(); if (reduce) draw(.9); });
+  palette(); resize();
+  if (reduce) draw(.9); else raf = requestAnimationFrame(loop);       // reduced-motion=静止画1枚
 })();
 // ---- スクロール出現（1要素1回・stagger 80ms） ----
 (function () {
