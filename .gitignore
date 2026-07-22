@@ -4,3 +4,4 @@ SPEC_RESULT_*.md
 BLOG_POLICY.md
 _work_fonts/
 _qa_shots/
+__pycache__/
