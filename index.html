@@ -83,8 +83,7 @@
   .hero h1 .l { display:block; white-space:nowrap; }
   .hero .sub { color:var(--sub-d); font-size:15.5px; margin:0; max-width:34em; }
   .disk-box { position:relative; aspect-ratio:1; min-width:0; }
-  #penguin { width:100%; height:100%; display:block; touch-action:pan-y; cursor:grab; }
-  #penguin.drag { cursor:grabbing; }
+  #penguin { width:100%; height:100%; display:block; touch-action:pan-y; cursor:pointer; }
   @media (max-width:760px) {
     .hero .in { grid-template-columns:1fr; }
     .disk-box { max-width:300px; margin:6px auto 0; width:78%; }
@@ -387,108 +386,134 @@
 
 <script>
 "use strict";
-// ---- 点群ペンギン（グリグリ操作可・依存ゼロ・背中=琥珀/腹=白磁の2トーン） ----
+// ---- 点群ペンギン（マウスに反応する生き物・依存ゼロ・背中=琥珀/腹=白磁） ----
 (function () {
   const c = document.getElementById('penguin'), x = c.getContext('2d');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const rand = (() => { let s = 20260722; return () => (s = s * 1664525 + 1013904223 >>> 0) / 4294967296; })();
   const g = () => { let u = 0, v = 0; while (!u) u = rand(); v = rand();
                     return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
-  // 部位ごとに楕円体表面をサンプリング。COL: 0=琥珀(背) 1=白磁(腹) 2=濃琥珀(くちばし/足) 3=暗色(目)
+  // 部位: 0=胴 1=頭 2=くちばし 3=目 4=フリッパー 5=足。正面向きで生成（腹=カメラ側=z-）
   const P = [];
-  function blob(n, cx, cy, cz, rx, ry, rz, col) {
+  function blob(n, cx, cy, cz, rx, ry, rz, part, twoTone) {
     for (let i = 0; i < n; i++) {
       let dx = g(), dy = g(), dz = g(); const L = Math.hypot(dx, dy, dz) || 1;
       dx /= L; dy /= L; dz /= L;
-      const p = { x: cx + dx * rx, y: cy + dy * ry, z: cz + dz * rz, nz: dz, col };
-      if (col === 4) p.col = dz > .02 ? 1 : 0;      // 4=自動: 前面(z+)は腹=白磁
-      if (col === 5) p.col = (dz > .45 && dy < .15) ? 1 : 0; // 5=頭: 前面下=白い頬
-      P.push(p);
+      const belly = twoTone && dz < -.02;                      // 前面(z-)=腹=白磁
+      P.push({ x: cx + dx * rx, y: cy + dy * ry, z: cz + dz * rz, part, col: belly ? 1 : 0 });
     }
   }
-  blob(650, 0, -0.22, 0.02, 0.54, 0.66, 0.48, 4);   // 胴（だるま型・前が腹）
-  blob(340, 0, 0.66, 0.00, 0.34, 0.32, 0.31, 5);    // 頭（背=琥珀・顔の前面下=白磁の頬）
-  for (let i = 0; i < 90; i++) {                     // くちばし（円錐・前へ）
+  blob(650, 0, -0.22, -0.02, 0.54, 0.66, 0.48, 0, true);       // 胴
+  blob(340, 0, 0.66, 0.00, 0.34, 0.32, 0.31, 1, false);        // 頭（背側=琥珀）
+  for (let i = 0; i < 90; i++) {                               // くちばし（カメラへ）
     const t2 = rand(), r = (1 - t2) * .10, a = rand() * Math.PI * 2;
-    P.push({ x: Math.cos(a) * r, y: 0.62 - t2 * .06 + Math.sin(a) * r * .55, z: 0.28 + t2 * .36, col: 2 });
+    P.push({ x: Math.cos(a) * r, y: 0.62 - t2 * .06 + Math.sin(a) * r * .55, z: -0.28 - t2 * .36, part: 2, col: 2 });
   }
-  for (const s of [-1, 1]) {                         // フリッパー（左右・下向きに開く）
-    for (let i = 0; i < 130; i++) {
+  for (const s of [-1, 1]) {
+    for (let i = 0; i < 130; i++) {                            // フリッパー（肩ピボット相対で保持）
       let dx = g(), dy = g(), dz = g(); const L = Math.hypot(dx, dy, dz) || 1;
-      let px = dx / L * .085, py = dy / L * .46, pz = dz / L * .20;
-      const rot = s * .35, xr = px * Math.cos(rot) - py * Math.sin(rot), yr = px * Math.sin(rot) + py * Math.cos(rot);
-      P.push({ x: s * .60 + xr, y: -0.16 + yr, z: pz, col: 0 });
+      P.push({ lx: dx / L * .085, ly: dy / L * .46 - .22, lz: dz / L * .20, side: s, part: 4, col: 0 });
     }
-    blob(65, s * .21, -0.92, 0.20, 0.14, 0.05, 0.28, 2);   // 足（前へ突き出す）
-    for (let i = 0; i < 35; i++) {                   // 目（頭表面の暗色クラスタ）
-      let dx = s * .40 + g() * .06, dy = .28 + g() * .06, dz = .85 + g() * .06;
+    blob(65, s * .21, -0.92, -0.16, 0.14, 0.05, 0.28, 5, false); // 足（前へ）
+    for (let i = 0; i < 30; i++) {                             // 目（前面の暗色クラスタ）
+      let dx = s * .40 + g() * .05, dy = .26 + g() * .05, dz = -.85 + g() * .05;
       const L = Math.hypot(dx, dy, dz);
-      P.push({ x: dx / L * .36, y: 0.66 + dy / L * .34, z: 0.00 + dz / L * .33, col: 3 });
+      P.push({ x: dx / L * .36, y: 0.66 + dy / L * .34, z: dz / L * .33, part: 3, col: 3 });
     }
   }
-  // 色: CSS変数の琥珀/白磁＋固定2色
+  for (const p of P) if (p.part === 5) p.col = 2;
   const cs = getComputedStyle(document.documentElement);
-  const AMB = cs.getPropertyValue('--pc-a').trim() || '#E8A33D';
-  const POR = cs.getPropertyValue('--pc-b').trim() || '#E9E4D8';
-  const COLS = [AMB, POR, '#B87A1F', '#15161C'];
+  const COLS = [cs.getPropertyValue('--pc-a').trim() || '#E8A33D',
+                cs.getPropertyValue('--pc-b').trim() || '#E9E4D8', '#B87A1F', '#15161C'];
+  const HP = 0.60;                                             // 頭ピボットの高さ
   let W = 0, H = 0, raf = 0;
-  let yaw = 3.05, pitch = 0.08, vyaw = 0, vpitch = 0, dragging = false, lx = 0, ly = 0, mouse = false;
-  let last = 0;
+  let hyT = 0, hpT = 0, hy = 0, hp = 0;                        // 頭yaw/pitch（目標/現在=イージング遅延）
+  let flapT0 = -1e9, jumpT0 = -1e9, jigT0 = -1e9, wasNear = false;
+  let blinkUntil = 0, nextBlink = performance.now() + 3000 + rand() * 4000;
   function resize() {
     const d = Math.min(devicePixelRatio || 1, 2), r = c.parentElement.getBoundingClientRect();
     W = c.width = Math.round(r.width * d); H = c.height = Math.round(r.height * d);
   }
-  function draw() {
+  function draw(now) {
     x.clearRect(0, 0, W, H);
-    const R = W * .34, f = 3.4;
-    const sy_ = Math.sin(yaw), cy_ = Math.cos(yaw), sp = Math.sin(pitch), cp = Math.cos(pitch);
+    const R = W * .34, f = 3.4, d = W / 680 + .55;
+    const by = hy * .22, br = hy * .06;                        // 体の傾き±8°・ごく薄いロール
+    const sby = Math.sin(by), cby = Math.cos(by), sbr = Math.sin(br), cbr = Math.cos(br);
+    const shy = Math.sin(hy), chy = Math.cos(hy), shp = Math.sin(hp), chp = Math.cos(hp);
+    const blink = now < blinkUntil;
+    const bob = reduce ? 0 : Math.sin(now / 4000 * Math.PI * 2) * 2 * (W / 300);   // 呼吸2px相当
+    const jp = (now - jumpT0) / 500;                           // 跳ね（0.5秒・放物線）
+    const jump = (jp >= 0 && jp < 1) ? -4 * .12 * jp * (1 - jp) * R : 0;
+    const jt = now - jigT0;                                    // 着地ぷるん（減衰正弦）
+    const jig = (jt >= 0 && jt < 450) ? Math.exp(-jt / 140) * Math.sin(jt / 45) * .05 : 0;
+    const fp = (now - flapT0) / 600;                           // パタパタ（2往復・0.6秒）
+    const flap = (fp >= 0 && fp < 1) ? Math.sin(fp * Math.PI * 4) * .55 : 0;
     for (const p of P) {
-      const x1 = p.x * cy_ + p.z * sy_, z1 = -p.x * sy_ + p.z * cy_;       // Y軸回り（ヨー）
-      const y2 = p.y * cp - z1 * sp, z2 = p.y * sp + z1 * cp;              // X軸回り（ピッチ）
-      const s = f / (f + z2);
-      const sx = W / 2 + x1 * s * R, sy2 = H / 2 - (y2 - .05) * s * R;
-      const depth = (1 - z2) * .5;
+      if (p.part === 3 && blink) continue;                     // 瞬き=目を消す
+      let px, py, pz;
+      if (p.part === 4) {                                      // フリッパー: 肩ピボット回転
+        const a = flap * p.side, ca = Math.cos(a), sa = Math.sin(a);
+        px = p.side * .60 + (p.lx * ca - p.ly * sa);
+        py = -0.16 + .22 + (p.lx * sa + p.ly * ca);
+        pz = p.lz;
+      } else { px = p.x; py = p.y; pz = p.z; }
+      if (p.part === 1 || p.part === 2 || p.part === 3) {      // 頭・くちばし・目=視線追従
+        const ly = py - HP;
+        let x1 = px * chy - pz * shy, z1 = px * shy + pz * chy;
+        let y1 = ly * chp - z1 * shp; z1 = ly * shp + z1 * chp;
+        px = x1; py = y1 + HP; pz = z1;
+      }
+      if (p.part === 0 && jig) px *= 1 + jig * Math.sign(Math.sin(py * 9));  // 腹ぷるん
+      let x1 = px * cby - pz * sby, z1 = px * sby + pz * cby;  // 体の傾き（yaw）
+      let x2 = x1 * cbr - py * sbr, y2 = x1 * sbr + py * cbr;  // 薄いロール
+      const s = f / (f + z1);
+      const sx = W / 2 + x2 * s * R, sy = H / 2 - (y2 - .05) * s * R + bob + jump;
+      const depth = (1 - z1) * .5;
       x.globalAlpha = .30 + .60 * depth;
       x.fillStyle = COLS[p.col];
-      const rad = (1.15 + depth * 1.5) * (W / 680 + .55);
-      x.fillRect(sx - rad / 2, sy2 - rad / 2, rad, rad);
+      const rad = (1.15 + depth * 1.5) * d;
+      x.fillRect(sx - rad / 2, sy - rad / 2, rad, rad);
     }
   }
-  function tick(t) {
-    const dt = last ? Math.min(t - last, 50) : 16; last = t;
-    if (!dragging) {
-      yaw += vyaw; pitch += vpitch; vyaw *= .95; vpitch *= .95;            // 慣性
-      if (!reduce && Math.abs(vyaw) < .0004) yaw += dt / 8000 * Math.PI * 2; // 無操作時=8秒/周
-      pitch = Math.max(-.6, Math.min(.6, pitch));
-      if (reduce && Math.abs(vyaw) < .0002 && Math.abs(vpitch) < .0002) {  // reduced: 停止して静止
-        draw(); raf = 0; last = 0; return;
-      }
-    }
-    draw(); raf = requestAnimationFrame(tick);
+  function tick(now) {
+    if (now > nextBlink) { blinkUntil = now + 120; nextBlink = now + 3000 + rand() * 4000; }
+    hy += (hyT - hy) * .07; hp += (hpT - hp) * .07;            // イージング遅延=振り遅れキョロキョロ
+    draw(now);
+    raf = requestAnimationFrame(tick);
   }
-  function start() { if (!raf) raf = requestAnimationFrame(tick); }
-  c.addEventListener('pointerdown', e => {
-    dragging = true; mouse = e.pointerType === 'mouse'; lx = e.clientX; ly = e.clientY;
-    vyaw = vpitch = 0; c.classList.add('drag');
-    if (mouse) c.setPointerCapture(e.pointerId);                           // タッチはcaptureせずpan-yを活かす
-    start();
+  function follow(mx, my) {
+    const r = c.getBoundingClientRect(), cx0 = r.x + r.width / 2, cy0 = r.y + r.height / 2;
+    hyT = Math.max(-.61, Math.min(.61, (mx - cx0) / r.width * 1.5));    // ±35°
+    hpT = Math.max(-.61, Math.min(.61, -(my - cy0) / r.height * 1.2));
+    const near = Math.hypot(mx - cx0, my - cy0) < r.width * .62;
+    if (near && !wasNear && !reduce) flapT0 = performance.now();        // 接近→パタパタ
+    wasNear = near;
+  }
+  addEventListener('pointermove', e => { if (!reduce) follow(e.clientX, e.clientY); }, { passive: true });
+  document.documentElement.addEventListener('mouseleave', () => { hyT = 0; hpT = 0; wasNear = false; });
+  c.addEventListener('click', () => {                                   // クリック/タップ=跳ねる
+    if (reduce) return;
+    const now = performance.now();
+    if (now - jumpT0 > 500) { jumpT0 = now; jigT0 = now + 500; }
   });
-  c.addEventListener('pointermove', e => {
-    if (!dragging) return;
-    const dx = e.clientX - lx, dy = e.clientY - ly; lx = e.clientX; ly = e.clientY;
-    yaw += dx * .008; vyaw = dx * .008;
-    if (mouse) { pitch += dy * .006; vpitch = dy * .006;                   // 縦回転はマウスのみ（タッチは縦=スクロール）
-                 pitch = Math.max(-.6, Math.min(.6, pitch)); }
-  });
-  const up = () => { dragging = false; c.classList.remove('drag'); start(); };
-  c.addEventListener('pointerup', up); c.addEventListener('pointercancel', up);
-  addEventListener('resize', () => { resize(); if (!raf) draw(); });
+  addEventListener('resize', () => { resize(); if (reduce) draw(performance.now()); });
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { cancelAnimationFrame(raf); raf = 0; last = 0; }
-    else if (!reduce) start();
+    if (document.hidden) { cancelAnimationFrame(raf); raf = 0; clearTimeout(blTimer); }
+    else if (!reduce && !raf) raf = requestAnimationFrame(tick);
+    else if (reduce) schedBlink();
   });
+  let blTimer = 0;
+  function schedBlink() {                                               // reduced: 静止+瞬きのみ
+    clearTimeout(blTimer);
+    blTimer = setTimeout(() => {
+      blinkUntil = performance.now() + 120; draw(performance.now());
+      setTimeout(() => draw(performance.now()), 140);
+      schedBlink();
+    }, 3000 + rand() * 4000);
+  }
   resize();
-  if (reduce) draw(); else start();                                        // reduced-motion=静止（ドラッグは可）
+  if (reduce) { draw(performance.now()); schedBlink(); }
+  else raf = requestAnimationFrame(tick);
 })();
 // ---- 固定ナビ: スクロールで背景・下線色をセクションに同期 ----
 (function () {
