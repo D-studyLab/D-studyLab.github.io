@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>D-studyLab｜作って、出す個人ラボ</title>
 <meta name="description" content="研究とものづくりを行き来する個人ラボ D-studyLab。ブラウザで遊べるミニゲーム、岩手の地酒と開発のブログ、お店のウェブ制作。小さく作って、すぐ出す。">
 <meta name="robots" content="index,follow">
@@ -80,7 +83,8 @@
   .hero h1 .l { display:block; white-space:nowrap; }
   .hero .sub { color:var(--sub-d); font-size:15.5px; margin:0; max-width:34em; }
   .disk-box { position:relative; aspect-ratio:1; min-width:0; }
-  #disk { width:100%; height:100%; display:block; touch-action:pan-y; }
+  #penguin { width:100%; height:100%; display:block; touch-action:pan-y; cursor:grab; }
+  #penguin.drag { cursor:grabbing; }
   @media (max-width:760px) {
     .hero .in { grid-template-columns:1fr; }
     .disk-box { max-width:300px; margin:6px auto 0; width:78%; }
@@ -147,7 +151,13 @@
   .band-b p { color:#4C4438; }
   .band-b .cta { background:var(--b-acc); color:#FBF8F0; }
   .band-b .pv { background:#FBF8F0; border:1px solid #E4DCC8; }
-  .band-b .mj { color:var(--b-acc); font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-size:30px; letter-spacing:.12em; }
+  /* 便箋の抽象モチーフ（罫線＋胡桃の封蝋） */
+  .band-b .paper-pv { width:150px; height:88px; background:#fff; border:1px solid #E4DCC8; border-radius:4px;
+      position:relative; box-shadow:0 2px 8px rgba(138,90,51,.10); }
+  .band-b .paper-pv::before { content:""; position:absolute; left:16px; right:16px; top:24px; height:1px;
+      background:#E0D6C2; box-shadow:0 14px 0 #E0D6C2, 0 28px 0 #E0D6C2; }
+  .band-b .paper-pv::after { content:""; position:absolute; right:14px; bottom:11px; width:16px; height:16px;
+      border-radius:50%; background:var(--b-acc); opacity:.85; }
   /* ③ web = 岩手の工房 */
   .band-w { background:var(--w-bg); color:#20221F; }
   .band-w h3 { font-family:"Zen Old Mincho","Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; color:var(--w-acc); letter-spacing:.05em; }
@@ -185,11 +195,11 @@
   .fmap .col a { display:block; color:var(--txt-d); text-decoration:none; font-size:13.5px; margin-bottom:9px; }
   .fmap .col a:hover { color:var(--acc); }
   .sns { display:flex; flex-wrap:wrap; gap:10px; }
-  .sns a { display:inline-flex; align-items:center; gap:7px; font-size:13px; text-decoration:none;
-           color:var(--txt-d); border:1px solid var(--line); border-radius:20px; padding:7px 14px;
+  .sns a { display:inline-flex; align-items:center; gap:7px; font-size:13px; line-height:1; text-decoration:none;
+           color:var(--txt-d); border:1px solid var(--line); border-radius:20px; padding:9px 14px;
            transition:border-color .14s, color .14s; }
   .sns a:hover { border-color:var(--acc); color:var(--acc); }
-  .sns svg { width:16px; height:16px; }
+  .sns svg { width:16px; height:16px; display:block; }
   .copy { margin-top:36px; padding-top:18px; border-top:1px solid var(--line); font-size:12px;
           display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
   .copy .logo { font-family:"Unbounded",-apple-system,sans-serif; color:var(--acc); font-size:12px; letter-spacing:.05em; }
@@ -229,7 +239,7 @@
       <h1 class="jp-head"><span class="l fade">考えたら、作る。</span><span class="l fade">作ったら、出す。</span></h1>
       <p class="sub fade">研究とものづくりを行き来する、岩手の個人ラボ。ブラウザゲーム・地酒と開発のブログ・お店のウェブ制作——ぜんぶ「小さく作ってすぐ出す」で回しています。</p>
     </div>
-    <div class="disk-box" aria-hidden="true"><canvas id="disk"></canvas></div>
+    <div class="disk-box" aria-hidden="true"><canvas id="penguin"></canvas></div>
   </div>
 </section>
 
@@ -287,12 +297,12 @@
   <section class="band band-b" data-acc="#C08A55" data-k="business">
     <div class="in">
       <div class="reveal">
-        <h3>ブログ「酒と、道具」</h3>
+        <h3>ブログ</h3>
         <p>岩手の地酒を1蔵ずつ味わうレビューと、AIと組んで1日1ゲーム作る開発環境の話。</p>
         <p>飲むもの・作るもの、どちらも「実際にやってみた」ことだけを書いています。</p>
         <a class="cta" href="/blog/">▶ 読みに行く</a>
       </div>
-      <div class="pv reveal" aria-hidden="true"><span class="mj">酒と、道具</span></div>
+      <div class="pv reveal" aria-hidden="true"><div class="paper-pv"></div></div>
     </div>
   </section>
   <section class="band band-w" data-acc="#35A574" data-k="business">
@@ -341,7 +351,7 @@
       <div class="col">
         <h4>事業</h4>
         <a href="/games/">ミニゲームゲームズ</a>
-        <a href="/blog/">ブログ「酒と、道具」</a>
+        <a href="/blog/">ブログ</a>
         <a href="/web/">まちのウェブ屋さん</a>
       </div>
       <div class="col">
@@ -377,76 +387,108 @@
 
 <script>
 "use strict";
-// ---- 回転する3D点群ディスク（canvas 2D・依存ゼロ・同心円+放射の粗密） ----
+// ---- 点群ペンギン（グリグリ操作可・依存ゼロ・背中=琥珀/腹=白磁の2トーン） ----
 (function () {
-  const c = document.getElementById('disk'), x = c.getContext('2d');
+  const c = document.getElementById('penguin'), x = c.getContext('2d');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const rand = (() => { let s = 20260722; return () => (s = s * 1664525 + 1013904223 >>> 0) / 4294967296; })();
-  // 点群生成: 同心円リング(6本)+放射スポーク(16本)+中心の飾り(中房)+散布 ≈1200点
+  const g = () => { let u = 0, v = 0; while (!u) u = rand(); v = rand();
+                    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+  // 部位ごとに楕円体表面をサンプリング。COL: 0=琥珀(背) 1=白磁(腹) 2=濃琥珀(くちばし/足) 3=暗色(目)
   const P = [];
-  for (let k = 0; k < 6; k++) {                       // 同心円: 外周ほど点を増やす
-    const r = 0.30 + k * 0.14, n = Math.round(46 + k * 22);
+  function blob(n, cx, cy, cz, rx, ry, rz, col) {
     for (let i = 0; i < n; i++) {
-      const a = i / n * Math.PI * 2 + rand() * .04;
-      P.push({ r: r + (rand() - .5) * .022, a, y: (rand() - .5) * .03 });
+      let dx = g(), dy = g(), dz = g(); const L = Math.hypot(dx, dy, dz) || 1;
+      dx /= L; dy /= L; dz /= L;
+      const p = { x: cx + dx * rx, y: cy + dy * ry, z: cz + dz * rz, nz: dz, col };
+      if (col === 4) p.col = dz > .02 ? 1 : 0;      // 4=自動: 前面(z+)は腹=白磁
+      if (col === 5) p.col = (dz > .45 && dy < .15) ? 1 : 0; // 5=頭: 前面下=白い頬
+      P.push(p);
     }
   }
-  for (let s = 0; s < 16; s++)                        // 放射スポーク
-    for (let i = 0; i < 14; i++) {
-      const r = 0.30 + i / 13 * 0.70;
-      P.push({ r: r + (rand() - .5) * .015, a: s / 16 * Math.PI * 2 + (rand() - .5) * .02, y: (rand() - .5) * .03 });
+  blob(650, 0, -0.22, 0.02, 0.54, 0.66, 0.48, 4);   // 胴（だるま型・前が腹）
+  blob(340, 0, 0.66, 0.00, 0.34, 0.32, 0.31, 5);    // 頭（背=琥珀・顔の前面下=白磁の頬）
+  for (let i = 0; i < 90; i++) {                     // くちばし（円錐・前へ）
+    const t2 = rand(), r = (1 - t2) * .10, a = rand() * Math.PI * 2;
+    P.push({ x: Math.cos(a) * r, y: 0.62 - t2 * .06 + Math.sin(a) * r * .55, z: 0.28 + t2 * .36, col: 2 });
+  }
+  for (const s of [-1, 1]) {                         // フリッパー（左右・下向きに開く）
+    for (let i = 0; i < 130; i++) {
+      let dx = g(), dy = g(), dz = g(); const L = Math.hypot(dx, dy, dz) || 1;
+      let px = dx / L * .085, py = dy / L * .46, pz = dz / L * .20;
+      const rot = s * .35, xr = px * Math.cos(rot) - py * Math.sin(rot), yr = px * Math.sin(rot) + py * Math.cos(rot);
+      P.push({ x: s * .60 + xr, y: -0.16 + yr, z: pz, col: 0 });
     }
-  for (let i = 0; i < 90; i++)                        // 中心の房（密）
-    P.push({ r: Math.sqrt(rand()) * .17, a: rand() * Math.PI * 2, y: (rand() - .5) * .05 });
-  for (let i = 0; i < 130; i++)                       // 全体に薄く散布
-    P.push({ r: Math.sqrt(rand()) * .99, a: rand() * Math.PI * 2, y: (rand() - .5) * .03 });
-  for (const p of P) p.t = Math.min(1, Math.max(0, p.r * .75 + rand() * .35)); // 色相ミックス係数
-  // 琥珀→白磁の8段色バケツ
+    blob(65, s * .21, -0.92, 0.20, 0.14, 0.05, 0.28, 2);   // 足（前へ突き出す）
+    for (let i = 0; i < 35; i++) {                   // 目（頭表面の暗色クラスタ）
+      let dx = s * .40 + g() * .06, dy = .28 + g() * .06, dz = .85 + g() * .06;
+      const L = Math.hypot(dx, dy, dz);
+      P.push({ x: dx / L * .36, y: 0.66 + dy / L * .34, z: 0.00 + dz / L * .33, col: 3 });
+    }
+  }
+  // 色: CSS変数の琥珀/白磁＋固定2色
   const cs = getComputedStyle(document.documentElement);
-  const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
-  const A = hex(cs.getPropertyValue('--pc-a').trim()), B = hex(cs.getPropertyValue('--pc-b').trim());
-  const cols = Array.from({ length: 8 }, (_, i) => {
-    const t = i / 7, m = A.map((v, j) => Math.round(v + (B[j] - v) * t));
-    return `rgb(${m[0]},${m[1]},${m[2]})`;
-  });
-  let W = 0, H = 0, raf = 0, tx = 0, ty = 0, cx2 = 0, cy2 = 0; // 目標傾き/現在傾き(慣性)
+  const AMB = cs.getPropertyValue('--pc-a').trim() || '#E8A33D';
+  const POR = cs.getPropertyValue('--pc-b').trim() || '#E9E4D8';
+  const COLS = [AMB, POR, '#B87A1F', '#15161C'];
+  let W = 0, H = 0, raf = 0;
+  let yaw = 3.05, pitch = 0.08, vyaw = 0, vpitch = 0, dragging = false, lx = 0, ly = 0, mouse = false;
+  let last = 0;
   function resize() {
     const d = Math.min(devicePixelRatio || 1, 2), r = c.parentElement.getBoundingClientRect();
     W = c.width = Math.round(r.width * d); H = c.height = Math.round(r.height * d);
   }
-  function draw(ang) {
+  function draw() {
     x.clearRect(0, 0, W, H);
-    const R = W * .46, f = 3.2, tilt = 1.05 + cy2, roll = cx2;
-    const st = Math.sin(tilt), ct = Math.cos(tilt), sr = Math.sin(roll), cr = Math.cos(roll);
+    const R = W * .34, f = 3.4;
+    const sy_ = Math.sin(yaw), cy_ = Math.cos(yaw), sp = Math.sin(pitch), cp = Math.cos(pitch);
     for (const p of P) {
-      const a = p.a + ang;
-      let px = Math.cos(a) * p.r, pz = Math.sin(a) * p.r, py = p.y;
-      let y1 = py * ct - pz * st, z1 = py * st + pz * ct;             // X軸回り（傾き）
-      let x2 = px * cr - y1 * sr, y2 = px * sr + y1 * cr;             // Z軸回り（ポインタ）
-      const s = f / (f + z1);
-      const sx = W / 2 + x2 * s * R, sy = H / 2 + y2 * s * R;
-      const depth = (1 - z1) * .5;                                    // 手前=1 奥=0
-      x.globalAlpha = .25 + .65 * depth;
-      x.fillStyle = cols[Math.round(p.t * 7)];
-      const rad = (.9 + depth * 1.5) * (W / 680 + .55);
-      x.fillRect(sx - rad / 2, sy - rad / 2, rad, rad);
+      const x1 = p.x * cy_ + p.z * sy_, z1 = -p.x * sy_ + p.z * cy_;       // Y軸回り（ヨー）
+      const y2 = p.y * cp - z1 * sp, z2 = p.y * sp + z1 * cp;              // X軸回り（ピッチ）
+      const s = f / (f + z2);
+      const sx = W / 2 + x1 * s * R, sy2 = H / 2 - (y2 - .05) * s * R;
+      const depth = (1 - z2) * .5;
+      x.globalAlpha = .30 + .60 * depth;
+      x.fillStyle = COLS[p.col];
+      const rad = (1.15 + depth * 1.5) * (W / 680 + .55);
+      x.fillRect(sx - rad / 2, sy2 - rad / 2, rad, rad);
     }
   }
-  function loop(t) {
-    cx2 += (tx - cx2) * .06; cy2 += (ty - cy2) * .06;                 // 慣性
-    draw(t / 8000 * Math.PI * 2);                                     // 8秒/周
-    raf = requestAnimationFrame(loop);
+  function tick(t) {
+    const dt = last ? Math.min(t - last, 50) : 16; last = t;
+    if (!dragging) {
+      yaw += vyaw; pitch += vpitch; vyaw *= .95; vpitch *= .95;            // 慣性
+      if (!reduce && Math.abs(vyaw) < .0004) yaw += dt / 8000 * Math.PI * 2; // 無操作時=8秒/周
+      pitch = Math.max(-.6, Math.min(.6, pitch));
+      if (reduce && Math.abs(vyaw) < .0002 && Math.abs(vpitch) < .0002) {  // reduced: 停止して静止
+        draw(); raf = 0; last = 0; return;
+      }
+    }
+    draw(); raf = requestAnimationFrame(tick);
   }
-  addEventListener('pointermove', e => {
-    tx = (e.clientX / innerWidth - .5) * .5; ty = (e.clientY / innerHeight - .5) * .45;
-  }, { passive: true });
-  addEventListener('resize', () => { resize(); if (reduce) draw(.9); });
+  function start() { if (!raf) raf = requestAnimationFrame(tick); }
+  c.addEventListener('pointerdown', e => {
+    dragging = true; mouse = e.pointerType === 'mouse'; lx = e.clientX; ly = e.clientY;
+    vyaw = vpitch = 0; c.classList.add('drag');
+    if (mouse) c.setPointerCapture(e.pointerId);                           // タッチはcaptureせずpan-yを活かす
+    start();
+  });
+  c.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const dx = e.clientX - lx, dy = e.clientY - ly; lx = e.clientX; ly = e.clientY;
+    yaw += dx * .008; vyaw = dx * .008;
+    if (mouse) { pitch += dy * .006; vpitch = dy * .006;                   // 縦回転はマウスのみ（タッチは縦=スクロール）
+                 pitch = Math.max(-.6, Math.min(.6, pitch)); }
+  });
+  const up = () => { dragging = false; c.classList.remove('drag'); start(); };
+  c.addEventListener('pointerup', up); c.addEventListener('pointercancel', up);
+  addEventListener('resize', () => { resize(); if (!raf) draw(); });
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { cancelAnimationFrame(raf); raf = 0; }
-    else if (!reduce && !raf) raf = requestAnimationFrame(loop);
+    if (document.hidden) { cancelAnimationFrame(raf); raf = 0; last = 0; }
+    else if (!reduce) start();
   });
   resize();
-  if (reduce) draw(.9); else raf = requestAnimationFrame(loop);       // reduced-motion=静止画1枚
+  if (reduce) draw(); else start();                                        // reduced-motion=静止（ドラッグは可）
 })();
 // ---- 固定ナビ: スクロールで背景・下線色をセクションに同期 ----
 (function () {
