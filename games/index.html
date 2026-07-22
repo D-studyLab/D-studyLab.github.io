@@ -20,12 +20,13 @@
     font-family:"DotGothic16"; font-style:normal; font-weight:400;
     font-display:swap; src:url("/assets/fonts/DotGothic16-subset.woff2") format("woff2");
   }
-  :root { --bg:#0c0f1a; --panel:#141a2b; --panel2:#1b2238; --line:#2c3654; --txt:#e7ecfb; --sub:#93a0c4;
-          --acc:#4af; --acc-mg:#ff5db1; --acc-yl:#ffd23f; --gold:#ffd23f; }
+  /* 夜のアーケード: 紫黒×マゼンタ×イエロー */
+  :root { --bg:#131019; --panel:#1C1727; --panel2:#241D33; --line:#332B44; --txt:#EFEAF6; --sub:#A79DBE;
+          --acc:#FF4D9D; --acc-mg:#FFD644; --acc-yl:#FFD644; --gold:#FFD644; --new-tx:#131019; --on-tx:#131019; }
   @media (prefers-color-scheme: light) {
-    /* ゲームボーイ風 淡緑グレー */
-    :root { --bg:#c7d0bd; --panel:#dbe2cf; --panel2:#e6ebda; --line:#8a9679; --txt:#20281a; --sub:#4c5a3d;
-            --acc:#2b6d8f; --acc-mg:#a83b73; --acc-yl:#7a6410; --gold:#7a6410; }
+    /* 明灰（緑黄の色被りなし）×濃マゼンタ×深紫 */
+    :root { --bg:#F1EFEA; --panel:#FBFAF7; --panel2:#ECE8F2; --line:#B9B0C9; --txt:#26222E; --sub:#5C5566;
+            --acc:#C21F6B; --acc-mg:#4A2C82; --acc-yl:#4A2C82; --gold:#4A2C82; --new-tx:#FFFFFF; --on-tx:#FBFAF7; }
   }
   * { box-sizing:border-box; }
   body { margin:0; background:var(--bg); color:var(--txt); line-height:1.7;
@@ -62,8 +63,7 @@
   .chip { border:2px solid var(--line); background:var(--panel); color:var(--sub);
           border-radius:0; padding:5px 14px; font-size:13px; cursor:pointer; user-select:none; }
   .chip:hover { border-color:var(--acc); color:var(--txt); }
-  .chip.on { background:var(--acc); color:#04101d; border-color:var(--acc); font-weight:bold; }
-  @media (prefers-color-scheme: light) { .chip.on { color:#e6ebda; } }
+  .chip.on { background:var(--acc); color:var(--on-tx); border-color:var(--acc); font-weight:bold; }
   .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); gap:14px; }
   /* ファミコンウィンドウ風 角ばった二重ボーダー */
   .card { background:var(--panel); border:2px solid var(--line); border-radius:0;
@@ -83,7 +83,7 @@
                  padding-top:7px; border-top:1px solid var(--line); display:inline-block; }
   .card .guide:hover { text-decoration:underline; }
   /* ドット調の旗 NEW */
-  .new { position:absolute; top:-2px; right:-2px; background:var(--acc-mg); color:#fff;
+  .new { position:absolute; top:-2px; right:-2px; background:var(--acc-mg); color:var(--new-tx);
          font-size:10px; font-weight:bold; padding:2px 8px 3px; border-radius:0; letter-spacing:.08em;
          box-shadow:-2px 2px 0 rgba(0,0,0,.3); }
   .about { margin:34px 0 0; border-top:2px solid var(--line); padding-top:20px; }
