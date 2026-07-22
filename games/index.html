@@ -45,6 +45,13 @@
   .wrap { position:relative; z-index:1; max-width:920px; margin:0 auto; padding:26px 16px 60px; }
   .crumb { font-size:13px; color:var(--sub); margin-bottom:12px; }
   .crumb a { color:var(--acc); text-decoration:none; }
+  /* 屋台夜景ヒーローバナー（v3.8・バナーが主役） */
+  .gbanner { position:relative; margin:8px 0 16px; border:2px solid var(--line);
+             box-shadow:0 0 0 2px var(--bg), 0 0 0 4px var(--line); overflow:hidden; }
+  .gbanner img { width:100%; display:block; max-height:400px; object-fit:cover; object-position:center 38%; }
+  .gbanner h1 { position:absolute; left:16px; bottom:10px; margin:0;
+                font-size:clamp(22px,4.8vw,42px); color:#FFF; letter-spacing:.04em;
+                text-shadow:0 2px 0 #131019, 0 0 14px rgba(255,77,157,.85), 0 0 3px #131019, 2px 0 0 #131019, -2px 0 0 #131019, 0 -2px 0 #131019; }
   header h1 { font-size:26px; margin:6px 0 4px; letter-spacing:.02em; }
   header .lead { color:var(--sub); font-size:14px; margin-bottom:20px; }
   /* 筐体マーキー風「きょうの1本」 */
@@ -106,7 +113,10 @@
 <div class="wrap">
   <header>
     <div class="crumb"><a href="/">← D-studyLab トップ</a></div>
-    <h1 class="pix">🕹 ミニゲームゲームズ</h1>
+    <div class="gbanner">
+      <img src="banner.webp" alt="夜の商店街に立つ、ペンギン店主のゲーム屋台（ドット絵）" width="1600" height="893" fetchpriority="high">
+      <h1 class="pix">🕹 ミニゲームゲームズ</h1>
+    </div>
     <p class="lead">3日に1本のペースで増える、ブラウザで遊べるミニゲームの屋台。全部無料・インストール不要・スマホOK。</p>
   </header>
 
