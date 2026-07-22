@@ -22,251 +22,358 @@
     font-family:"Zen Kaku Gothic New"; font-style:normal; font-weight:700;
     font-display:swap; src:url("/assets/fonts/ZenKakuGothicNew-700-subset.woff2") format("woff2");
   }
-  :root {
-    --bg:#0C0D12; --panel:#14161D; --line:#262A35; --txt:#EDEBE6;
-    --sub:#9A9890; --acc:#E8A33D; --acc-hover:#F5B95C; --porcelain:#E9E4D8;
-    --pc-a:#E8A33D; --pc-b:#E9E4D8; --glow:rgba(232,163,61,.12);
+  @font-face {
+    font-family:"Zen Old Mincho"; font-style:normal; font-weight:600;
+    font-display:swap; src:url("/assets/fonts/ZenOldMincho-600-subset.woff2") format("woff2");
   }
-  @media (prefers-color-scheme: light) {
-    :root {
-      --bg:#F5F2EA; --panel:#FDFBF4; --line:#E1DCCE; --txt:#22211D;
-      --sub:#6E6A5E; --acc:#B87A1F; --acc-hover:#9A6519; --porcelain:#4C483E;
-      --pc-a:#B87A1F; --pc-b:#6B6455; --glow:rgba(184,122,31,.10);
-    }
+  @font-face {
+    font-family:"DotGothic16"; font-style:normal; font-weight:400;
+    font-display:swap; src:url("/assets/fonts/DotGothic16-subset.woff2") format("woff2");
+  }
+  /* ルートはセクション固定背景（明暗混在がデザイン）。テーマ切替は行わない */
+  :root {
+    --ink:#0C0D12; --ink2:#08090C; --panel:#14161D; --line:#262A35;
+    --txt-d:#EDEBE6; --sub-d:#9A9890; --acc:#E8A33D; --acc-hover:#F5B95C; --porcelain:#E9E4D8;
+    --paper:#FBFAF7; --kinari:#F5F2EA; --txt-l:#22211D; --sub-l:#6E6A5E;
+    --amber-deep:#B87A1F; --line-l:#E1DCCE;
+    --g-bg:#131019; --g-acc:#FF4D9D; --g-sub:#FFD644; --g-line:#332B44;
+    --b-bg:#F5F0E4; --b-acc:#8A5A33;
+    --w-bg:#FAFAF6; --w-acc:#156B4A; --w-cu:#A56A35;
+    --pc-a:#E8A33D; --pc-b:#E9E4D8;
+    --nav-acc:#E8A33D;
   }
   * { box-sizing:border-box; }
   html { scroll-behavior:smooth; }
-  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.8;
+  body { margin:0; background:var(--ink); color:var(--txt-d); line-height:1.8;
          font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
-         overflow-x:hidden;
-         background-image:radial-gradient(1100px 620px at 72% -12%, var(--glow), transparent 62%); }
-  /* 极薄ノイズ（静的・アニメなし） */
-  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.05;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"); }
-  .wrap { position:relative; z-index:1; max-width:860px; margin:0 auto; padding:56px 20px 72px; }
+         overflow-x:hidden; }
   .jp-head { font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; font-weight:700; }
+  section { scroll-margin-top:64px; }
+  .in { max-width:960px; margin:0 auto; padding:0 22px; }
 
-  /* ---- hero（左テキスト×右 点群ディスク） ---- */
-  .hero { display:grid; grid-template-columns:minmax(0,1fr) minmax(220px,300px); gap:8px 28px;
-          align-items:center; padding:20px 0 6px; }
+  /* ---- 0. 固定ナビ（透明→黒鉛・下線色はセクション同期） ---- */
+  nav { position:fixed; inset:0 0 auto; z-index:10; transition:background .25s, border-color .25s;
+        border-bottom:1px solid transparent; }
+  nav.on { background:rgba(12,13,18,.92); border-color:var(--line); backdrop-filter:blur(6px); }
+  nav .in { display:flex; align-items:center; gap:22px; height:56px; }
+  nav .logo { font-family:"Unbounded",-apple-system,sans-serif; font-weight:700; font-size:14px;
+              letter-spacing:.05em; color:var(--acc); text-decoration:none; margin-right:auto; }
+  nav .lk { position:relative; color:var(--txt-d); text-decoration:none; font-size:13.5px; padding:4px 2px; }
+  nav .lk::after { content:""; position:absolute; left:0; right:100%; bottom:-2px; height:3px;
+                   background:var(--nav-acc); border-radius:2px; transition:right .25s, background .25s; }
+  nav .lk.act::after { right:0; }
+  nav .x-btn { display:inline-flex; align-items:center; gap:7px; font-size:12.5px; color:var(--ink);
+               background:var(--acc); text-decoration:none; font-weight:bold; border-radius:18px; padding:6px 14px; }
+  nav .x-btn:hover { background:var(--acc-hover); }
+  nav .x-btn svg { width:13px; height:13px; }
+  @media (max-width:560px) { nav .x-btn { display:none; } nav .in { gap:16px; } }
+
+  /* ---- 1. ヒーロー（黒鉛×琥珀） ---- */
+  .hero { background:var(--ink) radial-gradient(1100px 620px at 72% -12%, rgba(232,163,61,.12), transparent 62%);
+          position:relative; overflow:hidden; padding:118px 0 64px; }
+  .hero::before { content:""; position:absolute; inset:0; pointer-events:none; opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"); }
+  .hero .in { display:grid; grid-template-columns:minmax(0,1fr) minmax(220px,300px); gap:8px 28px;
+              align-items:center; position:relative; }
   .hero-tx { min-width:0; container-type:inline-size; }
-  .mark { font-family:"Unbounded",-apple-system,sans-serif; font-weight:700; letter-spacing:.05em;
-          font-size:14px; color:var(--acc); display:inline-block; margin-bottom:22px;
-          padding:5px 14px; border:1px solid var(--line); border-radius:20px; background:var(--panel); }
   .hero h1 { font-size:clamp(38px,min(8vw,12.2cqw),64px); line-height:1.25; margin:0 0 16px; letter-spacing:.01em; }
   .hero h1 .l { display:block; white-space:nowrap; }
-  .hero .sub { color:var(--sub); font-size:15.5px; margin:0; max-width:34em; }
-  .cue { display:inline-block; margin:26px 0 0; color:var(--acc); font-size:13px; text-decoration:none; letter-spacing:.06em; }
-  .cue:hover { color:var(--acc-hover); }
+  .hero .sub { color:var(--sub-d); font-size:15.5px; margin:0; max-width:34em; }
   .disk-box { position:relative; aspect-ratio:1; min-width:0; }
   #disk { width:100%; height:100%; display:block; touch-action:pan-y; }
   @media (max-width:760px) {
-    .hero { grid-template-columns:1fr; }
+    .hero .in { grid-template-columns:1fr; }
     .disk-box { max-width:300px; margin:6px auto 0; width:78%; }
     .hero h1 { font-size:clamp(34px,9.2vw,56px); }
   }
 
-  h2.sec { font-size:13px; color:var(--sub); letter-spacing:.2em; margin:56px 0 16px; }
-  h2.sec::before { content:""; display:inline-block; width:18px; height:2px; background:var(--acc);
-                   vertical-align:middle; margin-right:10px; }
+  h2.sec { font-size:clamp(22px,3.4vw,28px); margin:0 0 6px; letter-spacing:.02em; }
+  .sec-en { font-family:"Unbounded",-apple-system,sans-serif; font-size:11px; letter-spacing:.22em;
+            display:block; margin-bottom:10px; }
 
-  /* ---- business cards (world previews / v3配色) ---- */
-  .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(230px,1fr)); gap:16px; }
-  .card { border:1px solid var(--line); border-radius:16px; padding:0; text-decoration:none; color:inherit;
-          display:flex; flex-direction:column; overflow:hidden;
-          transition:transform .16s, border-color .16s, box-shadow .16s; }
-  .card:hover { transform:translateY(-5px); border-color:var(--acc); box-shadow:0 12px 34px rgba(0,0,0,.28); }
-  .card .prev { height:78px; display:flex; align-items:center; justify-content:center; position:relative; }
-  .card .body { background:var(--panel); padding:15px 17px 17px; flex:1; display:flex; flex-direction:column; gap:7px; }
-  .card .nm { font-size:16px; }
-  .card .ds { font-size:13px; color:var(--sub); flex:1; }
-  .card .go { font-size:12.5px; color:var(--acc); margin-top:5px; }
-  /* games preview = 夜のアーケード（紫黒×マゼンタ） */
-  .prev-games { background:
-      repeating-linear-gradient(0deg,#131019,#131019 6px,#1C1727 6px,#1C1727 12px),
-      repeating-linear-gradient(90deg,transparent,transparent 11px,rgba(255,77,157,.07) 11px,rgba(255,77,157,.07) 12px); }
-  .prev-games .px { width:14px; height:14px; background:#FF4D9D; image-rendering:pixelated; box-shadow:
-      0 0 0 0 #FF4D9D, 16px 0 0 0 #FFD644, 0 16px 0 0 #FFD644, 16px 16px 0 0 #FF4D9D; }
-  /* blog preview = 生成り×胡桃×明朝 */
-  .prev-blog { background:#F5F0E4; }
-  .prev-blog .mj { color:#8A5A33; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-size:26px; letter-spacing:.1em; }
-  /* web preview = 暖白×常磐緑 */
-  .prev-web { background:#FAFAF6; }
-  .prev-web .win { width:120px; height:44px; border:1.5px solid #156B4A; border-radius:5px; position:relative; background:#FAFAF6; }
-  .prev-web .win::before { content:""; position:absolute; left:0; right:0; top:0; height:11px;
-      background:#156B4A; border-radius:3px 3px 0 0; }
-  .prev-web .win::after { content:""; position:absolute; left:10px; top:20px; width:56px; height:5px;
-      background:#CBDCD2; box-shadow:0 9px 0 #DCE8E0, 0 18px 0 #A56A35; border-radius:3px; }
+  /* ---- 2. ニュース（白×琥珀濃） ---- */
+  .news { background:var(--paper); color:var(--txt-l); padding:64px 0 68px; }
+  .news .sec-en { color:var(--amber-deep); }
+  .news ul { list-style:none; margin:22px 0 0; padding:0; border-top:1px solid var(--line-l); }
+  .news li { border-bottom:1px solid var(--line-l); }
+  .news li a { display:flex; align-items:baseline; gap:14px; padding:15px 6px; text-decoration:none;
+               color:inherit; flex-wrap:wrap; transition:background .14s; }
+  .news li a:hover { background:rgba(184,122,31,.06); }
+  .news .dt { flex:none; font-size:13px; color:var(--sub-l); font-variant-numeric:tabular-nums; letter-spacing:.03em; }
+  .news .tag { flex:none; font-size:11.5px; font-weight:bold; letter-spacing:.06em; border-radius:4px;
+               padding:2px 9px; color:#fff; }
+  .news .tag.g { background:#C21F6B; } .news .tag.b { background:var(--b-acc); } .news .tag.w { background:var(--w-acc); }
+  .news .tt { flex:1 1 16em; font-size:14.5px; min-width:0; }
+  .news .more { display:inline-block; margin-top:18px; color:var(--amber-deep); font-size:13.5px;
+                text-decoration:none; font-weight:bold; }
+  .news .more:hover { text-decoration:underline; }
 
-  /* ---- timeline ---- */
-  .timeline { position:relative; margin:4px 0 0; padding-left:26px; }
+  /* ---- 3. D-studyLabとは（生成り×墨） ---- */
+  .about { background:var(--kinari); color:var(--txt-l); padding:64px 0 68px; }
+  .about .sec-en { color:var(--sub-l); }
+  .about .lead { font-size:15.5px; max-width:40em; margin:14px 0 0; }
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-top:32px; }
+  .stat { border:1px solid var(--line-l); border-radius:12px; background:rgba(255,255,255,.55); padding:18px 18px 15px; }
+  .stat .v { font-family:"Unbounded",-apple-system,sans-serif; font-size:clamp(22px,3vw,30px); color:var(--txt-l); line-height:1.2; }
+  .stat .v small { font-size:14px; font-family:inherit; }
+  .stat .k { font-size:12.5px; color:var(--sub-l); margin-top:5px; letter-spacing:.05em; }
+
+  /* ---- 4. 事業紹介（全幅の帯×3・帯ごとに世界が変わる） ---- */
+  .biz-head { background:var(--paper); color:var(--txt-l); padding:56px 0 30px; }
+  .biz-head .sec-en { color:var(--amber-deep); }
+  .band { padding:58px 0 62px; }
+  .band .in { display:grid; grid-template-columns:minmax(0,1fr) minmax(200px,300px); gap:20px 40px; align-items:center; }
+  @media (max-width:700px) { .band .in { grid-template-columns:1fr; } }
+  .band h3 { font-size:clamp(21px,3vw,26px); margin:0 0 12px; }
+  .band p { font-size:14.5px; margin:0 0 6px; max-width:36em; }
+  .band .cta { display:inline-block; margin-top:16px; text-decoration:none; font-weight:bold; font-size:14px;
+               border-radius:10px; padding:10px 22px; transition:opacity .15s; }
+  .band .cta:hover { opacity:.85; }
+  .band .pv { display:flex; align-items:center; justify-content:center; min-height:120px; border-radius:14px; }
+  /* ① games = 夜のアーケード */
+  .band-g { background:var(--g-bg); color:#EFEAF6; }
+  .band-g h3 { font-family:"DotGothic16",monospace; font-weight:400; color:var(--g-acc); letter-spacing:.04em; }
+  .band-g p { color:#C9C2D6; }
+  .band-g .cta { background:var(--g-acc); color:var(--g-bg); }
+  .band-g .pv { background:
+      repeating-linear-gradient(0deg,#17131F,#17131F 6px,#1C1727 6px,#1C1727 12px),
+      repeating-linear-gradient(90deg,transparent,transparent 11px,rgba(255,77,157,.07) 11px,rgba(255,77,157,.07) 12px);
+      border:1px solid var(--g-line); }
+  .band-g .px { width:16px; height:16px; background:var(--g-acc); image-rendering:pixelated; box-shadow:
+      0 0 0 0 var(--g-acc), 19px 0 0 0 var(--g-sub), 0 19px 0 0 var(--g-sub), 19px 19px 0 0 var(--g-acc); }
+  /* ② blog = 生成りの便箋 */
+  .band-b { background:var(--b-bg); color:#2A241E; }
+  .band-b h3 { font-family:"Hiragino Mincho ProN","Yu Mincho",serif; color:var(--b-acc); letter-spacing:.06em; }
+  .band-b p { color:#4C4438; }
+  .band-b .cta { background:var(--b-acc); color:#FBF8F0; }
+  .band-b .pv { background:#FBF8F0; border:1px solid #E4DCC8; }
+  .band-b .mj { color:var(--b-acc); font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-size:30px; letter-spacing:.12em; }
+  /* ③ web = 岩手の工房 */
+  .band-w { background:var(--w-bg); color:#20221F; }
+  .band-w h3 { font-family:"Zen Old Mincho","Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; color:var(--w-acc); letter-spacing:.05em; }
+  .band-w p { color:#4A4C46; }
+  .band-w .cta { background:var(--w-acc); color:#FAFAF6; }
+  .band-w .pv { background:#fff; border:1px solid #E2E0D8; }
+  .band-w .win { width:150px; height:56px; border:1.5px solid var(--w-acc); border-radius:6px; position:relative; background:var(--w-bg); }
+  .band-w .win::before { content:""; position:absolute; left:0; right:0; top:0; height:14px;
+      background:var(--w-acc); border-radius:4px 4px 0 0; }
+  .band-w .win::after { content:""; position:absolute; left:12px; top:25px; width:72px; height:6px;
+      background:#CBDCD2; box-shadow:0 11px 0 #DCE8E0, 0 22px 0 var(--w-cu); border-radius:3px; }
+
+  /* ---- 5. プロフィール（黒鉛に回帰） ---- */
+  .profile { background:var(--ink); color:var(--txt-d); padding:66px 0 70px; position:relative; overflow:hidden; }
+  .profile::before { content:""; position:absolute; inset:0; pointer-events:none; opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"); }
+  .profile .in { position:relative; }
+  .profile .sec-en { color:var(--acc); }
+  .timeline { position:relative; margin:26px 0 0; padding-left:26px; }
   .timeline::before { content:""; position:absolute; left:6px; top:6px; bottom:6px; width:2px;
       background:linear-gradient(var(--acc),var(--porcelain)); opacity:.45; }
   .tl { position:relative; margin-bottom:26px; }
   .tl::before { content:""; position:absolute; left:-26px; top:5px; width:12px; height:12px; border-radius:50%;
-      background:var(--bg); border:2px solid var(--acc); }
+      background:var(--ink); border:2px solid var(--acc); }
   .tl .k { font-size:12.5px; color:var(--acc); font-weight:bold; letter-spacing:.08em; margin-bottom:2px; }
   .tl .h { font-size:16.5px; margin:0 0 4px; }
-  .tl .p { font-size:14px; color:var(--sub); margin:0; }
+  .tl .p { font-size:14px; color:var(--sub-d); margin:0; }
+  .profile .more { font-size:13px; color:var(--sub-d); margin:2px 0 0; }
+  .profile .more a { color:var(--acc); }
 
-  /* ---- activity log ---- */
-  .log { border:1px solid var(--line); border-radius:16px; overflow:hidden; background:var(--panel); }
-  .log a { display:flex; align-items:center; gap:12px; padding:12px 16px; text-decoration:none; color:inherit;
-           border-bottom:1px solid var(--line); transition:background .14s; }
-  .log a:last-child { border-bottom:0; }
-  .log a:hover { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); }
-  .log .ic { flex:none; width:22px; height:22px; color:var(--acc); }
-  .log .ic svg { width:22px; height:22px; display:block; }
-  .log .tt { flex:1; font-size:14px; }
-  .log .dt { flex:none; font-size:12px; color:var(--sub); font-variant-numeric:tabular-nums; }
-
-  /* ---- sns ---- */
-  .sns { display:flex; flex-wrap:wrap; gap:11px; }
-  .sns a { display:inline-flex; align-items:center; gap:8px; font-size:13.5px; text-decoration:none;
-           color:var(--txt); border:1px solid var(--line); border-radius:22px; padding:8px 16px; background:var(--panel);
+  /* ---- 6. フッター（墨・コーポレート式） ---- */
+  footer { background:var(--ink2); color:var(--sub-d); padding:52px 0 40px; border-top:1px solid var(--line); }
+  .fmap { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:26px; }
+  .fmap .col h4 { font-size:12px; letter-spacing:.16em; color:var(--sub-d); margin:0 0 12px; }
+  .fmap .col a { display:block; color:var(--txt-d); text-decoration:none; font-size:13.5px; margin-bottom:9px; }
+  .fmap .col a:hover { color:var(--acc); }
+  .sns { display:flex; flex-wrap:wrap; gap:10px; }
+  .sns a { display:inline-flex; align-items:center; gap:7px; font-size:13px; text-decoration:none;
+           color:var(--txt-d); border:1px solid var(--line); border-radius:20px; padding:7px 14px;
            transition:border-color .14s, color .14s; }
   .sns a:hover { border-color:var(--acc); color:var(--acc); }
-  .sns svg { width:18px; height:18px; }
+  .sns svg { width:16px; height:16px; }
+  .copy { margin-top:36px; padding-top:18px; border-top:1px solid var(--line); font-size:12px;
+          display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+  .copy .logo { font-family:"Unbounded",-apple-system,sans-serif; color:var(--acc); font-size:12px; letter-spacing:.05em; }
 
-  footer { margin-top:44px; color:var(--sub); font-size:12px; text-align:center; line-height:2.1; }
-  footer a { color:var(--acc); }
-
-  /* ---- entry & scroll animations（合計≤1秒で静止） ---- */
-  .fade { opacity:0; transform:translateY(14px); }
-  .hero .fade { animation:up .5s ease forwards; }
-  .hero .mark { animation-delay:0s; } .hero h1 { animation-delay:.12s; }
-  .hero .sub { animation-delay:.30s; } .hero .cue { animation-delay:.44s; }
+  /* ---- entry & scroll animations（各要素0.5秒・1回） ---- */
+  .fade { opacity:0; transform:translateY(14px); animation:up .5s ease forwards; }
+  .hero .l:nth-child(2) { animation-delay:.12s; } .hero .sub { animation-delay:.30s; }
   @keyframes up { to { opacity:1; transform:none; } }
   .reveal { opacity:0; transform:translateY(12px); transition:opacity .5s ease, transform .5s ease; }
-  .reveal.in { opacity:1; transform:none; }
+  .reveal.vis { opacity:1; transform:none; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior:auto; }
     .fade, .reveal { opacity:1 !important; transform:none !important; animation:none !important; transition:none !important; }
+    nav .lk::after { transition:none; }
   }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <div class="hero">
+<nav id="nav" aria-label="サイト内">
+  <div class="in">
+    <a class="logo" href="/">D-studyLab</a>
+    <a class="lk" href="#business" data-k="business">事業</a>
+    <a class="lk" href="#news" data-k="news">ニュース</a>
+    <a class="lk" href="#profile" data-k="profile">プロフィール</a>
+    <a class="x-btn" href="https://x.com/info_prog_study" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2.5h3.3l-7.2 8.2 8.5 11.3h-6.7l-5.2-6.9-6 6.9H1.5l7.7-8.8L1 2.5h6.8l4.7 6.3zm-1.2 17.8h1.8L7.1 4.4H5.2z"/></svg>
+      相談・連絡
+    </a>
+  </div>
+</nav>
+
+<!-- 1. ヒーロー -->
+<section class="hero" id="top" data-acc="#E8A33D" data-k="">
+  <div class="in">
     <div class="hero-tx">
-      <span class="mark fade">D-studyLab</span>
       <h1 class="jp-head"><span class="l fade">考えたら、作る。</span><span class="l fade">作ったら、出す。</span></h1>
       <p class="sub fade">研究とものづくりを行き来する、岩手の個人ラボ。ブラウザゲーム・地酒と開発のブログ・お店のウェブ制作——ぜんぶ「小さく作ってすぐ出す」で回しています。</p>
-      <a class="cue fade" href="#doing">▼ やっていること</a>
     </div>
     <div class="disk-box" aria-hidden="true"><canvas id="disk"></canvas></div>
   </div>
+</section>
 
-  <h2 class="sec jp-head reveal" id="doing">やっていること</h2>
-  <div class="grid">
-    <a class="card reveal" href="/games/">
-      <div class="prev prev-games"><div class="px"></div></div>
-      <div class="body">
-        <div class="nm jp-head">ミニゲームゲームズ</div>
-        <div class="ds">3日に1本のペースで増える、ブラウザで遊べるミニゲームの屋台。空間認識・確率・AI対戦を、3分で体感できる形に。全部無料・インストール不要・スマホOK。現在11本。</div>
-        <div class="go">▶ 遊びに行く</div>
-      </div>
-    </a>
-    <a class="card reveal" href="/blog/">
-      <div class="prev prev-blog"><span class="mj">酒と、道具</span></div>
-      <div class="body">
-        <div class="nm jp-head">ブログ</div>
-        <div class="ds">岩手の地酒を1蔵ずつ味わうレビューと、AIと組んで1日1ゲーム作る開発環境の話。飲むもの・作るもの、どちらも「実際にやってみた」だけを書いています。</div>
-        <div class="go">▶ 読みに行く</div>
-      </div>
-    </a>
-    <a class="card reveal" href="/web/">
-      <div class="prev prev-web"><div class="win"></div></div>
-      <div class="body">
-        <div class="nm jp-head">まちのウェブ屋さん</div>
-        <div class="ds">お店の「ウェブどうしよう」を小さく解決する制作屋。作って動かしているサイトの実例つき。難しい言葉を使わずに、必要なぶんだけ作ります。</div>
-        <div class="go">▶ 相談してみる</div>
-      </div>
-    </a>
+<!-- 2. ニュース -->
+<section class="news" id="news" data-acc="#E8A33D" data-k="news">
+  <div class="in">
+    <span class="sec-en">NEWS</span>
+    <h2 class="sec jp-head reveal">ニュース</h2>
+    <ul class="reveal">
+      <li><a href="/"><span class="dt">2026.07.22</span><span class="tag w">サイト</span><span class="tt">D-studyLab 公式サイトを公開しました</span></a></li>
+      <li><a href="/tsumi-battle/" target="_blank" rel="noopener"><span class="dt">2026.07.21</span><span class="tag g">ゲーム</span><span class="tt">「積みバトル」を公開——先読みAIと崩さず積む</span></a></li>
+      <li><a href="/answer-shoot/" target="_blank" rel="noopener"><span class="dt">2026.07.21</span><span class="tag g">ゲーム</span><span class="tt">「アンサーシュート」を公開——答えを届けるクイズ</span></a></li>
+      <li><a href="/yomiate/" target="_blank" rel="noopener"><span class="dt">2026.07.21</span><span class="tag g">ゲーム</span><span class="tt">「ヨミアテ」を公開——情報を「買う」数字当て</span></a></li>
+      <li><a href="/blog/kikunotsukasa.html"><span class="dt">2026.07.21</span><span class="tag b">記事</span><span class="tt">ブログ「菊の司——250年目の引っ越し」を公開</span></a></li>
+      <li><a href="/blog/dev-setup.html"><span class="dt">2026.07.21</span><span class="tag b">記事</span><span class="tt">ブログ「AIと1日1ゲーム作る開発環境」を公開</span></a></li>
+    </ul>
+    <a class="more" href="/games/">作ったもの一覧 →</a>
   </div>
+</section>
 
-  <h2 class="sec jp-head reveal">プロフィール</h2>
-  <div class="timeline">
-    <div class="tl reveal">
-      <div class="k">いま</div>
-      <p class="h jp-head">個人ラボ D-studyLab として活動中</p>
-      <p class="p">ミニゲームを3日に1本公開するサイクル／お店のウェブ制作「まちのウェブ屋さん」／地酒と開発のブログ。かたわら塾講師として数学や情報を教えています。</p>
-    </div>
-    <div class="tl reveal">
-      <div class="k">研究</div>
-      <p class="h jp-head">岩手大学大学院で情報系の研究（修士・工学）</p>
-      <p class="p">文化財（古代瓦）を3Dスキャンした点群データから、形の類似を数理的に測る研究。学会発表・論文執筆も継続中です。</p>
-    </div>
-    <div class="tl reveal">
-      <div class="k">原点</div>
-      <p class="h jp-head">「読むよりさわった方が早い」</p>
-      <p class="p">むずかしい概念を、遊べる・動くかたちにして理解する。研究も、ゲームも、ウェブサイトも、根っこは同じです。</p>
+<!-- 3. D-studyLabとは -->
+<section class="about" id="about" data-acc="#E9E4D8" data-k="">
+  <div class="in">
+    <span class="sec-en">ABOUT</span>
+    <h2 class="sec jp-head reveal">D-studyLabとは</h2>
+    <p class="lead reveal">「読むよりさわった方が早い」——むずかしい概念を、遊べる・動くかたちにして理解する。それがこのラボの原点です。研究も、ゲームも、ウェブサイトも、根っこは同じ。考えたら作る、作ったら出す、を繰り返しています。</p>
+    <div class="stats">
+      <div class="stat reveal"><div class="v">11<small>本</small></div><div class="k">公開中のブラウザゲーム</div></div>
+      <div class="stat reveal"><div class="v">3<small>日に1本</small></div><div class="k">ミニゲームの制作サイクル</div></div>
+      <div class="stat reveal"><div class="v">2<small>サイト</small></div><div class="k">企画から運営まで自前</div></div>
     </div>
   </div>
-  <p style="font-size:13px;color:var(--sub);margin:2px 0 0;" class="reveal">→ もう少しくわしく：<a href="/about.html" style="color:var(--acc);">運営者情報</a></p>
+</section>
 
-  <h2 class="sec jp-head reveal">最近つくったもの・書いたもの</h2>
-  <div class="log reveal">
-    <a href="/">
-      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 4v5"/></svg></span>
-      <span class="tt">D-studyLab 公式サイトを公開</span><span class="dt">2026-07-22</span>
-    </a>
-    <a href="/tsumi-battle/" target="_blank" rel="noopener">
-      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="20" height="9" rx="4"/><path d="M7 12.5h3M8.5 11v3M15.5 12h.01M18 13.5h.01"/></svg></span>
-      <span class="tt">積みバトル（先読みAIと崩さず積む）</span><span class="dt">2026-07-21</span>
-    </a>
-    <a href="/answer-shoot/" target="_blank" rel="noopener">
-      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="20" height="9" rx="4"/><path d="M7 12.5h3M8.5 11v3M15.5 12h.01M18 13.5h.01"/></svg></span>
-      <span class="tt">アンサーシュート（答えを届けるクイズ）</span><span class="dt">2026-07-21</span>
-    </a>
-    <a href="/yomiate/" target="_blank" rel="noopener">
-      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="20" height="9" rx="4"/><path d="M7 12.5h3M8.5 11v3M15.5 12h.01M18 13.5h.01"/></svg></span>
-      <span class="tt">ヨミアテ（情報を「買う」数字当て）</span><span class="dt">2026-07-21</span>
-    </a>
-    <a href="/blog/kikunotsukasa.html">
-      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h9l3 3v13H4z"/><path d="M13 4v3h3M7 12h6M7 15h6"/></svg></span>
-      <span class="tt">ブログ「菊の司——250年目の引っ越し」</span><span class="dt">2026-07-21</span>
-    </a>
-    <a href="/blog/dev-setup.html">
-      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h9l3 3v13H4z"/><path d="M13 4v3h3M7 12h6M7 15h6"/></svg></span>
-      <span class="tt">ブログ「AIと1日1ゲーム作る開発環境」</span><span class="dt">2026-07-21</span>
-    </a>
-    <a href="/kage-ate/" target="_blank" rel="noopener">
-      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="20" height="9" rx="4"/><path d="M7 12.5h3M8.5 11v3M15.5 12h.01M18 13.5h.01"/></svg></span>
-      <span class="tt">かげ当てパズル（光から影を当てる）</span><span class="dt">2026-07-20</span>
-    </a>
-    <a href="/kukan-test/" target="_blank" rel="noopener">
-      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="20" height="9" rx="4"/><path d="M7 12.5h3M8.5 11v3M15.5 12h.01M18 13.5h.01"/></svg></span>
-      <span class="tt">空間認識偏差値テスト（頭の中で3Dを回す）</span><span class="dt">2026-07-20</span>
-    </a>
+<!-- 4. 事業紹介（帯×3） -->
+<div id="business">
+  <div class="biz-head">
+    <div class="in">
+      <span class="sec-en">SERVICES</span>
+      <h2 class="sec jp-head reveal">事業紹介</h2>
+    </div>
   </div>
-
-  <h2 class="sec jp-head reveal">つながる</h2>
-  <div class="sns reveal">
-    <a href="https://x.com/info_prog_study" target="_blank" rel="noopener" aria-label="X">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2.5h3.3l-7.2 8.2 8.5 11.3h-6.7l-5.2-6.9-6 6.9H1.5l7.7-8.8L1 2.5h6.8l4.7 6.3zm-1.2 17.8h1.8L7.1 4.4H5.2z"/></svg>
-      X
-    </a>
-    <a href="https://note.com/d_studylab" target="_blank" rel="noopener" aria-label="note">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8.5 16.5V9.5c0-.6.7-.9 1.1-.4l4.9 6.4c.4.5 1.1.2 1.1-.4V8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      note
-    </a>
-    <a href="https://zenn.dev/dstudylab" target="_blank" rel="noopener" aria-label="Zenn">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2.5 20.5 12 3.6a.6.6 0 0 1 1 .3v15.9a.6.6 0 0 1-.6.6H3a.6.6 0 0 1-.5-.9z"/><path d="M15.3 20.1 21.2 9.8a.5.5 0 0 1 .9.2v9.9a.5.5 0 0 1-.5.5h-6a.3.3 0 0 1-.3-.3z" opacity=".55"/></svg>
-      Zenn
-    </a>
-    <a href="https://github.com/D-studyLab" target="_blank" rel="noopener" aria-label="GitHub">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
-      GitHub
-    </a>
-  </div>
-
-  <footer>
-    <a href="/about.html">運営者情報</a> ・ <a href="/privacy.html">プライバシーポリシー</a><br>
-    © D-studyLab
-  </footer>
+  <section class="band band-g" data-acc="#FF4D9D" data-k="business">
+    <div class="in">
+      <div class="reveal">
+        <h3>ミニゲームゲームズ</h3>
+        <p>3日に1本のペースで増える、ブラウザで遊べるミニゲームの屋台。</p>
+        <p>空間認識・確率・AIとの読み合いを、3分で体感できる形に。</p>
+        <p>全部無料・インストール不要・スマホOK。現在11本。</p>
+        <a class="cta" href="/games/">▶ 遊びに行く</a>
+      </div>
+      <div class="pv reveal" aria-hidden="true"><div class="px"></div></div>
+    </div>
+  </section>
+  <section class="band band-b" data-acc="#C08A55" data-k="business">
+    <div class="in">
+      <div class="reveal">
+        <h3>ブログ「酒と、道具」</h3>
+        <p>岩手の地酒を1蔵ずつ味わうレビューと、AIと組んで1日1ゲーム作る開発環境の話。</p>
+        <p>飲むもの・作るもの、どちらも「実際にやってみた」ことだけを書いています。</p>
+        <a class="cta" href="/blog/">▶ 読みに行く</a>
+      </div>
+      <div class="pv reveal" aria-hidden="true"><span class="mj">酒と、道具</span></div>
+    </div>
+  </section>
+  <section class="band band-w" data-acc="#35A574" data-k="business">
+    <div class="in">
+      <div class="reveal">
+        <h3>まちのウェブ屋さん</h3>
+        <p>お店の「ウェブどうしよう」を、必要なぶんだけ小さく解決する制作屋。</p>
+        <p>作って動かしているサイトの実例つき。難しい言葉は使いません。</p>
+        <a class="cta" href="/web/">▶ 相談してみる</a>
+      </div>
+      <div class="pv reveal" aria-hidden="true"><div class="win"></div></div>
+    </div>
+  </section>
 </div>
+
+<!-- 5. プロフィール -->
+<section class="profile" id="profile" data-acc="#E8A33D" data-k="profile">
+  <div class="in">
+    <span class="sec-en">PROFILE</span>
+    <h2 class="sec jp-head reveal">プロフィール</h2>
+    <div class="timeline">
+      <div class="tl reveal">
+        <div class="k">いま</div>
+        <p class="h jp-head">個人ラボ D-studyLab として活動中</p>
+        <p class="p">ミニゲームを3日に1本公開するサイクル／お店のウェブ制作「まちのウェブ屋さん」／地酒と開発のブログ。かたわら塾講師として数学や情報を教えています。</p>
+      </div>
+      <div class="tl reveal">
+        <div class="k">研究</div>
+        <p class="h jp-head">岩手大学大学院で情報系の研究（修士・工学）</p>
+        <p class="p">文化財（古代瓦）を3Dスキャンした点群データから、形の類似を数理的に測る研究。学会発表・論文執筆も継続中です。</p>
+      </div>
+      <div class="tl reveal">
+        <div class="k">原点</div>
+        <p class="h jp-head">「読むよりさわった方が早い」</p>
+        <p class="p">むずかしい概念を、遊べる・動くかたちにして理解する。研究も、ゲームも、ウェブサイトも、根っこは同じです。</p>
+      </div>
+    </div>
+    <p class="more reveal">→ もう少しくわしく：<a href="/about.html">運営者情報</a></p>
+  </div>
+</section>
+
+<!-- 6. フッター -->
+<footer>
+  <div class="in">
+    <div class="fmap">
+      <div class="col">
+        <h4>事業</h4>
+        <a href="/games/">ミニゲームゲームズ</a>
+        <a href="/blog/">ブログ「酒と、道具」</a>
+        <a href="/web/">まちのウェブ屋さん</a>
+      </div>
+      <div class="col">
+        <h4>サイト情報</h4>
+        <a href="/about.html">運営者情報</a>
+        <a href="/privacy.html">プライバシーポリシー</a>
+      </div>
+      <div class="col">
+        <h4>つながる</h4>
+        <div class="sns">
+          <a href="https://x.com/info_prog_study" target="_blank" rel="noopener" aria-label="X">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2.5h3.3l-7.2 8.2 8.5 11.3h-6.7l-5.2-6.9-6 6.9H1.5l7.7-8.8L1 2.5h6.8l4.7 6.3zm-1.2 17.8h1.8L7.1 4.4H5.2z"/></svg>
+            X
+          </a>
+          <a href="https://note.com/d_studylab" target="_blank" rel="noopener" aria-label="note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8.5 16.5V9.5c0-.6.7-.9 1.1-.4l4.9 6.4c.4.5 1.1.2 1.1-.4V8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            note
+          </a>
+          <a href="https://zenn.dev/dstudylab" target="_blank" rel="noopener" aria-label="Zenn">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2.5 20.5 12 3.6a.6.6 0 0 1 1 .3v15.9a.6.6 0 0 1-.6.6H3a.6.6 0 0 1-.5-.9z"/><path d="M15.3 20.1 21.2 9.8a.5.5 0 0 1 .9.2v9.9a.5.5 0 0 1-.5.5h-6a.3.3 0 0 1-.3-.3z" opacity=".55"/></svg>
+            Zenn
+          </a>
+          <a href="https://github.com/D-studyLab" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="copy"><span class="logo">D-studyLab</span><span>© D-studyLab</span></div>
+  </div>
+</footer>
 
 <script>
 "use strict";
@@ -294,18 +401,14 @@
   for (let i = 0; i < 130; i++)                       // 全体に薄く散布
     P.push({ r: Math.sqrt(rand()) * .99, a: rand() * Math.PI * 2, y: (rand() - .5) * .03 });
   for (const p of P) p.t = Math.min(1, Math.max(0, p.r * .75 + rand() * .35)); // 色相ミックス係数
-  // テーマの2色（琥珀→白磁）を読み、8段の色バケツを作る
-  let cols = [];
-  function palette() {
-    const cs = getComputedStyle(document.documentElement);
-    const pa = cs.getPropertyValue('--pc-a').trim(), pb = cs.getPropertyValue('--pc-b').trim();
-    const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
-    const A = hex(pa), B = hex(pb);
-    cols = Array.from({ length: 8 }, (_, i) => {
-      const t = i / 7, m = A.map((v, j) => Math.round(v + (B[j] - v) * t));
-      return `rgb(${m[0]},${m[1]},${m[2]})`;
-    });
-  }
+  // 琥珀→白磁の8段色バケツ
+  const cs = getComputedStyle(document.documentElement);
+  const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const A = hex(cs.getPropertyValue('--pc-a').trim()), B = hex(cs.getPropertyValue('--pc-b').trim());
+  const cols = Array.from({ length: 8 }, (_, i) => {
+    const t = i / 7, m = A.map((v, j) => Math.round(v + (B[j] - v) * t));
+    return `rgb(${m[0]},${m[1]},${m[2]})`;
+  });
   let W = 0, H = 0, raf = 0, tx = 0, ty = 0, cx2 = 0, cy2 = 0; // 目標傾き/現在傾き(慣性)
   function resize() {
     const d = Math.min(devicePixelRatio || 1, 2), r = c.parentElement.getBoundingClientRect();
@@ -342,22 +445,39 @@
     if (document.hidden) { cancelAnimationFrame(raf); raf = 0; }
     else if (!reduce && !raf) raf = requestAnimationFrame(loop);
   });
-  matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => { palette(); if (reduce) draw(.9); });
-  palette(); resize();
+  resize();
   if (reduce) draw(.9); else raf = requestAnimationFrame(loop);       // reduced-motion=静止画1枚
+})();
+// ---- 固定ナビ: スクロールで背景・下線色をセクションに同期 ----
+(function () {
+  const nav = document.getElementById('nav');
+  const links = [...nav.querySelectorAll('.lk')];
+  const secs = [...document.querySelectorAll('[data-acc]')];
+  function onScroll() { nav.classList.toggle('on', scrollY > 40); }
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  // 画面中央にあるセクションを現在地とみなす
+  const io = new IntersectionObserver(ents => {
+    for (const en of ents) if (en.isIntersecting) {
+      const el = en.target;
+      document.documentElement.style.setProperty('--nav-acc', el.dataset.acc);
+      links.forEach(l => l.classList.toggle('act', !!el.dataset.k && l.dataset.k === el.dataset.k));
+    }
+  }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+  secs.forEach(s => io.observe(s));
 })();
 // ---- スクロール出現（1要素1回・stagger 80ms） ----
 (function () {
   const els = document.querySelectorAll('.reveal');
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    els.forEach(e => e.classList.add('in')); return;
+    els.forEach(e => e.classList.add('vis')); return;
   }
   const io = new IntersectionObserver((ents, o) => {
     let i = 0;
     for (const en of ents) if (en.isIntersecting) {
       const el = en.target;
       el.style.transitionDelay = (i++ * 80) + 'ms';
-      el.classList.add('in'); o.unobserve(el);
+      el.classList.add('vis'); o.unobserve(el);
     }
   }, { threshold: 0.12 });
   els.forEach(e => io.observe(e));
