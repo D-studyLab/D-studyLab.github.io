@@ -14,12 +14,12 @@
     font-family:"DotGothic16"; font-style:normal; font-weight:400;
     font-display:swap; src:url("/assets/fonts/DotGothic16-subset.woff2") format("woff2");
   }
-  :root { --bg:#0c0f1a; --panel:#141a2b; --line:#2c3654; --txt:#e7ecfb; --sub:#93a0c4;
-          --acc:#4af; --good:#6bdf9a; --bad:#ff5db1; --gold:#ffd23f; }
+  :root { --bg:#131019; --panel:#1C1727; --line:#332B44; --txt:#EFEAF6; --sub:#A79DBE;
+          --acc:#FF4D9D; --good:#6bdf9a; --bad:#ff5db1; --gold:#FFD644; --play-tx:#131019; }
   @media (prefers-color-scheme: light) {
-    /* ゲームボーイ風 淡緑グレー（games世界観の軽量版） */
-    :root { --bg:#c7d0bd; --panel:#dbe2cf; --line:#8a9679; --txt:#20281a; --sub:#4c5a3d;
-            --acc:#2b6d8f; --good:#1f8a52; --bad:#a83b73; --gold:#7a6410; }
+    /* 明灰（緑黄の色被りなし）×濃マゼンタ×深紫（games世界観の軽量版） */
+    :root { --bg:#F1EFEA; --panel:#FBFAF7; --line:#B9B0C9; --txt:#26222E; --sub:#5C5566;
+            --acc:#C21F6B; --good:#1f8a52; --bad:#a83b73; --gold:#4A2C82; --play-tx:#FFFFFF; }
   }
   * { box-sizing:border-box; }
   body { margin:0; background:var(--bg); color:var(--txt); line-height:1.9;
@@ -31,7 +31,7 @@
   .hero .emj { font-size:52px; line-height:1; }
   h1 { font-size:23px; margin:0; }
   .meta { color:var(--sub); font-size:13px; margin:2px 0 20px; }
-  .play { display:inline-block; background:var(--acc); color:#08202f; font-weight:bold;
+  .play { display:inline-block; background:var(--acc); color:var(--play-tx); font-weight:bold;
           text-decoration:none; border-radius:10px; padding:11px 22px; font-size:15px; margin:6px 0 26px; }
   h2 { font-size:18px; margin:30px 0 8px; padding-left:11px; border-left:4px solid var(--acc); }
   p { font-size:15.5px; }
