@@ -60,8 +60,8 @@
   nav.on { background:rgba(12,13,18,.92); border-color:var(--line); backdrop-filter:blur(6px); }
   nav .in { display:flex; align-items:center; gap:22px; height:56px; }
   nav .logo { font-family:"Unbounded",-apple-system,sans-serif; font-weight:700; font-size:14px;
-              letter-spacing:.05em; color:var(--acc); text-decoration:none; margin-right:auto; }
-  nav .lk { position:relative; color:var(--txt-d); text-decoration:none; font-size:13.5px; padding:4px 2px; }
+              letter-spacing:.05em; color:var(--acc); text-decoration:none; margin-right:auto; white-space:nowrap; flex:none; }
+  nav .lk { position:relative; color:var(--txt-d); text-decoration:none; font-size:13.5px; padding:4px 2px; white-space:nowrap; flex:none; }
   nav .lk::after { content:""; position:absolute; left:0; right:100%; bottom:-2px; height:3px;
                    background:var(--nav-acc); border-radius:2px; transition:right .25s, background .25s; }
   nav .lk.act::after { right:0; }
@@ -69,7 +69,12 @@
                background:var(--acc); text-decoration:none; font-weight:bold; border-radius:18px; padding:6px 14px; }
   nav .x-btn:hover { background:var(--acc-hover); }
   nav .x-btn svg { width:13px; height:13px; }
-  @media (max-width:560px) { nav .x-btn { display:none; } nav .in { gap:16px; } }
+  @media (max-width:860px) { nav .in { gap:15px; } nav .lk { font-size:12.5px; } }
+  @media (max-width:700px) { nav .x-btn { display:none; } nav .in { gap:13px; } }
+  @media (max-width:460px) { nav .in { gap:8px; padding:0 10px; } nav .lk { font-size:11.5px; letter-spacing:0; }
+                             nav .logo { font-size:11.5px; letter-spacing:.02em; } }
+  @media (max-width:374px) { nav .in { gap:6px; } nav .lk { font-size:10.5px; } nav .logo { font-size:10.5px; } }
+  @media (max-width:345px) { nav .logo { display:none; } nav .in { justify-content:center; } }
 
   /* ---- 1. ヒーロー（黒鉛×琥珀） ---- */
   .hero { background:var(--ink) radial-gradient(1100px 620px at 72% -12%, rgba(232,163,61,.12), transparent 62%);
@@ -98,8 +103,7 @@
   .hero-pg img.p-sleep { height:auto; width:min(52vw,300px); }
   /* 点滅根治: src差し替え禁止→全フレームを重ねてopacity切替（§17.3-b） */
   .hero-pg[data-pose="hero"] .p-hero, .hero-pg[data-pose="blink"] .p-blink,
-  .hero-pg[data-pose="tilt"] .p-tilt, .hero-pg[data-pose="greet"] .p-greet,
-  .hero-pg[data-pose="sleep"] .p-sleep { opacity:1; }
+  .hero-pg[data-pose="tilt"] .p-tilt, .hero-pg[data-pose="sleep"] .p-sleep { opacity:1; }
   @keyframes pg-breathe { 0%,100%{transform:translateY(0)} 50%{transform:translateY(3px)} }
   .hero-pg.jump img { animation:pg-jump .55s cubic-bezier(.3,.7,.4,1); }
   @keyframes pg-jump {
@@ -323,8 +327,9 @@
 <nav id="nav" aria-label="サイト内">
   <div class="in">
     <a class="logo" href="/">D-studyLab</a>
-    <a class="lk" href="#business" data-k="business">事業</a>
     <a class="lk" href="#news" data-k="news">ニュース</a>
+    <a class="lk" href="#about" data-k="about">D-studyLabとは</a>
+    <a class="lk" href="#business" data-k="business">事業紹介</a>
     <a class="lk" href="#profile" data-k="profile">プロフィール</a>
     <a class="x-btn" href="https://x.com/info_prog_study" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2.5h3.3l-7.2 8.2 8.5 11.3h-6.7l-5.2-6.9-6 6.9H1.5l7.7-8.8L1 2.5h6.8l4.7 6.3zm-1.2 17.8h1.8L7.1 4.4H5.2z"/></svg>
@@ -346,7 +351,6 @@
         <img class="p-hero" src="/assets/mascot/hero.webp" alt="" width="465" height="720" decoding="async">
         <img class="p-blink" src="/assets/mascot/blink.webp" alt="" width="465" height="720" decoding="async">
         <img class="p-tilt" src="/assets/mascot/tilt.webp" alt="" width="265" height="340" decoding="async">
-        <img class="p-greet" src="/assets/mascot/greet.webp" alt="" width="307" height="368" decoding="async">
         <img class="p-sleep" src="/assets/mascot/sleep.webp" alt="" width="357" height="226" decoding="async">
       </div>
       <div class="zzz" id="pgZzz"><span>z</span><span>z</span><span>z</span></div>    </div>
@@ -371,7 +375,7 @@
 </section>
 
 <!-- 3. D-studyLabとは -->
-<section class="about" id="about" data-acc="#E9E4D8" data-k="" style="position:relative">
+<section class="about" id="about" data-acc="#E9E4D8" data-k="about" style="position:relative">
   <div class="tracks" aria-hidden="true"></div>
   <div class="in" style="position:relative">
     <span class="sec-en">ABOUT</span>
@@ -643,12 +647,11 @@
   document.documentElement.addEventListener('mouseleave', () => { rotT = 0; });
   ['pointerdown', 'scroll', 'keydown', 'touchstart'].forEach(ev =>
     addEventListener(ev, wake, { passive: true }));
-  tilt.addEventListener('click', () => {                       // クリック=跳ね→着地で挨拶0.8秒
+  tilt.addEventListener('click', () => {                       // クリック=squash&stretchの揺れのみ（§18.2）
     wake();
     if (busy) return;
     busy = true; wrap.classList.add('jump');
-    setTimeout(() => { wrap.classList.remove('jump'); setPose('greet'); }, 550);
-    setTimeout(() => { setPose('hero'); busy = false; }, 1350);
+    setTimeout(() => { wrap.classList.remove('jump'); busy = false; }, 550);
   });
 
   let wx = .02, wdir = 1, wmode = 'walk', whover = false, lastSlide = performance.now();
