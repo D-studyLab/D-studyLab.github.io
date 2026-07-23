@@ -113,10 +113,10 @@
   .hero-pg .zzz span:nth-child(3) { font-size:22px; animation-delay:1.6s; }
   @keyframes pg-zzz { 0%,100%{transform:translateY(0); opacity:.4} 50%{transform:translateY(-9px); opacity:1} }
   /* 足跡ペタペタ（G1・琥珀2色濃淡・1個ずつ出現） */
-  .tracks { position:absolute; top:10px; left:4%; right:4%; height:26px; pointer-events:none; }
-  .tracks svg { position:absolute; width:15px; height:15px; opacity:0; transform:scale(.5);
-                transition:opacity .18s ease-out, transform .18s cubic-bezier(.34,1.6,.6,1); }
-  .tracks.on svg { opacity:.85; transform:scale(1); }
+  .tracks { position:absolute; top:8px; left:4%; right:4%; height:30px; pointer-events:none; }
+  .tracks svg { position:absolute; width:16px; height:18px; opacity:0; scale:1.15;
+                transition:opacity .12s ease-out, scale .12s ease-out; }
+  .tracks.on svg { opacity:.9; scale:1; }
   /* トボガン滑走（G3・初回1回） */
   .tobo { position:absolute; top:-34px; left:-14%; width:96px; pointer-events:none; z-index:2; }
   .tobo img { width:100%; display:block; transform:scaleX(-1); }
@@ -452,19 +452,20 @@
   const A = '/assets/mascot/';
 
   // --- G1 足跡ペタペタ: セクション境界を歩幅どおり横断（初回のみ・0.15秒間隔） ---
-  const FOOT = '<svg viewBox="0 0 20 20" fill="FILL" aria-hidden="true">' +
-    '<ellipse cx="10" cy="12.5" rx="5.6" ry="4.6"/>' +
-    '<ellipse cx="4.6" cy="7.2" rx="2.2" ry="3.2" transform="rotate(20 4.6 7.2)"/>' +
-    '<ellipse cx="10" cy="5.6" rx="2.2" ry="3.4"/>' +
-    '<ellipse cx="15.4" cy="7.2" rx="2.2" ry="3.2" transform="rotate(-20 15.4 7.2)"/></svg>';
+  const FOOT = '<svg viewBox="0 0 16 18" aria-hidden="true">' +
+    '<g fill="#B87A1F"><path d="M6.6 16.6C4.6 14.8 2.7 8.6 1.9 4.7 1.6 3.2 3.4 2.4 4.3 3.6 5.1 4.8 5.9 6.2 6.4 7.3 6.6 5.2 7 3 7.4 1.6 7.7 .4 9.3 .4 9.6 1.6 10 3 10.4 5.2 10.6 7.3 11.1 6.2 11.9 4.8 12.7 3.6 13.6 2.4 15.4 3.2 15.1 4.7 14.3 8.6 12.4 14.8 10.4 16.6 9.3 17.7 7.7 17.7 6.6 16.6Z"/><ellipse cx="8.5" cy="16.6" rx="2.1" ry="1.5"/></g>' +
+    '<g fill="#E8A33D"><path d="M6.9 16C5.1 14.3 3.4 8.5 2.7 4.9 2.5 3.8 3.7 3.3 4.4 4.2 5.3 5.5 6.2 7.1 6.7 8.3 6.8 6 7.2 3.4 7.6 1.9 7.8 1 9.2 1 9.4 1.9 9.8 3.4 10.2 6 10.3 8.3 10.8 7.1 11.7 5.5 12.6 4.2 13.3 3.3 14.5 3.8 14.3 4.9 13.6 8.5 11.9 14.3 10.1 16 9.2 16.9 7.8 16.9 6.9 16Z"/><ellipse cx="8.5" cy="16.4" rx="1.6" ry="1.1"/></g>' +
+    '<g stroke="#B87A1F" stroke-width=".55" stroke-linecap="round" fill="none" opacity=".85">' +
+    '<path d="M6.7 8.6C6.9 10.8 7.3 13.4 7.8 15"/><path d="M10.3 8.6C10.1 10.8 9.7 13.4 9.2 15"/></g></svg>';
   document.querySelectorAll('.tracks').forEach(tr => {
-    const N = 12;
+    const STRIDE = 29;                                         // 歩幅=足跡18pxの1.6倍
+    const N = Math.min(44, Math.max(8, Math.floor(tr.clientWidth / STRIDE)));
     let html = '';
-    for (let i = 0; i < N; i++) {                              // 左右交互の歩幅・進行方向=右
-      const col = i % 2 ? '#B87A1F' : '#E8A33D';
-      html += FOOT.replace('FILL', col).replace('aria-hidden', 'style="left:' +
-        (i * 100 / N) + '%;top:' + (i % 2 ? 11 : 0) + 'px;transition-delay:' +
-        (i * .15) + 's;rotate:' + (90 + (i % 2 ? -16 : 16)) + 'deg" aria-hidden');
+    for (let i = 0; i < N; i++) {                              // 左右ミラー＋進行方向へ±12°交互
+      const L = i % 2 === 0;
+      html += FOOT.replace('aria-hidden', 'style="left:' + (i * STRIDE) + 'px;top:' +
+        (L ? 0 : 10) + 'px;transition-delay:' + (i * .15) + 's;transform:rotate(' +
+        (90 + (L ? 12 : -12)) + 'deg)' + (L ? '' : ' scaleY(-1)') + '" aria-hidden');
     }
     tr.innerHTML = html;
     if (reduce) { tr.classList.add('on'); return; }
