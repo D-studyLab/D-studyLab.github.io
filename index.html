@@ -103,7 +103,7 @@
   .hero-pg img.p-sleep { height:auto; width:min(52vw,300px); }
   /* 点滅根治: src差し替え禁止→全フレームを重ねてopacity切替（§17.3-b） */
   .hero-pg[data-pose="hero"] .p-hero, .hero-pg[data-pose="blink"] .p-blink,
-  .hero-pg[data-pose="tilt"] .p-tilt, .hero-pg[data-pose="sleep"] .p-sleep { opacity:1; }
+  .hero-pg[data-pose="sleep"] .p-sleep { opacity:1; }
   @keyframes pg-breathe { 0%,100%{transform:translateY(0)} 50%{transform:translateY(3px)} }
   .hero-pg.jump img { animation:pg-jump .55s cubic-bezier(.3,.7,.4,1); }
   @keyframes pg-jump {
@@ -350,7 +350,6 @@
       <div class="tiltbox" id="pgTilt">
         <img class="p-hero" src="/assets/mascot/hero.webp" alt="" width="465" height="720" decoding="async">
         <img class="p-blink" src="/assets/mascot/blink.webp" alt="" width="465" height="720" decoding="async">
-        <img class="p-tilt" src="/assets/mascot/tilt.webp" alt="" width="265" height="340" decoding="async">
         <img class="p-sleep" src="/assets/mascot/sleep.webp" alt="" width="357" height="226" decoding="async">
       </div>
       <div class="zzz" id="pgZzz"><span>z</span><span>z</span><span>z</span></div>    </div>
@@ -616,7 +615,7 @@
     return;
   }
   let cur = 'hero', busy = false, asleep = false;
-  let rot = 0, rotT = 0, blT = 0, idleT = 0, tiltUntil = 0, raf = 0, last = 0;
+  let rot = 0, rotT = 0, blT = 0, idleT = 0, raf = 0, last = 0;
   const setPose = n => { cur = n;                              // 全フレームDOM常駐→切替は属性のみ=空白ゼロ
     requestAnimationFrame(() => { wrap.dataset.pose = cur; }); };
   function schedBlink() {
@@ -633,16 +632,10 @@
     clearTimeout(idleT); idleT = setTimeout(fallAsleep, 60000);
     if (asleep) { asleep = false; wrap.classList.remove('asleep'); setPose('hero'); }
   }
-  addEventListener('pointermove', e => {
+  addEventListener('pointermove', e => {                       // 接近ポーズ切替は§19で全廃=微傾きのみ
     wake();
-    const r = wrap.getBoundingClientRect(), cx = r.x + r.width / 2, cy = r.y + r.height / 2;
+    const r = wrap.getBoundingClientRect(), cx = r.x + r.width / 2;
     rotT = Math.max(-4, Math.min(4, (e.clientX - cx) / r.width * 6));     // 体全体の微傾き±4°
-    const now = performance.now();
-    if (!busy && !asleep && cur === 'hero' && now > tiltUntil + 4000 &&
-        Math.hypot(e.clientX - cx, e.clientY - cy) < r.width * .62) {     // 接近→首をかしげる0.6秒
-      tiltUntil = now + 600; setPose('tilt');
-      setTimeout(() => { if (cur === 'tilt') setPose('hero'); }, 600);
-    }
   }, { passive: true });
   document.documentElement.addEventListener('mouseleave', () => { rotT = 0; });
   ['pointerdown', 'scroll', 'keydown', 'touchstart'].forEach(ev =>
