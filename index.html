@@ -6,6 +6,7 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" as="image" href="/assets/mascot/hero.webp" type="image/webp">
 <title>D-studyLab｜作って、出す個人ラボ</title>
 <meta name="description" content="研究とものづくりを行き来する個人ラボ D-studyLab。ブラウザで遊べるミニゲーム、岩手の地酒と開発のブログ、お店のウェブ制作。小さく作って、すぐ出す。">
 <meta name="robots" content="index,follow">
@@ -89,10 +90,16 @@
 
   /* ---- マスコットペンギン（本人生成画像・ポーズ切替・v3.8） ---- */
   .hero-pg { min-width:0; position:relative; display:flex; align-items:flex-end; justify-content:center; }
-  .hero-pg .tiltbox { will-change:transform; transform-origin:50% 92%; }
-  .hero-pg img { height:min(46vw,350px); width:auto; display:block; cursor:pointer;
-                 user-select:none; -webkit-user-drag:none;
+  .hero-pg .tiltbox { will-change:transform; transform-origin:50% 92%; display:grid; cursor:pointer; }
+  .hero-pg img { grid-area:1/1; align-self:end; justify-self:center;
+                 height:min(46vw,350px); width:auto; display:block;
+                 user-select:none; -webkit-user-drag:none; opacity:0;
                  animation:pg-breathe 4s ease-in-out infinite; }
+  .hero-pg img.p-sleep { height:auto; width:min(52vw,300px); }
+  /* 点滅根治: src差し替え禁止→全フレームを重ねてopacity切替（§17.3-b） */
+  .hero-pg[data-pose="hero"] .p-hero, .hero-pg[data-pose="blink"] .p-blink,
+  .hero-pg[data-pose="tilt"] .p-tilt, .hero-pg[data-pose="greet"] .p-greet,
+  .hero-pg[data-pose="sleep"] .p-sleep { opacity:1; }
   @keyframes pg-breathe { 0%,100%{transform:translateY(0)} 50%{transform:translateY(3px)} }
   .hero-pg.jump img { animation:pg-jump .55s cubic-bezier(.3,.7,.4,1); }
   @keyframes pg-jump {
@@ -102,7 +109,7 @@
     76% { transform:translateY(0) scale(1.08,.92) }
     90% { transform:translateY(0) scale(.98,1.02) }
   }
-  .hero-pg.asleep img { height:auto; width:min(52vw,300px); animation:pg-doze 5s ease-in-out infinite; }
+  .hero-pg.asleep img { animation:pg-doze 5s ease-in-out infinite; }
   @keyframes pg-doze { 0%,100%{transform:scale(1,1)} 50%{transform:scale(1.015,.985)} }
   .hero-pg .zzz { position:absolute; right:14%; top:6%; opacity:0; transition:opacity .6s;
                   color:var(--porcelain); font-weight:bold; pointer-events:none; }
@@ -118,8 +125,11 @@
                 transition:opacity .12s ease-out, scale .12s ease-out; }
   .tracks.on svg { opacity:.9; scale:1; }
   /* トボガン滑走（G3・初回1回） */
-  .tobo { position:absolute; top:-34px; left:-14%; width:96px; pointer-events:none; z-index:2; }
-  .tobo img { width:100%; display:block; transform:scaleX(-1); }
+  .tobo { position:absolute; top:-34px; left:-14%; width:96px; pointer-events:none; z-index:2; display:grid; }
+  .tobo img { grid-area:1/1; align-self:end; justify-self:center; width:100%; display:block;
+              transform:scaleX(-1); opacity:0; }
+  .tobo[data-pose="slide"] .p-slide, .tobo[data-pose="stand"] .p-front { opacity:1; }
+  .tobo[data-pose="stand"] .p-front { width:44%; transform:none; }
   .tobo .trail { position:absolute; top:26px; right:96px; width:0; height:5px; border-radius:3px;
                  background:linear-gradient(90deg, transparent, rgba(255,255,255,.85)); }
   .tobo.go { animation:tobo-run 1.2s cubic-bezier(.25,.6,.35,1) forwards; }
@@ -129,10 +139,13 @@
   .tobo.bye { transition:opacity .4s; opacity:0; }
   .tobo.stand img { transform:none; }
   /* フッターとことこ（G6・JS駆動・たまにトボガン） */
-  .walker { position:absolute; top:-56px; left:2%; width:46px; cursor:pointer; }
-  .walker img { width:100%; display:block; animation:pg-rock .5s ease-in-out infinite; transform-origin:50% 94%; }
+  .walker { position:absolute; top:-56px; left:2%; width:46px; cursor:pointer; display:grid; }
+  .walker img { grid-area:1/1; align-self:end; justify-self:center; height:52px; width:auto;
+                display:block; opacity:0; animation:pg-rock .5s ease-in-out infinite; transform-origin:50% 94%; }
   @keyframes pg-rock { 0%,100%{transform:rotate(3.5deg)} 50%{transform:rotate(-3.5deg)} }
-  .walker.sliding { width:78px; top:-40px; }
+  .walker[data-pose="walk"] .f-walk, .walker[data-pose="slide"] .f-slide,
+  .walker[data-pose="front"] .f-front { opacity:1; }
+  .walker[data-pose="slide"] img { height:40px; }
   .walker.sliding img, .walker.still img { animation:none; }
 
   h2.sec { font-size:clamp(22px,3.4vw,28px); margin:0 0 6px; letter-spacing:.02em; }
@@ -290,9 +303,15 @@
       <h1 class="jp-head"><span class="l fade">考えたら、作る。</span><span class="l fade">作ったら、出す。</span></h1>
       <p class="sub fade">研究とものづくりを行き来する、岩手の個人ラボ。ブラウザゲーム・地酒と開発のブログ・お店のウェブ制作——ぜんぶ「小さく作ってすぐ出す」で回しています。</p>
     </div>
-    <div class="hero-pg" id="heroPg" aria-hidden="true">
+    <div class="hero-pg" id="heroPg" data-pose="hero" aria-hidden="true">
       <!-- マスコット（本人生成画像・ポーズ切替はJS） -->
-      <div class="tiltbox" id="pgTilt"><img id="pgImg" src="/assets/mascot/hero.webp" alt="" width="465" height="720" decoding="async"></div>
+      <div class="tiltbox" id="pgTilt">
+        <img class="p-hero" src="/assets/mascot/hero.webp" alt="" width="465" height="720" decoding="async">
+        <img class="p-blink" src="/assets/mascot/blink.webp" alt="" width="465" height="720" decoding="async">
+        <img class="p-tilt" src="/assets/mascot/tilt.webp" alt="" width="265" height="340" decoding="async">
+        <img class="p-greet" src="/assets/mascot/greet.webp" alt="" width="307" height="368" decoding="async">
+        <img class="p-sleep" src="/assets/mascot/sleep.webp" alt="" width="357" height="226" decoding="async">
+      </div>
       <div class="zzz" id="pgZzz"><span>z</span><span>z</span><span>z</span></div>    </div>
   </div>
 </section>
@@ -333,7 +352,7 @@
 <div id="business">
   <div class="biz-head" style="position:relative">
     <div class="tracks" aria-hidden="true"></div>
-    <div class="tobo" id="tobo" aria-hidden="true"><img src="/assets/mascot/slide1.webp" alt="" loading="lazy" decoding="async"><div class="trail"></div></div>
+    <div class="tobo" id="tobo" data-pose="slide" aria-hidden="true"><img class="p-slide" src="/assets/mascot/slide1.webp" alt="" loading="lazy" decoding="async"><img class="p-front" src="/assets/mascot/front.webp" alt="" loading="lazy" decoding="async"><div class="trail"></div></div>
     <div class="in">
       <span class="sec-en">SERVICES</span>
       <h2 class="sec jp-head reveal">事業紹介</h2>
@@ -404,7 +423,7 @@
 <!-- 6. フッター -->
 <footer>
   <!-- とことこ歩く小ペンギン（G6・たまにトボガン） -->
-  <div class="walker" id="walker" aria-hidden="true"><img id="walkerImg" src="/assets/mascot/walk.webp" alt="" loading="lazy" decoding="async"></div>
+  <div class="walker" id="walker" data-pose="walk" aria-hidden="true"><img class="f-walk" src="/assets/mascot/walk.webp" alt="" loading="lazy" decoding="async"><img class="f-slide" src="/assets/mascot/slide1.webp" alt="" loading="lazy" decoding="async"><img class="f-front" src="/assets/mascot/front.webp" alt="" loading="lazy" decoding="async"></div>
   <div class="in">
     <div class="fmap">
       <div class="col">
@@ -483,9 +502,7 @@
         o.disconnect();
         tobo.classList.add('go');
         setTimeout(() => {                                     // 右端で立ち上がる
-          tobo.classList.add('stand');
-          tobo.querySelector('img').src = A + 'front.webp';
-          tobo.style.width = '42px'; tobo.style.top = '-56px';
+          tobo.classList.add('stand'); tobo.dataset.pose = 'stand'; tobo.style.top = '-56px';
         }, 1250);
         setTimeout(() => tobo.classList.add('bye'), 1750);
         setTimeout(() => tobo.remove(), 2250);
@@ -495,20 +512,17 @@
   } else if (tobo) tobo.remove();
 
   // --- ヒーロー主役: 呼吸(CSS)・瞬き・微傾き・クリック=跳ね→挨拶・60秒放置で眠る ---
-  const wrap = document.getElementById('heroPg'), tilt = document.getElementById('pgTilt'),
-        img = document.getElementById('pgImg');
+  const wrap = document.getElementById('heroPg'), tilt = document.getElementById('pgTilt');
   // --- G6 フッターとことこ（＋30秒に1回トボガン往復） ---
-  const wk = document.getElementById('walker'), wi = document.getElementById('walkerImg');
+  const wk = document.getElementById('walker');
   if (reduce) {                                                // reduced=正面立ちで全静止
-    wi.src = A + 'front.webp'; wk.classList.add('still'); wk.style.left = '8%';
+    wk.dataset.pose = 'front'; wk.classList.add('still'); wk.style.left = '8%';
     return;
   }
-  ['blink', 'tilt', 'greet', 'sleep', 'front', 'slide1'].forEach(n => {
-    const p = new Image(); p.src = A + n + '.webp';            // 先読み=切替を瞬時に
-  });
   let cur = 'hero', busy = false, asleep = false;
   let rot = 0, rotT = 0, blT = 0, idleT = 0, tiltUntil = 0, raf = 0, last = 0;
-  const setPose = n => { cur = n; img.src = A + n + '.webp'; };
+  const setPose = n => { cur = n;                              // 全フレームDOM常駐→切替は属性のみ=空白ゼロ
+    requestAnimationFrame(() => { wrap.dataset.pose = cur; }); };
   function schedBlink() {
     clearTimeout(blT);
     blT = setTimeout(() => {
@@ -537,7 +551,7 @@
   document.documentElement.addEventListener('mouseleave', () => { rotT = 0; });
   ['pointerdown', 'scroll', 'keydown', 'touchstart'].forEach(ev =>
     addEventListener(ev, wake, { passive: true }));
-  img.addEventListener('click', () => {                        // クリック=跳ね→着地で挨拶0.8秒
+  tilt.addEventListener('click', () => {                       // クリック=跳ね→着地で挨拶0.8秒
     wake();
     if (busy) return;
     busy = true; wrap.classList.add('jump');
@@ -547,11 +561,11 @@
 
   let wx = .02, wdir = 1, wmode = 'walk', whover = false, lastSlide = performance.now();
   wk.addEventListener('pointerenter', () => {                  // ホバー=立ち止まりこちらを見る
-    whover = true; wk.classList.add('still'); wi.src = A + 'front.webp';
+    whover = true; wk.classList.add('still'); wk.dataset.pose = 'front';
   });
   wk.addEventListener('pointerleave', () => {
     whover = false; wk.classList.remove('still');
-    wi.src = A + (wmode === 'slide' ? 'slide1' : 'walk') + '.webp';
+    wk.dataset.pose = (wmode === 'slide' ? 'slide' : 'walk');
   });
   function frame(now) {
     const dt = Math.min(.05, (now - last) / 1000); last = now;
@@ -561,13 +575,13 @@
     // フッター歩行
     if (!whover) {
       if (wmode === 'walk' && now - lastSlide > 30000) {       // 30秒に1回トボガンに切替
-        wmode = 'slide'; wk.classList.add('sliding'); wi.src = A + 'slide1.webp';
+        wmode = 'slide'; wk.classList.add('sliding'); wk.dataset.pose = 'slide';
       }
       wx += dt * .1 * (wmode === 'slide' ? 4 : 1) * wdir;
       if (wx >= 1 || wx <= 0) {
         wx = Math.max(0, Math.min(1, wx)); wdir *= -1;
         if (wmode === 'slide') {                               // 片道滑ったら歩きに戻る
-          wmode = 'walk'; wk.classList.remove('sliding'); wi.src = A + 'walk.webp';
+          wmode = 'walk'; wk.classList.remove('sliding'); wk.dataset.pose = 'walk';
           lastSlide = now;
         }
       }
