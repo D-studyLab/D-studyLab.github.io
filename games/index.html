@@ -105,6 +105,12 @@
     .today .lbl { animation:none; }
     .today:hover, .card:hover { transition:none; }
   }
+
+  .worklist { list-style:none; padding:0; margin:14px 0 6px; }
+  .worklist li { padding:9px 0; border-bottom:1px dashed rgba(255,255,255,.14); }
+  .worklist li a { font-weight:bold; text-decoration:none; }
+  .worklist .sd { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+  .wl-note { font-size:13px; margin-top:14px; }
 </style>
 </head>
 <body>
@@ -128,11 +134,31 @@
 
   <!-- AD SLOT: 審査通過後にここへ -->
 
+
+  <div class="about" id="all-works">
+    <h2 class="pix">全作品リスト</h2>
+    <p>いま遊べるのは11本です。どれもインストール不要、登録不要、スマホでも動きます。計算はすべて端末の中で完結し、遊んだ内容がどこかへ送られることはありません。</p>
+    <ul class="worklist">
+      <li><a href="/tsumi-battle/">🏗️ 積みバトル</a><span class="sd">先読みAIと崩さず積む・AIの脳内が見える（5分・AI対戦／物理）</span></li>
+      <li><a href="/kage-ate/">🌗 かげ当てパズル</a><span class="sd">光の向きから影の形を当てろ（3分・空間／パズル）</span></li>
+      <li><a href="/kukan-test/">🧠 空間認識偏差値テスト</a><span class="sd">頭の中で3Dを回せるか（3分・空間／診断）</span></li>
+      <li><a href="/answer-shoot/">🎯 アンサーシュート</a><span class="sd">答えがわかっても届けなきゃ正解じゃない（5分・クイズ／アクション）</span></li>
+      <li><a href="/yomiate/">🔢 ヨミアテ</a><span class="sd">情報を「買う」数字当て（5分・推理／数字）</span></li>
+      <li><a href="/untetris/">🧩 つみおろし</a><span class="sd">逆向きテトリス、積んだ順を暴け（4分・推理／パズル）</span></li>
+      <li><a href="/monty/">🚪 モンティホール100連</a><span class="sd">「変える」となぜ2倍勝てるのか（3分・確率／体感）</span></li>
+      <li><a href="/toru-card/">🃏 そのカード、取る？</a><span class="sd">デッキ構築の直感を1万回シミュで検算（4分・確率／シミュ）</span></li>
+      <li><a href="/gacha-sim/">🎰 1万人ガチャシミュレータ</a><span class="sd">「平均90連」の裏の地獄と天国（3分・確率／体感）</span></li>
+      <li><a href="/yomikiri/">✂️ ヨミキリ</a><span class="sd">あなたの癖を学習する限定ジャンケン（5分・AI対戦）</span></li>
+      <li><a href="/damashi-ai/">🤖 AIを騙せ！</a><span class="sd">騙すとその場で学習して強くなる（5分・AI対戦）</span></li>
+    </ul>
+    <p class="wl-note">それぞれの詳しい遊び方は <a href="/games/guide/kukan-test.html">各作品の解説ページ</a> にも書いています。仕組みの解説は <a href="/blog/">ブログ</a> にまとめました。</p>
+  </div>
+
   <div class="about">
     <h2 class="pix">お店の口上</h2>
     <p>むずかしい概念ほど、読むより<b>遊べる</b>ほうが早くわかる。空間認識・確率・AIとの読み合いを、3分で触れるゲームにして並べています。</p>
     <p>1本ずつ、3日以内に必ず公開する。だから毎日ちょっとずつ増えます。</p>
-    <p>読み物 → <a href="/blog/">📝 ブログ（地酒レビュー・開発環境の話）</a></p>
+    <p>読み物 → <a href="/blog/">📝 ブログ</a>（確率や空間認識の解説、作ってみて分かったことなど）</p>
     <p>作ってる人 → <a href="https://x.com/info_prog_study" target="_blank" rel="noopener">X @info_prog_study</a></p>
   </div>
 
