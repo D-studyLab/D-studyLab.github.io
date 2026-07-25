@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Claude Codeでどこまで作れるのか——4日で11本公開して分かった、できることとできないこと｜D-studyLab ブログ</title>
+<meta name="description" content="プログラマーが本業ではない人間がClaude Codeを使い、4日間でブラウザゲーム11本（自作8,655行）を公開しました。実際にできたこと、そして自動化できなかったことを、宣伝抜きで正直に書きます。">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="Claude Codeでどこまで作れるのか——4日で11本公開して分かった、できることとできないこと">
+<meta property="og:description" content="4日で11本・自作8,655行を公開。Claude Codeで実際にできたことと、どうしてもできなかったことを正直に書きました。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/claude-code-reality.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">🤖 AIと開発</div>
+  <h1>Claude Codeでどこまで作れるのか——4日で11本公開して分かった、できることとできないこと</h1>
+  <div class="date">2026年7月26日</div>
+
+  <p>Claude Code を使って、<b>4日間でブラウザゲームを11本公開しました。</b>全部このサイトで今も動いています。</p>
+
+  <p>この記事は「AIすごい」という話ではありません。<b>実際に何行書けて、どこでつまずいて、何が最後まで自動化できなかったか</b>を、数字と一緒に正直に書きます。導入を検討している人が、期待値を正しく設定できるように。</p>
+
+  <p>先に立場を書いておきます。私はプログラマーが本業ではありません。研究で数値計算のコードは書きますが、Webフロントエンドは専門外です。<b>3Dの描画も、ゲームの当たり判定も、この11本を作るまで書いたことがありませんでした。</b></p>
+
+  <h2>実際に作ったもの（実測）</h2>
+
+  <p>公開日は2026年7月18日から21日。ソースを実際に数えた結果がこれです。</p>
+
+  <table>
+    <tr><th>項目</th><th>実測値</th></tr>
+    <tr><td>公開した本数</td><td><b>11本</b></td></tr>
+    <tr><td>期間</td><td><b>4日</b></td></tr>
+    <tr><td>自分のコード（HTML/CSS/JS）</td><td><b>8,655行</b></td></tr>
+    <tr><td>使った外部ライブラリ</td><td>3,153行（3D描画のみ）</td></tr>
+    <tr><td>テストファイル</td><td>9本</td></tr>
+  </table>
+
+  <p>内容は、AIと対戦する積みゲーム、3D空間認識テスト、確率シミュレーター、逆向きテトリスなど。単純なクリックゲームではなく、<b>3D表示・物理演算・AIの学習ロジック</b>を含むものが混ざっています。</p>
+
+  <p>いちばん大きいもので1,773行、小さいもので136行でした。</p>
+
+  <h2>できたこと</h2>
+
+  <p><b>1. 知らない分野の実装が、調べる時間ゼロで動く。</b></p>
+
+  <p>これが最大の変化です。3Dの立方体を回して描画する、という作業を私は知りませんでした。従来なら仕様を調べて理解するだけで数時間かかります。それが<b>「立方体の集合を3Dで表示して、ドラッグで回せるようにして」で動くところまで行きます。</b></p>
+
+  <p><b>2. 「作れそうにないから諦める」が消える。</b></p>
+
+  <p>作る前のコストが下がると、思いつきをそのまま試せます。11本という数字は、能力が上がったからではなく、<b>着手のハードルが下がった</b>結果です。</p>
+
+  <p><b>3. テストを書かせられる。</b></p>
+
+  <p>これは後述しますが、実は一番効きました。自分で全部確認できない部分を、機械に確認させられます。</p>
+
+  <h2>できなかったこと・つまずいたこと</h2>
+
+  <p>ここからが本題です。</p>
+
+  <p><b>1. ブラウザ操作でのファイルアップロードは、原理的に自動化できない。</b></p>
+
+  <p>作ったものをブログサービスに投稿する作業を自動化しようとして、画像のアップロードだけがどうしても通りませんでした。4通りの方法を試して全滅です。</p>
+
+  <p>理由はセキュリティ仕様でした。<b>ファイル選択ダイアログは「本物の人間の操作」からしか開けない</b>ようブラウザ側で決まっています。AIが操作している限り、この扉は開きません。工夫の問題ではなく、そういう設計です。</p>
+
+  <p>つまり<b>「画像を含む投稿は、最後の一手だけ必ず人間の手作業になる」</b>。ここは何を使っても変わりません。</p>
+
+  <p><b>2. 「動く」と「正しい」は別。そしてAIも間違いに気づかない。</b></p>
+
+  <p>作った空間認識テストで、4択の問題に<b>正解が3つ含まれている</b>という致命的なバグを出しました。テストプレイした人の「どれ選んでも同じじゃね？」で発覚しました。</p>
+
+  <p>原因は、私が頭の中だけで「立体の正面はこっち」と決めていて、それを一度も明文化していなかったことです。<b>私が言わなかった前提は、AIも知りません。</b>コードは指示どおり完璧に動いていました。ただ、指示のほうが間違っていた。</p>
+
+  <p>この種の間違いは、AIに何度レビューさせても出てきません。<b>コードの中に矛盾がないからです。</b>矛盾しているのは、コードと「作った人の頭の中」の間です。</p>
+
+  <p><b>3. 直すと、隣が壊れる。</b></p>
+
+  <p>上のバグを直すために立体の向きを固定したら、今度は<b>手前のブロックの陰に隠れて、判定に必要なマスが画面に映らない</b>という別のバグが生まれました。塞いだ形に合わせて、次の穴が開きます。</p>
+
+  <p>これも指示していないことなので、AIは教えてくれません。<b>「直した」で終わらせず、直したことで何が新しく成り立たなくなったかを自分で探す</b>必要がありました。</p>
+
+  <p><b>4. 早いぶん、質の検品が追いつかない。</b></p>
+
+  <p>これが一番危ないところでした。4日で11本というスピードで作ると、<b>作った本人が全部を確認しきれません。</b>公開後に読み返して、説明文が実装と食い違っているもの、内容が薄すぎるものが見つかりました。</p>
+
+  <p><b>作る速度が10倍になっても、確認する速度は10倍になりません。</b>ここが詰まります。</p>
+
+  <h2>対策として効いたこと</h2>
+
+  <p>上の問題に対して、実際にやって効果があったのはこの3つです。</p>
+
+  <p><b>1. 検算をコードに書かせる。</b></p>
+
+  <p>「正解が3つある問題」の対策として、問題を生成するたびに<b>正解の重複がないかを機械が自動で確認する</b>処理を入れました。人間が目で確かめるのではなく、間違ったものが生まれないことを機械に保証させる。ランダム生成のように全パターンを見られないものでは、これしか方法がありません。</p>
+
+  <p><b>2. 出す前に、他人（別のAI）に否定させる。</b></p>
+
+  <p>自分と同じAIにレビューさせると、たいてい褒めます。そこで<b>別のセッションを立てて「これを出す価値があるか、厳しく判定しろ」と役割を与える</b>ようにしました。これで、自分では気づかなかった水準の低さが出てきます。実際にこの方法で、公開直前の記事に不合格判定が出ました。</p>
+
+  <p><b>3. 公開前の機械チェックを固定する。</b></p>
+
+  <p>文字化け・リンク切れ・分量不足を自動でチェックして、<b>1つでも引っかかったら公開処理そのものを止める</b>仕組みを入れました。この記事も、そのチェックを通ってから公開されています。</p>
+
+  <h2>これから始める人へ</h2>
+
+  <ul>
+    <li><b>小さくて完結したものから作る。</b>11本のうち最小は136行です。「これくらいなら」を積むほうが、大きな1本より確実に前に進みます</li>
+    <li><b>正しさが命の部分は、必ずテストを書かせる。</b>「動いた」を信用しない。私のバグは全部この境目で起きました</li>
+    <li><b>作った直後に人に触ってもらう。</b>自分にだけ見えない前提は、何も知らない人が触った瞬間にしか出てきません</li>
+    <li><b>公開する前に「これを見た人は何を持ち帰るか」を1文で言えるか確認する。</b>言えないものは、作れていても出す価値がありません</li>
+  </ul>
+
+  <h2>結論</h2>
+
+  <p><b>専門外の分野でも、動くものは作れます。</b>これは実際に11本公開して確認しました。</p>
+
+  <p>ただし変わったのは<b>「作る」部分だけ</b>です。何を作るか決めること、それが本当に正しいか確かめること、出す価値があるか判断すること——ここは一切自動化されませんでした。むしろ、作るのが速くなったぶん<b>この部分が全体のボトルネックとして目立つようになりました。</b></p>
+
+  <p>導入を考えている人への現実的な期待値としては、<b>「作れなくて諦めていたものが作れるようになる。ただし、良いものになるかは変わらない」</b>あたりが正確だと思います。</p>
+
+  <p>実際に何ができたのかは、動いているものを見てもらうのが早いです。全部ブラウザで動いて、登録もインストールも要りません。</p>
+
+  <a class="cta" href="/games/">🕹️ 4日で作った11本を見る（全部ブラウザで動きます）</a>
+
+  <div class="related">
+    <div class="rt">この記事に出てきた具体例</div>
+    <a href="/blog/spatial-ability.html">🧠 空間認識能力とは何か、どう鍛えるか</a>——正解が3つあったテストの話<br>
+    <a href="/blog/monty-hall.html">🚪 モンティホール問題がどうしても納得できない人へ</a>——検算をコードに書かせた例<br>
+    <a href="/blog/">📝 ブログ一覧</a>
+  </div>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
