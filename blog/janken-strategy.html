@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>じゃんけんに必勝法はあるか——「ランダムに出す」が誰にもできない理由を実測した｜D-studyLab ブログ</title>
+<meta name="description" content="じゃんけんの必勝法を、27万ラウンドのシミュレーション実測で検証しました。癖がなければ勝率は50%。しかし「勝ったら同じ手」を出すだけで37.9%、規則的に出すと最悪0.0%まで落ちます。人間が持つ癖と、その消し方。">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="じゃんけんに必勝法はあるか——「ランダムに出す」が誰にもできない理由を実測した">
+<meta property="og:description" content="癖がなければ勝率50%。でも「勝ったら同じ手」で37.9%、規則的に出すと0.0%。じゃんけんの必勝法を実測で検証しました。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/janken-strategy.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"空間認識能力とは何か、どう鍛えるか——無料で今すぐ測れるテストつき","description":"空間認識能力の正体（メンタルローテーション）と、自分の現在地を測る方法、鍛え方を整理しました。インストール不要・登録不要のテストを用意しているので、読みながら実際に試せます。","url":"https://d-studylab.com/blog/spatial-ability.html","datePublished":"2026-07-26","dateModified":"2026-07-26","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/spatial-ability.html"}}</script>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">✊ 読み合いの数学</div>
+  <h1>じゃんけんに必勝法はあるか——「ランダムに出す」が誰にもできない理由を実測した</h1>
+  <div class="date">2026年7月26日</div>
+
+  <p>じゃんけんの必勝法を検索すると、たいてい同じ答えが出てきます。<b>「完全にランダムに出せば、誰にも読まれない」</b>。</p>
+
+  <p>これは数学的に正しい。ただし、この答えには続きがあります。</p>
+
+  <p><b>人間には、ランダムに出すことができません。</b></p>
+
+  <p>この記事では、相手の癖を機械学習で読むAIを相手に、<b>いろいろな「打ち方」で27万ラウンド戦わせた実測データ</b>を出します。癖のない打ち方なら勝率はきっちり50%。ですが、人間がやりがちな打ち方をすると、勝率がどこまで落ちるかが数字ではっきり出ました。</p>
+
+  <a class="cta" href="/yomikiri/">✊ 癖を学習するAIと対戦してみる（登録不要・ブラウザで完結）</a>
+
+  <h2>結論：癖がなければ、AI相手でも五分</h2>
+
+  <p>まず前提の確認です。<b>癖のない打ち方をすれば、相手がどんなに賢くても勝率は50%になります。</b></p>
+
+  <p>3種類の強さのAIに対して、「残っている手札に比例して、それ以外は完全に運任せで出す」という癖のない打ち方をぶつけた結果です。</p>
+
+  <table>
+    <tr><th>相手のAI</th><th>癖のない打ち方の勝率</th></tr>
+    <tr><td>手の頻度を数えるだけのAI</td><td>50.8%</td></tr>
+    <tr><td>試合中に癖を学習するAI</td><td>49.9%</td></tr>
+    <tr><td>全対戦を記憶して学習し続けるAI</td><td>50.4%</td></tr>
+  </table>
+
+  <p>どれも50%です。<b>読むべき癖がなければ、機械学習をどれだけ積んでも意味がありません。</b>ここが出発点になります。</p>
+
+  <p>逆に言えば、<b>じゃんけんで負け越しているなら、それは運ではなく、読まれる何かを出している</b>ということです。</p>
+
+  <h2>やりがちな打ち方で、どこまで落ちるか</h2>
+
+  <p>ここからが本題です。同じAIに対して、人間がやりがちな打ち方を4種類ぶつけました。それぞれ18,000ラウンドずつ、あいこを除いた勝率です。</p>
+
+  <table>
+    <tr><th>打ち方</th><th>頻度を数えるAI</th><th>学習AI</th><th>記憶するAI</th></tr>
+    <tr><td>癖なし（基準）</td><td>50.8%</td><td>49.9%</td><td>50.4%</td></tr>
+    <tr><td>負けたら、相手がさっき出した手に勝つ手を出す</td><td>47.3%</td><td>50.1%</td><td><b>43.0%</b></td></tr>
+    <tr><td>勝ったら、同じ手をもう一度出す</td><td><b>37.9%</b></td><td>41.2%</td><td>39.1%</td></tr>
+    <tr><td>好きな手がある（6割そればかり）</td><td>36.5%</td><td>33.0%</td><td><b>31.3%</b></td></tr>
+    <tr><td>グー→チョキ→パーと順番に出す</td><td>86.8%</td><td>34.0%</td><td><b>0.0%</b></td></tr>
+  </table>
+
+  <p>数字を見ていきます。</p>
+
+  <p><b>「勝ったら同じ手をもう一度」だけで、勝率は37.9%まで落ちます。</b>これはたった1つの癖です。他は全部運任せで打っていて、勝った直後の1手だけが読める。それだけで、五分だったものが3勝5敗のペースになります。</p>
+
+  <p><b>「好きな手がある」は、さらに悪い。</b>6割の頻度でパーを出すだけで31.3%です。頻度の偏りは、いちばん見つけやすい癖だからです。相手は数を数えるだけでいい。</p>
+
+  <h2>いちばん危ないのは「規則的に出す」こと</h2>
+
+  <p>表の最後の行を見てください。<b>グー→チョキ→パーと順番に出す打ち方は、記憶するAI相手に勝率0.0%</b>でした。</p>
+
+  <p>これは丸め誤差ではありません。18,000ラウンドで、<b>5勝17,135敗</b>です。あいこ以外は全部負けています。</p>
+
+  <p>順番に出すのは、一見すると「偏りがない」打ち方です。グーもチョキもパーも同じ回数出るので、頻度を数えるだけの相手には通用します——実際、頻度を数えるだけのAIには86.8%で勝ちました。</p>
+
+  <p>ですが、<b>「次に何が来るか」は完全に決まっています。</b>手の順番まで見る相手には、これほど組みやすい相手はいません。</p>
+
+  <p>ここに重要な事実があります。</p>
+
+  <blockquote>同じ打ち方が、相手によって<b>86.8%にも 0.0%にもなる</b>。</blockquote>
+
+  <p>「必勝法」を探すときに見落とされがちなのがここです。<b>じゃんけんに、相手を問わず通用する打ち方はありません。</b>あるのは「この相手には効く/効かない」だけです。唯一の例外が、どの相手にも50%を保証する「完全にランダム」なのです。</p>
+
+  <h2>なぜ人間はランダムに出せないのか</h2>
+
+  <p>「じゃあランダムに出せばいい」——そう思いますが、これが本当に難しい。</p>
+
+  <p>人間がランダムのつもりで出すとき、無意識に次のようなことをしています。</p>
+
+  <ul>
+    <li><b>同じ手が続くのを避ける。</b>本当のランダムなら、グーが3回続くことは珍しくありません（3回に1回の確率が3回続くので約3.7%＝27回に1回）。でも人間は「さすがに次は変えよう」と考えてしまう。<b>結果として、実際のランダムより手が入れ替わりすぎる</b>ことになります</li>
+    <li><b>直前の結果に反応する。</b>負けた直後は「さっき相手が出した手」が頭に残っていて、それに勝つ手を選びやすい。勝った直後は、成功した手をもう一度出したくなる</li>
+    <li><b>癖が本人には見えない。</b>これが一番厄介です。癖とは無意識にやっていることなので、定義上、自分では気づけません</li>
+  </ul>
+
+  <p>上の表の2行目（負けたら相手の前の手に勝つ手を出す）と3行目（勝ったら同じ手）は、この2番目の性質をそのまま打ち方にしたものです。それだけで43.0%と37.9%まで落ちました。</p>
+
+  <h2>じゃあ、どうすれば勝てるのか</h2>
+
+  <p>実測から言えることは3つです。</p>
+
+  <p><b>1. 自分の癖を消すより、相手の癖を探すほうが早い。</b></p>
+
+  <p>自分の無意識を制御するのは非常に難しい。一方、相手の癖は外から観察できます。特に<b>「勝った直後」「負けた直後」に何を出すか</b>は、多くの人にはっきりした傾向があります。数回観察するだけで見えてきます。</p>
+
+  <p><b>2. どうしても自分でランダムにしたいなら、外部の乱数を使う。</b></p>
+
+  <p>頭の中で乱数を作るのは諦めて、その場にあるものを使います。時計の秒針の下1桁を3で割った余り、直前に見た数字、手のひらの中で決めておいた対応。<b>自分の判断を介在させないことが大事</b>です。</p>
+
+  <p><b>3. 「規則的に見えないパターン」を事前に決めても意味がない。</b></p>
+
+  <p>グーチョキパーの順番が0.0%だったのは極端な例ですが、「グーグーパー」のような自作のパターンも、繰り返せば同じことです。長さが違うだけで、いずれ読まれます。</p>
+
+  <h2>自分の癖を、見てみる</h2>
+
+  <p>癖は自分では見えない、と書きました。だったら見えるようにすればいい、と思って作ったのがこれです。</p>
+
+  <p>対戦相手のAIは、あなたの直近の手・勝ち負けへの反応・残っている手札をニューラルネットに入れて、<b>試合中にその場で学習</b>します。そして毎ラウンド終わりに、<b>「何を根拠にあなたの手を読んだか」をあなた自身の統計で開示</b>します。</p>
+
+  <p>「あなたは負けた直後、7割の確率でこの手を出しています」——こういう形で、自分の癖が目の前に出てきます。</p>
+
+  <p>後出しをしていない証明も付けました。AIの手は、あなたが選ぶ<b>前</b>にハッシュ値として画面に固定されます。対戦後に元の文字列が開示されるので、疑うなら自分でハッシュを計算して照合できます。</p>
+
+  <a class="cta" href="/yomikiri/">✊ 自分の癖を見てみる（3分・登録不要）</a>
+
+  <h2>この記事の要点</h2>
+
+  <ul>
+    <li><b>癖のない打ち方なら、どんなAI相手でも勝率50%</b>（実測 49.9〜50.8%）</li>
+    <li><b>「勝ったら同じ手」の癖ひとつで 37.9%</b>まで落ちる</li>
+    <li><b>「好きな手が6割」で 31.3%</b>。頻度の偏りはいちばん読まれやすい</li>
+    <li><b>規則的に出すのが最悪。記憶するAI相手に 0.0%</b>（5勝17,135敗）</li>
+    <li>同じ打ち方でも<b>相手次第で86.8%にも0.0%にもなる</b>。万能の必勝法は「完全ランダム」だけ</li>
+    <li>実践的には、<b>自分の癖を消すより相手の癖を探すほうが早い</b></li>
+  </ul>
+
+  <p style="font-size:13.5px;color:var(--sub)">
+  ※数値は、公開しているゲームと同じAIのコードを使い、5種類の打ち方 × 3種類のAI で
+  各18,000ラウンド（合計27万ラウンド）試行した実測値です。乱数の種を固定して再現可能な形で計算しています。
+  勝率はあいこを除いた勝敗のみで計算しました。なお、このゲームは手札12枚を使い切る「限定じゃんけん」形式で、
+  残り札という追加情報がある点が普通のじゃんけんと異なります。ただし
+  「癖があると読まれる／なければ読まれない」という結論は、その違いに依存しません。</p>
+
+  <div class="related">
+    <div class="rt">確率と直感の話、他にも書いています</div>
+    <a href="/blog/monty-hall.html">🚪 モンティホール問題がどうしても納得できない人へ</a><br>
+    <a href="/blog/gacha-probability.html">🎰 ガチャの確率を正しく計算する</a><br>
+    <a href="/games/">🕹️ ミニゲーム一覧</a>　<a href="/blog/">📝 ブログ一覧</a>
+  </div>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
