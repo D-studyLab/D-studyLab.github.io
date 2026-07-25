@@ -75,6 +75,15 @@
 
   code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
          padding:1px 6px; font-size:14px; }
+
+  .morelinks { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+               padding:16px 18px; margin:30px 0 0; }
+  .morelinks .mt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .morelinks a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+                 border-bottom:1px dashed var(--line); }
+  .morelinks a:last-child { border-bottom:none; }
+  .morelinks .lt { font-weight:bold; font-size:15px; color:var(--acc); }
+  .morelinks .ld { font-size:12.5px; color:var(--sub); }
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Claude Codeでどこまで作れるのか——4日で11本公開して分かった、できることとできないこと","description":"プログラマーが本業ではない人間がClaude Codeを使い、4日間でブラウザゲーム11本（自作8,655行）を公開しました。実際にできたこと、そして自動化できなかったことを、宣伝抜きで正直に書きます。","url":"https://d-studylab.com/blog/claude-code-reality.html","datePublished":"2026-07-26","dateModified":"2026-07-26","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/claude-code-reality.html"}}</script>
 </head>
@@ -198,6 +207,14 @@
     <a href="/blog/monty-hall.html">🚪 モンティホール問題がどうしても納得できない人へ</a>——検算をコードに書かせた例<br>
     <a href="/blog/">📝 ブログ一覧</a>
   </div>
+  <div class="morelinks">
+    <div class="mt">つづけて読む</div>
+    <a href="/blog/ai-upload-limit.html"><span class="lt">🚫 AIに任せられない作業——画像アップロードの壁</span><span class="ld">自動化が原理的に不可能な場所の話</span></a>
+    <a href="/blog/ai-design.html"><span class="lt">🎨 AIっぽいデザインの正体を探して11回作り直した</span><span class="ld">「AIが作った感じ」が何でできているか</span></a>
+    <a href="/blog/dev-setup.html"><span class="lt">🛠 AIと1日1ゲーム作る開発環境</span><span class="ld">実際に使っている道具立て</span></a>
+    <a href="/blog/ai-two-seats.html"><span class="lt">🪑 AIを2台走らせるとき、いちばん大事なのは数字を疑う係</span><span class="ld">2つのAIを役割分担させる運用の話</span></a>
+  </div>
+
 
   <div class="foot">
     © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>

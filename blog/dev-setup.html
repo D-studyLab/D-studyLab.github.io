@@ -66,6 +66,15 @@
   .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
   .foot a { color:var(--acc); }
   @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  .morelinks { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+               padding:16px 18px; margin:30px 0 0; }
+  .morelinks .mt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .morelinks a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+                 border-bottom:1px dashed var(--line); }
+  .morelinks a:last-child { border-bottom:none; }
+  .morelinks .lt { font-weight:bold; font-size:15px; color:var(--acc); }
+  .morelinks .ld { font-size:12.5px; color:var(--sub); }
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"AIと1日1ゲーム作る開発環境——実際に使っている道具を全部書く","description":"3日以内に必ず公開を回すために組んだ最小の開発環境。Windows機・Claude Code・three.js・GitHub Pages。11本を実際に作った実運用ベースで、使っている道具を正直に紹介します。","url":"https://d-studylab.com/blog/dev-setup.html","datePublished":"2026-07-21","dateModified":"2026-07-21","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/dev-setup.html"}}</script>
 </head>
@@ -121,6 +130,13 @@
     <div class="rt">このお店で遊べる作品</div>
     <a href="/games/">🕹️ ミニゲーム一覧</a> ／ <a href="kikunotsukasa.html">🍶 岩手の地酒レビュー</a>
   </div>
+  <div class="morelinks">
+    <div class="mt">つづけて読む</div>
+    <a href="/blog/claude-code-reality.html"><span class="lt">🤖 Claude Codeでどこまで作れるのか</span><span class="ld">4日で11本公開して分かった、できることとできないこと</span></a>
+    <a href="/blog/ai-design.html"><span class="lt">🎨 AIっぽいデザインの正体を探して11回作り直した</span><span class="ld">「AIが作った感じ」が何でできているか</span></a>
+    <a href="/blog/janken-strategy.html"><span class="lt">✊ じゃんけんに必勝法はあるか</span><span class="ld">癖があると何%まで落ちるかを27万ラウンドで実測</span></a>
+  </div>
+
 
   <div class="foot">
     © D-studyLab ／ <a href="./">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
