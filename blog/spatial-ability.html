@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>空間認識能力とは何か、どう鍛えるか——無料で今すぐ測れるテストつき｜D-studyLab ブログ</title>
+<meta name="description" content="空間認識能力の正体（メンタルローテーション）と、自分の現在地を測る方法、鍛え方を整理しました。インストール不要・登録不要のテストを用意しているので、読みながら実際に試せます。">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="空間認識能力とは何か、どう鍛えるか——無料で今すぐ測れるテストつき">
+<meta property="og:description" content="空間認識能力の正体と鍛え方。10問3分の無料テストつき（登録不要・ブラウザで完結）。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/spatial-ability.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">🧠 空間認識</div>
+  <h1>空間認識能力とは何か、どう鍛えるか——無料で今すぐ測れるテストつき</h1>
+  <div class="date">2026年7月26日</div>
+
+  <p>地図を回さないと道が分からない。展開図を見ても組み立てた形が想像できない。駐車のとき車の位置感覚がつかめない。——こういう場面で「自分は空間認識が弱いのかも」と思ったことはないでしょうか。</p>
+
+  <p>先に結論を書きます。<b>空間認識能力は、はっきりした課題として測ることができます。</b>そして<b>同じ種類の課題を繰り返すと、多くの人は成績が上がります。</b></p>
+
+  <p>この記事では、空間認識能力の正体、自分の現在地の測り方、鍛え方の順に整理します。読みながら実際に測れるよう、ブラウザで動くテストも用意しました。</p>
+
+  <a class="cta" href="/kukan-test/" style="display:block;text-align:center;background:var(--gold);color:#1b1400;font-weight:bold;text-decoration:none;border-radius:8px;padding:15px 20px;font-size:16.5px;margin:26px 0;">🧠 空間認識偏差値テストをやってみる（10問・約3分・登録不要）</a>
+
+  <h2>空間認識能力の正体は「頭の中で回す」作業</h2>
+
+  <p>心理学では、この能力を測るのに<b>メンタルローテーション</b>という課題を使います。1971年にシェパードとメツラーという2人の研究者が発表した実験が有名で、いまも空間認識研究の出発点として扱われています。</p>
+
+  <p>やることは単純です。立体の図形を2つ見せて、<b>「これは同じものを回転させただけか、それとも違うものか」</b>を答えさせる。それだけです。</p>
+
+  <p>この実験で分かった有名な現象があります。<b>2つの図形の角度差が大きいほど、答えるまでの時間が長くなる</b>のです。しかも、角度差と反応時間はきれいな比例関係になりました。</p>
+
+  <p>これが意味するのは、人は図形を見て一瞬で判断しているのではなく、<b>頭の中で実際に少しずつ回している</b>ということです。回す角度が大きければ、その分だけ時間がかかる。空間認識能力とは、この「頭の中の回転」をどれだけ速く正確にできるか、と言い換えられます。</p>
+
+  <h2>測ってみないと、鍛えようがない</h2>
+
+  <p>「自分は空間認識が弱い」と感じている人は多いのですが、実際に測ったことがある人はほとんどいません。健康診断を受けずに「たぶん血圧が高い」と言っているのと同じ状態です。</p>
+
+  <p>そこで、この課題をそのままブラウザで試せる形にしました。出題は3種類あります。</p>
+
+  <table>
+    <tr><th>種類</th><th>問われること</th></tr>
+    <tr><td><b>回転</b></td><td>回転させただけの「本物」を、そっくりな鏡像や別物の中から見分ける</td></tr>
+    <tr><td><b>俯瞰</b></td><td>ブロックの山を、真上から見るとどう見えるかを選ぶ</td></tr>
+    <tr><td><b>数え</b></td><td>手前に隠れて見えないブロックまで含めて、全部で何個あるかを数える</td></tr>
+  </table>
+
+  <p>10問・約3分です。正答と回答スピードの両方から結果が出ます。インストールも登録もいりません。<b>問題は毎回ランダムに作られる</b>ので、何度でも違う問題で試せます。</p>
+
+  <a class="cta" href="/kukan-test/" style="display:block;text-align:center;background:var(--gold);color:#1b1400;font-weight:bold;text-decoration:none;border-radius:8px;padding:15px 20px;font-size:16.5px;margin:26px 0;">🧠 空間認識偏差値テストをやってみる（10問・約3分・登録不要）</a>
+
+  <p style="font-size:13.5px;color:var(--sub)">
+  ※出る数値は、このテスト独自の採点モデルによる目安です。全国的な調査に基づく偏差値ではありません。
+  自分の中での変化を見る用途で使ってください。</p>
+
+  <h2>3つの種類のうち、どこで転ぶかで弱点が分かる</h2>
+
+  <p>やってみると、自分がどのタイプで時間を使っているかが見えてきます。</p>
+
+  <p><b>回転で間違える人は、鏡像に引っかかっています。</b>回転タイプの一番の罠は、どれだけ回しても絶対に重ならない「裏返し」の図形が選択肢に混ざっていることです。全体のシルエットが似ていると、つい選んでしまう。<b>見るべきはシルエットではなく、突起がどちら向きに伸びているかという「つながり」</b>です。</p>
+
+  <p><b>俯瞰で間違える人は、視点の移動でつまずいています。</b>横から見た形を、真上からの見え方に変換する作業です。コツは、いきなり真上を想像しないこと。<b>基準になる一点を決めて、そこを軸に少しずつ視点を上げていく</b>と安定します。</p>
+
+  <p><b>数えで間違える人は、見えない部分の推理が甘い。</b>ここは回転ではなく論理の問題です。<b>「宙に浮いたブロックは存在しない」</b>——この原則だけで、上に乗っているブロックから、下に必ずあるはずのブロックを逆算できます。</p>
+
+  <h2>鍛え方：負荷のかかる形で繰り返す</h2>
+
+  <p>空間認識は、日常生活でも意識すれば鍛えられます。ポイントは<b>「見て終わり」にせず、頭の中で操作する</b>ことです。</p>
+
+  <ul>
+    <li><b>地図を回さずに読む</b>——スマホの地図を進行方向に回転させたくなったとき、あえて北を上に固定したまま「自分が今どちらを向いているか」を頭の中で変換する。日常でいちばん回数を稼げる訓練です</li>
+    <li><b>家具の配置を、動かす前に想像する</b>——実際に動かす前に、頭の中で置いてみて、通路の幅まで想像する。答え合わせがその場でできます</li>
+    <li><b>展開図を見たら組み立ててみる</b>——お菓子の箱を開くとき、逆再生で組み立て直せるか考える</li>
+    <li><b>積み木・ブロック・パズル系のゲーム</b>——同じ操作を短時間に大量に繰り返せるのが利点です</li>
+  </ul>
+
+  <p>ひとつ正直に書いておきます。<b>「テストの点が上がること」と「日常生活が便利になること」は、必ずしも同じではありません。</b>特定の課題に慣れると、その課題の成績は確実に上がります。ただしそれがどこまで日常の場面に広がるかは、人によって差があります。</p>
+
+  <p>それでも、<b>自分の現在地を数字で知ること</b>には意味があります。弱点の種類が分かれば、鍛える方向を絞れるからです。</p>
+
+  <h2>「空間認識が低い」は、才能の話ではない</h2>
+
+  <p>この能力は、生まれつきの才能として語られがちです。ただ実際には、<b>これまでどれだけその作業をしてきたかの積み重ね</b>という側面がかなりあります。</p>
+
+  <p>立体を扱う趣味や仕事、地図を読む機会、球技の経験。そういう「頭の中で位置関係を扱う回数」が多い人ほど、この種の課題に慣れています。逆に言えば、<b>回数を増やせば変わる余地がある</b>ということです。</p>
+
+  <p>まずは一度測ってみてください。3分で終わります。</p>
+
+  <a class="cta" href="/kukan-test/" style="display:block;text-align:center;background:var(--gold);color:#1b1400;font-weight:bold;text-decoration:none;border-radius:8px;padding:15px 20px;font-size:16.5px;margin:26px 0;">🧠 空間認識偏差値テストをやってみる（10問・約3分・登録不要）</a>
+
+  <div class="related">
+    <div class="rtitle">このお店で遊べる作品</div>
+    <a href="/games/">🕹️ ミニゲーム一覧</a>
+    <a href="/blog/">📝 ブログ一覧</a>
+  </div>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
