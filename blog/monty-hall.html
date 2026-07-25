@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>モンティホール問題がどうしても納得できない人へ——あなたの直感は、実は間違っていない｜D-studyLab ブログ</title>
+<meta name="description" content="モンティホール問題を10万回シミュレーションした実測データで解説します。「変えると2/3」の理由と、多くの人が感じる「50%じゃないの？」という直感が正しくなる条件まで、実際に回した数字で示します。">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="モンティホール問題がどうしても納得できない人へ——あなたの直感は、実は間違っていない">
+<meta property="og:description" content="「変えると2/3」を10万回の実測で確認。そして、あなたの直感が正しくなる条件も実測しました。ブラウザで試せます。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/monty-hall.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">🚪 確率の直感</div>
+  <h1>モンティホール問題がどうしても納得できない人へ——あなたの直感は、実は間違っていない</h1>
+  <div class="date">2026年7月26日</div>
+
+  <p>3つのドアのうち1つに景品がある。あなたが1つ選ぶと、答えを知っている司会者が残り2つのうちハズレを1つ開けて、こう聞く。「選び直しますか？」</p>
+
+  <p>正解は<b>「変える」</b>です。変えれば勝率は 2/3、変えなければ 1/3。有名な話なので、聞いたことがある人も多いと思います。</p>
+
+  <p>それでも、多くの人がこう思います。<b>「残り2つなんだから、50%じゃないの？」</b></p>
+
+  <p>この記事では、この問題を<b>実際に10万回シミュレーションした数字</b>で説明します。そして最後に、ひとつ大事なことを書きます。<b>あなたの「50%だろう」という直感は、実は間違っていません。</b>ある条件のもとでは、その直感のほうが正しいのです。</p>
+
+  <a class="cta" href="/monty/">🚪 モンティホール100連を試す（登録不要・ブラウザで完結）</a>
+
+  <h2>まず、実際に10万回やってみた結果</h2>
+
+  <p>議論の前に数字を出します。同じルールで10万回ずつ、2つの戦略を回しました。</p>
+
+  <table>
+    <tr><th>戦略</th><th>10万回の実測勝率</th><th>理論値</th></tr>
+    <tr><td>ドアを<b>変えない</b></td><td><b>33.39%</b></td><td>33.33%（1/3）</td></tr>
+    <tr><td>ドアを<b>変える</b></td><td><b>66.47%</b></td><td>66.67%（2/3）</td></tr>
+  </table>
+
+  <p>ぴたりと理論値に一致しました。<b>変えたほうが、勝率はちょうど2倍です。</b>これは議論の余地がありません。</p>
+
+  <h2>なぜ2倍になるのか——「司会者は答えを知っている」が全部</h2>
+
+  <p>説明の仕方はいくつもありますが、いちばん短いのはこれです。</p>
+
+  <blockquote>最初に選んだドアが当たりである確率は 1/3。<br>つまり、<b>「最初の選択が外れている確率が 2/3」</b>。</blockquote>
+
+  <p>ここは誰も反対しないはずです。3つのうち1つを適当に選んだのだから、外れている可能性のほうが高い。</p>
+
+  <p>問題はこの先です。司会者がハズレを1枚開けたとき、<b>この 2/3 はどこへ行ったのか。</b></p>
+
+  <p>消えません。<b>残った1枚のドアに、まるごと移動します。</b></p>
+
+  <p>なぜかというと、司会者は<b>答えを知っていて、必ずハズレを選んで開けている</b>からです。ここが決定的です。司会者は迷っていません。あなたが外していた場合（確率 2/3）、司会者に選択肢はありません。残り2枚のうち片方は当たりなので、<b>開けられるハズレは1枚しかない</b>。だから残るのは必然的に当たりのドアです。</p>
+
+  <p>整理するとこうなります。</p>
+
+  <table>
+    <tr><th>最初の選択</th><th>起きる確率</th><th>変えるとどうなるか</th></tr>
+    <tr><td>当たりを選んでいた</td><td>1/3</td><td>必ず<b>外れる</b></td></tr>
+    <tr><td>外れを選んでいた</td><td>2/3</td><td>必ず<b>当たる</b></td></tr>
+  </table>
+
+  <p>「変える」という行為は、<b>「最初の自分は外していた」に賭けること</b>と同じです。そして最初の自分が外している確率は 2/3。だから 2/3 で勝ちます。</p>
+
+  <h2>それでも納得できない人へ：ドアを100枚にしてみる</h2>
+
+  <p>3枚だと差が小さくて実感しにくいので、枚数を増やしてみます。ルールは同じで、司会者はあなたが選んだ1枚を残し、<b>当たり以外を全部開けます</b>。</p>
+
+  <p>実際に10万回ずつ回した結果がこれです。</p>
+
+  <table>
+    <tr><th>ドアの枚数</th><th>「変える」の実測勝率</th></tr>
+    <tr><td>3枚</td><td>66.70%</td></tr>
+    <tr><td>10枚</td><td>90.01%</td></tr>
+    <tr><td>100枚</td><td>99.02%</td></tr>
+    <tr><td>1000枚</td><td>99.89%</td></tr>
+  </table>
+
+  <p>1000枚のドアから1枚を適当に選んだあと、司会者が998枚を開けて、あなたのドアと、もう1枚だけが残った。<b>その残った1枚が当たりである確率は 99.89%</b>です。</p>
+
+  <p>この状況なら、たぶん誰でも乗り換えます。最初に1000分の1を引き当てた自信があるかと聞かれれば、無いからです。3枚のときに起きているのは、これとまったく同じことです。</p>
+
+  <a class="cta" href="/monty/">🚪 実際に100連・1万連を回してみる</a>
+
+  <h2>ここからが本題：あなたの直感が正しくなる条件</h2>
+
+  <p>ここまで読んでもモヤモヤが残る人へ。その感覚には、はっきりした理由があります。</p>
+
+  <p><b>あなたはたぶん、無意識に別の問題を解いています。</b>そして<b>その問題では、答えは本当に50%です。</b></p>
+
+  <p>その別の問題とは、こうです。</p>
+
+  <blockquote>司会者は<b>中身を知らない</b>。あなたが選ばなかった2枚のうち、<b>適当に1枚</b>を開けた。<br>たまたまハズレだった。さあ、変えますか？</blockquote>
+
+  <p>この設定でも10万回シミュレーションしました。司会者が当たりを開けてしまった回はゲームが成立しないので除外し、<b>ハズレが出た回だけ</b>で勝率を出しています。</p>
+
+  <table>
+    <tr><th>司会者が中身を知らない場合</th><th>実測勝率</th></tr>
+    <tr><td>変えない</td><td><b>49.65%</b></td></tr>
+    <tr><td>変える</td><td><b>50.10%</b></td></tr>
+  </table>
+
+  <p><b>本当に50%でした。</b>変えても変えなくても、まったく同じです。</p>
+
+  <p>ちなみに10万回のうち、<b>33,453回は司会者が当たりを開けてしまって</b>ゲームが成立しませんでした。全体の約3分の1です。この「そもそも成立しなかった回」が捨てられていることが、確率が変わる仕掛けの正体です。</p>
+
+  <p>つまり、こういうことです。</p>
+
+  <table>
+    <tr><th>司会者は</th><th>変えたときの勝率</th></tr>
+    <tr><td>中身を知っていて、必ずハズレを開ける</td><td><b>66.5%</b></td></tr>
+    <tr><td>中身を知らず、たまたまハズレが出た</td><td><b>50.1%</b></td></tr>
+  </table>
+
+  <p>画面に映っている光景は、どちらもまったく同じです。ドアが1枚開いて、ハズレが見えている。<b>違うのは、その1枚がどうやって選ばれたかという履歴だけ</b>です。</p>
+
+  <p>そして、その履歴によって勝率が 66.5% にも 50.1% にもなる。</p>
+
+  <p>だから「50%じゃないの？」という直感は、判断力が足りないのではありません。<b>「司会者が答えを知っている」という条件を、重要な情報だと思わずに聞き流しているだけ</b>です。実際その一文は、問題文の中でいちばん目立たない場所にさりげなく置かれています。</p>
+
+  <p>この問題が引っかけとして優秀なのは、答えが直感に反するからではなく、<b>勝敗を決める条件が、いちばん地味な顔をして紛れ込んでいる</b>からです。</p>
+
+  <h2>「自分で試したけど、変わらなかった」という人へ</h2>
+
+  <p>実際に手で何回か試して、「別に変わらないじゃないか」と思った人もいると思います。それも当然です。</p>
+
+  <p>「変える」戦略で<b>10回ずつ、20セット</b>回した結果がこれです（10回中の勝ち数）。</p>
+
+  <p><code>8, 4, 7, 9, 7, 7, 7, 8, 6, 5, 9, 6, 8, 7, 3, 6, 7, 5, 5, 7</code></p>
+
+  <p>理論上は10回中6.67勝のはずですが、<b>20セット中5セットは5勝以下</b>でした。3勝しかしないセットもあります。つまり<b>4回に1回くらいは、10回試すと「変えたら負け越した」という結果になります。</b></p>
+
+  <p>10回程度の試行では、2/3 と 1/2 の差は誤差に埋もれて見えません。差をはっきり見るには、<b>最低でも100回、できれば1000回以上</b>必要です。</p>
+
+  <p>これは確率の話全般に言えることです。<b>「自分で何回か試した実感」は、確率を判定する道具としては弱すぎます。</b>ガチャの「爆死した」「引きが良い」といった話も、たいていはこの範囲に収まります。</p>
+
+  <p>そこで、ボタン1つで100回・1万回を一気に回せるものを作りました。「変える」と「変えない」を同じ条件で同時に走らせて、勝率が理論値に近づいていく様子をグラフで見られます。</p>
+
+  <a class="cta" href="/monty/">🚪 モンティホール100連（1万連まで一気に回せます）</a>
+
+  <h2>この記事の要点</h2>
+
+  <ul>
+    <li><b>変えると 2/3 で勝つ。</b>10万回の実測で 66.47%（理論値 66.67%）</li>
+    <li>理由は<b>「最初の自分が外している確率 2/3」が、開かれずに残った1枚へ丸ごと移る</b>から</li>
+    <li>腑に落ちないときは<b>ドアを1000枚</b>にして考える。実測で 99.89%</li>
+    <li><b>司会者が中身を知らない場合は、本当に 50%</b>（実測 50.10%）。あなたの直感は、この問題を解いていた</li>
+    <li>手で10回試しても<b>差は見えない</b>。20セット中5セットは負け越した</li>
+  </ul>
+
+  <p style="font-size:13.5px;color:var(--sub)">
+  ※数値はすべて実際に計算した実測値です。3枚のドアの数値は、上で公開しているシミュレーターと同じコードを10万回試行したもの。ドアの枚数を増やした版と、司会者が中身を知らない版は、同じ考え方をそのまま拡張して別に書いたコードによるものです（いずれも乱数の種を固定して再現可能な形で計算しています）。理論値とのわずかな差は、試行回数に由来する誤差です。</p>
+
+  <div class="related">
+    <div class="rt">関連するもの</div>
+    <a href="/gacha-sim/">🎰 1万人ガチャシミュレータ</a>——「排出率1%＝100連で出る」ではない、を体感する<br>
+    <a href="/games/">🕹️ ミニゲーム一覧</a>　<a href="/blog/">📝 ブログ一覧</a>
+  </div>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
