@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>note の人気記事58本を実測したら、自分の記事に足りないものが数字で出た｜D-studyLab ブログ</title>
+<meta name="description" content="note の公開APIで人気記事58本の本文量・画像数・見出し数を実測し、自分の記事6本と比較した記録。「なんとなく薄い」を数字にすると、直すべき場所がはっきりします。">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="note の人気記事58本を実測したら、自分の記事に足りないものが数字で出た">
+<meta property="og:description" content="人気記事58本と自分の記事6本を実測して比較。中央値で本文2,684字/画像6枚に対し、自分は1,193字/画像0枚でした。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/note-data.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">📊 データ</div>
+  <h1>note の人気記事58本を実測したら、自分の記事に足りないものが数字で出た</h1>
+  <div class="date">2026年7月25日</div>
+
+  <p>自分の書いた記事が「なんとなく薄い」と感じることがあります。ただ、なんとなくのままだと直しようがありません。そこで note の公開APIを使って、実際に読まれている記事がどういう形をしているのかを測ってみました。</p>
+
+  <p>結果は、思っていたより残酷で、そして分かりやすいものでした。</p>
+
+  <h2>何をどう測ったか</h2>
+
+  <p>note には記事データを返す公開APIがあります。これを使って「個人開発」「Claude Code」「AI 開発」で人気順に記事を集め、重複を除いた<b>58本</b>について、本文の中身を機械的に数えました。</p>
+
+  <p>数えたのは4つです。HTMLタグ・スクリプト・スタイルを取り除いた<b>本文の文字数</b>、記事内の<b>画像の枚数</b>、<b>見出しの数</b>、そして<b>太字の数</b>。比較対象として、自分が公開している記事6本もまったく同じ方法で数えました。</p>
+
+  <h2>数字で出た差</h2>
+
+  <p>中央値で比べた結果がこれです。</p>
+
+  <table>
+    <tr><th>指標</th><th>人気記事58本</th><th>自分の記事6本</th></tr>
+    <tr><td>本文の文字数</td><td>2,684字</td><td>1,193字</td></tr>
+    <tr><td><b>画像の枚数</b></td><td><b>6枚</b></td><td><b>0枚</b></td></tr>
+    <tr><td>見出しの数</td><td>6個</td><td>4個</td></tr>
+    <tr><td>太字の数</td><td>5個</td><td>1個</td></tr>
+  </table>
+
+  <p>文字数が半分以下、というのは薄々わかっていました。ただ<b>画像0枚</b>は完全に見落としていました。文章を書くことばかり考えていて、見せることを考えていなかった。</p>
+
+  <p>とくに痛かったのは有料記事です。私は1本だけ有料の記事を出していますが、それが<b>画像0枚</b>でした。同じ価格帯で数百のスキがついている記事を見に行ったら、5,000字を超える本文に<b>50枚以上</b>の画像が入っていました。字数で2倍、画像で50倍以上の差があった。お金を取るページに画像が1枚も無いというのは、商品として成立していなかったと言われても仕方ありません。</p>
+
+  <h2>伸びている記事の見出しは、それだけ読んでも中身がわかる</h2>
+
+  <p>数字の次に、実際の記事の見出しを並べて眺めました。共通していたのは<b>見出しに数字と結論が入っている</b>ことです。</p>
+
+  <p>たとえば、あるサービス開発の記事はこういう並びでした。</p>
+
+  <blockquote>
+    6年間の売上<br>
+    2023年: 競合が消えて、売上が5倍になった<br>
+    2025年11月28日、機能停止<br>
+    700円のまま、6年間値上げしなかった理由
+  </blockquote>
+
+  <p>目次を読むだけで、何が起きてどう終わったのかが分かります。「〜について」「〜の話」といった中身のない見出しが1つもない。</p>
+
+  <p>別の記事は、最初の見出しがいきなり<b>「まず実物から」</b>でした。前置きを読ませる前に成果物を見せてしまう。そして最後の見出しが「教訓と、今日から始める3ステップ」。<b>読者が動ける形で終わる</b>んです。</p>
+
+  <p>有料記事にはもう一つ型がありました。冒頭で<b>実績を数字で列挙してから本題に入る</b>という構成です。買う前に信用を担保する、という順番になっている。技術的な中身より前に、まず「この人から買っていいのか」に答えている。</p>
+
+  <h2>画像は、用意できないのではなく、用意していなかった</h2>
+
+  <p>画像0枚という結果を見て最初に思ったのは「写真なんて持っていない」でした。でもこれは言い訳でした。</p>
+
+  <p>自分が作ったものの記事なら、<b>実際の画面のスクリーンショット</b>が撮れます。仕組みの説明なら<b>図を描けます</b>。修正前と修正後を並べた比較も作れる。実際、この検証のあとに書いた記事では、説明したい仕組みを図にして入れました。文章で3段落かけていた説明が、図1枚で伝わるようになりました。</p>
+
+  <p>持っていなかったのは写真ではなく、<b>「図を作る」という発想</b>のほうでした。</p>
+
+  <h2>測ってよかったこと</h2>
+
+  <p>この検証でいちばん良かったのは、直すべき場所が具体的になったことです。</p>
+
+  <p>「もっと良い記事を書こう」では何も変わりません。でも「本文2,500字以上、画像5枚以上、見出しは全部言い切りか数字入り」なら、書いたあとに自分でチェックできます。達成できたかどうかが自分で判定できる形になっている。</p>
+
+  <p>感覚で「薄いかも」と思っているうちは、たいてい何も直りません。<b>測ると、直せます。</b></p>
+
+  <div class="note-caution">
+    ※数値は2026年7月時点で note の公開APIから取得したデータにもとづきます。検索キーワードや取得時期によって結果は変わります。中央値で比較しているのは、極端な記事に引っ張られないようにするためです。
+  </div>
+
+  <div class="related">
+    <div class="rtitle">このお店で遊べる作品</div>
+    <a href="/games/">🕹️ ミニゲーム一覧</a>
+    <a href="/blog/">📝 ブログ一覧</a>
+  </div>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
