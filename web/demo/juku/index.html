@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex,nofollow">
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ふくろう学習教室｜盛岡の少人数学習塾（架空デモ）</title>
+<meta name="description" content="盛岡の少人数制学習塾「ふくろう学習教室」。小4〜中3対象、1クラス6人まで。「わかったつもり」を残さない対話式授業。※これは営業用の架空デモサイトです。" />
+<style>
+  :root{
+    --kami:#fbfaf5;
+    --hoban:#28405e;
+    --hoban-deep:#1d3049;
+    --daidai:#e8863c;
+    --daidai-bright:#f2a35e;
+    --midori:#5f8f6a;
+    --ink:#2c3540;
+    --mute:#71797f;
+    --line:rgba(44,53,64,.13);
+    --grid:rgba(40,64,94,.07);
+    --serif:"Hiragino Mincho ProN","Yu Mincho","BIZ UDMincho",serif;
+    --sans:"Hiragino Kaku Gothic ProN","Yu Gothic","BIZ UDGothic",sans-serif;
+    --ease:cubic-bezier(.2,.7,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans);color:var(--ink);
+    background:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+      var(--kami);
+    background-size:28px 28px;
+    line-height:1.9;letter-spacing:.02em;overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--daidai);color:#fff;}
+
+  /* ===== hero ===== */
+  .hero{
+    position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;
+  }
+  .hero__wrap{
+    position:relative;z-index:3;width:100%;max-width:1100px;margin:0 auto;
+    padding:0 7vw;display:flex;align-items:center;justify-content:space-between;gap:4vw;
+  }
+  .hero__text{flex:1 1 auto;}
+  .hero__en{
+    font-style:italic;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--daidai);font-size:.82rem;margin-bottom:1.6rem;
+  }
+  .hero__title{
+    font-family:var(--serif);font-weight:700;
+    font-size:clamp(2.2rem,6.4vw,4rem);line-height:1.45;letter-spacing:.06em;color:var(--hoban);
+  }
+  /* 蛍光マーカー風アクセント */
+  .hero__title .marker{
+    background:linear-gradient(transparent 58%, rgba(242,163,94,.55) 58% 92%, transparent 92%);
+  }
+  .hero__lead{margin-top:1.8rem;font-size:.96rem;color:var(--mute);line-height:2.2;max-width:38ch;}
+  .hero__tag{
+    display:inline-block;margin-top:2.2rem;font-size:.74rem;letter-spacing:.26em;
+    padding:.5rem 1.2rem;border:1px solid var(--line);color:var(--mute);background:rgba(255,255,255,.7);
+  }
+  .hero__mascot{flex:0 0 clamp(200px,26vw,300px);}
+  .hero__mascot svg{width:100%;height:auto;display:block;}
+  .float{animation:float 5s var(--ease) infinite;}
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
+  /* 鉛筆が線を書く */
+  .pen{animation:pen 3.6s ease-in-out infinite;}
+  @keyframes pen{
+    0%,15%{transform:translate(0,0) rotate(0deg);}
+    40%{transform:translate(26px,4px) rotate(3deg);}
+    60%{transform:translate(52px,0px) rotate(-2deg);}
+    75%{transform:translate(52px,0) rotate(-2deg);}
+    90%,100%{transform:translate(0,0) rotate(0deg);}
+  }
+  .written{stroke-dasharray:60;stroke-dashoffset:60;animation:written 3.6s ease-in-out infinite;}
+  @keyframes written{
+    0%,15%{stroke-dashoffset:60;}
+    60%{stroke-dashoffset:0;}
+    75%{stroke-dashoffset:0;opacity:1;}
+    90%,100%{stroke-dashoffset:60;opacity:0;}
+  }
+  /* 花丸 */
+  .hanamaru{stroke-dasharray:120;stroke-dashoffset:120;animation:hanamaru 3.6s ease-in-out infinite;}
+  @keyframes hanamaru{
+    0%,60%{stroke-dashoffset:120;opacity:0;}
+    64%{opacity:1;}
+    80%{stroke-dashoffset:0;opacity:1;}
+    92%,100%{stroke-dashoffset:0;opacity:0;}
+  }
+  .blink{animation:blink 4.4s infinite;}
+  @keyframes blink{0%,90%,100%{transform:scaleY(1);}94%{transform:scaleY(.1);}}
+  .nod{transform-origin:50% 78%;animation:nod 3.6s ease-in-out infinite;}
+  @keyframes nod{0%,55%,100%{transform:rotate(0deg);}66%{transform:rotate(4deg);}78%{transform:rotate(0deg);}}
+  .scrollcue{
+    position:absolute;left:50%;bottom:2.2rem;z-index:3;transform:translateX(-50%);
+    font-style:italic;letter-spacing:.3em;font-size:.7rem;color:var(--mute);text-align:center;
+  }
+  .scrollcue span{display:block;width:1px;height:40px;margin:.7rem auto 0;background:linear-gradient(var(--daidai),transparent);animation:cue 2.4s var(--ease) infinite;}
+  @keyframes cue{0%,100%{transform:scaleY(.4);opacity:.4;transform-origin:top;}50%{transform:scaleY(1);opacity:1;}}
+
+  /* ===== sections ===== */
+  .section{max-width:1100px;margin:0 auto;padding:clamp(4.5rem,11vw,8rem) 7vw;}
+  .eyebrow{
+    font-style:italic;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--daidai);font-size:.8rem;margin-bottom:1rem;
+  }
+  .sec-title{
+    font-family:var(--serif);font-weight:600;color:var(--hoban);
+    font-size:clamp(1.7rem,4.6vw,2.4rem);line-height:1.5;letter-spacing:.05em;
+  }
+  .sec-lead{margin-top:1.3rem;max-width:46ch;color:var(--mute);font-size:.95rem;line-height:2.1;}
+
+  /* 特長 */
+  .points{margin-top:3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.4rem;}
+  .pt{
+    background:#fff;border:1px solid var(--line);border-radius:8px;padding:2rem 1.7rem;
+    position:relative;
+    transition:transform .5s var(--ease),box-shadow .5s var(--ease);
+  }
+  .pt:hover{transform:translateY(-4px);box-shadow:0 22px 44px -26px rgba(40,64,94,.35);}
+  .pt__num{
+    position:absolute;top:-14px;left:1.4rem;
+    font-style:italic;font-size:.8rem;letter-spacing:.14em;color:#fff;
+    background:var(--hoban);padding:.25rem .9rem;border-radius:999px;
+  }
+  .pt h3{font-family:var(--serif);font-size:1.12rem;letter-spacing:.05em;color:var(--hoban);margin-top:.4rem;}
+  .pt p{margin-top:.8rem;font-size:.87rem;color:var(--mute);line-height:2;}
+
+  /* コース */
+  .course-bg{background:var(--hoban);color:var(--kami);}
+  .course-bg .eyebrow{color:var(--daidai-bright);}
+  .course-bg .sec-title{color:var(--kami);}
+  .course-bg .sec-lead{color:rgba(251,250,245,.72);}
+  .courses{margin-top:3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.4rem;}
+  .course{
+    border:1px solid rgba(251,250,245,.22);border-radius:8px;padding:2rem 1.7rem;
+    background:rgba(251,250,245,.05);
+  }
+  .course__grade{font-size:.74rem;letter-spacing:.2em;color:var(--daidai-bright);}
+  .course__name{font-family:var(--serif);font-size:1.2rem;margin-top:.5rem;letter-spacing:.06em;}
+  .course__price{margin-top:.8rem;font-style:italic;font-size:1.5rem;}
+  .course__price small{font-size:.7rem;font-style:normal;color:rgba(251,250,245,.6);margin-left:.3rem;}
+  .course__desc{margin-top:.9rem;font-size:.85rem;color:rgba(251,250,245,.75);line-height:2;}
+
+  /* 声 */
+  .voices{margin-top:3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.4rem;}
+  .voice{
+    background:#fff;border:1px solid var(--line);border-radius:8px;padding:1.8rem 1.6rem;
+    font-size:.9rem;line-height:2.05;position:relative;
+  }
+  .voice::before{
+    content:"";position:absolute;top:0;left:1.6rem;width:34px;height:4px;
+    background:var(--daidai);border-radius:0 0 3px 3px;
+  }
+  .voice__meta{margin-top:1rem;font-size:.78rem;color:var(--mute);letter-spacing:.08em;}
+
+  /* 一日の流れ */
+  .day{margin-top:2.8rem;max-width:640px;}
+  .d-item{
+    display:grid;grid-template-columns:86px 1fr;gap:1.3rem;padding:1.1rem 0;
+    border-bottom:1px dashed var(--line);align-items:baseline;
+  }
+  .d-item__time{font-style:italic;font-size:1.05rem;color:var(--daidai);white-space:nowrap;}
+  .d-item__body h3{font-size:.98rem;letter-spacing:.05em;color:var(--hoban);}
+  .d-item__body p{margin-top:.3rem;font-size:.85rem;color:var(--mute);line-height:1.9;}
+
+  /* info */
+  .info-bg{background:#fff;border-top:1px solid var(--line);}
+  .info__grid{margin-top:2.4rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2rem;}
+  .info__grid dt{font-family:var(--serif);font-size:.92rem;letter-spacing:.14em;color:var(--hoban);margin-bottom:.5rem;}
+  .info__grid dd{font-size:.9rem;line-height:2.05;}
+  .info__note{margin-top:2.6rem;font-size:.8rem;color:var(--mute);line-height:2;}
+
+  .footer{background:var(--hoban-deep);color:var(--kami);}
+  .footer .section{padding-top:2.6rem;padding-bottom:2.6rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;align-items:baseline;}
+  .footer__brand{font-family:var(--serif);font-size:1.05rem;letter-spacing:.18em;}
+  .footer__copy{font-size:.74rem;color:rgba(251,250,245,.45);letter-spacing:.05em;line-height:1.9;}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity 1s var(--ease),transform 1s var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+  .hero .reveal{transition-delay:var(--d,0s);}
+
+  @media (max-width:760px){
+    .hero__wrap{flex-direction:column-reverse;justify-content:center;gap:2rem;padding-top:13vh;padding-bottom:14vh;}
+    .hero__mascot{flex-basis:auto;width:min(56vw,240px);}
+    .d-item{grid-template-columns:70px 1fr;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important;}
+    .reveal{opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+<div id="dsl-demobar" style="position:sticky;top:0;z-index:99999;background:#1a1a1a;color:#f2ede4;
+     font:13px/1.5 -apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;
+     padding:9px 14px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;
+     border-bottom:1px solid #3a3a3a;letter-spacing:.02em;">
+  <span style="background:#E8A33D;color:#1a1a1a;font-weight:bold;border-radius:3px;padding:2px 8px;font-size:12px;">
+    サンプル</span>
+  <span>これは <b>まちのウェブ屋さん</b> の制作サンプルです。店名・住所・電話番号はすべて架空のものです。</span>
+  <a href="/web/" style="color:#E8A33D;text-decoration:none;border-bottom:1px solid rgba(232,163,61,.5);">
+    ← 他の業種を見る</a>
+</div>
+
+
+<!-- ===== hero ===== -->
+<header class="hero">
+  <div class="hero__wrap">
+    <div class="hero__text">
+      <p class="hero__en reveal" style="--d:.1s">fukurou learning class</p>
+      <h1 class="hero__title reveal" style="--d:.25s">「わかったつもり」を、<br /><span class="marker">置いて帰らせない</span>。</h1>
+      <p class="hero__lead reveal" style="--d:.4s">1クラス6人まで。授業の最後に、その日習ったことを先生に「自分の言葉で」説明できたら帰れる塾です。説明できなければ、できるまで付き合います。</p>
+      <span class="hero__tag reveal" style="--d:.55s">小4〜中3・1クラス6人まで・体験2回無料</span>
+    </div>
+    <div class="hero__mascot reveal float" style="--d:.35s" aria-hidden="true">
+      <!-- 自作マスコット「ふくまる先生」：鉛筆で書いて花丸をつけるフクロウ -->
+      <svg viewBox="0 0 240 230" role="img" aria-label="ノートに書いて花丸をつけるフクロウ先生のマスコット">
+        <!-- 体 -->
+        <g class="nod">
+          <!-- 耳羽 -->
+          <path d="M74 44 l-8 -18 l20 8 z M150 44 l8 -18 l-20 8 z" fill="#8a6842" stroke="#2c3540" stroke-width="3" stroke-linejoin="round"/>
+          <!-- 頭〜体 -->
+          <path d="M62 88 q0 -50 50 -50 q50 0 50 50 l-4 52 q-2 30 -46 30 q-44 0 -46 -30 z" fill="#a9805a" stroke="#2c3540" stroke-width="3" stroke-linejoin="round"/>
+          <!-- 顔盤 -->
+          <path d="M74 84 q0 -34 38 -34 q38 0 38 34 q0 26 -38 26 q-38 0 -38 -26 z" fill="#e9dbc0"/>
+          <!-- めがね -->
+          <circle cx="94" cy="84" r="15" fill="#fff" stroke="#2c3540" stroke-width="3"/>
+          <circle cx="130" cy="84" r="15" fill="#fff" stroke="#2c3540" stroke-width="3"/>
+          <path d="M109 84 h6" stroke="#2c3540" stroke-width="3"/>
+          <!-- 目 -->
+          <g class="blink" style="transform-origin:112px 84px;">
+            <circle cx="94" cy="84" r="5" fill="#2c3540"/>
+            <circle cx="130" cy="84" r="5" fill="#2c3540"/>
+          </g>
+          <!-- くちばし -->
+          <path d="M107 98 l5 8 l5 -8 z" fill="#e8863c" stroke="#2c3540" stroke-width="2.5" stroke-linejoin="round"/>
+          <!-- おなか模様 -->
+          <path d="M92 130 q4 8 10 0 M112 130 q4 8 10 0 M102 144 q4 8 10 0" fill="none" stroke="#8a6842" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
+          <!-- 左羽（ノートを押さえる） -->
+          <path d="M66 110 q-16 14 -6 30" fill="none" stroke="#2c3540" stroke-width="3" stroke-linecap="round"/>
+        </g>
+        <!-- ノート -->
+        <rect x="52" y="172" width="140" height="42" rx="4" fill="#fff" stroke="#2c3540" stroke-width="3"/>
+        <path d="M60 182 h60 M60 192 h44" stroke="rgba(44,53,64,.25)" stroke-width="2" stroke-linecap="round"/>
+        <!-- 書かれる線 -->
+        <path class="written" d="M64 204 q14 -6 28 0 q14 6 26 -2" fill="none" stroke="#28405e" stroke-width="3" stroke-linecap="round"/>
+        <!-- 花丸 -->
+        <g class="hanamaru">
+          <path d="M166 196 q10 -12 2 -18 q-9 -6 -14 4 q-5 10 4 14 q11 5 16 -6" fill="none" stroke="#e8863c" stroke-width="3" stroke-linecap="round"/>
+        </g>
+        <!-- 右羽＋鉛筆 -->
+        <g class="pen">
+          <path d="M152 140 q10 12 6 26" fill="none" stroke="#2c3540" stroke-width="3" stroke-linecap="round"/>
+          <g transform="translate(150,168) rotate(58)">
+            <rect x="0" y="-3" width="34" height="7" rx="2" fill="#f2c94c" stroke="#2c3540" stroke-width="2"/>
+            <path d="M0 -3 l-8 3.5 l8 3.5 z" fill="#e9dbc0" stroke="#2c3540" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M-8 .5 l-3 0" stroke="#2c3540" stroke-width="3" stroke-linecap="round"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="scrollcue">scroll<span></span></div>
+</header>
+
+<main>
+  <!-- ===== 特長 ===== -->
+  <section class="section">
+    <p class="eyebrow reveal">features</p>
+    <h2 class="sec-title reveal">ふくろう式、3つのやり方</h2>
+    <div class="points">
+      <div class="pt reveal">
+        <span class="pt__num">その一</span>
+        <h3>説明できたら、合格</h3>
+        <p>授業の最後5分は「先生に教え返す」時間。人に説明できて初めて「わかった」です。言葉に詰まったところが、そのまま次回の課題になります。</p>
+      </div>
+      <div class="pt reveal">
+        <span class="pt__num">その二</span>
+        <h3>宿題は塾で終わらせる</h3>
+        <p>授業前後の自習席をいつでも無料開放。家でやれない日があっても大丈夫。わからない問題はその場で質問して、持ち帰らないのがルールです。</p>
+      </div>
+      <div class="pt reveal">
+        <span class="pt__num">その三</span>
+        <h3>順位より、前回の自分</h3>
+        <p>張り出すのは点数ではなく「先月からの伸び」。60点が75点になった子を、90点キープの子と同じだけ褒める教室です。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== コース ===== -->
+  <section class="course-bg">
+    <div class="section">
+      <p class="eyebrow reveal">course</p>
+      <h2 class="sec-title reveal">コースと月謝</h2>
+      <p class="sec-lead reveal">教材費は年2回（各3,300円）だけ。講習の強制参加はありません。</p>
+      <div class="courses">
+        <div class="course reveal">
+          <p class="course__grade">小4〜小6</p>
+          <h3 class="course__name">小学生コース</h3>
+          <p class="course__price">¥8,800<small>/月・週1回75分</small></p>
+          <p class="course__desc">算数・国語。学校の単元に先行して「学校の授業がわかる」状態を作ります。週2回は¥14,300。</p>
+        </div>
+        <div class="course reveal">
+          <p class="course__grade">中1・中2</p>
+          <h3 class="course__name">中学生コース</h3>
+          <p class="course__price">¥16,500<small>/月・週2回100分</small></p>
+          <p class="course__desc">数学・英語＋定期テスト前は5教科対応。テスト2週間前から無料の対策自習会があります。</p>
+        </div>
+        <div class="course reveal">
+          <p class="course__grade">中3</p>
+          <h3 class="course__name">受験コース</h3>
+          <p class="course__price">¥22,000<small>/月・週3回100分</small></p>
+          <p class="course__desc">白ゆり模試に準拠した志望校面談を年5回。過去問演習は「解説を自分で言えるまで」やります。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 保護者の声 ===== -->
+  <section class="section">
+    <p class="eyebrow reveal">voice</p>
+    <h2 class="sec-title reveal">保護者と生徒の声</h2>
+    <div class="voices">
+      <div class="voice reveal">
+        「今日なにやったの？」に「別に」としか言わなかった息子が、夕飯どきに連立方程式の説明をしてくるようになりました。
+        <p class="voice__meta">中2男子の母</p>
+      </div>
+      <div class="voice reveal">
+        宿題が塾で終わるので、家でのバトルがなくなったのが一番ありがたいです。成績は3ヶ月目から動きました。
+        <p class="voice__meta">小6女子の父</p>
+      </div>
+      <div class="voice reveal">
+        説明タイムは最初いやだったけど、テスト中に「あのとき自分で言ったやつだ」って思い出せる。あれはずるい。
+        <p class="voice__meta">中3・生徒本人</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 一日の流れ ===== -->
+  <section class="section" style="padding-top:0;">
+    <p class="eyebrow reveal">one day</p>
+    <h2 class="sec-title reveal">中学生コースのある日</h2>
+    <div class="day">
+      <div class="d-item reveal">
+        <p class="d-item__time">17:30</p>
+        <div class="d-item__body"><h3>自習席オープン</h3><p>学校の宿題を先に片付ける子、前回の復習をする子。軽食持ち込みOK。</p></div>
+      </div>
+      <div class="d-item reveal">
+        <p class="d-item__time">19:00</p>
+        <div class="d-item__body"><h3>授業（前半）</h3><p>新しい単元の導入。6人なので「指名されない授業」はありません。</p></div>
+      </div>
+      <div class="d-item reveal">
+        <p class="d-item__time">19:50</p>
+        <div class="d-item__body"><h3>演習タイム</h3><p>解くスピードは人それぞれ。先生は机の間を回り続けます。</p></div>
+      </div>
+      <div class="d-item reveal">
+        <p class="d-item__time">20:35</p>
+        <div class="d-item__body"><h3>説明タイム</h3><p>今日のポイントを一人ずつ先生に説明。花丸が出たら帰れます。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== info ===== -->
+  <section class="info-bg">
+    <div class="section">
+      <p class="eyebrow reveal">information</p>
+      <h2 class="sec-title reveal">教室のご案内</h2>
+      <dl class="info__grid reveal">
+        <div>
+          <dt>教室名</dt>
+          <dd>ふくろう学習教室</dd>
+        </div>
+        <div>
+          <dt>所在地</dt>
+          <dd>岩手県盛岡市ふくろう町2-4-7 2F<br />（架空の住所です）<br />自転車置き場あり・お迎え待機スペースあり</dd>
+        </div>
+        <div>
+          <dt>開講時間</dt>
+          <dd>平日 17:00〜21:30／土 13:00〜19:00<br />日曜休み（テスト前は開けます）</dd>
+        </div>
+        <div>
+          <dt>体験・ご相談</dt>
+          <dd>体験授業2回無料<br />お電話またはメールにて</dd>
+        </div>
+      </dl>
+      <p class="info__note">※このページはWeb制作の営業用に作成した架空教室のデモサイトです。実在の塾・住所・料金とは関係ありません。</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="section">
+    <p class="footer__brand">ふくろう学習教室</p>
+    <p class="footer__copy">© 2026 fukurou learning class（架空デモ）｜まちのウェブ屋さん 制作見本</p>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    for(const e of entries){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    }
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex,nofollow">
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>かばのは歯科クリニック｜盛岡の家族の歯医者さん（架空デモ）</title>
+<meta name="description" content="盛岡の住宅街の歯科医院「かばのは歯科クリニック」。痛くなる前の予防歯科と、こわがりさん・お子さま向けのやさしい診療。※これは営業用の架空デモサイトです。" />
+<style>
+  :root{
+    --sora:#eaf4f8;
+    --sora-deep:#d8eaf2;
+    --ao:#3d7ea6;
+    --ao-deep:#2c5f80;
+    --mint:#7fc4b6;
+    --yellow:#f2c94c;
+    --ink:#2e3a40;
+    --mute:#6f8089;
+    --line:rgba(46,58,64,.13);
+    --serif:"Hiragino Mincho ProN","Yu Mincho","BIZ UDMincho",serif;
+    --sans:"Hiragino Kaku Gothic ProN","Yu Gothic","BIZ UDGothic",sans-serif;
+    --ease:cubic-bezier(.2,.7,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans);color:var(--ink);background:#fdfefe;
+    line-height:1.9;letter-spacing:.02em;overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--ao);color:#fff;}
+
+  /* ===== hero ===== */
+  .hero{
+    position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;
+    background:linear-gradient(180deg,#fdfefe 0%,var(--sora) 60%,var(--sora-deep) 100%);
+  }
+  /* ふわふわ泡 */
+  .bubbles{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+  .bub{
+    position:absolute;bottom:-30px;border-radius:50%;
+    border:2px solid rgba(61,126,166,.25);
+    background:radial-gradient(circle at 32% 30%, rgba(255,255,255,.9), rgba(216,234,242,.25));
+    animation:rise linear infinite;
+  }
+  @keyframes rise{
+    0%{transform:translateY(0);opacity:0;}
+    10%{opacity:.8;}
+    100%{transform:translateY(-108vh) translateX(var(--bx,20px));opacity:0;}
+  }
+  .hero__wrap{
+    position:relative;z-index:3;width:100%;max-width:1100px;margin:0 auto;
+    padding:0 7vw;display:flex;align-items:center;justify-content:space-between;gap:4vw;
+  }
+  .hero__text{flex:1 1 auto;}
+  .hero__en{
+    font-style:italic;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--ao);font-size:.82rem;margin-bottom:1.6rem;
+  }
+  .hero__title{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(2.2rem,6.4vw,4rem);line-height:1.45;letter-spacing:.08em;
+  }
+  .hero__title .accent{color:var(--ao-deep);}
+  .hero__lead{margin-top:1.8rem;font-size:.96rem;color:var(--mute);line-height:2.2;max-width:38ch;}
+  .hero__tag{
+    display:inline-block;margin-top:2.2rem;font-size:.74rem;letter-spacing:.26em;
+    padding:.5rem 1.2rem;border:1px solid var(--line);color:var(--mute);background:rgba(255,255,255,.6);
+  }
+  .hero__mascot{flex:0 0 clamp(200px,27vw,310px);}
+  .hero__mascot svg{width:100%;height:auto;display:block;}
+  .float{animation:float 5s var(--ease) infinite;}
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+  /* 歯ブラシしゃこしゃこ */
+  .shako{animation:shako 1.4s ease-in-out infinite;}
+  @keyframes shako{
+    0%,100%{transform:translateX(0);}
+    25%{transform:translateX(-7px);}
+    75%{transform:translateX(7px);}
+  }
+  .blink{animation:blink 4.6s infinite;}
+  @keyframes blink{0%,92%,100%{transform:scaleY(1);}95%{transform:scaleY(.08);}}
+  /* 歯のキャラのうれし揺れ */
+  .happy{transform-origin:50% 90%;animation:happy 2.8s ease-in-out infinite;}
+  @keyframes happy{0%,70%,100%{transform:rotate(0deg);}78%{transform:rotate(-5deg);}86%{transform:rotate(5deg);}94%{transform:rotate(0deg);}}
+  /* 泡ぷくぷく（ブラシ先） */
+  .foam circle{opacity:0;animation:foam 1.4s ease-out infinite;}
+  @keyframes foam{
+    0%,40%{opacity:0;transform:translate(0,0) scale(.5);}
+    55%{opacity:.9;}
+    100%{opacity:0;transform:translate(var(--fx,6px),-14px) scale(1.1);}
+  }
+  .scrollcue{
+    position:absolute;left:50%;bottom:2.2rem;z-index:3;transform:translateX(-50%);
+    font-style:italic;letter-spacing:.3em;font-size:.7rem;color:var(--mute);text-align:center;
+  }
+  .scrollcue span{display:block;width:1px;height:40px;margin:.7rem auto 0;background:linear-gradient(var(--ao),transparent);animation:cue 2.4s var(--ease) infinite;}
+  @keyframes cue{0%,100%{transform:scaleY(.4);opacity:.4;transform-origin:top;}50%{transform:scaleY(1);opacity:1;}}
+
+  /* ===== sections ===== */
+  .section{max-width:1100px;margin:0 auto;padding:clamp(4.5rem,11vw,8rem) 7vw;}
+  .eyebrow{
+    font-style:italic;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--mint);font-size:.8rem;margin-bottom:1rem;
+  }
+  .sec-title{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(1.7rem,4.6vw,2.4rem);line-height:1.5;letter-spacing:.05em;
+  }
+  .sec-lead{margin-top:1.3rem;max-width:46ch;color:var(--mute);font-size:.95rem;line-height:2.1;}
+
+  /* 診療内容 */
+  .cards{margin-top:3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.4rem;}
+  .card{
+    position:relative;padding:2rem 1.7rem;background:#fff;
+    border:1px solid var(--line);border-radius:10px;
+    transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease);
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 24px 46px -28px rgba(44,95,128,.35);border-color:rgba(61,126,166,.45);}
+  .card__icon{width:46px;height:46px;margin-bottom:1rem;}
+  .card__icon svg{width:100%;height:100%;display:block;stroke:var(--ao);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .card__name{font-family:var(--serif);font-weight:600;font-size:1.12rem;letter-spacing:.06em;}
+  .card__desc{margin-top:.8rem;font-size:.87rem;color:var(--mute);line-height:2;}
+
+  /* こわがりさんへ */
+  .yasashii-bg{background:var(--sora);}
+  .steps{margin-top:2.8rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.4rem;counter-reset:step;}
+  .step{
+    background:#fff;border:1px solid var(--line);border-radius:10px;padding:1.7rem 1.5rem;
+  }
+  .step::before{
+    counter-increment:step;content:"0" counter(step);
+    font-style:italic;font-size:1.7rem;color:var(--mint);display:block;line-height:1;
+  }
+  .step h3{font-family:var(--serif);font-size:1.02rem;margin-top:.8rem;letter-spacing:.05em;}
+  .step p{margin-top:.6rem;font-size:.85rem;color:var(--mute);line-height:2;}
+
+  /* 診療時間 */
+  .hours{margin-top:2.6rem;overflow-x:auto;}
+  .hours table{
+    width:100%;min-width:520px;border-collapse:collapse;background:#fff;
+    border:1px solid var(--line);border-radius:10px;overflow:hidden;
+  }
+  .hours th,.hours td{
+    padding:.85rem .6rem;text-align:center;font-size:.88rem;
+    border-bottom:1px solid var(--line);
+  }
+  .hours thead th{background:var(--ao);color:#fff;font-weight:500;letter-spacing:.1em;}
+  .hours tbody th{font-weight:500;background:var(--sora);white-space:nowrap;}
+  .hours td .ok{color:var(--ao);font-weight:700;}
+  .hours td .no{color:#c9c2b8;}
+  .hours__note{margin-top:1.2rem;font-size:.8rem;color:var(--mute);line-height:2;}
+
+  /* info */
+  .info-bg{background:var(--ao-deep);color:#f0f6f9;}
+  .info-bg .eyebrow{color:var(--yellow);}
+  .info__grid{margin-top:2.4rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2rem;}
+  .info__grid dt{font-family:var(--serif);font-size:.92rem;letter-spacing:.14em;color:var(--mint);margin-bottom:.5rem;}
+  .info__grid dd{font-size:.9rem;color:rgba(240,246,249,.85);line-height:2.05;}
+  .info__note{margin-top:2.6rem;font-size:.8rem;color:rgba(240,246,249,.5);line-height:2;}
+
+  .footer{background:#224a63;color:#f0f6f9;}
+  .footer .section{padding-top:2.6rem;padding-bottom:2.6rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;align-items:baseline;}
+  .footer__brand{font-family:var(--serif);font-size:1.05rem;letter-spacing:.18em;}
+  .footer__copy{font-size:.74rem;color:rgba(240,246,249,.5);letter-spacing:.05em;line-height:1.9;}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity 1s var(--ease),transform 1s var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+  .hero .reveal{transition-delay:var(--d,0s);}
+
+  @media (max-width:760px){
+    .hero__wrap{flex-direction:column-reverse;justify-content:center;gap:2rem;padding-top:13vh;padding-bottom:14vh;}
+    .hero__mascot{flex-basis:auto;width:min(56vw,240px);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important;}
+    .reveal{opacity:1;transform:none;}
+    .bubbles{display:none;}
+  }
+</style>
+</head>
+<body>
+<div id="dsl-demobar" style="position:sticky;top:0;z-index:99999;background:#1a1a1a;color:#f2ede4;
+     font:13px/1.5 -apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;
+     padding:9px 14px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;
+     border-bottom:1px solid #3a3a3a;letter-spacing:.02em;">
+  <span style="background:#E8A33D;color:#1a1a1a;font-weight:bold;border-radius:3px;padding:2px 8px;font-size:12px;">
+    サンプル</span>
+  <span>これは <b>まちのウェブ屋さん</b> の制作サンプルです。店名・住所・電話番号はすべて架空のものです。</span>
+  <a href="/web/" style="color:#E8A33D;text-decoration:none;border-bottom:1px solid rgba(232,163,61,.5);">
+    ← 他の業種を見る</a>
+</div>
+
+
+<!-- ===== hero ===== -->
+<header class="hero">
+  <div class="bubbles" aria-hidden="true"></div>
+  <div class="hero__wrap">
+    <div class="hero__text">
+      <p class="hero__en reveal" style="--d:.1s">kabanoha dental clinic</p>
+      <h1 class="hero__title reveal" style="--d:.25s">痛くなる前に、<br /><span class="accent">会いに来て</span>ほしい。</h1>
+      <p class="hero__lead reveal" style="--d:.4s">住宅街の小さな歯医者です。治療より予防、削るより守る。こわがりな大人も、初めてのお子さまも、その人のペースで進めます。</p>
+      <span class="hero__tag reveal" style="--d:.55s">予防歯科・キッズスペースあり・バリアフリー</span>
+    </div>
+    <div class="hero__mascot reveal float" style="--d:.35s" aria-hidden="true">
+      <!-- 自作マスコット「かばの先生」：大きな歯をみがくカバ -->
+      <svg viewBox="0 0 240 230" role="img" aria-label="大きな歯を歯ブラシでみがくカバのマスコット">
+        <!-- カバ -->
+        <g>
+          <!-- 耳 -->
+          <circle cx="66" cy="52" r="10" fill="#9db8cc" stroke="#2e3a40" stroke-width="3"/>
+          <circle cx="140" cy="52" r="10" fill="#9db8cc" stroke="#2e3a40" stroke-width="3"/>
+          <!-- 頭 -->
+          <ellipse cx="103" cy="86" rx="52" ry="40" fill="#b3cddd" stroke="#2e3a40" stroke-width="3"/>
+          <!-- 鼻先 -->
+          <ellipse cx="103" cy="106" rx="38" ry="24" fill="#cfe2ec" stroke="#2e3a40" stroke-width="3"/>
+          <ellipse cx="88" cy="102" rx="4" ry="5.5" fill="#2e3a40"/>
+          <ellipse cx="118" cy="102" rx="4" ry="5.5" fill="#2e3a40"/>
+          <!-- 目 -->
+          <g class="blink" style="transform-origin:103px 74px;">
+            <circle cx="84" cy="74" r="4.5" fill="#2e3a40"/>
+            <circle cx="122" cy="74" r="4.5" fill="#2e3a40"/>
+          </g>
+          <!-- ほっぺ -->
+          <circle cx="62" cy="86" r="6" fill="#e8a3a3" opacity=".55"/>
+          <circle cx="144" cy="86" r="6" fill="#e8a3a3" opacity=".55"/>
+          <!-- 白衣の襟 -->
+          <path d="M70 122 l33 14 l33 -14 l6 16 q-39 18 -78 0 z" fill="#fff" stroke="#2e3a40" stroke-width="3" stroke-linejoin="round"/>
+          <!-- 体 -->
+          <path d="M64 136 q-10 46 39 46 q49 0 39 -46" fill="#fff" stroke="#2e3a40" stroke-width="3" stroke-linejoin="round"/>
+          <!-- 聴診器風ミラー -->
+          <path d="M103 140 v18" stroke="#3d7ea6" stroke-width="2.5"/>
+          <circle cx="103" cy="163" r="5" fill="none" stroke="#3d7ea6" stroke-width="2.5"/>
+        </g>
+        <!-- 歯のキャラ -->
+        <g class="happy">
+          <path d="M164 148 q-2 -26 22 -26 q24 0 22 26 q-1 14 -6 22 q-4 6 -7 -1 q-2 -5 -9 -5 q-7 0 -9 5 q-3 7 -7 1 q-5 -8 -6 -22 z"
+                fill="#fff" stroke="#2e3a40" stroke-width="3" stroke-linejoin="round"/>
+          <circle cx="179" cy="140" r="2.6" fill="#2e3a40"/>
+          <circle cx="193" cy="140" r="2.6" fill="#2e3a40"/>
+          <path d="M182 149 q4 4 8 0" fill="none" stroke="#2e3a40" stroke-width="2.4" stroke-linecap="round"/>
+          <circle cx="172" cy="148" r="4" fill="#e8a3a3" opacity=".6"/>
+          <circle cx="200" cy="148" r="4" fill="#e8a3a3" opacity=".6"/>
+          <!-- つや -->
+          <path d="M172 130 q-4 4 -5 9" fill="none" stroke="#b3cddd" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+        <!-- 腕＋歯ブラシ（しゃこしゃこ） -->
+        <g class="shako">
+          <path d="M136 150 q16 -6 26 -14" fill="none" stroke="#2e3a40" stroke-width="3" stroke-linecap="round"/>
+          <g transform="translate(158,128) rotate(-18)">
+            <rect x="0" y="0" width="42" height="6" rx="3" fill="#f2c94c" stroke="#2e3a40" stroke-width="2.2"/>
+            <rect x="34" y="-7" width="12" height="8" rx="2" fill="#fff" stroke="#2e3a40" stroke-width="2.2"/>
+            <path d="M36 -7 v8 M40 -7 v8 M44 -7 v8" stroke="#9db8cc" stroke-width="1.4"/>
+          </g>
+          <!-- 泡 -->
+          <g class="foam" fill="#cfe2ec" stroke="#3d7ea6" stroke-width="1.4">
+            <circle cx="196" cy="118" r="4" style="--fx:8px;"/>
+            <circle cx="188" cy="112" r="3" style="--fx:-6px;animation-delay:.3s;"/>
+            <circle cx="202" cy="110" r="2.6" style="--fx:12px;animation-delay:.6s;"/>
+          </g>
+        </g>
+        <!-- あし -->
+        <ellipse cx="86" cy="186" rx="13" ry="6" fill="#b3cddd" stroke="#2e3a40" stroke-width="3"/>
+        <ellipse cx="120" cy="186" rx="13" ry="6" fill="#b3cddd" stroke="#2e3a40" stroke-width="3"/>
+      </svg>
+    </div>
+  </div>
+  <div class="scrollcue">scroll<span></span></div>
+</header>
+
+<main>
+  <!-- ===== 診療内容 ===== -->
+  <section class="section">
+    <p class="eyebrow reveal">service</p>
+    <h2 class="sec-title reveal">診療のご案内</h2>
+    <p class="sec-lead reveal">「今日は何をするか」を必ず先に説明してから始めます。説明だけで終わる日があっても大丈夫。</p>
+    <div class="cards">
+      <div class="card reveal">
+        <div class="card__icon"><svg viewBox="0 0 46 46"><path d="M14 10 q-6 2 -6 10 q0 10 5 16 q3 4 4 -2 q1 -5 6 -5 q5 0 6 5 q1 6 4 2 q5 -6 5 -16 q0 -8 -6 -10 q-4 -2 -9 1 q-5 -3 -9 -1 z"/></svg></div>
+        <h3 class="card__name">予防歯科・クリーニング</h3>
+        <p class="card__desc">3ヶ月ごとの定期ケアが基本。歯ぐきの検査、歯石取り、みがき方のコツまで60分かけて。</p>
+      </div>
+      <div class="card reveal">
+        <div class="card__icon"><svg viewBox="0 0 46 46"><path d="M23 8 v30 M23 8 q-8 0 -10 8 M23 8 q8 0 10 8 M13 30 q10 6 20 0"/></svg></div>
+        <h3 class="card__name">むし歯・歯周病の治療</h3>
+        <p class="card__desc">できるだけ削らない・抜かない方針。治療の選択肢は費用も含めて全部お見せします。</p>
+      </div>
+      <div class="card reveal">
+        <div class="card__icon"><svg viewBox="0 0 46 46"><circle cx="23" cy="20" r="10"/><path d="M17 18 q0 3 0 0 M29 18 q0 3 0 0" stroke-width="3.5"/><path d="M19 24 q4 3 8 0 M23 30 v8 M17 38 h12"/></svg></div>
+        <h3 class="card__name">こども歯科</h3>
+        <p class="card__desc">初回は診療台に座る練習から。フッ素・シーラントで「治療デビューしない」を目標に。</p>
+      </div>
+      <div class="card reveal">
+        <div class="card__icon"><svg viewBox="0 0 46 46"><rect x="9" y="12" width="28" height="22" rx="4"/><path d="M9 20 h28 M16 28 h6 M26 28 h6"/></svg></div>
+        <h3 class="card__name">訪問歯科</h3>
+        <p class="card__desc">通院が難しい方のご自宅・施設へ伺います。入れ歯の調整、飲み込みの相談もどうぞ。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== こわがりさんへ ===== -->
+  <section class="yasashii-bg">
+    <div class="section">
+      <p class="eyebrow reveal">first visit</p>
+      <h2 class="sec-title reveal">歯医者がこわい方へ、初回の過ごし方</h2>
+      <p class="sec-lead reveal">「何をされるかわからない」が一番こわい。だから初回は、ほとんど何もしません。</p>
+      <div class="steps">
+        <div class="step reveal"><h3>まず、お話だけ</h3><p>個室でこれまでの経緯と苦手なこと（音・におい・麻酔など）を伺います。</p></div>
+        <div class="step reveal"><h3>お口の中を見せてもらう</h3><p>カメラで撮って、一緒にモニターで見ます。この日は器具を使いません。</p></div>
+        <div class="step reveal"><h3>計画を一緒に決める</h3><p>急ぐ所・様子見でいい所を分けて説明。ペースはあなたが決めてください。</p></div>
+        <div class="step reveal"><h3>合図で止まります</h3><p>治療中は左手を挙げたら必ず中断。「いつでも止められる」が安心の土台です。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 診療時間 ===== -->
+  <section class="section">
+    <p class="eyebrow reveal">hours</p>
+    <h2 class="sec-title reveal">診療時間</h2>
+    <div class="hours reveal">
+      <table>
+        <thead>
+          <tr><th>時間</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th><th>日祝</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>9:00〜12:30</th>
+            <td><span class="ok">●</span></td><td><span class="ok">●</span></td><td><span class="ok">●</span></td>
+            <td><span class="no">−</span></td><td><span class="ok">●</span></td><td><span class="ok">●</span></td><td><span class="no">−</span></td>
+          </tr>
+          <tr>
+            <th>14:00〜18:00</th>
+            <td><span class="ok">●</span></td><td><span class="ok">●</span></td><td><span class="ok">●</span></td>
+            <td><span class="no">−</span></td><td><span class="ok">●</span></td><td><span class="no">−</span></td><td><span class="no">−</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="hours__note reveal">▲ 土曜午後・木曜・日祝は休診。祝日のある週の木曜は診療します。急な痛みは診療時間内にお電話ください、当日枠でみます。</p>
+  </section>
+
+  <!-- ===== info ===== -->
+  <section class="info-bg">
+    <div class="section">
+      <p class="eyebrow reveal">information</p>
+      <h2 class="sec-title reveal">医院のご案内</h2>
+      <dl class="info__grid reveal">
+        <div>
+          <dt>医院名</dt>
+          <dd>かばのは歯科クリニック</dd>
+        </div>
+        <div>
+          <dt>所在地</dt>
+          <dd>岩手県盛岡市かばのは町5-6-1<br />（架空の住所です）<br />駐車場6台・キッズスペースあり</dd>
+        </div>
+        <div>
+          <dt>院長</dt>
+          <dd>河馬野 葉太郎（かばの ようたろう）<br />歯科医師歴18年（架空の人物です）</dd>
+        </div>
+        <div>
+          <dt>ご予約</dt>
+          <dd>お電話にて承ります<br />急患は随時受付</dd>
+        </div>
+      </dl>
+      <p class="info__note">※このページはWeb制作の営業用に作成した架空医院のデモサイトです。実在の医院・住所・人物とは関係ありません。</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="section">
+    <p class="footer__brand">かばのは歯科クリニック</p>
+    <p class="footer__copy">© 2026 kabanoha dental clinic（架空デモ）｜まちのウェブ屋さん 制作見本</p>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    for(const e of entries){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    }
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // ふわふわ泡を生成
+  const wrap = document.querySelector('.bubbles');
+  for(let i=0;i<10;i++){
+    const b = document.createElement('span');
+    b.className = 'bub';
+    const size = Math.random()*22+10;
+    b.style.width = size+'px'; b.style.height = size+'px';
+    b.style.left = Math.random()*96 + 'vw';
+    b.style.setProperty('--bx', (Math.random()*80-40) + 'px');
+    b.style.animationDuration = (Math.random()*8+9) + 's';
+    b.style.animationDelay = (Math.random()*9) + 's';
+    wrap.appendChild(b);
+  }
+</script>
+</body>
+</html>

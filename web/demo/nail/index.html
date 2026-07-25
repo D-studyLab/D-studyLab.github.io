@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex,nofollow">
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>nail room ミルネ｜盛岡のプライベートネイルサロン（架空デモ）</title>
+<meta name="description" content="盛岡のマンション一室、1席だけのプライベートネイルサロン「ミルネ」。オフィスにもなじむ定額シンプルコースが得意。※これは営業用の架空デモサイトです。" />
+<style>
+  :root{
+    --cream:#faf7f2;
+    --cream-deep:#f2ebe2;
+    --mauve:#9d7a8c;
+    --mauve-deep:#7c5d6e;
+    --gold:#c9a96a;
+    --pink:#e7c6cd;
+    --ink:#3a3236;
+    --mute:#8a7c82;
+    --line:rgba(58,50,54,.13);
+    --serif:"Hiragino Mincho ProN","Yu Mincho","BIZ UDMincho",serif;
+    --sans:"Hiragino Kaku Gothic ProN","Yu Gothic","BIZ UDGothic",sans-serif;
+    --ease:cubic-bezier(.2,.7,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans);color:var(--ink);background:var(--cream);
+    line-height:1.9;letter-spacing:.02em;overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--mauve);color:var(--cream);}
+
+  .grain{
+    position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.04;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* きらめき（固定レイヤー・JS生成） */
+  .sparkles{position:fixed;inset:0;z-index:2;pointer-events:none;}
+  .spk{
+    position:absolute;width:10px;height:10px;opacity:0;
+    animation:spk ease-in-out infinite;
+  }
+  .spk::before{
+    content:"";position:absolute;inset:0;
+    background:
+      linear-gradient(0deg,transparent 44%,var(--gold) 44% 56%,transparent 56%),
+      linear-gradient(90deg,transparent 44%,var(--gold) 44% 56%,transparent 56%);
+  }
+  @keyframes spk{
+    0%,100%{opacity:0;transform:scale(.3) rotate(0deg);}
+    50%{opacity:.7;transform:scale(1) rotate(45deg);}
+  }
+
+  /* ===== hero ===== */
+  .hero{
+    position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;
+    background:
+      radial-gradient(90% 70% at 80% 18%, rgba(231,198,205,.35), transparent 60%),
+      linear-gradient(180deg,var(--cream) 0%,var(--cream-deep) 100%);
+  }
+  .hero__wrap{
+    position:relative;z-index:3;width:100%;max-width:1100px;margin:0 auto;
+    padding:0 7vw;display:flex;align-items:center;justify-content:space-between;gap:4vw;
+  }
+  .hero__text{flex:1 1 auto;}
+  .hero__en{
+    font-style:italic;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--mauve);font-size:.82rem;margin-bottom:1.6rem;
+  }
+  .hero__title{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(2.2rem,6.4vw,4rem);line-height:1.45;letter-spacing:.08em;
+  }
+  .hero__title .accent{color:var(--mauve-deep);}
+  .hero__lead{margin-top:1.8rem;font-size:.96rem;color:var(--mute);line-height:2.2;max-width:38ch;}
+  .hero__tag{
+    display:inline-block;margin-top:2.2rem;font-size:.74rem;letter-spacing:.26em;
+    padding:.5rem 1.2rem;border:1px solid var(--line);color:var(--mute);
+  }
+  .hero__mascot{flex:0 0 clamp(190px,26vw,290px);}
+  .hero__mascot svg{width:100%;height:auto;display:block;}
+  .float{animation:float 5s var(--ease) infinite;}
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+  /* 筆を動かす */
+  .brush{transform-origin:30% 20%;animation:brush 2.8s ease-in-out infinite;}
+  @keyframes brush{
+    0%,20%,100%{transform:rotate(0deg);}
+    35%{transform:rotate(-9deg) translateX(-3px);}
+    50%{transform:rotate(3deg) translateX(2px);}
+    65%{transform:rotate(-6deg) translateX(-2px);}
+    80%{transform:rotate(0deg);}
+  }
+  .blink{animation:blink 4.8s infinite;}
+  @keyframes blink{0%,92%,100%{transform:scaleY(1);}95%{transform:scaleY(.08);}}
+  .tailwave{transform-origin:12% 88%;animation:tailwave 4s ease-in-out infinite;}
+  @keyframes tailwave{0%,100%{transform:rotate(0deg);}50%{transform:rotate(9deg);}}
+  /* ネイルの輝き */
+  .nail-shine{opacity:0;animation:nshine 2.8s ease-in-out infinite;}
+  @keyframes nshine{0%,60%{opacity:0;transform:scale(.4);}75%{opacity:.95;transform:scale(1.15);}90%,100%{opacity:0;transform:scale(.4);}}
+  .scrollcue{
+    position:absolute;left:50%;bottom:2.2rem;z-index:3;transform:translateX(-50%);
+    font-style:italic;letter-spacing:.3em;font-size:.7rem;color:var(--mute);text-align:center;
+  }
+  .scrollcue span{display:block;width:1px;height:40px;margin:.7rem auto 0;background:linear-gradient(var(--mauve),transparent);animation:cue 2.4s var(--ease) infinite;}
+  @keyframes cue{0%,100%{transform:scaleY(.4);opacity:.4;transform-origin:top;}50%{transform:scaleY(1);opacity:1;}}
+
+  /* ===== sections ===== */
+  .section{max-width:1100px;margin:0 auto;padding:clamp(4.5rem,11vw,8rem) 7vw;position:relative;z-index:3;}
+  .eyebrow{
+    font-style:italic;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--mauve);font-size:.8rem;margin-bottom:1rem;
+  }
+  .sec-title{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(1.7rem,4.6vw,2.4rem);line-height:1.5;letter-spacing:.05em;
+  }
+  .sec-lead{margin-top:1.3rem;max-width:46ch;color:var(--mute);font-size:.95rem;line-height:2.1;}
+
+  /* メニュー */
+  .cards{margin-top:3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.4rem;}
+  .card{
+    position:relative;padding:2.2rem 1.8rem;background:#fff;
+    border:1px solid var(--line);border-radius:8px;text-align:center;
+    transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease);
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 24px 46px -28px rgba(125,93,110,.4);border-color:rgba(157,122,140,.5);}
+  .card--osusume{border-color:var(--mauve);}
+  .card--osusume::after{
+    content:"人気No.1";position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+    font-size:.68rem;letter-spacing:.18em;color:#fff;background:var(--mauve);
+    padding:.2rem .9rem;border-radius:999px;white-space:nowrap;
+  }
+  .card__name{font-family:var(--serif);font-weight:600;font-size:1.15rem;letter-spacing:.08em;}
+  .card__price{margin-top:.7rem;font-style:italic;font-size:1.65rem;color:var(--mauve-deep);}
+  .card__price small{font-size:.7rem;color:var(--mute);font-style:normal;margin-left:.25rem;}
+  .card__time{margin-top:.2rem;font-size:.74rem;color:var(--mute);letter-spacing:.1em;}
+  .card__desc{margin-top:1rem;font-size:.85rem;color:var(--mute);line-height:2;text-align:left;}
+  .card__hr{width:36px;height:1px;background:var(--gold);margin:1rem auto 0;}
+
+  /* デザイン見本（ネイルチップ） */
+  .tips-bg{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .tips{margin-top:3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1.3rem;}
+  .tip{text-align:center;}
+  .tip svg{width:min(96px,70%);height:auto;display:block;margin:0 auto;transition:transform .45s var(--ease);}
+  .tip:hover svg{transform:translateY(-6px) rotate(-3deg);}
+  .tip__name{margin-top:.7rem;font-size:.8rem;letter-spacing:.1em;color:var(--mute);}
+
+  /* こだわり */
+  .points{margin-top:3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.4rem;}
+  .pt{border-left:2px solid var(--gold);padding:0 0 0 1.4rem;}
+  .pt h3{font-family:var(--serif);font-size:1.08rem;letter-spacing:.08em;}
+  .pt p{margin-top:.6rem;font-size:.88rem;color:var(--mute);line-height:2.05;}
+
+  /* info */
+  .info-bg{background:var(--mauve-deep);color:var(--cream);}
+  .info-bg .eyebrow{color:var(--gold);}
+  .info__grid{margin-top:2.4rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2rem;}
+  .info__grid dt{font-family:var(--serif);font-size:.92rem;letter-spacing:.14em;color:var(--pink);margin-bottom:.5rem;}
+  .info__grid dd{font-size:.9rem;color:rgba(250,247,242,.85);line-height:2.05;}
+  .info__note{margin-top:2.6rem;font-size:.8rem;color:rgba(250,247,242,.5);line-height:2;}
+
+  .footer{background:#5f4654;color:var(--cream);}
+  .footer .section{padding-top:2.6rem;padding-bottom:2.6rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;align-items:baseline;}
+  .footer__brand{font-family:var(--serif);font-size:1.05rem;letter-spacing:.18em;}
+  .footer__copy{font-size:.74rem;color:rgba(250,247,242,.5);letter-spacing:.05em;line-height:1.9;}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity 1s var(--ease),transform 1s var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+  .hero .reveal{transition-delay:var(--d,0s);}
+
+  @media (max-width:760px){
+    .hero__wrap{flex-direction:column-reverse;justify-content:center;gap:2rem;padding-top:14vh;padding-bottom:14vh;}
+    .hero__mascot{flex-basis:auto;width:min(52vw,220px);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important;}
+    .reveal{opacity:1;transform:none;}
+    .sparkles{display:none;}
+  }
+</style>
+</head>
+<body>
+<div id="dsl-demobar" style="position:sticky;top:0;z-index:99999;background:#1a1a1a;color:#f2ede4;
+     font:13px/1.5 -apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;
+     padding:9px 14px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;
+     border-bottom:1px solid #3a3a3a;letter-spacing:.02em;">
+  <span style="background:#E8A33D;color:#1a1a1a;font-weight:bold;border-radius:3px;padding:2px 8px;font-size:12px;">
+    サンプル</span>
+  <span>これは <b>まちのウェブ屋さん</b> の制作サンプルです。店名・住所・電話番号はすべて架空のものです。</span>
+  <a href="/web/" style="color:#E8A33D;text-decoration:none;border-bottom:1px solid rgba(232,163,61,.5);">
+    ← 他の業種を見る</a>
+</div>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="sparkles" aria-hidden="true"></div>
+
+<!-- ===== hero ===== -->
+<header class="hero">
+  <div class="hero__wrap">
+    <div class="hero__text">
+      <p class="hero__en reveal" style="--d:.1s">private nail room mirune</p>
+      <h1 class="hero__title reveal" style="--d:.25s">指先が整うと、<br />月曜も<span class="accent">少し好き</span>になる。</h1>
+      <p class="hero__lead reveal" style="--d:.4s">マンションの一室、1席だけのプライベートサロン。派手じゃなくていい、でもちゃんときれい。オフィスにもなじむシンプルネイルが得意です。</p>
+      <span class="hero__tag reveal" style="--d:.55s">完全予約制・女性専用・お子さま連れOK</span>
+    </div>
+    <div class="hero__mascot reveal float" style="--d:.35s" aria-hidden="true">
+      <!-- 自作マスコット「みるちゃん」：筆でネイルを塗る白猫 -->
+      <svg viewBox="0 0 220 230" role="img" aria-label="筆でネイルを塗る白猫のマスコット">
+        <!-- しっぽ -->
+        <path class="tailwave" d="M172 178 q28 -4 26 -30" fill="none" stroke="#e9e2e8" stroke-width="11" stroke-linecap="round"/>
+        <path class="tailwave" d="M196 152 q2 -8 -2 -12" fill="none" stroke="#9d7a8c" stroke-width="11" stroke-linecap="round"/>
+        <!-- 耳 -->
+        <path d="M68 78 l-6 -26 l24 12 z M148 78 l6 -26 l-24 12 z" fill="#fff" stroke="#3a3236" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M70 70 l-2 -12 l11 6 z M146 70 l2 -12 l-11 6 z" fill="#e7c6cd"/>
+        <!-- 頭 -->
+        <ellipse cx="108" cy="106" rx="48" ry="42" fill="#fff" stroke="#3a3236" stroke-width="3"/>
+        <!-- 目 -->
+        <g class="blink" style="transform-origin:108px 102px;">
+          <path d="M88 100 q4 5 9 0" fill="none" stroke="#3a3236" stroke-width="3" stroke-linecap="round"/>
+          <path d="M119 100 q4 5 9 0" fill="none" stroke="#3a3236" stroke-width="3" stroke-linecap="round"/>
+        </g>
+        <!-- ほっぺ -->
+        <circle cx="80" cy="114" r="6" fill="#e7c6cd" opacity=".8"/>
+        <circle cx="136" cy="114" r="6" fill="#e7c6cd" opacity=".8"/>
+        <!-- 口 -->
+        <path d="M104 116 q4 4 8 0" fill="none" stroke="#3a3236" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- ひげ -->
+        <path d="M62 108 h-14 M64 116 h-12 M154 108 h14 M152 116 h12" stroke="#3a3236" stroke-width="1.8" stroke-linecap="round" opacity=".6"/>
+        <!-- 体 -->
+        <path d="M76 142 q-8 44 32 44 q40 0 32 -44" fill="#fff" stroke="#3a3236" stroke-width="3" stroke-linejoin="round"/>
+        <!-- エプロン -->
+        <path d="M84 150 q24 14 48 0 l-4 30 q-20 10 -40 0 z" fill="#9d7a8c" opacity=".85"/>
+        <!-- 左手＝お客さまの手（大きな手を支える） -->
+        <g>
+          <path d="M32 176 q-4 -18 12 -20 q4 -8 14 -6 q6 -6 14 -2 q10 -2 12 8 l2 22 q-26 12 -54 -2 z" fill="#fbe8dc" stroke="#3a3236" stroke-width="2.6" stroke-linejoin="round"/>
+          <!-- 塗られた爪 -->
+          <ellipse cx="46" cy="156" rx="4" ry="5" fill="#c9899b"/>
+          <ellipse cx="60" cy="150" rx="4" ry="5" fill="#c9899b"/>
+          <ellipse cx="74" cy="150" rx="4" ry="5" fill="#e7c6cd"/>
+          <!-- 輝き -->
+          <g class="nail-shine" style="transform-origin:60px 150px;">
+            <path d="M60 141 l1.6 3.4 l3.6 .5 l-2.6 2.5 l.6 3.6 l-3.2 -1.7 l-3.2 1.7 l.6 -3.6 l-2.6 -2.5 l3.6 -.5 z" fill="#c9a96a"/>
+          </g>
+        </g>
+        <!-- 右手＋筆 -->
+        <g class="brush">
+          <path d="M138 160 q14 4 18 12" fill="none" stroke="#3a3236" stroke-width="3" stroke-linecap="round"/>
+          <g transform="translate(84,196) rotate(-124)">
+            <rect x="0" y="-2.5" width="34" height="5" rx="2.5" fill="#c9a96a" stroke="#3a3236" stroke-width="1.8"/>
+            <path d="M34 -2.5 l9 2.5 l-9 2.5 z" fill="#9d7a8c" stroke="#3a3236" stroke-width="1.6" stroke-linejoin="round"/>
+          </g>
+        </g>
+        <!-- マニキュア瓶 -->
+        <g transform="translate(150,196)">
+          <rect x="0" y="0" width="16" height="18" rx="3" fill="#c9899b" stroke="#3a3236" stroke-width="2.4"/>
+          <rect x="4" y="-9" width="8" height="9" rx="1.5" fill="#3a3236"/>
+        </g>
+        <!-- あし -->
+        <ellipse cx="94" cy="188" rx="10" ry="5" fill="#fff" stroke="#3a3236" stroke-width="2.4"/>
+      </svg>
+    </div>
+  </div>
+  <div class="scrollcue">scroll<span></span></div>
+</header>
+
+<main>
+  <!-- ===== メニュー ===== -->
+  <section class="section">
+    <p class="eyebrow reveal">menu</p>
+    <h2 class="sec-title reveal">わかりやすい、3つの定額</h2>
+    <p class="sec-lead reveal">追加料金でふくらむのが嫌いなので、オフも含めて全部込みの定額にしました。</p>
+    <div class="cards">
+      <div class="card reveal">
+        <h3 class="card__name">シンプルコース</h3>
+        <p class="card__price">¥5,500<small>込み</small></p>
+        <p class="card__time">約60分｜ワンカラー・グラデ</p>
+        <div class="card__hr"></div>
+        <p class="card__desc">色は約80色から。オフィスOKの淡色から深色まで。ケア・オフ・保湿ぜんぶ込み。</p>
+      </div>
+      <div class="card reveal card--osusume">
+        <h3 class="card__name">デザインコース</h3>
+        <p class="card__price">¥7,700<small>込み</small></p>
+        <p class="card__time">約90分｜アート2本つき</p>
+        <div class="card__hr"></div>
+        <p class="card__desc">ミラー・マグネット・ニュアンスなど、その季節の流行を2本だけさりげなく。</p>
+      </div>
+      <div class="card reveal">
+        <h3 class="card__name">ケアコース</h3>
+        <p class="card__price">¥3,300<small>込み</small></p>
+        <p class="card__time">約40分｜色なし</p>
+        <div class="card__hr"></div>
+        <p class="card__desc">甘皮ケアと磨きだけで、爪はちゃんと輝きます。男性のご紹介利用もこちらで。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== デザイン見本 ===== -->
+  <section class="tips-bg">
+    <div class="section">
+      <p class="eyebrow reveal">design</p>
+      <h2 class="sec-title reveal">今月のデザイン見本</h2>
+      <p class="sec-lead reveal">迷ったら「おまかせ」でどうぞ。お洋服と予定を聞いて、似合う一色を選びます。</p>
+      <div class="tips">
+        <div class="tip reveal">
+          <svg viewBox="0 0 60 90"><path d="M12 34 q0 -24 18 -24 q18 0 18 24 l-3 44 q-15 8 -30 0 z" fill="#e7c6cd" stroke="#3a3236" stroke-width="2"/><ellipse cx="22" cy="30" rx="5" ry="9" fill="#fff" opacity=".5" transform="rotate(-16 22 30)"/></svg>
+          <p class="tip__name">ミルクピンク</p>
+        </div>
+        <div class="tip reveal">
+          <svg viewBox="0 0 60 90"><path d="M12 34 q0 -24 18 -24 q18 0 18 24 l-3 44 q-15 8 -30 0 z" fill="#9d7a8c" stroke="#3a3236" stroke-width="2"/><ellipse cx="22" cy="30" rx="5" ry="9" fill="#fff" opacity=".35" transform="rotate(-16 22 30)"/></svg>
+          <p class="tip__name">モーヴ</p>
+        </div>
+        <div class="tip reveal">
+          <svg viewBox="0 0 60 90"><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#faf7f2"/><stop offset="1" stop-color="#c9899b"/></linearGradient></defs><path d="M12 34 q0 -24 18 -24 q18 0 18 24 l-3 44 q-15 8 -30 0 z" fill="url(#g1)" stroke="#3a3236" stroke-width="2"/></svg>
+          <p class="tip__name">グラデーション</p>
+        </div>
+        <div class="tip reveal">
+          <svg viewBox="0 0 60 90"><path d="M12 34 q0 -24 18 -24 q18 0 18 24 l-3 44 q-15 8 -30 0 z" fill="#f2ebe2" stroke="#3a3236" stroke-width="2"/><g fill="#c9a96a"><circle cx="24" cy="36" r="2.2"/><circle cx="36" cy="48" r="2.2"/><circle cx="28" cy="60" r="2.2"/></g></svg>
+          <p class="tip__name">金箔ドット</p>
+        </div>
+        <div class="tip reveal">
+          <svg viewBox="0 0 60 90"><path d="M12 34 q0 -24 18 -24 q18 0 18 24 l-3 44 q-15 8 -30 0 z" fill="#d9e2dc" stroke="#3a3236" stroke-width="2"/><path d="M18 44 q12 -8 24 0 M18 56 q12 -8 24 0" fill="none" stroke="#fff" stroke-width="3" opacity=".8"/></svg>
+          <p class="tip__name">ミントマーブル</p>
+        </div>
+        <div class="tip reveal">
+          <svg viewBox="0 0 60 90"><path d="M12 34 q0 -24 18 -24 q18 0 18 24 l-3 44 q-15 8 -30 0 z" fill="#b8a3c9" stroke="#3a3236" stroke-width="2"/><ellipse cx="30" cy="46" rx="10" ry="16" fill="#fff" opacity=".3"/><ellipse cx="30" cy="46" rx="5" ry="9" fill="#fff" opacity=".4"/></svg>
+          <p class="tip__name">マグネット</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== こだわり ===== -->
+  <section class="section">
+    <p class="eyebrow reveal">promise</p>
+    <h2 class="sec-title reveal">ミルネの約束</h2>
+    <div class="points">
+      <div class="pt reveal">
+        <h3>爪を削りすぎない</h3>
+        <p>パラジェル登録サロン。自爪を削らないベースで、3週間後の爪も元気なままに。</p>
+      </div>
+      <div class="pt reveal">
+        <h3>時間どおりに終わる</h3>
+        <p>お迎えや仕事の前でも安心。所要時間は予約時にお伝えし、超えません。</p>
+      </div>
+      <div class="pt reveal">
+        <h3>営業・勧誘なし</h3>
+        <p>回数券や商品のおすすめはしません。「また来たい」だけで続くお店にしたいので。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== info ===== -->
+  <section class="info-bg">
+    <div class="section">
+      <p class="eyebrow reveal">information</p>
+      <h2 class="sec-title reveal">サロンのご案内</h2>
+      <dl class="info__grid reveal">
+        <div>
+          <dt>店名</dt>
+          <dd>private nail room ミルネ</dd>
+        </div>
+        <div>
+          <dt>所在地</dt>
+          <dd>岩手県盛岡市みるね町1-2-8<br />ミルネマンション302（架空の住所です）<br />※詳細はご予約時にお知らせします</dd>
+        </div>
+        <div>
+          <dt>営業時間</dt>
+          <dd>9:30〜17:00（最終受付 15:30）<br />定休日：日曜・祝日</dd>
+        </div>
+        <div>
+          <dt>ご予約</dt>
+          <dd>完全予約制・女性専用<br />LINEまたはお電話にて</dd>
+        </div>
+      </dl>
+      <p class="info__note">※このページはWeb制作の営業用に作成した架空店舗のデモサイトです。実在の店舗・住所・料金とは関係ありません。</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="section">
+    <p class="footer__brand">nail room ミルネ</p>
+    <p class="footer__copy">© 2026 private nail room mirune（架空デモ）｜まちのウェブ屋さん 制作見本</p>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    for(const e of entries){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    }
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // きらめきを生成
+  const wrap = document.querySelector('.sparkles');
+  for(let i=0;i<12;i++){
+    const s = document.createElement('span');
+    s.className = 'spk';
+    s.style.left = Math.random()*96 + 'vw';
+    s.style.top = Math.random()*92 + 'vh';
+    s.style.animationDuration = (Math.random()*3+2.5) + 's';
+    s.style.animationDelay = (Math.random()*5) + 's';
+    const sc = Math.random()*.8+.5;
+    s.style.width = 10*sc+'px'; s.style.height = 10*sc+'px';
+    wrap.appendChild(s);
+  }
+</script>
+</body>
+</html>

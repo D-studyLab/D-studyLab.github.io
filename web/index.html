@@ -93,6 +93,15 @@
     .reveal { opacity:1 !important; transform:none !important; transition:none !important; }
     .ex::before { transition:none; }
   }
+
+  .demos { display:grid; grid-template-columns:repeat(auto-fit, minmax(158px,1fr)); gap:11px; margin:10px 0 4px; }
+  .dm { background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:15px 13px 13px;
+        text-decoration:none; color:inherit; display:flex; flex-direction:column; gap:5px;
+        transition:border-color .2s, transform .2s, box-shadow .2s; }
+  .dm:hover { border-color:var(--acc); transform:translateY(-2px); box-shadow:0 6px 16px rgba(21,107,74,.10); }
+  .dm .ic { width:26px; height:26px; color:var(--cu); margin-bottom:2px; }
+  .dm .gn { font-size:14px; font-weight:bold; }
+  .dm .sn { font-size:11.5px; color:var(--sub); }
 </style>
 </head>
 <body>
@@ -126,6 +135,73 @@
     </a>
   </div>
   <p class="note">どちらも自分で企画して自分で運用しているサイトです。同じ作り方で、お店のサイトも作れます。</p>
+
+  <h2 class="mincho reveal">業種別のサンプル</h2>
+  <p class="reveal">「うちの業種だと、どんな見た目になるの？」——先にお見せできるよう、12業種ぶん作ってあります。<b>すべてスマホでも崩れません。</b>ご相談いただいた後は、これをそのまま使うのではなく、お店に合わせて一から作ります。</p>
+  <div class="demos reveal">
+    <a class="dm" href="/web/demo/cafe/" target="_blank" rel="noopener">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8v5a4 4 0 0 1-8 0zM16 5h2a2 2 0 0 1 0 4h-2M6 21h12"/></svg>
+      <div class="gn">カフェ・喫茶店</div>
+      <div class="sn">喫茶くまのま</div>
+    </a>
+    <a class="dm" href="/web/demo/bakery/" target="_blank" rel="noopener">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a4 4 0 0 1 8 0 4 4 0 0 1 8 0v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg>
+      <div class="gn">パン屋</div>
+      <div class="sn">むぎねこベーカリー</div>
+    </a>
+    <a class="dm" href="/web/demo/ramen/" target="_blank" rel="noopener">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16a8 8 0 0 1-16 0zM7 6c0-1 1-1 1-2M11 6c0-1 1-1 1-2M15 6c0-1 1-1 1-2"/></svg>
+      <div class="gn">ラーメン店</div>
+      <div class="sn">中華そば 虎輝</div>
+    </a>
+    <a class="dm" href="/web/demo/salon/" target="_blank" rel="noopener">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l12 12M18 4L6 16M6 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM18 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>
+      <div class="gn">美容室</div>
+      <div class="sn">hair atelier つむぎ</div>
+    </a>
+    <a class="dm" href="/web/demo/nail/" target="_blank" rel="noopener">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v11a3 3 0 0 1-6 0zM7 21h10"/></svg>
+      <div class="gn">ネイルサロン</div>
+      <div class="sn">nail room ミルネ</div>
+    </a>
+    <a class="dm" href="/web/demo/seitai/" target="_blank" rel="noopener">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM8 21l2-7-3-3 3-3h4l3 3-3 3 2 7"/></svg>
+      <div class="gn">整体院</div>
+      <div class="sn">くまのて整体院</div>
+    </a>
+    <a class="dm" href="/web/demo/dental/" target="_blank" rel="noopener">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 0 5 1 5 4 0 4-1 6-1 10 0 2-2 2-2 0l-1-4h-2l-1 4c0 2-2 2-2 0 0-4-1-6-1-10 0-3 2-4 5-4z"/></svg>
+      <div class="gn">歯科医院</div>
+      <div class="sn">かばのは歯科クリニック</div>
+    </a>
+    <a class="dm" href="/web/demo/vet/" target="_blank" rel="noopener">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11a4 4 0 0 1 4 4v1a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-1a4 4 0 0 1 4-4zM7 6a1.6 1.6 0 1 0 0 3 1.6 1.6 0 0 0 0-3zM17 6a1.6 1.6 0 1 0 0 3 1.6 1.6 0 0 0 0-3z"/></svg>
+      <div class="gn">動物病院</div>
+      <div class="sn">もりのしっぽ動物病院</div>
+    </a>
+    <a class="dm" href="/web/demo/juku/" target="_blank" rel="noopener">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4zM7 11v5c0 1 2 3 5 3s5-2 5-3v-5"/></svg>
+      <div class="gn">学習塾</div>
+      <div class="sn">ふくろう学習教室</div>
+    </a>
+    <a class="dm" href="/web/demo/komuten/" target="_blank" rel="noopener">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-6 8 6M6 10v9h12v-9M10 19v-5h4v5"/></svg>
+      <div class="gn">工務店</div>
+      <div class="sn">木音建築</div>
+    </a>
+    <a class="dm" href="/web/demo/photo/" target="_blank" rel="noopener">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1zM12 16a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4z"/></svg>
+      <div class="gn">写真スタジオ</div>
+      <div class="sn">photo studio ひだまり</div>
+    </a>
+    <a class="dm" href="/web/demo/flower/" target="_blank" rel="noopener">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM12 8V5M12 13v6M9.5 9.5L7 8M14.5 9.5 17 8M9.5 11.5 7 13M14.5 11.5 17 13"/></svg>
+      <div class="gn">花屋</div>
+      <div class="sn">花と緑の店 ハチクサ</div>
+    </a>
+  </div>
+  <p class="note">※すべて<b>架空のお店</b>です。店名・住所・電話番号・人物は実在しません。見た目と構成をご覧いただくためのものです。</p>
+
 
   <h2 class="mincho reveal">制作の考え方</h2>
   <div class="think reveal">

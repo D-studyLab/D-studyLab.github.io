@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex,nofollow">
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>喫茶くまのま｜盛岡の小さな自家焙煎喫茶（架空デモ）</title>
+<meta name="description" content="盛岡の路地にある自家焙煎の喫茶店「くまのま」。ネルドリップの深煎りと、厚切りトースト。長居歓迎、電源と本棚あり。※これは営業用の架空デモサイトです。" />
+<style>
+  :root{
+    --kabe:#f3ecdd;
+    --kabe-deep:#e9dfc9;
+    --cha:#4a3628;
+    --cha-soft:#5d4635;
+    --terra:#b5643c;
+    --terra-bright:#d08356;
+    --ame:#c9a253;
+    --ink:#3a2e24;
+    --mute:#84745f;
+    --line:rgba(58,46,36,.15);
+    --serif:"Hiragino Mincho ProN","Yu Mincho","BIZ UDMincho",serif;
+    --sans:"Hiragino Kaku Gothic ProN","Yu Gothic","BIZ UDGothic",sans-serif;
+    --ease:cubic-bezier(.2,.7,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans);color:var(--ink);background:var(--kabe);
+    line-height:1.9;letter-spacing:.02em;overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--terra);color:var(--kabe);}
+
+  .grain{
+    position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.06;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ===== hero ===== */
+  .hero{
+    position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;
+    background:
+      radial-gradient(100% 80% at 20% 15%, rgba(201,162,83,.14), transparent 55%),
+      linear-gradient(180deg,var(--kabe) 0%,var(--kabe-deep) 100%);
+  }
+  .hero__wrap{
+    position:relative;z-index:3;width:100%;max-width:1100px;margin:0 auto;
+    padding:0 7vw;display:flex;align-items:center;justify-content:space-between;gap:4vw;
+  }
+  .hero__text{flex:1 1 auto;}
+  .hero__en{
+    font-style:italic;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--terra);font-size:.82rem;margin-bottom:1.6rem;
+  }
+  .hero__title{
+    font-family:var(--serif);font-weight:700;
+    font-size:clamp(2.3rem,6.6vw,4.2rem);line-height:1.42;letter-spacing:.08em;color:var(--cha);
+  }
+  .hero__title .accent{color:var(--terra);}
+  .hero__lead{margin-top:1.8rem;font-size:.97rem;color:var(--mute);line-height:2.2;max-width:38ch;}
+  .hero__tag{
+    display:inline-block;margin-top:2.2rem;font-size:.74rem;letter-spacing:.26em;
+    padding:.5rem 1.2rem;border:1px solid var(--line);color:var(--mute);
+  }
+  .hero__mascot{flex:0 0 clamp(200px,27vw,310px);}
+  .hero__mascot svg{width:100%;height:auto;display:block;}
+  /* ドリップの注ぎ（ポットの傾き） */
+  .pour{transform-origin:62% 40%;animation:pour 4.2s ease-in-out infinite;}
+  @keyframes pour{
+    0%,18%,88%,100%{transform:rotate(0deg);}
+    32%,70%{transform:rotate(-16deg);}
+  }
+  /* お湯の線 */
+  .water{opacity:0;animation:water 4.2s ease-in-out infinite;}
+  @keyframes water{
+    0%,30%{opacity:0;}
+    36%,66%{opacity:.85;}
+    74%,100%{opacity:0;}
+  }
+  /* 立ちのぼる湯気 */
+  .steam{fill:none;stroke:#84745f;stroke-width:2.6;stroke-linecap:round;opacity:0;animation:steam 3.6s ease-in-out infinite;}
+  .steam.s2{animation-delay:1.2s;}
+  .steam.s3{animation-delay:2.4s;}
+  @keyframes steam{
+    0%{opacity:0;transform:translateY(5px);}
+    30%{opacity:.5;}
+    100%{opacity:0;transform:translateY(-20px);}
+  }
+  .blink{animation:blink 5s infinite;}
+  @keyframes blink{0%,92%,100%{transform:scaleY(1);}95%{transform:scaleY(.08);}}
+  .ear-twitch{transform-origin:50% 100%;animation:eartw 6s ease-in-out infinite;}
+  @keyframes eartw{0%,90%,100%{transform:rotate(0deg);}93%{transform:rotate(-8deg);}96%{transform:rotate(4deg);}}
+  .scrollcue{
+    position:absolute;left:50%;bottom:2.2rem;z-index:3;transform:translateX(-50%);
+    font-style:italic;letter-spacing:.3em;font-size:.7rem;color:var(--mute);text-align:center;
+  }
+  .scrollcue span{display:block;width:1px;height:40px;margin:.7rem auto 0;background:linear-gradient(var(--terra),transparent);animation:cue 2.4s var(--ease) infinite;}
+  @keyframes cue{0%,100%{transform:scaleY(.4);opacity:.4;transform-origin:top;}50%{transform:scaleY(1);opacity:1;}}
+
+  /* ===== sections ===== */
+  .section{max-width:1100px;margin:0 auto;padding:clamp(4.5rem,11vw,8rem) 7vw;position:relative;z-index:2;}
+  .eyebrow{
+    font-style:italic;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--ame);font-size:.8rem;margin-bottom:1rem;
+  }
+  .sec-title{
+    font-family:var(--serif);font-weight:600;color:var(--cha);
+    font-size:clamp(1.7rem,4.6vw,2.4rem);line-height:1.5;letter-spacing:.05em;
+  }
+  .sec-lead{margin-top:1.3rem;max-width:46ch;color:var(--mute);font-size:.95rem;line-height:2.1;}
+
+  /* about */
+  .about{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,4.5rem);align-items:center;}
+  .about__art svg{width:100%;height:auto;display:block;}
+  .about__points{list-style:none;margin-top:2rem;display:flex;flex-direction:column;gap:1.1rem;}
+  .about__points li{padding-left:1.6rem;position:relative;font-size:.94rem;line-height:2;}
+  .about__points li::before{content:"";position:absolute;left:0;top:.85em;width:.7rem;height:1px;background:var(--terra);}
+
+  /* menu */
+  .menu-bg{background:var(--cha);color:var(--kabe);}
+  .menu-bg .eyebrow{color:var(--ame);}
+  .menu-bg .sec-title{color:var(--kabe);}
+  .menu-bg .sec-lead{color:rgba(243,236,221,.7);}
+  .menu-cols{margin-top:3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(2rem,5vw,3.5rem);}
+  .menu-col h3{
+    font-family:var(--serif);font-size:1.15rem;letter-spacing:.14em;color:var(--ame);
+    padding-bottom:.8rem;border-bottom:1px solid rgba(243,236,221,.25);
+  }
+  .mi{display:flex;align-items:baseline;gap:.9rem;padding:1rem 0;border-bottom:1px dashed rgba(243,236,221,.18);}
+  .mi__name{font-size:.95rem;letter-spacing:.04em;}
+  .mi__name small{display:block;font-size:.76rem;color:rgba(243,236,221,.55);margin-top:.15rem;}
+  .mi__dots{flex:1;border-bottom:1px dotted rgba(243,236,221,.3);transform:translateY(-4px);}
+  .mi__price{font-style:italic;font-size:1.05rem;color:var(--ame);white-space:nowrap;}
+
+  /* 過ごし方 */
+  .scenes{margin-top:3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.4rem;}
+  .scene{
+    background:#fff;border:1px solid var(--line);border-radius:6px;padding:2rem 1.7rem;
+    transition:transform .5s var(--ease),box-shadow .5s var(--ease);
+  }
+  .scene:hover{transform:translateY(-4px);box-shadow:0 22px 44px -26px rgba(74,54,40,.35);}
+  .scene__time{font-style:italic;font-size:.8rem;letter-spacing:.2em;color:var(--terra);}
+  .scene h3{font-family:var(--serif);font-size:1.1rem;margin-top:.6rem;letter-spacing:.06em;color:var(--cha);}
+  .scene p{margin-top:.7rem;font-size:.87rem;color:var(--mute);line-height:2;}
+
+  /* info */
+  .info-bg{background:#fff;border-top:1px solid var(--line);}
+  .info__grid{margin-top:2.4rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2rem;}
+  .info__grid dt{font-family:var(--serif);font-size:.92rem;letter-spacing:.14em;color:var(--terra);margin-bottom:.5rem;}
+  .info__grid dd{font-size:.9rem;line-height:2.05;}
+  .info__note{margin-top:2.6rem;font-size:.8rem;color:var(--mute);line-height:2;}
+
+  .footer{background:#3a2b1f;color:var(--kabe);}
+  .footer .section{padding-top:2.6rem;padding-bottom:2.6rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;align-items:baseline;}
+  .footer__brand{font-family:var(--serif);font-size:1.05rem;letter-spacing:.18em;}
+  .footer__copy{font-size:.74rem;color:rgba(243,236,221,.45);letter-spacing:.05em;line-height:1.9;}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity 1s var(--ease),transform 1s var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+  .hero .reveal{transition-delay:var(--d,0s);}
+
+  @media (max-width:760px){
+    .hero__wrap{flex-direction:column-reverse;justify-content:center;gap:2rem;padding-top:13vh;padding-bottom:14vh;}
+    .hero__mascot{flex-basis:auto;width:min(58vw,250px);}
+    .about{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important;}
+    .reveal{opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+<div id="dsl-demobar" style="position:sticky;top:0;z-index:99999;background:#1a1a1a;color:#f2ede4;
+     font:13px/1.5 -apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;
+     padding:9px 14px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;
+     border-bottom:1px solid #3a3a3a;letter-spacing:.02em;">
+  <span style="background:#E8A33D;color:#1a1a1a;font-weight:bold;border-radius:3px;padding:2px 8px;font-size:12px;">
+    サンプル</span>
+  <span>これは <b>まちのウェブ屋さん</b> の制作サンプルです。店名・住所・電話番号はすべて架空のものです。</span>
+  <a href="/web/" style="color:#E8A33D;text-decoration:none;border-bottom:1px solid rgba(232,163,61,.5);">
+    ← 他の業種を見る</a>
+</div>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ===== hero ===== -->
+<header class="hero">
+  <div class="hero__wrap">
+    <div class="hero__text">
+      <p class="hero__en reveal" style="--d:.1s">kissa kumanoma</p>
+      <h1 class="hero__title reveal" style="--d:.25s">急がない時間を、<br /><span class="accent">一杯ぶん</span>。</h1>
+      <p class="hero__lead reveal" style="--d:.4s">路地の奥、看板は小さめ。自家焙煎の深煎りをネルドリップで、一杯ずつ淹れています。本棚と電源あり。長居、むしろ歓迎です。</p>
+      <span class="hero__tag reveal" style="--d:.55s">自家焙煎・ネルドリップ・長居歓迎</span>
+    </div>
+    <div class="hero__mascot reveal" style="--d:.35s" aria-hidden="true">
+      <!-- 自作マスコット「くまマスター」：ネルドリップを淹れるクマ -->
+      <svg viewBox="0 0 250 240" role="img" aria-label="コーヒーをドリップするクマのマスコット">
+        <!-- 湯気（カップから） -->
+        <path class="steam"    d="M186 158 q-5 -8 1 -14 q6 -6 1 -13" />
+        <path class="steam s2" d="M198 156 q-5 -8 1 -14 q6 -6 1 -13" />
+        <!-- クマ -->
+        <g>
+          <!-- 耳 -->
+          <g class="ear-twitch" style="transform-origin:60px 52px;">
+            <circle cx="60" cy="46" r="13" fill="#8a6842" stroke="#3a2e24" stroke-width="3"/>
+            <circle cx="60" cy="46" r="6" fill="#c9a878"/>
+          </g>
+          <circle cx="128" cy="46" r="13" fill="#8a6842" stroke="#3a2e24" stroke-width="3"/>
+          <circle cx="128" cy="46" r="6" fill="#c9a878"/>
+          <!-- 頭 -->
+          <ellipse cx="94" cy="82" rx="48" ry="40" fill="#8a6842" stroke="#3a2e24" stroke-width="3"/>
+          <!-- 鼻まわり -->
+          <ellipse cx="94" cy="98" rx="20" ry="14" fill="#c9a878"/>
+          <ellipse cx="94" cy="92" rx="6" ry="4.5" fill="#3a2e24"/>
+          <path d="M94 96 v6 M94 102 q-5 4 -9 1 M94 102 q5 4 9 1" fill="none" stroke="#3a2e24" stroke-width="2.4" stroke-linecap="round"/>
+          <!-- 目（穏やか） -->
+          <g class="blink" style="transform-origin:94px 76px;">
+            <path d="M72 76 q5 4 10 0" fill="none" stroke="#3a2e24" stroke-width="3" stroke-linecap="round"/>
+            <path d="M106 76 q5 4 10 0" fill="none" stroke="#3a2e24" stroke-width="3" stroke-linecap="round"/>
+          </g>
+          <!-- 蝶ネクタイ -->
+          <path d="M84 124 l-14 -8 v16 z M104 124 l14 -8 v16 z" fill="#b5643c" stroke="#3a2e24" stroke-width="2.5" stroke-linejoin="round"/>
+          <circle cx="94" cy="124" r="4" fill="#b5643c" stroke="#3a2e24" stroke-width="2.5"/>
+          <!-- 体（エプロン） -->
+          <path d="M56 130 q-8 52 38 52 q46 0 38 -52" fill="#8a6842" stroke="#3a2e24" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M68 138 h52 l-5 38 q-21 8 -42 0 z" fill="#e9dfc9" stroke="#3a2e24" stroke-width="2.5" stroke-linejoin="round"/>
+          <!-- 左腕（サーバーを支える） -->
+          <path d="M62 142 q-16 10 -10 26" fill="none" stroke="#3a2e24" stroke-width="3" stroke-linecap="round"/>
+        </g>
+        <!-- 右腕＋ケトル -->
+        <g class="pour">
+          <path d="M126 142 q14 0 22 -8" fill="none" stroke="#3a2e24" stroke-width="3" stroke-linecap="round"/>
+          <g transform="translate(146,112)">
+            <path d="M4 8 q0 -8 12 -8 q12 0 12 8 l-2 14 h-20 z" fill="#5d4635" stroke="#3a2e24" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M4 10 q-14 -2 -16 8" fill="none" stroke="#3a2e24" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M10 0 q6 -6 12 0" fill="none" stroke="#3a2e24" stroke-width="2.5"/>
+          </g>
+        </g>
+        <!-- お湯 -->
+        <path class="water" d="M132 132 q-2 12 -1 22" fill="none" stroke="#b8cfdd" stroke-width="3" stroke-linecap="round"/>
+        <!-- ドリッパーとサーバー -->
+        <g>
+          <path d="M116 156 h32 l-9 14 h-14 z" fill="#e9dfc9" stroke="#3a2e24" stroke-width="2.6" stroke-linejoin="round"/>
+          <path d="M112 156 h40" stroke="#3a2e24" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M118 176 q-4 22 14 22 q18 0 14 -22 z" fill="none" stroke="#3a2e24" stroke-width="2.6" stroke-linejoin="round"/>
+          <path d="M122 188 q10 5 20 0 l-2 8 q-8 4 -16 0 z" fill="#4a3628"/>
+        </g>
+        <!-- カップ -->
+        <g transform="translate(176,168)">
+          <path d="M0 0 h28 q-2 18 -14 18 q-12 0 -14 -18 z" fill="#fff" stroke="#3a2e24" stroke-width="2.6" stroke-linejoin="round"/>
+          <path d="M28 4 q10 0 6 8 q-3 5 -9 3" fill="none" stroke="#3a2e24" stroke-width="2.4"/>
+          <ellipse cx="14" cy="4" rx="10" ry="2.6" fill="#4a3628"/>
+          <path d="M-4 22 h36" stroke="#3a2e24" stroke-width="2.4" stroke-linecap="round"/>
+        </g>
+        <!-- カウンター -->
+        <path d="M34 214 h182" stroke="#3a2e24" stroke-width="3" stroke-linecap="round"/>
+        <path d="M40 214 v10 M210 214 v10" stroke="#3a2e24" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+      </svg>
+    </div>
+  </div>
+  <div class="scrollcue">scroll<span></span></div>
+</header>
+
+<main>
+  <!-- ===== about ===== -->
+  <section class="section">
+    <div class="about">
+      <div class="reveal">
+        <p class="eyebrow">about</p>
+        <h2 class="sec-title">スマホを置きたくなる、<br />壁と椅子と灯り。</h2>
+        <p class="sec-lead">飲み終わっても居ていい店です。文庫の続き、書きかけの手紙、ただの休憩。おかわりは150円、水は勝手に注いでください。</p>
+        <ul class="about__points">
+          <li>豆は週2回、店の奥の焙煎機で。深煎り中心に常時4種類</li>
+          <li>全席に電源。ただしお昼どき（12〜13時）はPC作業をひと休み</li>
+          <li>会話は小さめの音量で。BGMはレコード、ときどき無音</li>
+        </ul>
+      </div>
+      <div class="about__art reveal" aria-hidden="true">
+        <!-- 店内の線画：窓と椅子とランプ -->
+        <svg viewBox="0 0 300 240">
+          <g fill="none" stroke="#b5643c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="36" y="36" width="90" height="110" rx="4"/>
+            <path d="M81 36 v110 M36 91 h90"/>
+            <path d="M170 60 v46 M156 60 h28" />
+            <path d="M162 106 q8 10 16 0" />
+            <path d="M60 200 h180 M78 200 v-34 h56 v34 M106 166 v-16 h44 v50"/>
+            <path d="M196 200 v-52 q0 -10 10 -10 h6" opacity=".8"/>
+          </g>
+          <g fill="#c9a253" opacity=".7">
+            <circle cx="170" cy="118" r="4"/>
+            <circle cx="54" cy="62" r="2.5"/><circle cx="108" cy="118" r="2.5"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== menu ===== -->
+  <section class="menu-bg">
+    <div class="section">
+      <p class="eyebrow reveal">menu</p>
+      <h2 class="sec-title reveal">お品書き</h2>
+      <p class="sec-lead reveal">価格は税込。豆の販売（100g 780円〜）もしています。</p>
+      <div class="menu-cols">
+        <div class="menu-col reveal">
+          <h3>コーヒー</h3>
+          <div class="mi"><p class="mi__name">くまのまブレンド<small>深煎り・ネルドリップの看板</small></p><span class="mi__dots"></span><p class="mi__price">¥600</p></div>
+          <div class="mi"><p class="mi__name">本日のシングル<small>週替わり・浅煎りから深煎りまで</small></p><span class="mi__dots"></span><p class="mi__price">¥650</p></div>
+          <div class="mi"><p class="mi__name">カフェオレ<small>牛乳は小岩井風の地元産（架空）</small></p><span class="mi__dots"></span><p class="mi__price">¥680</p></div>
+          <div class="mi"><p class="mi__name">おかわり<small>同じ豆で二杯目</small></p><span class="mi__dots"></span><p class="mi__price">¥150</p></div>
+        </div>
+        <div class="menu-col reveal">
+          <h3>フード・甘いもの</h3>
+          <div class="mi"><p class="mi__name">厚切りトースト<small>バター／あんバター＋100円</small></p><span class="mi__dots"></span><p class="mi__price">¥400</p></div>
+          <div class="mi"><p class="mi__name">たまごサンド<small>昼まで。売り切れごめん</small></p><span class="mi__dots"></span><p class="mi__price">¥650</p></div>
+          <div class="mi"><p class="mi__name">本日のプリン<small>かため。カラメルほろ苦め</small></p><span class="mi__dots"></span><p class="mi__price">¥450</p></div>
+          <div class="mi"><p class="mi__name">コーヒーゼリー<small>ブレンドで作っています</small></p><span class="mi__dots"></span><p class="mi__price">¥500</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 過ごし方 ===== -->
+  <section class="section">
+    <p class="eyebrow reveal">scenes</p>
+    <h2 class="sec-title reveal">くまのまの過ごし方</h2>
+    <div class="scenes">
+      <div class="scene reveal">
+        <p class="scene__time">8:00 — MORNING</p>
+        <h3>出勤前の一杯</h3>
+        <p>トーストとブレンドのモーニングセット（¥850）。新聞は岩手日報と日経があります。</p>
+      </div>
+      <div class="scene reveal">
+        <p class="scene__time">14:00 — AFTERNOON</p>
+        <h3>本棚とプリン</h3>
+        <p>いちばん空いている時間。窓際の一人席で、店の文庫を勝手に読み進めてください。</p>
+      </div>
+      <div class="scene reveal">
+        <p class="scene__time">17:00 — EVENING</p>
+        <h3>帰り道の一服</h3>
+        <p>夕方は少し照明を落とします。豆を買って帰る方はこの時間が多いです。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== info ===== -->
+  <section class="info-bg">
+    <div class="section">
+      <p class="eyebrow reveal">information</p>
+      <h2 class="sec-title reveal">店舗のご案内</h2>
+      <dl class="info__grid reveal">
+        <div>
+          <dt>店名</dt>
+          <dd>喫茶くまのま</dd>
+        </div>
+        <div>
+          <dt>所在地</dt>
+          <dd>岩手県盛岡市くまの小路1-8<br />（架空の住所です）</dd>
+        </div>
+        <div>
+          <dt>営業時間</dt>
+          <dd>8:00〜18:00（モーニングは11時まで）<br />定休日：火曜・第3水曜</dd>
+        </div>
+        <div>
+          <dt>席・設備</dt>
+          <dd>カウンター4席・テーブル10席<br />全席禁煙・電源あり・Wi-Fiあり</dd>
+        </div>
+      </dl>
+      <p class="info__note">※このページはWeb制作の営業用に作成した架空店舗のデモサイトです。実在の店舗・住所・料金とは関係ありません。</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="section">
+    <p class="footer__brand">喫茶くまのま</p>
+    <p class="footer__copy">© 2026 kissa kumanoma（架空デモ）｜まちのウェブ屋さん 制作見本</p>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    for(const e of entries){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    }
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

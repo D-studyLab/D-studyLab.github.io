@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex,nofollow">
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>hair atelier つむぎ｜盛岡の小さな美容室（架空デモ）</title>
+<meta name="description" content="盛岡の住宅街にある1席だけの美容室「hair atelier つむぎ」。髪質と暮らしに寄り添うマンツーマン施術。※これは営業用の架空デモサイトです。" />
+<style>
+  :root{
+    --sumi:#1a1614;
+    --cream:#f6f1e8;
+    --cream-deep:#ece3d2;
+    --moss:#5c6b4f;
+    --moss-bright:#8ba173;
+    --rose:#c98a7d;
+    --ink:#2d2723;
+    --ink-mute:#786a5c;
+    --line:rgba(45,39,35,.15);
+    --serif:"Hiragino Mincho ProN","Yu Mincho","BIZ UDMincho",serif;
+    --sans:"Hiragino Kaku Gothic ProN","Yu Gothic","BIZ UDGothic",sans-serif;
+    --ease:cubic-bezier(.2,.7,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans);color:var(--ink);background:var(--cream);
+    line-height:1.9;letter-spacing:.02em;overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--moss);color:var(--cream);}
+
+  /* grain */
+  .grain{
+    position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ===== hero ===== */
+  .hero{
+    position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;
+    background:linear-gradient(180deg,var(--cream) 0%,var(--cream-deep) 100%);
+  }
+  .hero__wrap{
+    position:relative;z-index:3;width:100%;max-width:1100px;margin:0 auto;
+    padding:0 7vw;display:flex;align-items:center;justify-content:space-between;gap:4vw;
+  }
+  .hero__text{flex:1 1 auto;}
+  .hero__en{
+    font-style:italic;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--moss);font-size:.82rem;margin-bottom:1.6rem;
+  }
+  .hero__title{
+    font-family:var(--serif);font-weight:700;
+    font-size:clamp(2.4rem,7vw,4.4rem);line-height:1.35;letter-spacing:.08em;
+  }
+  .hero__title .accent{color:var(--moss);}
+  .hero__lead{margin-top:1.8rem;font-size:.98rem;color:var(--ink-mute);line-height:2.2;max-width:38ch;}
+  .hero__tag{
+    display:inline-block;margin-top:2.2rem;font-size:.74rem;letter-spacing:.26em;
+    padding:.5rem 1.2rem;border:1px solid var(--line);color:var(--ink-mute);
+  }
+  /* mascot */
+  .hero__mascot{flex:0 0 clamp(180px,26vw,300px);}
+  .hero__mascot svg{width:100%;height:auto;display:block;}
+  .float{animation:float 4.5s var(--ease) infinite;}
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+  .snip{transform-origin:52% 38%;animation:snip 2.6s ease-in-out infinite;}
+  @keyframes snip{0%,55%,100%{transform:rotate(0deg);}65%{transform:rotate(-16deg);}75%{transform:rotate(0deg);}85%{transform:rotate(-10deg);}}
+  .blink{animation:blink 5s infinite;}
+  @keyframes blink{0%,92%,100%{transform:scaleY(1);}95%{transform:scaleY(.08);}}
+  /* falling hair strands */
+  .strand{opacity:0;animation:fall 3.4s linear infinite;}
+  .strand:nth-child(2){animation-delay:1.1s;}
+  .strand:nth-child(3){animation-delay:2.2s;}
+  @keyframes fall{
+    0%{opacity:0;transform:translateY(0) rotate(0deg);}
+    12%{opacity:.7;}
+    100%{opacity:0;transform:translateY(64px) rotate(38deg);}
+  }
+  .scrollcue{
+    position:absolute;left:50%;bottom:2.2rem;z-index:3;transform:translateX(-50%);
+    font-style:italic;letter-spacing:.3em;font-size:.7rem;color:var(--ink-mute);text-align:center;
+  }
+  .scrollcue span{display:block;width:1px;height:40px;margin:.7rem auto 0;background:linear-gradient(var(--moss),transparent);animation:cue 2.4s var(--ease) infinite;}
+  @keyframes cue{0%,100%{transform:scaleY(.4);opacity:.4;transform-origin:top;}50%{transform:scaleY(1);opacity:1;}}
+
+  /* ===== sections ===== */
+  .section{max-width:1100px;margin:0 auto;padding:clamp(4.5rem,11vw,8rem) 7vw;}
+  .eyebrow{
+    font-style:italic;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--moss);font-size:.8rem;margin-bottom:1rem;
+  }
+  .sec-title{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(1.7rem,4.6vw,2.5rem);line-height:1.5;letter-spacing:.05em;
+  }
+  .sec-lead{margin-top:1.3rem;max-width:46ch;color:var(--ink-mute);font-size:.95rem;line-height:2.1;}
+
+  /* concept */
+  .concept{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,4.5rem);align-items:center;}
+  .concept__art svg{width:100%;height:auto;display:block;}
+  .concept__points{list-style:none;margin-top:2rem;display:flex;flex-direction:column;gap:1.1rem;}
+  .concept__points li{
+    padding-left:1.6rem;position:relative;font-size:.94rem;line-height:2;
+  }
+  .concept__points li::before{
+    content:"";position:absolute;left:0;top:.85em;width:.7rem;height:1px;background:var(--moss);
+  }
+
+  /* menu cards */
+  .menu-bg{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .cards{margin-top:3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.4rem;}
+  .card{
+    position:relative;padding:2rem 1.7rem;background:var(--cream);
+    border:1px solid var(--line);border-radius:4px;
+    transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease);
+  }
+  .card::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--moss);
+    transform:scaleY(0);transform-origin:top;transition:transform .5s var(--ease);
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 22px 44px -26px rgba(26,22,20,.35);border-color:rgba(92,107,79,.45);}
+  .card:hover::before{transform:scaleY(1);}
+  .card__name{font-family:var(--serif);font-weight:700;font-size:1.2rem;letter-spacing:.06em;}
+  .card__price{margin-top:.4rem;font-style:italic;font-size:1.35rem;color:var(--moss);letter-spacing:.04em;}
+  .card__price small{font-size:.72rem;color:var(--ink-mute);font-style:normal;margin-left:.3rem;}
+  .card__desc{margin-top:.9rem;font-size:.86rem;color:var(--ink-mute);line-height:2;}
+
+  /* voice */
+  .voices{margin-top:3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.4rem;}
+  .voice{
+    background:#fff;border:1px solid var(--line);border-radius:4px;padding:1.8rem 1.6rem;
+    font-size:.9rem;line-height:2.05;
+  }
+  .voice__meta{margin-top:1rem;font-size:.78rem;color:var(--ink-mute);letter-spacing:.08em;}
+  .voice::before{content:"“";font-family:var(--serif);font-size:2.2rem;color:var(--rose);line-height:1;display:block;margin-bottom:.4rem;}
+
+  /* info */
+  .info{background:var(--sumi);color:var(--cream);}
+  .info .eyebrow{color:var(--moss-bright);}
+  .info__grid{margin-top:2.4rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2rem;}
+  .info__grid dt{font-family:var(--serif);font-size:.92rem;letter-spacing:.14em;color:var(--moss-bright);margin-bottom:.5rem;}
+  .info__grid dd{font-size:.9rem;color:rgba(246,241,232,.82);line-height:2.05;}
+  .info__note{margin-top:2.6rem;font-size:.8rem;color:rgba(246,241,232,.5);line-height:2;}
+
+  /* footer */
+  .footer{background:#141110;color:var(--cream);}
+  .footer .section{padding-top:2.6rem;padding-bottom:2.6rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;align-items:baseline;}
+  .footer__brand{font-family:var(--serif);font-size:1.05rem;letter-spacing:.18em;}
+  .footer__copy{font-size:.74rem;color:rgba(246,241,232,.45);letter-spacing:.05em;line-height:1.9;}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity 1s var(--ease),transform 1s var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+  .hero .reveal{transition-delay:var(--d,0s);}
+
+  @media (max-width:760px){
+    .hero__wrap{flex-direction:column-reverse;justify-content:center;gap:2rem;padding-top:14vh;padding-bottom:14vh;text-align:left;}
+    .hero__mascot{flex-basis:auto;width:min(52vw,220px);}
+    .concept{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important;}
+    .reveal{opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+<div id="dsl-demobar" style="position:sticky;top:0;z-index:99999;background:#1a1a1a;color:#f2ede4;
+     font:13px/1.5 -apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;
+     padding:9px 14px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;
+     border-bottom:1px solid #3a3a3a;letter-spacing:.02em;">
+  <span style="background:#E8A33D;color:#1a1a1a;font-weight:bold;border-radius:3px;padding:2px 8px;font-size:12px;">
+    サンプル</span>
+  <span>これは <b>まちのウェブ屋さん</b> の制作サンプルです。店名・住所・電話番号はすべて架空のものです。</span>
+  <a href="/web/" style="color:#E8A33D;text-decoration:none;border-bottom:1px solid rgba(232,163,61,.5);">
+    ← 他の業種を見る</a>
+</div>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ===== hero ===== -->
+<header class="hero">
+  <div class="hero__wrap">
+    <div class="hero__text">
+      <p class="hero__en reveal" style="--d:.1s">hair atelier tsumugi</p>
+      <h1 class="hero__title reveal" style="--d:.25s">髪を、暮らしを、<br /><span class="accent">つむぐ</span>時間。</h1>
+      <p class="hero__lead reveal" style="--d:.4s">盛岡の住宅街にひっそりと佇む、1席だけの小さな美容室。カウンセリングから仕上げまで、店主がマンツーマンで担当します。</p>
+      <span class="hero__tag reveal" style="--d:.55s">完全予約制・マンツーマン施術</span>
+    </div>
+    <div class="hero__mascot reveal float" style="--d:.35s" aria-hidden="true">
+      <!-- 自作マスコット「つむぎちゃん」：ハサミを持つことりの美容師 -->
+      <svg viewBox="0 0 200 220" role="img" aria-label="ハサミを持つことりのマスコット">
+        <!-- 落ちる髪 -->
+        <g stroke="#786a5c" stroke-width="1.4" stroke-linecap="round" fill="none">
+          <path class="strand" d="M120 118 q4 8 -1 14" />
+          <path class="strand" d="M130 122 q-4 9 1 15" />
+          <path class="strand" d="M112 124 q5 7 0 13" />
+        </g>
+        <!-- 体 -->
+        <ellipse cx="90" cy="140" rx="52" ry="58" fill="#f3e7d3" stroke="#2d2723" stroke-width="3"/>
+        <!-- おなか -->
+        <ellipse cx="90" cy="158" rx="30" ry="32" fill="#fff" stroke="none"/>
+        <!-- 羽（左） -->
+        <path d="M42 132 q-18 10 -12 30 q14 -2 22 -14" fill="#e4d3b8" stroke="#2d2723" stroke-width="3" stroke-linejoin="round"/>
+        <!-- 頭の寝ぐせ -->
+        <path d="M84 84 q2 -14 12 -16 M96 84 q6 -10 16 -8" fill="none" stroke="#2d2723" stroke-width="3" stroke-linecap="round"/>
+        <!-- 目 -->
+        <g class="blink" style="transform-origin:78px 128px;">
+          <circle cx="72" cy="128" r="4.5" fill="#2d2723"/>
+          <circle cx="104" cy="128" r="4.5" fill="#2d2723"/>
+        </g>
+        <!-- ほっぺ -->
+        <circle cx="63" cy="140" r="6" fill="#c98a7d" opacity=".55"/>
+        <circle cx="113" cy="140" r="6" fill="#c98a7d" opacity=".55"/>
+        <!-- くちばし -->
+        <path d="M84 138 l8 6 l-8 6 z" fill="#d9a441" stroke="#2d2723" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- 羽（右）＝ハサミを持つ -->
+        <path d="M132 128 q20 -4 26 -18" fill="none" stroke="#2d2723" stroke-width="3" stroke-linecap="round"/>
+        <!-- ハサミ -->
+        <g class="snip">
+          <g stroke="#5c6b4f" stroke-width="3.5" stroke-linecap="round" fill="none">
+            <path d="M150 96 l26 22" />
+            <path d="M150 118 l26 -22" />
+          </g>
+          <circle cx="150" cy="96" r="5" fill="none" stroke="#5c6b4f" stroke-width="3"/>
+          <circle cx="150" cy="118" r="5" fill="none" stroke="#5c6b4f" stroke-width="3"/>
+        </g>
+        <!-- あし -->
+        <path d="M76 197 l0 10 M104 197 l0 10" stroke="#d9a441" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+  <div class="scrollcue">scroll<span></span></div>
+</header>
+
+<main>
+  <!-- ===== concept ===== -->
+  <section class="section">
+    <div class="concept">
+      <div class="reveal">
+        <p class="eyebrow">concept</p>
+        <h2 class="sec-title">「なりたい」より、<br />「毎朝ラクできる」を。</h2>
+        <p class="sec-lead">雑誌の切り抜きどおりのスタイルよりも、あなたの髪質・クセ・毎朝の時間に合う髪型を。乾かすだけで決まる再現性を、いちばん大切にしています。</p>
+        <ul class="concept__points">
+          <li>施術は店主ひとり。カウンセリングは毎回20分かけます</li>
+          <li>次の来店まで持つ「伸びてもきれい」なカットライン</li>
+          <li>お子さま連れ・介護中の方の急な時間変更にも柔軟に対応</li>
+        </ul>
+      </div>
+      <div class="concept__art reveal" aria-hidden="true">
+        <!-- 鏡と椅子の線画 -->
+        <svg viewBox="0 0 300 260">
+          <g fill="none" stroke="#5c6b4f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="150" cy="95" rx="58" ry="72" opacity=".9"/>
+            <ellipse cx="150" cy="95" rx="48" ry="62" opacity=".35"/>
+            <path d="M150 167 v20 M128 187 h44" />
+            <path d="M96 232 h108 M116 232 q-4 -26 34 -26 q38 0 34 26" />
+            <path d="M150 206 v-14" opacity=".6"/>
+          </g>
+          <g fill="#c98a7d" opacity=".6">
+            <circle cx="118" cy="70" r="3"/>
+            <circle cx="186" cy="118" r="3"/>
+            <circle cx="172" cy="52" r="2.2"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== menu ===== -->
+  <section class="menu-bg">
+    <div class="section">
+      <p class="eyebrow reveal">menu</p>
+      <h2 class="sec-title reveal">メニューと料金</h2>
+      <p class="sec-lead reveal">表示はすべて税込。初回はカウンセリング込みで＋30分ほどお時間をいただきます。</p>
+      <div class="cards">
+        <div class="card reveal">
+          <h3 class="card__name">カット</h3>
+          <p class="card__price">¥4,950<small>約60分</small></p>
+          <p class="card__desc">シャンプー・ブロー込み。骨格と生えグセを見ながら、乾かすだけで収まるラインに。</p>
+        </div>
+        <div class="card reveal">
+          <h3 class="card__name">カット＋カラー</h3>
+          <p class="card__price">¥11,000<small>約150分</small></p>
+          <p class="card__desc">白髪ぼかし・暗めの透明感カラーが得意です。地肌にやさしい薬剤を使用。</p>
+        </div>
+        <div class="card reveal">
+          <h3 class="card__name">カット＋パーマ</h3>
+          <p class="card__price">¥12,100<small>約150分</small></p>
+          <p class="card__desc">朝のスタイリングを5分に。ゆるめの質感で、伸びてもうねりになじみます。</p>
+        </div>
+        <div class="card reveal">
+          <h3 class="card__name">ヘッドスパ</h3>
+          <p class="card__price">¥3,300<small>約30分</small></p>
+          <p class="card__desc">単品でもどうぞ。肩まわりのほぐしとあわせて、眠ってしまう方が続出です。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== voice ===== -->
+  <section class="section">
+    <p class="eyebrow reveal">voice</p>
+    <h2 class="sec-title reveal">お客さまの声</h2>
+    <div class="voices">
+      <div class="voice reveal">
+        毎朝アイロン必須だったのに、乾かすだけでまとまるようになりました。もっと早く来ればよかった。
+        <p class="voice__meta">40代・会社員（カット＋パーマ）</p>
+      </div>
+      <div class="voice reveal">
+        ほかのお客さんがいないので、子どもを連れて行っても気兼ねしません。絵本まで置いてくれていました。
+        <p class="voice__meta">30代・主婦（カット）</p>
+      </div>
+      <div class="voice reveal">
+        白髪を染めるというより「ぼかす」提案が新鮮でした。伸びてきても境目が気になりません。
+        <p class="voice__meta">50代・自営業（カット＋カラー）</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== info ===== -->
+  <section class="info">
+    <div class="section">
+      <p class="eyebrow reveal">information</p>
+      <h2 class="sec-title reveal">店舗のご案内</h2>
+      <dl class="info__grid reveal">
+        <div>
+          <dt>店名</dt>
+          <dd>hair atelier つむぎ<br />（ヘアアトリエ つむぎ）</dd>
+        </div>
+        <div>
+          <dt>所在地</dt>
+          <dd>岩手県盛岡市つむぎ町2-3-4<br />つむぎハイツ1F（架空の住所です）</dd>
+        </div>
+        <div>
+          <dt>営業時間</dt>
+          <dd>9:30〜18:00（最終受付 16:30）<br />定休日：月曜・第2火曜</dd>
+        </div>
+        <div>
+          <dt>ご予約</dt>
+          <dd>完全予約制<br />お電話またはLINEにて承ります</dd>
+        </div>
+      </dl>
+      <p class="info__note">※このページはWeb制作の営業用に作成した架空店舗のデモサイトです。実在の店舗・住所・料金とは関係ありません。</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="section">
+    <p class="footer__brand">hair atelier つむぎ</p>
+    <p class="footer__copy">© 2026 hair atelier tsumugi（架空デモ）｜まちのウェブ屋さん 制作見本</p>
+  </div>
+</footer>
+
+<script>
+  // スクロールに応じて .reveal を表示
+  const io = new IntersectionObserver((entries)=>{
+    for(const e of entries){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    }
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

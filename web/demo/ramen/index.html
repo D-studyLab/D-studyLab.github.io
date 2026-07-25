@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex,nofollow">
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>中華そば 虎輝（こてる）｜盛岡の煮干し中華そば（架空デモ）</title>
+<meta name="description" content="盛岡の路地裏、カウンター7席の中華そば専門店「虎輝」。煮干しと鶏の合わせ出汁、自家製ちぢれ麺。※これは営業用の架空デモサイトです。" />
+<style>
+  :root{
+    --kuro:#171310;
+    --kuro-soft:#241d18;
+    --shu:#c8452c;
+    --shu-bright:#e86a4a;
+    --kin:#d9a441;
+    --shiro:#f2ece0;
+    --ink:#2c251f;
+    --mute:rgba(242,236,224,.6);
+    --line:rgba(242,236,224,.16);
+    --serif:"Hiragino Mincho ProN","Yu Mincho","BIZ UDMincho",serif;
+    --sans:"Hiragino Kaku Gothic ProN","Yu Gothic","BIZ UDGothic",sans-serif;
+    --ease:cubic-bezier(.2,.7,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans);color:var(--shiro);background:var(--kuro);
+    line-height:1.9;letter-spacing:.02em;overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--shu);color:var(--shiro);}
+
+  .grain{
+    position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.07;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ===== hero ===== */
+  .hero{
+    position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;
+    background:radial-gradient(120% 90% at 70% 20%, rgba(200,69,44,.14), transparent 55%), var(--kuro);
+  }
+  .hero__wrap{
+    position:relative;z-index:3;width:100%;max-width:1100px;margin:0 auto;
+    padding:0 7vw;display:flex;align-items:center;justify-content:space-between;gap:5vw;
+  }
+  .hero__title{
+    writing-mode:vertical-rl;text-orientation:mixed;
+    font-family:var(--serif);font-weight:700;
+    font-size:clamp(3.2rem,9vw,5.8rem);line-height:1.12;letter-spacing:.16em;
+    height:min(66vh,560px);flex:0 0 auto;
+  }
+  .hero__title .accent{color:var(--shu-bright);}
+  .hero__meta{flex:0 1 30rem;}
+  .hero__en{
+    font-style:italic;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--kin);font-size:.82rem;margin-bottom:1.6rem;
+  }
+  .hero__sub{
+    font-family:var(--serif);font-size:clamp(1.2rem,3vw,1.6rem);line-height:1.9;margin-bottom:1.4rem;
+  }
+  .hero__lead{font-size:.94rem;color:var(--mute);line-height:2.1;}
+  .hero__tag{
+    display:inline-block;margin-top:2rem;font-size:.74rem;letter-spacing:.26em;
+    padding:.5rem 1.2rem;border:1px solid var(--line);color:var(--mute);
+  }
+  /* mascot: どんぶり猫 */
+  .hero__mascot{margin-top:2.4rem;width:min(220px,42vw);}
+  .hero__mascot svg{width:100%;height:auto;display:block;}
+  .steam{fill:none;stroke:var(--shiro);stroke-width:3;stroke-linecap:round;opacity:0;animation:steam 3.2s ease-in-out infinite;}
+  .steam.s2{animation-delay:1s;}
+  .steam.s3{animation-delay:2s;}
+  @keyframes steam{
+    0%{opacity:0;transform:translateY(6px);}
+    30%{opacity:.55;}
+    100%{opacity:0;transform:translateY(-22px);}
+  }
+  .tail{transform-origin:88% 82%;animation:tail 3s ease-in-out infinite;}
+  @keyframes tail{0%,100%{transform:rotate(0deg);}50%{transform:rotate(10deg);}}
+  .blink{animation:blink 5s infinite;}
+  @keyframes blink{0%,92%,100%{transform:scaleY(1);}95%{transform:scaleY(.08);}}
+  .slurp{transform-origin:50% 60%;animation:slurp 3s ease-in-out infinite;}
+  @keyframes slurp{0%,70%,100%{transform:translateY(0);}80%{transform:translateY(2.5px);}90%{transform:translateY(0);}}
+  .scrollcue{
+    position:absolute;left:50%;bottom:2.2rem;z-index:3;transform:translateX(-50%);
+    font-style:italic;letter-spacing:.3em;font-size:.7rem;color:var(--mute);text-align:center;
+  }
+  .scrollcue span{display:block;width:1px;height:40px;margin:.7rem auto 0;background:linear-gradient(var(--shu-bright),transparent);animation:cue 2.4s var(--ease) infinite;}
+  @keyframes cue{0%,100%{transform:scaleY(.4);opacity:.4;transform-origin:top;}50%{transform:scaleY(1);opacity:1;}}
+
+  /* ===== sections ===== */
+  .section{max-width:1100px;margin:0 auto;padding:clamp(4.5rem,11vw,8rem) 7vw;}
+  .eyebrow{
+    font-style:italic;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--kin);font-size:.8rem;margin-bottom:1rem;
+  }
+  .sec-title{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(1.7rem,4.6vw,2.5rem);line-height:1.5;letter-spacing:.05em;
+  }
+  .sec-lead{margin-top:1.3rem;max-width:46ch;color:var(--mute);font-size:.95rem;line-height:2.1;}
+
+  /* こだわり */
+  .kodawari{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.4rem;margin-top:3rem;}
+  .kd{
+    border:1px solid var(--line);border-radius:4px;padding:2rem 1.7rem;
+    background:var(--kuro-soft);
+    transition:transform .5s var(--ease),border-color .5s var(--ease);
+  }
+  .kd:hover{transform:translateY(-4px);border-color:rgba(232,106,74,.5);}
+  .kd__no{font-style:italic;font-size:2rem;color:var(--shu-bright);line-height:1;}
+  .kd__name{font-family:var(--serif);font-weight:700;font-size:1.15rem;margin-top:.8rem;letter-spacing:.08em;}
+  .kd__desc{margin-top:.8rem;font-size:.88rem;color:var(--mute);line-height:2;}
+
+  /* menu */
+  .menu-bg{background:var(--kuro-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .menu-list{margin-top:2.8rem;max-width:620px;}
+  .mi{
+    display:flex;align-items:baseline;gap:1rem;padding:1.2rem 0;
+    border-bottom:1px dashed var(--line);
+  }
+  .mi__name{font-family:var(--serif);font-size:1.1rem;letter-spacing:.06em;}
+  .mi__name small{display:block;font-family:var(--sans);font-size:.78rem;color:var(--mute);letter-spacing:.02em;margin-top:.2rem;}
+  .mi__dots{flex:1;border-bottom:1px dotted var(--line);transform:translateY(-4px);}
+  .mi__price{font-style:italic;font-size:1.2rem;color:var(--kin);white-space:nowrap;}
+  .mi--osusume .mi__name::after{
+    content:"いち推し";font-family:var(--sans);font-size:.66rem;letter-spacing:.14em;
+    color:var(--shiro);background:var(--shu);border-radius:2px;
+    padding:.15rem .5rem;margin-left:.7rem;vertical-align:middle;
+  }
+  .menu-note{margin-top:1.6rem;font-size:.8rem;color:var(--mute);}
+
+  /* 店主 */
+  .master{display:grid;grid-template-columns:auto 1fr;gap:clamp(1.6rem,5vw,3.4rem);align-items:center;}
+  .master__art{width:clamp(140px,20vw,190px);}
+  .master__art svg{width:100%;height:auto;display:block;}
+  .master__quote{
+    font-family:var(--serif);font-size:clamp(1.15rem,3vw,1.5rem);line-height:2;letter-spacing:.05em;
+  }
+  .master__name{margin-top:1.2rem;font-size:.84rem;color:var(--mute);letter-spacing:.1em;}
+
+  /* info */
+  .info__grid{margin-top:2.4rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2rem;}
+  .info__grid dt{font-family:var(--serif);font-size:.92rem;letter-spacing:.14em;color:var(--kin);margin-bottom:.5rem;}
+  .info__grid dd{font-size:.9rem;color:rgba(242,236,224,.82);line-height:2.05;}
+  .info__note{margin-top:2.6rem;font-size:.8rem;color:rgba(242,236,224,.45);line-height:2;}
+
+  .footer{background:#100d0b;}
+  .footer .section{padding-top:2.6rem;padding-bottom:2.6rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;align-items:baseline;}
+  .footer__brand{font-family:var(--serif);font-size:1.05rem;letter-spacing:.18em;}
+  .footer__copy{font-size:.74rem;color:rgba(242,236,224,.4);letter-spacing:.05em;line-height:1.9;}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity 1s var(--ease),transform 1s var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+  .hero .reveal{transition-delay:var(--d,0s);}
+
+  @media (max-width:760px){
+    .hero__wrap{flex-direction:column;align-items:flex-start;justify-content:center;gap:2.2rem;padding-top:15vh;padding-bottom:14vh;}
+    .hero__title{writing-mode:horizontal-tb;height:auto;font-size:clamp(2.8rem,14vw,4rem);letter-spacing:.08em;}
+    .master{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important;}
+    .reveal{opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+<div id="dsl-demobar" style="position:sticky;top:0;z-index:99999;background:#1a1a1a;color:#f2ede4;
+     font:13px/1.5 -apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;
+     padding:9px 14px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;
+     border-bottom:1px solid #3a3a3a;letter-spacing:.02em;">
+  <span style="background:#E8A33D;color:#1a1a1a;font-weight:bold;border-radius:3px;padding:2px 8px;font-size:12px;">
+    サンプル</span>
+  <span>これは <b>まちのウェブ屋さん</b> の制作サンプルです。店名・住所・電話番号はすべて架空のものです。</span>
+  <a href="/web/" style="color:#E8A33D;text-decoration:none;border-bottom:1px solid rgba(232,163,61,.5);">
+    ← 他の業種を見る</a>
+</div>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ===== hero ===== -->
+<header class="hero">
+  <div class="hero__wrap">
+    <h1 class="hero__title reveal" style="--d:.2s">中華そば<br /><span class="accent">虎輝</span></h1>
+    <div class="hero__meta">
+      <p class="hero__en reveal" style="--d:.1s">chuka-soba koteru</p>
+      <p class="hero__sub reveal" style="--d:.3s">煮干しと鶏、<br />一杯にぜんぶ注ぐ。</p>
+      <p class="hero__lead reveal" style="--d:.45s">盛岡の路地裏、カウンター7席。毎朝炊く合わせ出汁と自家製ちぢれ麺だけで勝負する、中華そば専門店です。</p>
+      <span class="hero__tag reveal" style="--d:.6s">スープ切れ次第、閉店</span>
+      <div class="hero__mascot reveal" style="--d:.5s" aria-hidden="true">
+        <!-- 自作マスコット「こてら」：どんぶりから麺をすする虎猫 -->
+        <svg viewBox="0 0 240 200" role="img" aria-label="どんぶりで麺をすする虎猫のマスコット">
+          <!-- 湯気 -->
+          <path class="steam"    d="M96 74 q-6 -10 2 -18 q8 -8 2 -16" />
+          <path class="steam s2" d="M120 70 q-6 -10 2 -18 q8 -8 2 -16" />
+          <path class="steam s3" d="M144 74 q-6 -10 2 -18 q8 -8 2 -16" />
+          <!-- しっぽ -->
+          <path class="tail" d="M196 156 q26 -6 22 -30" fill="none" stroke="#d9a441" stroke-width="9" stroke-linecap="round"/>
+          <path class="tail" d="M196 156 q26 -6 22 -30" fill="none" stroke="#2c251f" stroke-width="9" stroke-linecap="round" stroke-dasharray="6 12"/>
+          <!-- 顔と体（すするとき少し下がる） -->
+          <g class="slurp">
+            <!-- 耳 -->
+            <path d="M74 96 l-8 -22 l22 10 z M166 96 l8 -22 l-22 10 z" fill="#d9a441" stroke="#2c251f" stroke-width="3" stroke-linejoin="round"/>
+            <!-- 頭 -->
+            <ellipse cx="120" cy="112" rx="52" ry="40" fill="#e8b64f" stroke="#2c251f" stroke-width="3"/>
+            <!-- 虎じま -->
+            <path d="M84 88 q4 8 -2 14 M120 80 q0 9 0 14 M156 88 q-4 8 2 14" fill="none" stroke="#2c251f" stroke-width="3.5" stroke-linecap="round"/>
+            <!-- 目 -->
+            <g class="blink" style="transform-origin:120px 108px;">
+              <path d="M98 106 q6 6 12 0" fill="none" stroke="#2c251f" stroke-width="3" stroke-linecap="round"/>
+              <path d="M130 106 q6 6 12 0" fill="none" stroke="#2c251f" stroke-width="3" stroke-linecap="round"/>
+            </g>
+            <!-- ほっぺ -->
+            <circle cx="90" cy="120" r="6" fill="#c8452c" opacity=".5"/>
+            <circle cx="150" cy="120" r="6" fill="#c8452c" opacity=".5"/>
+            <!-- 口＝麺をくわえる -->
+            <ellipse cx="120" cy="128" rx="7" ry="5" fill="#2c251f"/>
+            <!-- 麺 -->
+            <path d="M114 128 q-4 14 2 24 M126 128 q4 14 -2 24" fill="none" stroke="#f2ece0" stroke-width="3.5" stroke-linecap="round"/>
+          </g>
+          <!-- どんぶり -->
+          <path d="M64 152 h112 q-4 34 -56 34 q-52 0 -56 -34 z" fill="#c8452c" stroke="#2c251f" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M84 164 q36 12 72 0" fill="none" stroke="#f2ece0" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+          <!-- 渦巻き紋 -->
+          <path d="M112 172 q8 -6 14 0 q-6 6 -14 0" fill="none" stroke="#f2ece0" stroke-width="2.4" opacity=".8"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="scrollcue">scroll<span></span></div>
+</header>
+
+<main>
+  <!-- ===== こだわり ===== -->
+  <section class="section">
+    <p class="eyebrow reveal">kodawari</p>
+    <h2 class="sec-title reveal">三つのこだわり</h2>
+    <div class="kodawari">
+      <div class="kd reveal">
+        <p class="kd__no">01</p>
+        <h3 class="kd__name">煮干し×鶏の合わせ出汁</h3>
+        <p class="kd__desc">三陸の片口いわし煮干しを主役に、岩手産鶏ガラでまるみを。えぐみを出さない低温抽出で、最後の一滴まで飲めるスープに。</p>
+      </div>
+      <div class="kd reveal">
+        <p class="kd__no">02</p>
+        <h3 class="kd__name">自家製ちぢれ中細麺</h3>
+        <p class="kd__desc">店の奥の製麺室で毎朝打つ、加水高めのちぢれ麺。スープを持ち上げる縮れ具合まで、季節で微調整しています。</p>
+      </div>
+      <div class="kd reveal">
+        <p class="kd__no">03</p>
+        <h3 class="kd__name">チャーシューは吊るし焼き</h3>
+        <p class="kd__desc">肩ロースを一本ずつ吊るして焼き上げ、香ばしさを閉じ込めてからスープでほどく二段仕込み。提供直前に炙ります。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== menu ===== -->
+  <section class="menu-bg">
+    <div class="section">
+      <p class="eyebrow reveal">menu</p>
+      <h2 class="sec-title reveal">お品書き</h2>
+      <div class="menu-list">
+        <div class="mi reveal mi--osusume">
+          <p class="mi__name">中華そば<small>煮干しと鶏の合わせ出汁・基本の一杯</small></p>
+          <span class="mi__dots"></span>
+          <p class="mi__price">¥900</p>
+        </div>
+        <div class="mi reveal">
+          <p class="mi__name">特製中華そば<small>チャーシュー増し・味玉・のり三枚</small></p>
+          <span class="mi__dots"></span>
+          <p class="mi__price">¥1,250</p>
+        </div>
+        <div class="mi reveal">
+          <p class="mi__name">つけそば<small>昼十食限定・魚介濃いめの熱盛りつけ汁</small></p>
+          <span class="mi__dots"></span>
+          <p class="mi__price">¥1,000</p>
+        </div>
+        <div class="mi reveal">
+          <p class="mi__name">替え玉<small>自家製麺・半玉もできます</small></p>
+          <span class="mi__dots"></span>
+          <p class="mi__price">¥150</p>
+        </div>
+        <div class="mi reveal">
+          <p class="mi__name">肉めし<small>チャーシューの切り落としをタレで</small></p>
+          <span class="mi__dots"></span>
+          <p class="mi__price">¥300</p>
+        </div>
+      </div>
+      <p class="menu-note reveal">※価格は税込。スープがなくなり次第、その日の営業を終了します。</p>
+    </div>
+  </section>
+
+  <!-- ===== 店主 ===== -->
+  <section class="section">
+    <p class="eyebrow reveal">master</p>
+    <div class="master">
+      <div class="master__art reveal" aria-hidden="true">
+        <!-- 店主の線画：ねじり鉢巻きと寸胴 -->
+        <svg viewBox="0 0 180 180">
+          <g fill="none" stroke="#d9a441" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="90" cy="62" r="30"/>
+            <path d="M62 52 q28 -14 56 0" stroke-width="6"/>
+            <path d="M118 50 l14 -8 M118 56 l16 -2"/>
+            <path d="M80 66 q0 4 0 0 M100 66 q0 4 0 0" stroke-width="4"/>
+            <path d="M82 76 q8 6 16 0"/>
+            <path d="M56 132 h68 v34 h-68 z"/>
+            <path d="M52 132 h76 M66 122 q24 -10 48 0"/>
+            <path d="M70 112 q-4 -10 4 -16 M90 108 q-4 -10 4 -16 M110 112 q-4 -10 4 -16" opacity=".7"/>
+          </g>
+        </svg>
+      </div>
+      <div class="reveal">
+        <p class="master__quote">「派手なことはできません。<br />けれど毎日、同じ一杯を<br />同じ真剣さで作ります。」</p>
+        <p class="master__name">店主・虎田 輝一（とらだ きいち）／屋台歴8年を経て2019年開業</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== info ===== -->
+  <section class="menu-bg">
+    <div class="section">
+      <p class="eyebrow reveal">information</p>
+      <h2 class="sec-title reveal">店舗のご案内</h2>
+      <dl class="info__grid reveal">
+        <div>
+          <dt>店名</dt>
+          <dd>中華そば 虎輝（こてる）</dd>
+        </div>
+        <div>
+          <dt>所在地</dt>
+          <dd>岩手県盛岡市とら町1-7-3<br />（架空の住所です）</dd>
+        </div>
+        <div>
+          <dt>営業時間</dt>
+          <dd>11:00〜15:00／18:00〜21:00<br />スープ切れ仕舞い・水曜定休</dd>
+        </div>
+        <div>
+          <dt>席数</dt>
+          <dd>カウンター7席のみ<br />現金・コード決済対応</dd>
+        </div>
+      </dl>
+      <p class="info__note">※このページはWeb制作の営業用に作成した架空店舗のデモサイトです。実在の店舗・住所・料金とは関係ありません。</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="section">
+    <p class="footer__brand">中華そば 虎輝</p>
+    <p class="footer__copy">© 2026 chuka-soba koteru（架空デモ）｜まちのウェブ屋さん 制作見本</p>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    for(const e of entries){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    }
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

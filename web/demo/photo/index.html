@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex,nofollow">
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>photo studio ひだまり｜盛岡の小さな写真館（架空デモ）</title>
+<meta name="description" content="盛岡の商店街の一角にある家族経営の写真館「photo studio ひだまり」。七五三・成人式・家族写真・証明写真。※これは営業用の架空デモサイトです。" />
+<style>
+  :root{
+    --sumi:#181419;
+    --paper:#f7f2ea;
+    --paper-deep:#efe6d6;
+    --indigo:#3b4a6b;
+    --indigo-bright:#7386ad;
+    --amber:#d9a441;
+    --coral:#c97d6e;
+    --ink:#2b2530;
+    --ink-mute:#75695f;
+    --line:rgba(43,37,48,.15);
+    --serif:"Hiragino Mincho ProN","Yu Mincho","BIZ UDMincho",serif;
+    --sans:"Hiragino Kaku Gothic ProN","Yu Gothic","BIZ UDGothic",sans-serif;
+    --ease:cubic-bezier(.2,.7,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans);color:var(--ink);background:var(--paper);
+    line-height:1.9;letter-spacing:.02em;overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--indigo);color:var(--paper);}
+
+  /* grain */
+  .grain{
+    position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ===== hero ===== */
+  .hero{
+    position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;
+    background:linear-gradient(180deg,var(--paper) 0%,var(--paper-deep) 100%);
+  }
+  .hero__wrap{
+    position:relative;z-index:3;width:100%;max-width:1100px;margin:0 auto;
+    padding:0 7vw;display:flex;align-items:center;justify-content:space-between;gap:4vw;
+  }
+  .hero__text{flex:1 1 auto;}
+  .hero__en{
+    font-style:italic;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--indigo);font-size:.82rem;margin-bottom:1.6rem;
+  }
+  .hero__title{
+    font-family:var(--serif);font-weight:700;
+    font-size:clamp(2.4rem,7vw,4.4rem);line-height:1.35;letter-spacing:.08em;
+  }
+  .hero__title .accent{color:var(--indigo);}
+  .hero__lead{margin-top:1.8rem;font-size:.98rem;color:var(--ink-mute);line-height:2.2;max-width:38ch;}
+  .hero__tag{
+    display:inline-block;margin-top:2.2rem;font-size:.74rem;letter-spacing:.26em;
+    padding:.5rem 1.2rem;border:1px solid var(--line);color:var(--ink-mute);
+  }
+  /* mascot */
+  .hero__mascot{flex:0 0 clamp(180px,26vw,300px);position:relative;}
+  .hero__mascot svg{width:100%;height:auto;display:block;}
+  .float{animation:float 4.5s var(--ease) infinite;}
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+  .blink{animation:blink 5s infinite;}
+  @keyframes blink{0%,92%,100%{transform:scaleY(1);}95%{transform:scaleY(.08);}}
+  /* カメラのフラッシュ */
+  .flashburst{transform-origin:154px 84px;opacity:0;animation:flashburst 4.2s ease-out infinite;}
+  @keyframes flashburst{
+    0%,74%{opacity:0;transform:scale(.3);}
+    78%{opacity:1;transform:scale(1);}
+    88%,100%{opacity:0;transform:scale(1.25);}
+  }
+  /* シャッターを押す指 */
+  .presswing{transform-origin:120px 96px;animation:presswing 4.2s ease-in-out infinite;}
+  @keyframes presswing{0%,70%,84%,100%{transform:rotate(0deg);}74%,80%{transform:rotate(9deg);}}
+  /* 画面全体がほんのり光る（フラッシュ連動） */
+  .hero__flash{
+    position:absolute;inset:0;z-index:2;pointer-events:none;background:#fff;
+    opacity:0;animation:heroflash 4.2s ease-out infinite;
+  }
+  @keyframes heroflash{0%,76%{opacity:0;}78%{opacity:.35;}86%,100%{opacity:0;}}
+  .scrollcue{
+    position:absolute;left:50%;bottom:2.2rem;z-index:3;transform:translateX(-50%);
+    font-style:italic;letter-spacing:.3em;font-size:.7rem;color:var(--ink-mute);text-align:center;
+  }
+  .scrollcue span{display:block;width:1px;height:40px;margin:.7rem auto 0;background:linear-gradient(var(--indigo),transparent);animation:cue 2.4s var(--ease) infinite;}
+  @keyframes cue{0%,100%{transform:scaleY(.4);opacity:.4;transform-origin:top;}50%{transform:scaleY(1);opacity:1;}}
+
+  /* ===== sections ===== */
+  .section{max-width:1100px;margin:0 auto;padding:clamp(4.5rem,11vw,8rem) 7vw;}
+  .eyebrow{
+    font-style:italic;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--indigo);font-size:.8rem;margin-bottom:1rem;
+  }
+  .sec-title{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(1.7rem,4.6vw,2.5rem);line-height:1.5;letter-spacing:.05em;
+  }
+  .sec-lead{margin-top:1.3rem;max-width:46ch;color:var(--ink-mute);font-size:.95rem;line-height:2.1;}
+
+  /* concept */
+  .concept{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,4.5rem);align-items:center;}
+  .concept__art svg{width:100%;height:auto;display:block;}
+  .concept__points{list-style:none;margin-top:2rem;display:flex;flex-direction:column;gap:1.1rem;}
+  .concept__points li{
+    padding-left:1.6rem;position:relative;font-size:.94rem;line-height:2;
+  }
+  .concept__points li::before{
+    content:"";position:absolute;left:0;top:.85em;width:.7rem;height:1px;background:var(--indigo);
+  }
+
+  /* menu cards */
+  .menu-bg{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .cards{margin-top:3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.4rem;}
+  .card{
+    position:relative;padding:2rem 1.7rem;background:var(--paper);
+    border:1px solid var(--line);border-radius:4px;
+    transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease);
+  }
+  .card::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--indigo);
+    transform:scaleY(0);transform-origin:top;transition:transform .5s var(--ease);
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 22px 44px -26px rgba(24,20,25,.35);border-color:rgba(59,74,107,.45);}
+  .card:hover::before{transform:scaleY(1);}
+  .card__name{font-family:var(--serif);font-weight:700;font-size:1.2rem;letter-spacing:.06em;}
+  .card__price{margin-top:.4rem;font-style:italic;font-size:1.35rem;color:var(--indigo);letter-spacing:.04em;}
+  .card__price small{font-size:.72rem;color:var(--ink-mute);font-style:normal;margin-left:.3rem;}
+  .card__desc{margin-top:.9rem;font-size:.86rem;color:var(--ink-mute);line-height:2;}
+  .card__badge{
+    position:absolute;top:-0.7rem;right:1rem;background:var(--amber);color:#fff;
+    font-size:.68rem;letter-spacing:.14em;padding:.15rem .7rem;border-radius:2px;
+  }
+  .menu-note{margin-top:1.6rem;font-size:.8rem;color:var(--ink-mute);line-height:2;}
+
+  /* flow */
+  .flow{margin-top:3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.4rem;counter-reset:step;}
+  .flow__step{
+    position:relative;background:#fff;border:1px solid var(--line);border-radius:4px;
+    padding:2.2rem 1.6rem 1.8rem;counter-increment:step;
+  }
+  .flow__step::before{
+    content:"0" counter(step);position:absolute;top:-0.9rem;left:1.2rem;
+    font-style:italic;font-size:1.6rem;color:var(--amber);letter-spacing:.06em;
+    background:var(--paper);padding:0 .5rem;line-height:1;
+  }
+  .flow__name{font-family:var(--serif);font-weight:700;font-size:1.05rem;letter-spacing:.06em;}
+  .flow__desc{margin-top:.8rem;font-size:.86rem;color:var(--ink-mute);line-height:2;}
+
+  /* cta */
+  .cta{background:var(--indigo);color:var(--paper);text-align:center;}
+  .cta .eyebrow{color:var(--amber);}
+  .cta__lead{margin:1.2rem auto 0;max-width:42ch;font-size:.94rem;color:rgba(247,242,234,.85);line-height:2.1;}
+  .cta__tel{
+    display:inline-block;margin-top:2.2rem;padding:1.1rem 2.8rem;
+    background:var(--paper);color:var(--indigo);text-decoration:none;border-radius:999px;
+    font-family:var(--serif);font-weight:700;font-size:clamp(1.3rem,4vw,1.8rem);letter-spacing:.08em;
+    box-shadow:0 14px 30px -14px rgba(0,0,0,.4);
+    transition:transform .4s var(--ease),box-shadow .4s var(--ease);
+  }
+  .cta__tel:hover{transform:translateY(-3px);box-shadow:0 20px 38px -14px rgba(0,0,0,.45);}
+  .cta__tel small{display:block;font-family:var(--sans);font-weight:400;font-size:.72rem;letter-spacing:.22em;color:var(--ink-mute);margin-bottom:.2rem;}
+  .cta__hours{margin-top:1.4rem;font-size:.8rem;color:rgba(247,242,234,.6);letter-spacing:.08em;}
+
+  /* info */
+  .info{background:var(--sumi);color:var(--paper);}
+  .info .eyebrow{color:var(--indigo-bright);}
+  .info__grid{margin-top:2.4rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2rem;}
+  .info__grid dt{font-family:var(--serif);font-size:.92rem;letter-spacing:.14em;color:var(--indigo-bright);margin-bottom:.5rem;}
+  .info__grid dd{font-size:.9rem;color:rgba(247,242,234,.82);line-height:2.05;}
+  .info__note{margin-top:2.6rem;font-size:.8rem;color:rgba(247,242,234,.5);line-height:2;}
+
+  /* footer */
+  .footer{background:#131015;color:var(--paper);}
+  .footer .section{padding-top:2.6rem;padding-bottom:2.6rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;align-items:baseline;}
+  .footer__brand{font-family:var(--serif);font-size:1.05rem;letter-spacing:.18em;}
+  .footer__copy{font-size:.74rem;color:rgba(247,242,234,.45);letter-spacing:.05em;line-height:1.9;}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity 1s var(--ease),transform 1s var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+  .hero .reveal{transition-delay:var(--d,0s);}
+
+  @media (max-width:760px){
+    .hero__wrap{flex-direction:column-reverse;justify-content:center;gap:2rem;padding-top:14vh;padding-bottom:14vh;text-align:left;}
+    .hero__mascot{flex-basis:auto;width:min(52vw,220px);}
+    .concept{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important;}
+    .reveal{opacity:1;transform:none;}
+    .hero__flash{display:none;}
+  }
+</style>
+</head>
+<body>
+<div id="dsl-demobar" style="position:sticky;top:0;z-index:99999;background:#1a1a1a;color:#f2ede4;
+     font:13px/1.5 -apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;
+     padding:9px 14px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;
+     border-bottom:1px solid #3a3a3a;letter-spacing:.02em;">
+  <span style="background:#E8A33D;color:#1a1a1a;font-weight:bold;border-radius:3px;padding:2px 8px;font-size:12px;">
+    サンプル</span>
+  <span>これは <b>まちのウェブ屋さん</b> の制作サンプルです。店名・住所・電話番号はすべて架空のものです。</span>
+  <a href="/web/" style="color:#E8A33D;text-decoration:none;border-bottom:1px solid rgba(232,163,61,.5);">
+    ← 他の業種を見る</a>
+</div>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ===== hero ===== -->
+<header class="hero">
+  <div class="hero__flash" aria-hidden="true"></div>
+  <div class="hero__wrap">
+    <div class="hero__text">
+      <p class="hero__en reveal" style="--d:.1s">photo studio hidamari</p>
+      <h1 class="hero__title reveal" style="--d:.25s">いちばんの笑顔を、<br /><span class="accent">一生もの</span>に。</h1>
+      <p class="hero__lead reveal" style="--d:.4s">盛岡の商店街の一角にある、親子二代の小さな写真館。緊張しがちなお子さまも、カメラ好きの店主がゆっくり笑顔を引き出します。</p>
+      <span class="hero__tag reveal" style="--d:.55s">完全予約制・一日三組限定</span>
+    </div>
+    <div class="hero__mascot reveal float" style="--d:.35s" aria-hidden="true">
+      <!-- 自作マスコット「ぱしゃまる」：カメラを構えるたぬきのカメラマン -->
+      <svg viewBox="0 0 200 220" role="img" aria-label="カメラを構えるたぬきのマスコット">
+        <!-- フラッシュの光 -->
+        <g class="flashburst" stroke="#d9a441" stroke-width="2.5" stroke-linecap="round" fill="none">
+          <path d="M154 68 v-12" />
+          <path d="M168 74 l9 -9" />
+          <path d="M172 88 h12" />
+          <path d="M140 74 l-9 -9" />
+        </g>
+        <!-- しっぽ -->
+        <path d="M42 168 q-22 6 -20 26 q18 6 30 -8" fill="#8a6f55" stroke="#2b2530" stroke-width="3" stroke-linejoin="round"/>
+        <!-- 体 -->
+        <ellipse cx="92" cy="146" rx="52" ry="56" fill="#b99a76" stroke="#2b2530" stroke-width="3"/>
+        <!-- おなか -->
+        <ellipse cx="92" cy="164" rx="30" ry="30" fill="#f0e4d0" stroke="none"/>
+        <!-- 耳 -->
+        <path d="M56 100 q-6 -18 8 -22 q10 4 8 18" fill="#8a6f55" stroke="#2b2530" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M128 100 q6 -18 -8 -22 q-10 4 -8 18" fill="#8a6f55" stroke="#2b2530" stroke-width="3" stroke-linejoin="round"/>
+        <!-- 目のまわりのぶち -->
+        <ellipse cx="70" cy="126" rx="13" ry="10" fill="#6e5640" opacity=".85"/>
+        <ellipse cx="114" cy="126" rx="13" ry="10" fill="#6e5640" opacity=".85"/>
+        <!-- 目（左は開いている・右はカメラを覗いてつぶる） -->
+        <g class="blink" style="transform-origin:70px 126px;">
+          <circle cx="70" cy="126" r="4.5" fill="#fff"/>
+          <circle cx="70" cy="126" r="2.6" fill="#2b2530"/>
+        </g>
+        <path d="M108 126 q6 3 12 0" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- ほっぺ -->
+        <circle cx="58" cy="142" r="6" fill="#c97d6e" opacity=".55"/>
+        <!-- 鼻 -->
+        <path d="M88 140 l8 5 l-8 5 z" fill="#2b2530" stroke="#2b2530" stroke-width="2" stroke-linejoin="round"/>
+        <!-- カメラ -->
+        <g class="presswing">
+          <rect x="118" y="84" width="52" height="38" rx="6" fill="#3b4a6b" stroke="#2b2530" stroke-width="3"/>
+          <circle cx="144" cy="103" r="12" fill="#f7f2ea" stroke="#2b2530" stroke-width="3"/>
+          <circle cx="144" cy="103" r="5.5" fill="#3b4a6b"/>
+          <rect x="150" y="76" width="12" height="8" rx="2" fill="#d9a441" stroke="#2b2530" stroke-width="2.5"/>
+          <rect x="124" y="90" width="9" height="6" rx="2" fill="#7386ad"/>
+        </g>
+        <!-- カメラを支える手 -->
+        <path d="M116 122 q-8 8 -18 6" fill="none" stroke="#2b2530" stroke-width="3" stroke-linecap="round"/>
+        <!-- あし -->
+        <path d="M78 201 l0 10 M106 201 l0 10" stroke="#6e5640" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+  <div class="scrollcue">scroll<span></span></div>
+</header>
+
+<main>
+  <!-- ===== concept ===== -->
+  <section class="section">
+    <div class="concept">
+      <div class="reveal">
+        <p class="eyebrow">concept</p>
+        <h2 class="sec-title">「はいチーズ」の前の、<br />ふとした顔がいちばんいい。</h2>
+        <p class="sec-lead">かしこまった記念写真だけでなく、支度中のくすぐったい笑顔や、家族のなにげないやりとりも一緒に残します。一日三組限定だから、時間に追われない撮影を。</p>
+        <ul class="concept__points">
+          <li>撮影は親子二代のカメラマン。人見知りのお子さまも得意です</li>
+          <li>着物・ドレスの衣装レンタルと着付け・ヘアセットまで館内で完結</li>
+          <li>全カットデータ渡し。焼き増し・台紙のご相談も後日ゆっくりと</li>
+        </ul>
+      </div>
+      <div class="concept__art reveal" aria-hidden="true">
+        <!-- 三脚カメラと背景紙の線画 -->
+        <svg viewBox="0 0 300 260">
+          <g fill="none" stroke="#3b4a6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M60 40 h180 M70 40 v130 q0 14 14 14 h132" opacity=".35"/>
+            <rect x="118" y="96" width="64" height="46" rx="8" opacity=".9"/>
+            <circle cx="150" cy="119" r="16" opacity=".9"/>
+            <circle cx="150" cy="119" r="7" opacity=".5"/>
+            <path d="M150 142 v22 M150 164 l-34 56 M150 164 l34 56 M150 164 v56" />
+            <rect x="160" y="86" width="14" height="10" rx="2" opacity=".7"/>
+          </g>
+          <g fill="#d9a441" opacity=".6">
+            <circle cx="96" cy="70" r="3"/>
+            <circle cx="210" cy="120" r="3"/>
+            <circle cx="188" cy="58" r="2.2"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== menu ===== -->
+  <section class="menu-bg">
+    <div class="section">
+      <p class="eyebrow reveal">menu &amp; price</p>
+      <h2 class="sec-title reveal">撮影メニューと料金</h2>
+      <p class="sec-lead reveal">表示はすべて税込。撮影データ（全カット）のお渡しを含みます。衣装レンタル・着付け・ヘアセット込みの安心価格です。</p>
+      <div class="cards">
+        <div class="card reveal">
+          <span class="card__badge">人気No.1</span>
+          <h3 class="card__name">七五三</h3>
+          <p class="card__price">¥33,000<small>約120分</small></p>
+          <p class="card__desc">お着物レンタル・着付け・ヘアセット込み。ご家族との集合写真も同料金内で撮影します。</p>
+        </div>
+        <div class="card reveal">
+          <h3 class="card__name">成人式・前撮り</h3>
+          <p class="card__price">¥38,500<small>約150分</small></p>
+          <p class="card__desc">振袖・袴に対応。ロケーション撮影（近隣の公園）への変更も追加料金なしでどうぞ。</p>
+        </div>
+        <div class="card reveal">
+          <h3 class="card__name">家族写真</h3>
+          <p class="card__price">¥16,500<small>約60分</small></p>
+          <p class="card__desc">お宮参り・入園入学・還暦のお祝いなどに。三世代そろっての撮影も追加料金はいただきません。</p>
+        </div>
+        <div class="card reveal">
+          <h3 class="card__name">証明写真</h3>
+          <p class="card__price">¥2,200<small>約15分</small></p>
+          <p class="card__desc">就活・受験・パスポートに。撮り直し無制限、その場でプリントとデータをお渡しします。</p>
+        </div>
+      </div>
+      <p class="menu-note reveal">※土日祝も同一料金です。台紙・アルバム・焼き増しは別途承ります（台紙 ¥3,300〜）。</p>
+    </div>
+  </section>
+
+  <!-- ===== flow ===== -->
+  <section class="section">
+    <p class="eyebrow reveal">flow</p>
+    <h2 class="sec-title reveal">撮影の流れ</h2>
+    <p class="sec-lead reveal">はじめての方でも迷わないよう、ご予約から写真のお渡しまでを4つのステップでご案内します。</p>
+    <div class="flow">
+      <div class="flow__step reveal">
+        <h3 class="flow__name">ご予約</h3>
+        <p class="flow__desc">お電話にてご希望の日時とメニューをお知らせください。衣装の下見だけのご来店も歓迎です。</p>
+      </div>
+      <div class="flow__step reveal">
+        <h3 class="flow__name">お支度</h3>
+        <p class="flow__desc">当日は手ぶらでOK。衣装選び・着付け・ヘアセットまで、館内でゆっくりお支度いただけます。</p>
+      </div>
+      <div class="flow__step reveal">
+        <h3 class="flow__name">撮影</h3>
+        <p class="flow__desc">遊びながら、おしゃべりしながら。緊張がほどけた頃のいちばん自然な表情を狙って撮影します。</p>
+      </div>
+      <div class="flow__step reveal">
+        <h3 class="flow__name">お渡し</h3>
+        <p class="flow__desc">約1週間後、全カットのデータをお渡しします。台紙やアルバムはお写真を見ながらご相談を。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== cta ===== -->
+  <section class="cta">
+    <div class="section">
+      <p class="eyebrow reveal">reservation</p>
+      <h2 class="sec-title reveal">ご予約はお電話にて</h2>
+      <p class="cta__lead reveal">完全予約制・一日三組限定です。「まだ日程が決まっていない」というご相談だけでも、お気軽にお電話ください。</p>
+      <a class="cta__tel reveal" href="tel:019-000-0000"><small>tap to call（架空の番号です）</small>019-000-0000</a>
+      <p class="cta__hours reveal">受付時間 9:00〜18:00（水曜定休）</p>
+    </div>
+  </section>
+
+  <!-- ===== info ===== -->
+  <section class="info">
+    <div class="section">
+      <p class="eyebrow reveal">information</p>
+      <h2 class="sec-title reveal">スタジオのご案内</h2>
+      <dl class="info__grid reveal">
+        <div>
+          <dt>店名</dt>
+          <dd>photo studio ひだまり<br />（フォトスタジオ ひだまり）</dd>
+        </div>
+        <div>
+          <dt>所在地</dt>
+          <dd>岩手県盛岡市ひだまり町1-2-3<br />ひだまりビル1F（架空の住所です）</dd>
+        </div>
+        <div>
+          <dt>営業時間</dt>
+          <dd>9:00〜18:00（最終受付 16:00）<br />定休日：水曜・第3木曜</dd>
+        </div>
+        <div>
+          <dt>ご予約</dt>
+          <dd>完全予約制・一日三組限定<br />お電話にて承ります（019-000-0000）</dd>
+        </div>
+      </dl>
+      <p class="info__note">※このページはWeb制作の営業用に作成した架空店舗のデモサイトです。実在の店舗・住所・電話番号・料金とは関係ありません。</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="section">
+    <p class="footer__brand">photo studio ひだまり</p>
+    <p class="footer__copy">© 2026 photo studio hidamari（架空デモ）｜まちのウェブ屋さん 制作見本</p>
+  </div>
+</footer>
+
+<script>
+  // スクロールに応じて .reveal を表示
+  const io = new IntersectionObserver((entries)=>{
+    for(const e of entries){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    }
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

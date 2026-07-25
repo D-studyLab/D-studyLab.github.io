@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex,nofollow">
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>花と緑の店 ハチクサ｜盛岡の小さな花屋（架空デモ）</title>
+<meta name="description" content="盛岡の商店街の角にある小さな花屋「ハチクサ」。季節の枝もの・野の花寄せのブーケ、定期便もあります。※これは営業用の架空デモサイトです。" />
+<style>
+  :root{
+    --shiro:#fbf9f4;
+    --shiro-deep:#f1ecdf;
+    --ha:#4a6b4f;
+    --ha-bright:#7ba06f;
+    --hana:#d98ba0;
+    --mitsu:#dfa93f;
+    --ink:#33302a;
+    --mute:#7d7668;
+    --line:rgba(51,48,42,.14);
+    --serif:"Hiragino Mincho ProN","Yu Mincho","BIZ UDMincho",serif;
+    --sans:"Hiragino Kaku Gothic ProN","Yu Gothic","BIZ UDGothic",sans-serif;
+    --ease:cubic-bezier(.2,.7,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans);color:var(--ink);background:var(--shiro);
+    line-height:1.9;letter-spacing:.02em;overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--ha);color:var(--shiro);}
+
+  .grain{
+    position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.045;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* 舞う花びら（固定レイヤー・JSで生成） */
+  .petals{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden;}
+  .petal{
+    position:absolute;top:-24px;width:12px;height:9px;border-radius:60% 40% 55% 45%;
+    background:var(--hana);opacity:.5;
+    animation:petal linear infinite;
+  }
+  @keyframes petal{
+    0%{transform:translate(0,-24px) rotate(0deg);}
+    100%{transform:translate(var(--dx,40px),105vh) rotate(var(--rot,320deg));}
+  }
+
+  /* ===== hero ===== */
+  .hero{
+    position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;
+    background:linear-gradient(180deg,var(--shiro) 0%,var(--shiro-deep) 100%);
+  }
+  .hero__wrap{
+    position:relative;z-index:3;width:100%;max-width:1100px;margin:0 auto;
+    padding:0 7vw;display:flex;align-items:center;justify-content:space-between;gap:4vw;
+  }
+  .hero__text{flex:1 1 auto;}
+  .hero__en{
+    font-style:italic;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--ha);font-size:.82rem;margin-bottom:1.6rem;
+  }
+  .hero__title{
+    font-family:var(--serif);font-weight:700;
+    font-size:clamp(2.3rem,6.6vw,4.2rem);line-height:1.4;letter-spacing:.08em;
+  }
+  .hero__title .accent{color:var(--ha);}
+  .hero__lead{margin-top:1.8rem;font-size:.97rem;color:var(--mute);line-height:2.2;max-width:38ch;}
+  .hero__tag{
+    display:inline-block;margin-top:2.2rem;font-size:.74rem;letter-spacing:.26em;
+    padding:.5rem 1.2rem;border:1px solid var(--line);color:var(--mute);
+  }
+  .hero__mascot{flex:0 0 clamp(190px,26vw,300px);}
+  .hero__mascot svg{width:100%;height:auto;display:block;}
+  /* みつばちの飛行 */
+  .bee{animation:beefly 5s ease-in-out infinite;}
+  @keyframes beefly{
+    0%,100%{transform:translate(0,0) rotate(0deg);}
+    25%{transform:translate(-14px,-10px) rotate(-6deg);}
+    55%{transform:translate(10px,-16px) rotate(5deg);}
+    80%{transform:translate(-6px,-4px) rotate(-3deg);}
+  }
+  .wing{transform-origin:50% 100%;animation:wing .18s linear infinite alternate;}
+  @keyframes wing{0%{transform:rotate(-14deg);}100%{transform:rotate(16deg);}}
+  .blink{animation:blink 4.6s infinite;}
+  @keyframes blink{0%,92%,100%{transform:scaleY(1);}95%{transform:scaleY(.08);}}
+  /* 花の揺れ */
+  .sway{transform-origin:50% 100%;animation:sway 4s ease-in-out infinite;}
+  .sway.s2{animation-delay:.8s;}
+  .sway.s3{animation-delay:1.6s;}
+  @keyframes sway{0%,100%{transform:rotate(-2.5deg);}50%{transform:rotate(2.5deg);}}
+  .scrollcue{
+    position:absolute;left:50%;bottom:2.2rem;z-index:3;transform:translateX(-50%);
+    font-style:italic;letter-spacing:.3em;font-size:.7rem;color:var(--mute);text-align:center;
+  }
+  .scrollcue span{display:block;width:1px;height:40px;margin:.7rem auto 0;background:linear-gradient(var(--ha-bright),transparent);animation:cue 2.4s var(--ease) infinite;}
+  @keyframes cue{0%,100%{transform:scaleY(.4);opacity:.4;transform-origin:top;}50%{transform:scaleY(1);opacity:1;}}
+
+  /* ===== sections ===== */
+  .section{max-width:1100px;margin:0 auto;padding:clamp(4.5rem,11vw,8rem) 7vw;position:relative;z-index:3;}
+  .eyebrow{
+    font-style:italic;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--ha);font-size:.8rem;margin-bottom:1rem;
+  }
+  .sec-title{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(1.7rem,4.6vw,2.5rem);line-height:1.5;letter-spacing:.05em;
+  }
+  .sec-lead{margin-top:1.3rem;max-width:46ch;color:var(--mute);font-size:.95rem;line-height:2.1;}
+
+  /* できること */
+  .cards{margin-top:3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.4rem;}
+  .card{
+    position:relative;padding:2rem 1.7rem;background:#fff;
+    border:1px solid var(--line);border-radius:6px;
+    transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease);
+  }
+  .card::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ha);
+    border-radius:6px 0 0 6px;
+    transform:scaleY(0);transform-origin:top;transition:transform .5s var(--ease);
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 22px 44px -26px rgba(51,48,42,.3);border-color:rgba(74,107,79,.45);}
+  .card:hover::before{transform:scaleY(1);}
+  .card__icon{width:44px;height:44px;margin-bottom:1rem;}
+  .card__icon svg{width:100%;height:100%;display:block;stroke:var(--ha);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .card__name{font-family:var(--serif);font-weight:700;font-size:1.15rem;letter-spacing:.06em;}
+  .card__price{margin-top:.35rem;font-style:italic;font-size:1.1rem;color:var(--ha);}
+  .card__price small{font-size:.72rem;color:var(--mute);font-style:normal;margin-left:.3rem;}
+  .card__desc{margin-top:.8rem;font-size:.87rem;color:var(--mute);line-height:2;}
+
+  /* 定期便 */
+  .teiki-bg{background:var(--ha);color:var(--shiro);}
+  .teiki-bg .eyebrow{color:var(--mitsu);}
+  .teiki-bg .sec-lead{color:rgba(251,249,244,.75);}
+  .steps{margin-top:2.8rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.4rem;counter-reset:step;}
+  .step{
+    border:1px solid rgba(251,249,244,.25);border-radius:6px;padding:1.7rem 1.5rem;
+    background:rgba(251,249,244,.05);
+  }
+  .step::before{
+    counter-increment:step;content:"0" counter(step);
+    font-style:italic;font-size:1.7rem;color:var(--mitsu);display:block;line-height:1;
+  }
+  .step h3{font-family:var(--serif);font-size:1.05rem;margin-top:.8rem;letter-spacing:.06em;}
+  .step p{margin-top:.6rem;font-size:.85rem;color:rgba(251,249,244,.75);line-height:2;}
+
+  /* 店主 */
+  .master{display:grid;grid-template-columns:auto 1fr;gap:clamp(1.6rem,5vw,3.4rem);align-items:center;}
+  .master__art{width:clamp(150px,22vw,210px);}
+  .master__art svg{width:100%;height:auto;display:block;}
+  .master__quote{font-family:var(--serif);font-size:clamp(1.1rem,2.9vw,1.45rem);line-height:2.1;letter-spacing:.05em;}
+  .master__name{margin-top:1.2rem;font-size:.84rem;color:var(--mute);letter-spacing:.1em;}
+
+  /* info */
+  .info-bg{background:#fff;border-top:1px solid var(--line);}
+  .info__grid{margin-top:2.4rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2rem;}
+  .info__grid dt{font-family:var(--serif);font-size:.92rem;letter-spacing:.14em;color:var(--ha);margin-bottom:.5rem;}
+  .info__grid dd{font-size:.9rem;line-height:2.05;}
+  .info__note{margin-top:2.6rem;font-size:.8rem;color:var(--mute);line-height:2;}
+
+  .footer{background:#2e3c30;color:var(--shiro);}
+  .footer .section{padding-top:2.6rem;padding-bottom:2.6rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;align-items:baseline;}
+  .footer__brand{font-family:var(--serif);font-size:1.05rem;letter-spacing:.18em;}
+  .footer__copy{font-size:.74rem;color:rgba(251,249,244,.5);letter-spacing:.05em;line-height:1.9;}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity 1s var(--ease),transform 1s var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+  .hero .reveal{transition-delay:var(--d,0s);}
+
+  @media (max-width:760px){
+    .hero__wrap{flex-direction:column-reverse;justify-content:center;gap:2rem;padding-top:14vh;padding-bottom:14vh;}
+    .hero__mascot{flex-basis:auto;width:min(54vw,230px);}
+    .master{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important;}
+    .reveal{opacity:1;transform:none;}
+    .petals{display:none;}
+  }
+</style>
+</head>
+<body>
+<div id="dsl-demobar" style="position:sticky;top:0;z-index:99999;background:#1a1a1a;color:#f2ede4;
+     font:13px/1.5 -apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;
+     padding:9px 14px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;
+     border-bottom:1px solid #3a3a3a;letter-spacing:.02em;">
+  <span style="background:#E8A33D;color:#1a1a1a;font-weight:bold;border-radius:3px;padding:2px 8px;font-size:12px;">
+    サンプル</span>
+  <span>これは <b>まちのウェブ屋さん</b> の制作サンプルです。店名・住所・電話番号はすべて架空のものです。</span>
+  <a href="/web/" style="color:#E8A33D;text-decoration:none;border-bottom:1px solid rgba(232,163,61,.5);">
+    ← 他の業種を見る</a>
+</div>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="petals" aria-hidden="true"></div>
+
+<!-- ===== hero ===== -->
+<header class="hero">
+  <div class="hero__wrap">
+    <div class="hero__text">
+      <p class="hero__en reveal" style="--d:.1s">flowers &amp; greens hachikusa</p>
+      <h1 class="hero__title reveal" style="--d:.25s">今日の食卓に、<br /><span class="accent">一輪</span>の余白を。</h1>
+      <p class="hero__lead reveal" style="--d:.4s">商店街の角の小さな花屋です。豪華な花束より、暮らしにすっとなじむ野の花と枝もの。300円の一輪から、気軽にどうぞ。</p>
+      <span class="hero__tag reveal" style="--d:.55s">一輪 ¥300から・お花の定期便あり</span>
+    </div>
+    <div class="hero__mascot reveal" style="--d:.35s" aria-hidden="true">
+      <!-- 自作マスコット「はっちゃん」：エプロン姿のみつばち店員と揺れる花 -->
+      <svg viewBox="0 0 220 240" role="img" aria-label="花に水をやるみつばちのマスコット">
+        <!-- 揺れる花たち -->
+        <g class="sway">
+          <path d="M52 216 q-2 -34 4 -58" fill="none" stroke="#4a6b4f" stroke-width="3" stroke-linecap="round"/>
+          <g transform="translate(56,152)">
+            <circle r="6" fill="#dfa93f"/>
+            <g fill="#d98ba0">
+              <ellipse cx="0" cy="-11" rx="5" ry="7"/><ellipse cx="10" cy="-4" rx="7" ry="5"/>
+              <ellipse cx="7" cy="9" rx="6" ry="6"/><ellipse cx="-7" cy="9" rx="6" ry="6"/>
+              <ellipse cx="-10" cy="-4" rx="7" ry="5"/>
+            </g>
+            <circle r="5" fill="#dfa93f"/>
+          </g>
+        </g>
+        <g class="sway s2">
+          <path d="M84 216 q2 -40 -2 -66" fill="none" stroke="#4a6b4f" stroke-width="3" stroke-linecap="round"/>
+          <g transform="translate(82,144)">
+            <g fill="#e8e2d0">
+              <ellipse cx="0" cy="-10" rx="4.5" ry="7"/><ellipse cx="9" cy="-3" rx="6.5" ry="4.5"/>
+              <ellipse cx="6" cy="8" rx="5.5" ry="5.5"/><ellipse cx="-6" cy="8" rx="5.5" ry="5.5"/>
+              <ellipse cx="-9" cy="-3" rx="6.5" ry="4.5"/>
+            </g>
+            <circle r="4.5" fill="#dfa93f"/>
+          </g>
+        </g>
+        <g class="sway s3">
+          <path d="M116 216 q-2 -30 2 -50" fill="none" stroke="#4a6b4f" stroke-width="3" stroke-linecap="round"/>
+          <g transform="translate(120,160)">
+            <g fill="#c98ad9" opacity=".85">
+              <ellipse cx="0" cy="-9" rx="4" ry="6"/><ellipse cx="8" cy="-2" rx="6" ry="4"/>
+              <ellipse cx="5" cy="7" rx="5" ry="5"/><ellipse cx="-5" cy="7" rx="5" ry="5"/>
+              <ellipse cx="-8" cy="-2" rx="6" ry="4"/>
+            </g>
+            <circle r="4" fill="#dfa93f"/>
+          </g>
+        </g>
+        <!-- 葉 -->
+        <path d="M62 196 q-12 -4 -14 -14 q12 0 16 10 M96 190 q12 -4 14 -14 q-12 0 -16 10" fill="#7ba06f" opacity=".8"/>
+        <!-- 地面 -->
+        <path d="M34 216 h150" stroke="rgba(51,48,42,.25)" stroke-width="2" stroke-linecap="round"/>
+        <!-- みつばち -->
+        <g class="bee">
+          <!-- 羽 -->
+          <g class="wing" style="transform-origin:158px 84px;">
+            <ellipse cx="150" cy="70" rx="13" ry="18" fill="rgba(123,160,111,.28)" stroke="#4a6b4f" stroke-width="2"/>
+          </g>
+          <g class="wing" style="transform-origin:172px 84px; animation-delay:.09s;">
+            <ellipse cx="180" cy="70" rx="13" ry="18" fill="rgba(123,160,111,.28)" stroke="#4a6b4f" stroke-width="2"/>
+          </g>
+          <!-- 体 -->
+          <ellipse cx="164" cy="98" rx="26" ry="22" fill="#dfa93f" stroke="#33302a" stroke-width="3"/>
+          <path d="M150 82 q-2 22 4 34 M164 78 q0 24 0 42 M178 82 q2 22 -4 34" fill="none" stroke="#33302a" stroke-width="4" stroke-linecap="round" opacity=".85"/>
+          <!-- 顔 -->
+          <circle cx="164" cy="98" r="13" fill="#f5d98a"/>
+          <g class="blink" style="transform-origin:164px 96px;">
+            <circle cx="159" cy="96" r="2.4" fill="#33302a"/>
+            <circle cx="169" cy="96" r="2.4" fill="#33302a"/>
+          </g>
+          <path d="M160 103 q4 3 8 0" fill="none" stroke="#33302a" stroke-width="2" stroke-linecap="round"/>
+          <!-- 触角 -->
+          <path d="M158 86 q-3 -8 -8 -9 M170 86 q3 -8 8 -9" fill="none" stroke="#33302a" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="149" cy="76" r="2.2" fill="#33302a"/>
+          <circle cx="179" cy="76" r="2.2" fill="#33302a"/>
+          <!-- じょうろ -->
+          <g transform="translate(128,108) rotate(-18)">
+            <rect x="0" y="0" width="18" height="13" rx="3" fill="#7ba06f" stroke="#33302a" stroke-width="2.4"/>
+            <path d="M0 4 l-10 -5" stroke="#33302a" stroke-width="2.4" stroke-linecap="round"/>
+            <circle cx="-11" cy="-2" r="3" fill="#7ba06f" stroke="#33302a" stroke-width="2"/>
+          </g>
+          <!-- 水滴 -->
+          <g fill="#8fb7d9">
+            <circle cx="112" cy="122" r="2"><animate attributeName="cy" values="122;136" dur="1.1s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.9;0" dur="1.1s" repeatCount="indefinite"/></circle>
+            <circle cx="106" cy="126" r="1.7"><animate attributeName="cy" values="126;140" dur="1.3s" begin=".4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.9;0" dur="1.3s" begin=".4s" repeatCount="indefinite"/></circle>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="scrollcue">scroll<span></span></div>
+</header>
+
+<main>
+  <!-- ===== できること ===== -->
+  <section class="section">
+    <p class="eyebrow reveal">service</p>
+    <h2 class="sec-title reveal">できること</h2>
+    <p class="sec-lead reveal">「花屋は敷居が高い」をなくしたくて、値段も相談のしかたも、ぜんぶ明るくしています。</p>
+    <div class="cards">
+      <div class="card reveal">
+        <div class="card__icon"><svg viewBox="0 0 44 44"><path d="M22 38 v-16 M22 22 q-10 2 -12 -8 q10 -2 12 8 q2 -10 12 -8 q-2 10 -12 8"/><circle cx="22" cy="12" r="5"/></svg></div>
+        <h3 class="card__name">今日の一輪</h3>
+        <p class="card__price">¥300<small>から</small></p>
+        <p class="card__desc">その日いちばん元気な花を一輪から。新聞紙のラフ包みで、帰り道が少し楽しくなります。</p>
+      </div>
+      <div class="card reveal">
+        <div class="card__icon"><svg viewBox="0 0 44 44"><path d="M12 20 q10 -14 20 0 q-4 16 -10 18 q-6 -2 -10 -18 z M22 16 v-6 M18 12 l4 -4 l4 4"/></svg></div>
+        <h3 class="card__name">おまかせブーケ</h3>
+        <p class="card__price">¥1,500<small>〜¥5,000</small></p>
+        <p class="card__desc">ご予算と渡す相手だけ教えてください。季節の野の花寄せで、その場でお作りします。</p>
+      </div>
+      <div class="card reveal">
+        <div class="card__icon"><svg viewBox="0 0 44 44"><rect x="8" y="14" width="28" height="22" rx="3"/><path d="M8 20 h28 M16 14 v-4 M28 14 v-4"/></svg></div>
+        <h3 class="card__name">お花の定期便</h3>
+        <p class="card__price">月2回 ¥2,200<small>/月</small></p>
+        <p class="card__desc">隔週で店主が選んだ花をお届け。ご近所は自転車で直接、遠方は元気なうちに発送します。</p>
+      </div>
+      <div class="card reveal">
+        <div class="card__icon"><svg viewBox="0 0 44 44"><path d="M10 34 q12 4 24 0 l-2 -20 q-10 -4 -20 0 z M22 14 v20 M14 18 q8 -3 16 0"/></svg></div>
+        <h3 class="card__name">開店祝い・スタンド花</h3>
+        <p class="card__price">¥8,800<small>から</small></p>
+        <p class="card__desc">ご開店・発表会などに。派手すぎない「その店らしい」色合わせを一緒に考えます。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 定期便の流れ ===== -->
+  <section class="teiki-bg">
+    <div class="section">
+      <p class="eyebrow reveal">subscription</p>
+      <h2 class="sec-title reveal">定期便は、こんな流れ</h2>
+      <p class="sec-lead reveal">むずかしい手続きはありません。お休みも一回単位でできます。</p>
+      <div class="steps">
+        <div class="step reveal"><h3>お店かお電話で申込み</h3><p>お好みの色味と、飾る場所（玄関・食卓など）を教えてください。</p></div>
+        <div class="step reveal"><h3>隔週でお届け</h3><p>第2・第4の決まった曜日に。ご不在ならポスト横の日陰に置き配もできます。</p></div>
+        <div class="step reveal"><h3>飾って、また次へ</h3><p>長持ちのコツを書いた小さなカードつき。飽きたらいつでもやめられます。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 店主 ===== -->
+  <section class="section">
+    <p class="eyebrow reveal">owner</p>
+    <div class="master">
+      <div class="master__art reveal" aria-hidden="true">
+        <!-- 店主の線画：花を抱える人 -->
+        <svg viewBox="0 0 200 200">
+          <g fill="none" stroke="#4a6b4f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="100" cy="58" r="26"/>
+            <path d="M78 50 q22 -12 44 0"/>
+            <path d="M92 60 q0 3 0 0 M108 60 q0 3 0 0" stroke-width="4"/>
+            <path d="M94 70 q6 5 12 0"/>
+            <path d="M72 170 q-4 -56 28 -62 q32 6 28 62"/>
+            <path d="M76 120 q24 14 48 0"/>
+          </g>
+          <g fill="#d98ba0" opacity=".85">
+            <circle cx="86" cy="112" r="5"/><circle cx="100" cy="106" r="5"/><circle cx="114" cy="112" r="5"/>
+          </g>
+          <g fill="#dfa93f"><circle cx="93" cy="109" r="3"/><circle cx="107" cy="109" r="3"/></g>
+          <path d="M86 117 q-6 10 -4 18 M114 117 q6 10 4 18" fill="none" stroke="#7ba06f" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="reveal">
+        <p class="master__quote">「立派な花じゃなくていいんです。<br />月曜の朝、コップに挿した一輪が<br />ちゃんと効くのを知っているので。」</p>
+        <p class="master__name">店主・蜂谷 くさ子（はちや くさこ）／市場歴12年を経て2021年開業</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== info ===== -->
+  <section class="info-bg">
+    <div class="section">
+      <p class="eyebrow reveal">information</p>
+      <h2 class="sec-title reveal">店舗のご案内</h2>
+      <dl class="info__grid reveal">
+        <div>
+          <dt>店名</dt>
+          <dd>花と緑の店 ハチクサ</dd>
+        </div>
+        <div>
+          <dt>所在地</dt>
+          <dd>岩手県盛岡市はち町3-1-9<br />はちどおり商店街 角（架空の住所です）</dd>
+        </div>
+        <div>
+          <dt>営業時間</dt>
+          <dd>10:00〜18:30<br />定休日：木曜・市場休みの日</dd>
+        </div>
+        <div>
+          <dt>ご注文</dt>
+          <dd>店頭・お電話にて<br />ブーケのお取り置きもできます</dd>
+        </div>
+      </dl>
+      <p class="info__note">※このページはWeb制作の営業用に作成した架空店舗のデモサイトです。実在の店舗・住所・料金とは関係ありません。</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="section">
+    <p class="footer__brand">花と緑の店 ハチクサ</p>
+    <p class="footer__copy">© 2026 hachikusa（架空デモ）｜まちのウェブ屋さん 制作見本</p>
+  </div>
+</footer>
+
+<script>
+  // reveal
+  const io = new IntersectionObserver((entries)=>{
+    for(const e of entries){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    }
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // 舞う花びらを生成
+  const wrap = document.querySelector('.petals');
+  const colors = ['#d98ba0','#e8b7c4','#c98ad9','#f0d3a0'];
+  for(let i=0;i<14;i++){
+    const p = document.createElement('span');
+    p.className = 'petal';
+    p.style.left = Math.random()*100 + 'vw';
+    p.style.background = colors[i % colors.length];
+    p.style.setProperty('--dx', (Math.random()*120-60) + 'px');
+    p.style.setProperty('--rot', (Math.random()*480+180) + 'deg');
+    p.style.animationDuration = (Math.random()*7+8) + 's';
+    p.style.animationDelay = (Math.random()*10) + 's';
+    p.style.opacity = (Math.random()*.35+.25);
+    const s = Math.random()*.7+.7;
+    p.style.width = 12*s+'px'; p.style.height = 9*s+'px';
+    wrap.appendChild(p);
+  }
+</script>
+</body>
+</html>

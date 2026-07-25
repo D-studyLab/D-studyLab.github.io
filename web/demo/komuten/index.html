@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex,nofollow">
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>木音建築 きのおとけんちく｜盛岡の小さな工務店（架空デモ）</title>
+<meta name="description" content="盛岡の工務店「木音建築」。岩手の木で建てる注文住宅と、暮らしに合わせた小さなリフォーム。大工二人の小さな所帯です。※これは営業用の架空デモサイトです。" />
+<style>
+  :root{
+    --kon:#243447;
+    --kon-deep:#1a2634;
+    --ki:#c89b5e;
+    --ki-bright:#e0b877;
+    --kinari:#f4efe6;
+    --kinari-deep:#e9e1d1;
+    --ink:#2b2a26;
+    --mute:#77705f;
+    --line:rgba(43,42,38,.15);
+    --serif:"Hiragino Mincho ProN","Yu Mincho","BIZ UDMincho",serif;
+    --sans:"Hiragino Kaku Gothic ProN","Yu Gothic","BIZ UDGothic",sans-serif;
+    --ease:cubic-bezier(.2,.7,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans);color:var(--ink);background:var(--kinari);
+    line-height:1.9;letter-spacing:.02em;overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--kon);color:var(--kinari);}
+
+  .grain{
+    position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ===== hero ===== */
+  .hero{
+    position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;
+    background:
+      repeating-linear-gradient(90deg, rgba(200,155,94,.06) 0 2px, transparent 2px 90px),
+      linear-gradient(180deg,var(--kinari) 0%,var(--kinari-deep) 100%);
+  }
+  .hero__wrap{
+    position:relative;z-index:3;width:100%;max-width:1100px;margin:0 auto;
+    padding:0 7vw;display:flex;align-items:center;justify-content:space-between;gap:4vw;
+  }
+  .hero__text{flex:1 1 auto;}
+  .hero__en{
+    font-style:italic;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--kon);font-size:.82rem;margin-bottom:1.6rem;
+  }
+  .hero__title{
+    font-family:var(--serif);font-weight:700;
+    font-size:clamp(2.3rem,6.6vw,4.2rem);line-height:1.4;letter-spacing:.08em;
+  }
+  .hero__title .accent{color:var(--kon);border-bottom:4px solid var(--ki);}
+  .hero__lead{margin-top:1.8rem;font-size:.97rem;color:var(--mute);line-height:2.2;max-width:38ch;}
+  .hero__tag{
+    display:inline-block;margin-top:2.2rem;font-size:.74rem;letter-spacing:.26em;
+    padding:.5rem 1.2rem;border:1px solid var(--line);color:var(--mute);
+  }
+  .hero__mascot{flex:0 0 clamp(190px,26vw,300px);}
+  .hero__mascot svg{width:100%;height:auto;display:block;}
+  /* 金づちを打つ */
+  .hammer{transform-origin:72% 62%;animation:hammer 1.6s ease-in-out infinite;}
+  @keyframes hammer{
+    0%,55%,100%{transform:rotate(0deg);}
+    70%{transform:rotate(-38deg);}
+    78%{transform:rotate(4deg);}
+    84%{transform:rotate(0deg);}
+  }
+  /* 打った瞬間の火花（木くず） */
+  .chips path{opacity:0;animation:chips 1.6s ease-out infinite;}
+  @keyframes chips{
+    0%,76%{opacity:0;transform:translate(0,0);}
+    80%{opacity:.9;}
+    100%{opacity:0;transform:translate(var(--cx,8px),var(--cy,-12px));}
+  }
+  .blink{animation:blink 5s infinite;}
+  @keyframes blink{0%,92%,100%{transform:scaleY(1);}95%{transform:scaleY(.08);}}
+  .tail-pat{transform-origin:20% 90%;animation:tailpat 3.2s ease-in-out infinite;}
+  @keyframes tailpat{0%,100%{transform:rotate(0deg);}50%{transform:rotate(-7deg);}}
+  .scrollcue{
+    position:absolute;left:50%;bottom:2.2rem;z-index:3;transform:translateX(-50%);
+    font-style:italic;letter-spacing:.3em;font-size:.7rem;color:var(--mute);text-align:center;
+  }
+  .scrollcue span{display:block;width:1px;height:40px;margin:.7rem auto 0;background:linear-gradient(var(--kon),transparent);animation:cue 2.4s var(--ease) infinite;}
+  @keyframes cue{0%,100%{transform:scaleY(.4);opacity:.4;transform-origin:top;}50%{transform:scaleY(1);opacity:1;}}
+
+  /* ===== sections ===== */
+  .section{max-width:1100px;margin:0 auto;padding:clamp(4.5rem,11vw,8rem) 7vw;}
+  .eyebrow{
+    font-style:italic;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--ki);font-size:.8rem;margin-bottom:1rem;
+  }
+  .sec-title{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(1.7rem,4.6vw,2.5rem);line-height:1.5;letter-spacing:.05em;
+  }
+  .sec-lead{margin-top:1.3rem;max-width:46ch;color:var(--mute);font-size:.95rem;line-height:2.1;}
+
+  /* しごと */
+  .works{margin-top:3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.4rem;}
+  .work{
+    position:relative;padding:2rem 1.7rem;background:#fff;
+    border:1px solid var(--line);border-radius:4px;
+    transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease);
+  }
+  .work::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ki);
+    transform:scaleY(0);transform-origin:top;transition:transform .5s var(--ease);
+  }
+  .work:hover{transform:translateY(-4px);box-shadow:0 22px 44px -26px rgba(36,52,71,.35);border-color:rgba(200,155,94,.5);}
+  .work:hover::before{transform:scaleY(1);}
+  .work__name{font-family:var(--serif);font-weight:700;font-size:1.2rem;letter-spacing:.06em;}
+  .work__range{margin-top:.4rem;font-style:italic;font-size:1.05rem;color:var(--kon);}
+  .work__range small{font-size:.72rem;color:var(--mute);font-style:normal;margin-left:.3rem;}
+  .work__desc{margin-top:.9rem;font-size:.87rem;color:var(--mute);line-height:2;}
+
+  /* 施工の流れ */
+  .flow-bg{background:var(--kon);color:var(--kinari);}
+  .flow-bg .eyebrow{color:var(--ki-bright);}
+  .flow-bg .sec-lead{color:rgba(244,239,230,.72);}
+  .flow{margin-top:3rem;position:relative;display:flex;flex-direction:column;gap:0;}
+  .fl{
+    position:relative;display:grid;grid-template-columns:56px 1fr;gap:1.4rem;
+    padding:1.5rem 0;
+  }
+  .fl::before{
+    content:"";position:absolute;left:27px;top:0;bottom:0;width:2px;
+    background:rgba(244,239,230,.18);
+  }
+  .fl:first-child::before{top:50%;}
+  .fl:last-child::before{bottom:50%;}
+  .fl__no{
+    position:relative;z-index:1;width:56px;height:56px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--kon-deep);border:2px solid var(--ki);
+    font-style:italic;font-size:1.15rem;color:var(--ki-bright);
+  }
+  .fl__body h3{font-family:var(--serif);font-size:1.1rem;letter-spacing:.08em;}
+  .fl__body p{margin-top:.4rem;font-size:.88rem;color:rgba(244,239,230,.72);line-height:2;}
+
+  /* 実例 */
+  .cases{margin-top:3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.4rem;}
+  .case{background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden;}
+  .case__art{background:var(--kinari-deep);padding:1.4rem;}
+  .case__art svg{width:100%;height:auto;display:block;}
+  .case__body{padding:1.4rem 1.6rem 1.7rem;}
+  .case__name{font-family:var(--serif);font-weight:700;font-size:1.05rem;letter-spacing:.05em;}
+  .case__desc{margin-top:.6rem;font-size:.85rem;color:var(--mute);line-height:2;}
+  .case__meta{margin-top:.8rem;font-size:.74rem;color:var(--mute);letter-spacing:.08em;}
+  .case svg .ln{fill:none;stroke:var(--kon);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .case svg .wd{fill:none;stroke:var(--ki);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+  /* info */
+  .info-bg{background:#fff;border-top:1px solid var(--line);}
+  .info__grid{margin-top:2.4rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2rem;}
+  .info__grid dt{font-family:var(--serif);font-size:.92rem;letter-spacing:.14em;color:var(--kon);margin-bottom:.5rem;}
+  .info__grid dd{font-size:.9rem;line-height:2.05;}
+  .info__note{margin-top:2.6rem;font-size:.8rem;color:var(--mute);line-height:2;}
+
+  .footer{background:var(--kon-deep);color:var(--kinari);}
+  .footer .section{padding-top:2.6rem;padding-bottom:2.6rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;align-items:baseline;}
+  .footer__brand{font-family:var(--serif);font-size:1.05rem;letter-spacing:.18em;}
+  .footer__copy{font-size:.74rem;color:rgba(244,239,230,.45);letter-spacing:.05em;line-height:1.9;}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity 1s var(--ease),transform 1s var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+  .hero .reveal{transition-delay:var(--d,0s);}
+
+  @media (max-width:760px){
+    .hero__wrap{flex-direction:column-reverse;justify-content:center;gap:2rem;padding-top:14vh;padding-bottom:14vh;}
+    .hero__mascot{flex-basis:auto;width:min(54vw,230px);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important;}
+    .reveal{opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+<div id="dsl-demobar" style="position:sticky;top:0;z-index:99999;background:#1a1a1a;color:#f2ede4;
+     font:13px/1.5 -apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;
+     padding:9px 14px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;
+     border-bottom:1px solid #3a3a3a;letter-spacing:.02em;">
+  <span style="background:#E8A33D;color:#1a1a1a;font-weight:bold;border-radius:3px;padding:2px 8px;font-size:12px;">
+    サンプル</span>
+  <span>これは <b>まちのウェブ屋さん</b> の制作サンプルです。店名・住所・電話番号はすべて架空のものです。</span>
+  <a href="/web/" style="color:#E8A33D;text-decoration:none;border-bottom:1px solid rgba(232,163,61,.5);">
+    ← 他の業種を見る</a>
+</div>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ===== hero ===== -->
+<header class="hero">
+  <div class="hero__wrap">
+    <div class="hero__text">
+      <p class="hero__en reveal" style="--d:.1s">kinooto architects</p>
+      <h1 class="hero__title reveal" style="--d:.25s">木の音がする家を、<br /><span class="accent">手刻み</span>で。</h1>
+      <p class="hero__lead reveal" style="--d:.4s">大工二人の小さな工務店です。岩手の杉と栗の木を、プレカットに頼らず手で刻む。建てたあとも、敷居の直しひとつから伺います。</p>
+      <span class="hero__tag reveal" style="--d:.55s">新築・リフォーム・建具の修理まで</span>
+    </div>
+    <div class="hero__mascot reveal" style="--d:.35s" aria-hidden="true">
+      <!-- 自作マスコット「きのすけ」：金づちを打つビーバー大工 -->
+      <svg viewBox="0 0 230 230" role="img" aria-label="金づちで釘を打つビーバーのマスコット">
+        <!-- しっぽ（うろこ模様） -->
+        <g class="tail-pat">
+          <ellipse cx="52" cy="186" rx="30" ry="16" fill="#8a6842" stroke="#2b2a26" stroke-width="3"/>
+          <path d="M34 180 l10 8 l10 -8 l10 8 l10 -8" fill="none" stroke="#2b2a26" stroke-width="2" opacity=".6"/>
+        </g>
+        <!-- 体 -->
+        <ellipse cx="105" cy="150" rx="50" ry="54" fill="#a9805a" stroke="#2b2a26" stroke-width="3"/>
+        <!-- おなか -->
+        <ellipse cx="105" cy="164" rx="28" ry="30" fill="#d9bd94"/>
+        <!-- 耳 -->
+        <circle cx="72" cy="102" r="9" fill="#a9805a" stroke="#2b2a26" stroke-width="3"/>
+        <circle cx="138" cy="102" r="9" fill="#a9805a" stroke="#2b2a26" stroke-width="3"/>
+        <!-- ヘルメット -->
+        <path d="M66 104 q4 -32 39 -32 q35 0 39 32 z" fill="#e0b877" stroke="#2b2a26" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M60 104 h90" stroke="#2b2a26" stroke-width="3" stroke-linecap="round"/>
+        <path d="M105 72 v10" stroke="#2b2a26" stroke-width="3" stroke-linecap="round"/>
+        <!-- 目 -->
+        <g class="blink" style="transform-origin:105px 118px;">
+          <circle cx="88" cy="118" r="4.2" fill="#2b2a26"/>
+          <circle cx="122" cy="118" r="4.2" fill="#2b2a26"/>
+        </g>
+        <!-- 鼻と前歯 -->
+        <ellipse cx="105" cy="130" rx="7" ry="5" fill="#2b2a26"/>
+        <rect x="99" y="136" width="12" height="12" rx="2" fill="#fff" stroke="#2b2a26" stroke-width="2.5"/>
+        <path d="M105 136 v12" stroke="#2b2a26" stroke-width="2"/>
+        <!-- ほっぺ -->
+        <circle cx="76" cy="130" r="6" fill="#c8452c" opacity=".35"/>
+        <circle cx="134" cy="130" r="6" fill="#c8452c" opacity=".35"/>
+        <!-- 左腕＝板を押さえる -->
+        <path d="M66 150 q-14 12 -6 24" fill="none" stroke="#2b2a26" stroke-width="3" stroke-linecap="round"/>
+        <!-- 作業台と板 -->
+        <rect x="128" y="176" width="84" height="12" rx="2" fill="#c89b5e" stroke="#2b2a26" stroke-width="3"/>
+        <path d="M136 200 v-12 M204 200 v-12" stroke="#2b2a26" stroke-width="3" stroke-linecap="round"/>
+        <!-- 釘 -->
+        <path d="M172 176 v-10" stroke="#5a5a5a" stroke-width="3" stroke-linecap="round"/>
+        <path d="M167 166 h10" stroke="#5a5a5a" stroke-width="3" stroke-linecap="round"/>
+        <!-- 右腕＋金づち -->
+        <g class="hammer">
+          <path d="M140 148 q16 2 24 12" fill="none" stroke="#2b2a26" stroke-width="3" stroke-linecap="round"/>
+          <g transform="translate(164,158) rotate(24)">
+            <rect x="0" y="0" width="5" height="26" rx="2" fill="#c89b5e" stroke="#2b2a26" stroke-width="2"/>
+            <rect x="-8" y="-10" width="21" height="11" rx="2" fill="#5a5a5a" stroke="#2b2a26" stroke-width="2"/>
+          </g>
+        </g>
+        <!-- 木くず -->
+        <g class="chips" stroke="#c89b5e" stroke-width="2.5" stroke-linecap="round" fill="none">
+          <path d="M172 162 l0 -4" style="--cx:10px;--cy:-14px;"/>
+          <path d="M176 162 l3 -3" style="--cx:16px;--cy:-8px;" />
+          <path d="M168 162 l-3 -3" style="--cx:-12px;--cy:-12px;"/>
+        </g>
+        <!-- あし -->
+        <ellipse cx="88" cy="204" rx="13" ry="7" fill="#8a6842" stroke="#2b2a26" stroke-width="3"/>
+        <ellipse cx="122" cy="204" rx="13" ry="7" fill="#8a6842" stroke="#2b2a26" stroke-width="3"/>
+      </svg>
+    </div>
+  </div>
+  <div class="scrollcue">scroll<span></span></div>
+</header>
+
+<main>
+  <!-- ===== しごと ===== -->
+  <section class="section">
+    <p class="eyebrow reveal">works</p>
+    <h2 class="sec-title reveal">承っているしごと</h2>
+    <p class="sec-lead reveal">「これくらいで頼んでいいのかな」という小さな工事ほど、うちの得意分野です。</p>
+    <div class="works">
+      <div class="work reveal">
+        <h3 class="work__name">注文住宅（新築）</h3>
+        <p class="work__range">1,800万円<small>〜・木造平屋/二階建て</small></p>
+        <p class="work__desc">岩手県産材を手刻みで。年間2棟まで。設計士とご一緒の案件も歓迎です。</p>
+      </div>
+      <div class="work reveal">
+        <h3 class="work__name">水まわり・間取りリフォーム</h3>
+        <p class="work__range">30万円<small>〜・工期2日〜</small></p>
+        <p class="work__desc">キッチン・風呂・トイレの入れ替えから、壁を抜いてひと間にする工事まで。</p>
+      </div>
+      <div class="work reveal">
+        <h3 class="work__name">建具・敷居のなおし</h3>
+        <p class="work__range">8,000円<small>〜・即日対応あり</small></p>
+        <p class="work__desc">重い引き戸、閉まらない障子、鳴る床。半日仕事こそ喜んで伺います。</p>
+      </div>
+      <div class="work reveal">
+        <h3 class="work__name">耐震・断熱の相談</h3>
+        <p class="work__range">診断無料<small>・市の補助金対応</small></p>
+        <p class="work__desc">古い家の「どこまでやるか」を予算から逆算してご提案。診断だけでも構いません。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 流れ ===== -->
+  <section class="flow-bg">
+    <div class="section">
+      <p class="eyebrow reveal">flow</p>
+      <h2 class="sec-title reveal">ご相談から引き渡しまで</h2>
+      <p class="sec-lead reveal">見積もりまでは無料です。相見積もりも、どうぞ遠慮なく。</p>
+      <div class="flow">
+        <div class="fl reveal">
+          <div class="fl__no">01</div>
+          <div class="fl__body"><h3>ご相談・現地拝見</h3><p>お住まいを見せていただき、困りごとを伺います。この時点で費用はかかりません。</p></div>
+        </div>
+        <div class="fl reveal">
+          <div class="fl__no">02</div>
+          <div class="fl__body"><h3>お見積もり</h3><p>材料と手間を分けた明細でお出しします。「ここは削れる」も正直にお伝えします。</p></div>
+        </div>
+        <div class="fl reveal">
+          <div class="fl__no">03</div>
+          <div class="fl__body"><h3>施工</h3><p>工程表をお渡しして着工。職人が毎日、その日の進みを一言メモで残します。</p></div>
+        </div>
+        <div class="fl reveal">
+          <div class="fl__no">04</div>
+          <div class="fl__body"><h3>引き渡し・その後</h3><p>一年後に無料点検。以降も敷居一本から呼んでください。それが工務店の仕事です。</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 実例 ===== -->
+  <section class="section">
+    <p class="eyebrow reveal">case</p>
+    <h2 class="sec-title reveal">最近の実例</h2>
+    <div class="cases">
+      <div class="case reveal">
+        <div class="case__art" aria-hidden="true">
+          <svg viewBox="0 0 220 120">
+            <path class="ln" d="M30 100 h160 M40 100 v-40 l70 -35 l70 35 v40"/>
+            <path class="wd" d="M84 100 v-30 h32 v30 M140 78 h24 v14 h-24 z"/>
+            <path class="ln" d="M110 25 v-12 h10 v8" opacity=".7"/>
+          </svg>
+        </div>
+        <div class="case__body">
+          <h3 class="case__name">薪ストーブのある平屋</h3>
+          <p class="case__desc">ご夫婦ふたりの終の住処。杉の床は無塗装で、年々あめ色になっていきます。</p>
+          <p class="case__meta">盛岡市郊外｜新築・延床26坪｜工期6ヶ月</p>
+        </div>
+      </div>
+      <div class="case reveal">
+        <div class="case__art" aria-hidden="true">
+          <svg viewBox="0 0 220 120">
+            <path class="ln" d="M30 100 h160 M46 100 v-64 h128 v64"/>
+            <path class="wd" d="M64 100 v-40 h44 v40 M126 60 h32 v20 h-32 z"/>
+            <path class="ln" d="M64 60 h44" opacity=".6"/>
+          </svg>
+        </div>
+        <div class="case__body">
+          <h3 class="case__name">台所と居間をひと間に</h3>
+          <p class="case__desc">壁を一枚抜いて梁を見せ、家族の顔が見える台所へ。工事中も住みながらでした。</p>
+          <p class="case__meta">盛岡市内｜リフォーム｜工期12日</p>
+        </div>
+      </div>
+      <div class="case reveal">
+        <div class="case__art" aria-hidden="true">
+          <svg viewBox="0 0 220 120">
+            <path class="ln" d="M50 104 h120 M60 104 v-70 h100 v70"/>
+            <path class="wd" d="M80 104 v-52 h28 v52 M124 52 h24 v24 h-24 z M124 88 h24" />
+          </svg>
+        </div>
+        <div class="case__body">
+          <h3 class="case__name">築60年の建具再生</h3>
+          <p class="case__desc">祖父母の代の欄間と障子を削り直し。新品より安く、思い出はそのままに。</p>
+          <p class="case__meta">滝沢市｜建具修理8本｜工期3日</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== info ===== -->
+  <section class="info-bg">
+    <div class="section">
+      <p class="eyebrow reveal">company</p>
+      <h2 class="sec-title reveal">会社案内</h2>
+      <dl class="info__grid reveal">
+        <div>
+          <dt>屋号</dt>
+          <dd>木音建築（きのおとけんちく）</dd>
+        </div>
+        <div>
+          <dt>所在地</dt>
+          <dd>岩手県盛岡市きのおと町4-2-6<br />（架空の住所です）</dd>
+        </div>
+        <div>
+          <dt>営業時間</dt>
+          <dd>8:00〜18:00<br />日曜・祝日休み（急ぎの雨漏り等は応相談）</dd>
+        </div>
+        <div>
+          <dt>体制</dt>
+          <dd>棟梁1名・大工1名<br />建設業許可（架空）・賠償保険加入</dd>
+        </div>
+      </dl>
+      <p class="info__note">※このページはWeb制作の営業用に作成した架空事業者のデモサイトです。実在の会社・住所・価格とは関係ありません。</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="section">
+    <p class="footer__brand">木音建築</p>
+    <p class="footer__copy">© 2026 kinooto architects（架空デモ）｜まちのウェブ屋さん 制作見本</p>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    for(const e of entries){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    }
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
