@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>ガチャの確率を正しく計算する——「排出率1%だから100連で出る」が間違っている理由｜D-studyLab ブログ</title>
+<meta name="description" content="ガチャの確率の計算方法を、10万人ぶんのシミュレーション実測データで解説します。排出率1%で100連しても出ない人は36.6%。平均・中央値・天井の意味を、実際の数字と金額で確認できます。">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="ガチャの確率を正しく計算する——「排出率1%だから100連で出る」が間違っている理由">
+<meta property="og:description" content="排出率1%で100連しても出ない人は36.6%。平均と中央値の違い、天井の意味を10万人の実測データで解説。計算式つき。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/gacha-probability.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">🎰 確率と数字</div>
+  <h1>ガチャの確率を正しく計算する——「排出率1%だから100連で出る」が間違っている理由</h1>
+  <div class="date">2026年7月26日</div>
+
+  <p>「排出率1%だから、100連引けば出るでしょ」</p>
+
+  <p>この考え方は間違っています。<b>排出率1%のガチャを100連引いて出る確率は 63.4%</b>。つまり<b>3人に1人以上は、100連しても出ません。</b></p>
+
+  <p>この記事では、ガチャの確率の正しい計算方法を書きます。式だけでは実感が湧かないので、<b>10万人ぶんを実際にシミュレーションした数字</b>と、300円/連で計算した金額も一緒に示します。</p>
+
+  <a class="cta" href="/gacha-sim/">🎰 1万人ガチャシミュレータで試す（排出率・天井を変えて即計算）</a>
+
+  <h2>計算式はこれだけ</h2>
+
+  <p>排出率 p のガチャを n 回引いて、<b>1回以上出る確率</b>は次の式で出ます。</p>
+
+  <p style="text-align:center;font-size:19px;margin:22px 0"><code>1 − (1 − p)<sup>n</sup></code></p>
+
+  <p>考え方は単純です。<code>(1 − p)</code> は1回引いて<b>外れる</b>確率。それを n 回続けて全部外す確率が <code>(1 − p)<sup>n</sup></code>。<b>1回でも当たる確率は、その裏返し</b>なので 1 から引きます。</p>
+
+  <p>排出率1%（p = 0.01）で計算するとこうなります。</p>
+
+  <table>
+    <tr><th>引いた回数</th><th>1回以上出る確率</th><th>300円/連での金額</th></tr>
+    <tr><td>10連</td><td>9.6%</td><td>3,000円</td></tr>
+    <tr><td>50連</td><td>39.5%</td><td>15,000円</td></tr>
+    <tr><td><b>100連</b></td><td><b>63.4%</b></td><td>30,000円</td></tr>
+    <tr><td>200連</td><td>86.6%</td><td>60,000円</td></tr>
+    <tr><td>300連</td><td>95.1%</td><td>90,000円</td></tr>
+    <tr><td>459連</td><td>99.0%</td><td>137,700円</td></tr>
+  </table>
+
+  <p>覚えておくと便利な区切りが3つあります。排出率1%の場合、</p>
+
+  <ul>
+    <li><b>69連</b>で、ようやく半分（50%）の人に出る</li>
+    <li><b>230連</b>で、10人中9人（90%）に出る</li>
+    <li><b>459連</b>で、100人中99人（99%）に出る。ここまで来ても<b>100人に1人は出ていない</b></li>
+  </ul>
+
+  <p>「確率は何回引いても100%にはならない」というのは、こういうことです。459連（13.7万円）引いても、1%の人は手ぶらで終わります。</p>
+
+  <h2>「平均100連」の平均は、あなたの体験ではない</h2>
+
+  <p>排出率1%のガチャは「平均100連で出る」と言われます。これは正しい数字です。実際に10万人ぶん回してみると、平均は<b>99.9連</b>でした。</p>
+
+  <p>ただし、この「平均」を自分の目安にしてはいけません。同じ10万人の結果を、別の角度から見るとこうなります。</p>
+
+  <table>
+    <tr><th>指標</th><th>実測値</th><th>300円/連</th></tr>
+    <tr><td>運のいい上位10%</td><td>11連</td><td>3,300円</td></tr>
+    <tr><td><b>中央値（ちょうど真ん中の人）</b></td><td><b>69連</b></td><td>20,700円</td></tr>
+    <tr><td>平均</td><td>99.9連</td><td>29,970円</td></tr>
+    <tr><td>不運な下位10%</td><td>229連</td><td>68,700円</td></tr>
+    <tr><td>悲劇の1%</td><td>456連</td><td>136,800円</td></tr>
+    <tr><td>10万人中いちばん不運だった人</td><td><b>1,145連</b></td><td>343,500円</td></tr>
+  </table>
+
+  <p>注目してほしいのは、<b>平均（99.9連）と中央値（69連）が30連もずれている</b>ことです。</p>
+
+  <p>実際に数えたところ、<b>10万人のうち 63.4% は、平均より前に出ていました。</b>つまり<b>「平均以下で出る人」のほうが多数派</b>です。</p>
+
+  <p>ではなぜ平均が100連まで押し上がるのか。<b>ごく一部の、極端に出ない人が引き上げている</b>からです。1,145連まで出なかった人が1人いるだけで、平均はじわりと上がります。</p>
+
+  <blockquote>平均は「みんなの体験の代表」ではなく、<b>少数の悲劇を全員で割り算した数字</b>です。</blockquote>
+
+  <p>これは所得の話とまったく同じ構造です。平均年収より中央値のほうが低いのと、理由は同じです。<b>極端な値が片側にあると、平均はそちらへ引っ張られる。</b></p>
+
+  <p>だから、自分の予算を考えるときに見るべきは平均ではありません。<b>中央値（69連＝2万円）で「半分の人はここまで」、下位10%（229連＝6.9万円）で「10人に1人はここまで来る」</b>と考えるほうが実態に合っています。</p>
+
+  <a class="cta" href="/gacha-sim/">🎰 排出率を変えて、10万人の分布を実際に見る</a>
+
+  <h2>「爆死した」は、運が悪いのではない</h2>
+
+  <p>実測から、こういう数字が出ました。排出率1%・天井なしの場合です。</p>
+
+  <ul>
+    <li><b>200連引いても出ない人：13.3%</b>（8人に1人以上）</li>
+    <li><b>300連引いても出ない人：4.9%</b>（20人に1人）</li>
+  </ul>
+
+  <p>200連は6万円です。<b>これが8人に1人の頻度で起きます。</b></p>
+
+  <p>ここが大事なところです。この人たちは特別に運が悪いわけではありません。<b>確率的に必ず一定数発生する、想定内の人たち</b>です。1万人が引けば、1,330人はこうなります。</p>
+
+  <p>「自分は引きが悪い」と感じている人の多くは、実際には引きが悪いのではなく、<b>この13%に入っただけ</b>です。そして次に引くときの確率は、それまで何連外したかとは<b>一切関係なく</b>、また1%に戻ります。ガチャは前回の結果を覚えていません。</p>
+
+  <h2>天井が何をしているのか、数字で見る</h2>
+
+  <p>同じ排出率1%に、<b>200連の天井（保証）</b>を付けるとどうなるか。10万人で比較しました。</p>
+
+  <table>
+    <tr><th></th><th>天井なし</th><th>天井200連あり</th></tr>
+    <tr><td>平均</td><td>99.9連</td><td><b>86.4連</b></td></tr>
+    <tr><td>中央値</td><td>69連</td><td>69連（変わらず）</td></tr>
+    <tr><td>悲劇の1%</td><td>456連</td><td><b>200連</b></td></tr>
+    <tr><td>最悪の人</td><td>1,145連</td><td><b>200連</b></td></tr>
+  </table>
+
+  <p>見てのとおり、<b>中央値はまったく変わりません。</b>半分の人にとって、天井は存在しないのと同じです（69連で出るので、200連には届かない）。</p>
+
+  <p>天井が効いているのは<b>右端だけ</b>です。456連や1,145連といった悲劇を、200連で強制的に打ち切る。実測では<b>13.5%の人が天井に到達</b>しました。</p>
+
+  <p>言い換えると、<b>天井とは「運が悪い人の被害額に上限を設ける保険」</b>です。平均が下がるのはその副産物にすぎません。</p>
+
+  <p>だから、ガチャを引く前に見るべき数字は排出率だけではありません。<b>天井の有無と、その連数</b>です。天井200連・300円/連なら、<b>最悪でも6万円で必ず手に入る</b>と分かる。この「最悪いくら」が事前に分かるかどうかが、天井の本質的な価値です。</p>
+
+  <h2>排出率が3%になると、どう変わるか</h2>
+
+  <p>参考までに、排出率3%で同じことをやりました。</p>
+
+  <table>
+    <tr><th>指標</th><th>1%</th><th>3%</th></tr>
+    <tr><td>平均</td><td>99.9連</td><td>33.5連</td></tr>
+    <tr><td>中央値</td><td>69連</td><td>23連</td></tr>
+    <tr><td>不運な下位10%</td><td>229連</td><td>77連</td></tr>
+    <tr><td>悲劇の1%</td><td>456連</td><td>153連</td></tr>
+  </table>
+
+  <p>排出率が3倍になると、必要な連数はおおむね3分の1になります。<b>平均も中央値も悲劇も、ほぼ同じ比率で縮む</b>のが分かります。</p>
+
+  <h2>自分のガチャで計算するには</h2>
+
+  <p>電卓でも計算できます。排出率1.5%で150連なら、<code>1 − 0.985<sup>150</sup></code> です。</p>
+
+  <p>ただ、指数計算を毎回やるのは面倒ですし、平均・中央値・下位10%といった<b>分布</b>までは式では見えません。そこで、排出率・天井・単価を入力すると<b>1万人が同時に引いた結果</b>を出すものを作りました。</p>
+
+  <p>スライダーを動かすとその場で再計算されます。<b>天井を0（なし）にすると、右側の裾がどこまで伸びるか</b>が目で見えるので、天井のありがたみが一番よく分かります。計算はすべてブラウザの中で行われ、どこにも送信されません。</p>
+
+  <a class="cta" href="/gacha-sim/">🎰 1万人ガチャシミュレータを開く（登録不要・ブラウザで完結）</a>
+
+  <h2>この記事の要点</h2>
+
+  <ul>
+    <li>n連で1回以上出る確率は <code>1 − (1 − p)<sup>n</sup></code>。<b>排出率1%・100連で 63.4%</b></li>
+    <li><b>平均（99.9連）は多数派の体験ではない。</b>63.4%の人は平均より前に出ている。目安にすべきは<b>中央値69連</b></li>
+    <li><b>200連で出ない人は13.3%。</b>これは不運ではなく、必ず一定数発生する想定内</li>
+    <li><b>天井は中央値を変えない。</b>右端の悲劇（456連・1,145連）を切り落とす保険</li>
+    <li>過去に何連外したかは、次の1連の確率に<b>影響しない</b></li>
+  </ul>
+
+  <p style="font-size:13.5px;color:var(--sub)">
+  ※数値は、公開しているシミュレーターと同じロジック（毎回独立に判定し、天井に達したら確定）を10万人ぶん試行した実測値です。
+  乱数の種を固定して再現可能な形で計算しています。実在のゲームの確率仕様とは無関係の一般的なモデルです。
+  金額は1連300円として計算しました。ガチャはエンタメです。課金は計画的に。</p>
+
+  <div class="related">
+    <div class="rt">関連するもの</div>
+    <a href="/blog/monty-hall.html">🚪 モンティホール問題がどうしても納得できない人へ</a>——確率の直感がずれるもう一つの例<br>
+    <a href="/games/">🕹️ ミニゲーム一覧</a>　<a href="/blog/">📝 ブログ一覧</a>
+  </div>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
