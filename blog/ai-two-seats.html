@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>AIを2台同時に走らせるとき、いちばん大事なのは「数字を疑う係」だった｜D-studyLab ブログ</title>
+<meta name="description" content="AIに指示を出すAIと、実際に手を動かすAI。2台で作業を分けたときに何が起きたか。特に、片方が出した数字をもう片方が検証する仕組みが効きました。実際の運用記録。">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="AIを2台同時に走らせるとき、いちばん大事なのは「数字を疑う係」だった">
+<meta property="og:description" content="指示を出す側と手を動かす側でAIを分けた運用記録。片方の出した数字をもう片方が再計測する仕組みが、いちばん効きました。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/ai-two-seats.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">🛠️ 開発環境</div>
+  <h1>AIを2台同時に走らせるとき、いちばん大事なのは「数字を疑う係」だった</h1>
+  <div class="date">2026年7月25日</div>
+
+  <p>AIコーディング環境を2つ同時に立ち上げて、片方に計画を立てさせ、もう片方に作業させる。そういう使い方を試しています。</p>
+
+  <p>やってみると、速くなるのは当然として、それより大きな効果がありました。<b>片方が出した数字を、もう片方が疑える</b>ようになったことです。</p>
+
+  <h2>役割を分けた</h2>
+
+  <p>2台の役割はこう分けました。</p>
+
+  <table>
+    <tr><th></th><th>担当</th></tr>
+    <tr><td><b>指示を出す側</b></td><td>何をやるか決める・指示書を書く・出てきたものを検証する</td></tr>
+    <tr><td><b>手を動かす側</b></td><td>指示書どおりに作る・結果をファイルに書いて報告する</td></tr>
+  </table>
+
+  <p>大事なのは、指示を口頭ではなく<b>ファイルに書く</b>ことでした。「これをやって」とその場で伝えると、条件や禁止事項が抜けます。指示書としてファイルに残せば、作業する側は途中で何度でも読み返せますし、あとから「そんな指示は無かった」という食い違いも起きません。</p>
+
+  <p>結果も同じで、決まった名前のファイルに書かせます。何をどう作ったか、数値の根拠は何か、禁止事項を守ったか。これが揃っていると、検証する側の仕事がはっきりします。</p>
+
+  <h2>数字が出てきたら、必ず自分で測り直す</h2>
+
+  <p>いちばん効いたのがこれでした。</p>
+
+  <p>あるとき、作業側が書いた文章に<b>「〜が3割あった」「21,860通りを調べた」</b>という具体的な数字が入ってきました。文章としては説得力があります。ですが、これが本当に計測した値なのか、それっぽく書かれた数字なのかは、読んだだけでは区別がつきません。</p>
+
+  <p>そこで指示側が、<b>同じ計測を自分で走らせました。</b></p>
+
+  <p>結果、計測に使ったプログラムは実在し、対象のコードを実際に読み込んで総当たりで数えていることが確認できました。数字は本物でした。</p>
+
+  <p>ただし、自分で走らせた値は作業側の報告とかなりズレました。そこで一度「数字が合わない」と指摘したのですが、これは<b>こちらの誤り</b>でした。作業側は10倍以上のサンプルで測っていて、こちらの検証はサンプルが小さすぎたんです。指摘は撤回しました。</p>
+
+  <p>この一往復に意味がありました。おかげで<b>計測条件（サンプル数・設定値）が記録として残り、検証用のプログラムも成果物に同梱されました</b>。あとから誰でも再現できます。最初から疑わなければ、数字だけが独り歩きしていました。</p>
+
+  <h2>事実の表記も、もう一方の目で止められる</h2>
+
+  <p>数字以外でも、検証する側がいることで止められたものがありました。</p>
+
+  <p>作業側が書いた文章に、経歴について<b>まだ確定していないことを確定したように書いた表現</b>が入っていたんです。悪意ではなく、以前の文章にあった書き方をそのまま引き継いだ結果でした。</p>
+
+  <p>これは公開してから気づくと厄介です。指示側が事実関係を確認し、現時点で確実に言えることだけを書く表現に差し替えました。</p>
+
+  <p><b>書いた本人は、自分の文章の前提を疑いにくい。</b>人間同士でも同じですが、AIでも変わりませんでした。</p>
+
+  <h2>使う道具がぶつからないようにする</h2>
+
+  <p>実務的な注意点として、<b>2台が同じ道具を同時に使わないようにする</b>必要がありました。</p>
+
+  <p>特にブラウザです。片方がページを開いて操作している最中に、もう片方が別のページへ移動させると、両方の作業が壊れます。実際に一度これで詰まりました。</p>
+
+  <p>対策は単純で、<b>ブラウザは指示側が独占する</b>と決めました。作業側がスクリーンショットを必要とするときは、指示側が撮ってファイルとして渡します。判断を挟むより、使う人を固定するほうが確実でした。</p>
+
+  <h2>まとめると</h2>
+
+  <p>2台で作業を分けるときに効いたのは、速度より<b>チェックが構造として入ること</b>でした。</p>
+
+  <ul>
+    <li>指示はファイルに書く（口頭だと条件が抜ける）</li>
+    <li>結果もファイルに書かせる（検証しやすくなる）</li>
+    <li><b>出てきた数字は必ず自分で測り直す</b>（いちばん重要）</li>
+    <li>事実の表記は書いた本人以外が確認する</li>
+    <li>同時に使えない道具は、使う側を先に決めておく</li>
+  </ul>
+
+  <p>1台で作業していたときは、出てきたものをそのまま信じるか、全部自分で読み直すかの二択でした。2台にすると、その間に<b>「疑う工程」</b>を挟めます。速さより、こちらのほうが価値がありました。</p>
+
+  <div class="related">
+    <div class="rtitle">このお店で遊べる作品</div>
+    <a href="/games/">🕹️ ミニゲーム一覧</a>
+    <a href="/blog/">📝 ブログ一覧</a>
+  </div>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
