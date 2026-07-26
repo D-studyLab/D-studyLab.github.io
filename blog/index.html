@@ -66,6 +66,15 @@
   .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
   .foot a { color:var(--acc); }
   @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  .noteout { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+             padding:16px 18px; margin:34px 0 0; }
+  .noteout .nt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .noteout a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+               border-bottom:1px dashed var(--line); }
+  .noteout a:last-of-type { border-bottom:none; }
+  .noteout .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .noteout .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
 </style>
 </head>
 <body>
@@ -150,6 +159,14 @@
     <div class="ex">3日以内に必ず公開、を回すために組んだ最小構成。Windows機・Claude Code・three.js・GitHub Pages。派手なツールは使っていません。実際に11本を作った実運用ベースで紹介します。</div>
     <div class="date">2026-07-21</div>
   </a>
+  <div class="noteout">
+    <div class="nt">note でも書いています（作った話・技術の裏側）</div>
+    <a href="https://note.com/d_studylab/n/n07715f4f7f62" target="_blank" rel="noopener"><span class="lt">自分が作ったパズルに、正解が3つあった</span><span class="ld">空間認識テストに、正解が3つある問題が混ざっていた話</span></a>
+    <a href="https://note.com/d_studylab/n/n275450508318" target="_blank" rel="noopener"><span class="lt">形は合っているのに積めない切り分けが、3割あった</span><span class="ld">見た目は正しいのに作れない——逆向きテトリスの判定の話</span></a>
+    <a href="https://note.com/d_studylab/n/naa84c3b32211" target="_blank" rel="noopener"><span class="lt">AIがあなたの癖を学習するジャンケン賭博を作った</span><span class="ld">ブラウザの中だけで学習するAIが、何を見ているか</span></a>
+    <a href="https://note.com/d_studylab/n/nd7645bd8dda0" target="_blank" rel="noopener"><span class="lt">論文が進むAI執筆キット</span><span class="ld">AIに.texを壊させないための運用一式（全文無料）</span></a>
+  </div>
+
 
   <div class="foot">
     © D-studyLab ／ <a href="/games/">🕹️ ミニゲームゲームズ</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
