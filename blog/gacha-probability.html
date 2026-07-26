@@ -85,6 +85,10 @@
   .morelinks a:last-child { border-bottom:none; }
   .morelinks .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
   .morelinks .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+
+  figure { margin:26px 0; }
+  figure img { width:100%; height:auto; border:1px solid var(--line); border-radius:6px; display:block; }
+  figure figcaption { font-size:13px; color:var(--sub); margin-top:8px; text-align:center; }
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"ガチャの確率を正しく計算する——「排出率1%だから100連で出る」が間違っている理由","description":"ガチャの確率の計算方法を、10万人ぶんのシミュレーション実測データで解説します。排出率1%で100連しても出ない人は36.6%。平均・中央値・天井の意味を、実際の数字と金額で確認できます。","url":"https://d-studylab.com/blog/gacha-probability.html","datePublished":"2026-07-26","dateModified":"2026-07-26","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/gacha-probability.html"}}</script>
 </head>
@@ -137,6 +141,11 @@
   <h2>「平均100連」の平均は、あなたの体験ではない</h2>
 
   <p>排出率1%のガチャは「平均100連で出る」と言われます。これは正しい数字です。実際に10万人ぶん回してみると、平均は<b>99.9連</b>でした。</p>
+
+  <figure>
+    <img src="/blog/fig/gacha_distribution.png" alt="排出率1%のガチャを10万人が引いた結果。平均（赤の破線）と中央値（緑）が30連ずれている" loading="lazy" width="1100" height="572">
+    <figcaption>排出率1%のガチャを10万人が引いた結果。平均（赤の破線）と中央値（緑）が30連ずれている</figcaption>
+  </figure>
 
   <p>ただし、この「平均」を自分の目安にしてはいけません。同じ10万人の結果を、別の角度から見るとこうなります。</p>
 

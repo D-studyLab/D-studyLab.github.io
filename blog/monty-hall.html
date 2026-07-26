@@ -85,6 +85,10 @@
   .morelinks a:last-child { border-bottom:none; }
   .morelinks .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
   .morelinks .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+
+  figure { margin:26px 0; }
+  figure img { width:100%; height:auto; border:1px solid var(--line); border-radius:6px; display:block; }
+  figure figcaption { font-size:13px; color:var(--sub); margin-top:8px; text-align:center; }
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"モンティホール問題がどうしても納得できない人へ——あなたの直感は、実は間違っていない","description":"モンティホール問題を10万回シミュレーションした実測データで解説します。「変えると2/3」の理由と、多くの人が感じる「50%じゃないの？」という直感が正しくなる条件まで、実際に回した数字で示します。","url":"https://d-studylab.com/blog/monty-hall.html","datePublished":"2026-07-26","dateModified":"2026-07-26","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/monty-hall.html"}}</script>
 </head>
@@ -146,6 +150,11 @@
 
   <p>3枚だと差が小さくて実感しにくいので、枚数を増やしてみます。ルールは同じで、司会者はあなたが選んだ1枚を残し、<b>当たり以外を全部開けます</b>。</p>
 
+  <figure>
+    <img src="/blog/fig/monty_doors.png" alt="ドアを増やすほど、乗り換えるべきなのがはっきりする" loading="lazy" width="1100" height="572">
+    <figcaption>ドアを増やすほど、乗り換えるべきなのがはっきりする</figcaption>
+  </figure>
+
   <p>実際に10万回ずつ回した結果がこれです。</p>
 
   <table>
@@ -165,6 +174,11 @@
   <h2>ここからが本題：あなたの直感が正しくなる条件</h2>
 
   <p>ここまで読んでもモヤモヤが残る人へ。その感覚には、はっきりした理由があります。</p>
+
+  <figure>
+    <img src="/blog/fig/monty_hosts.png" alt="同じ画面に見えても、司会者が中身を知っているかで結果が変わる" loading="lazy" width="1100" height="572">
+    <figcaption>同じ画面に見えても、司会者が中身を知っているかで結果が変わる</figcaption>
+  </figure>
 
   <p><b>あなたはたぶん、無意識に別の問題を解いています。</b>そして<b>その問題では、答えは本当に50%です。</b></p>
 

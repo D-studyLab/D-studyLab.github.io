@@ -94,6 +94,10 @@
   .noteout a:last-of-type { border-bottom:none; }
   .noteout .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
   .noteout .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+
+  figure { margin:26px 0; }
+  figure img { width:100%; height:auto; border:1px solid var(--line); border-radius:6px; display:block; }
+  figure figcaption { font-size:13px; color:var(--sub); margin-top:8px; text-align:center; }
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"じゃんけんに必勝法はあるか——「ランダムに出す」が誰にもできない理由を実測した","description":"じゃんけんの必勝法を、27万ラウンドのシミュレーション実測で検証しました。癖がなければ勝率は50%。しかし「勝ったら同じ手」を出すだけで37.9%、規則的に出すと最悪0.0%まで落ちます。人間が持つ癖と、その消し方。","url":"https://d-studylab.com/blog/janken-strategy.html","datePublished":"2026-07-26","dateModified":"2026-07-26","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/janken-strategy.html"}}</script>
 </head>
@@ -136,6 +140,11 @@
 
   <p>ここからが本題です。同じAIに対して、人間がやりがちな打ち方を4種類ぶつけました。それぞれ18,000ラウンドずつ、あいこを除いた勝率です。</p>
 
+  <figure>
+    <img src="/blog/fig/janken_habits.png" alt="癖ひとつで勝率がどこまで落ちるか（記憶するAIが相手）" loading="lazy" width="1100" height="572">
+    <figcaption>癖ひとつで勝率がどこまで落ちるか（記憶するAIが相手）</figcaption>
+  </figure>
+
   <table>
     <tr><th>打ち方</th><th>頻度を数えるAI</th><th>学習AI</th><th>記憶するAI</th></tr>
     <tr><td>癖なし（基準）</td><td>50.8%</td><td>49.9%</td><td>50.4%</td></tr>
@@ -154,6 +163,11 @@
   <h2>いちばん危ないのは「規則的に出す」こと</h2>
 
   <p>表の最後の行を見てください。<b>グー→チョキ→パーと順番に出す打ち方は、記憶するAI相手に勝率0.0%</b>でした。</p>
+
+  <figure>
+    <img src="/blog/fig/janken_decay.png" alt="規則的に出し続けたときの勝率。5試合で9.6%まで落ちる" loading="lazy" width="1100" height="572">
+    <figcaption>規則的に出し続けたときの勝率。5試合で9.6%まで落ちる</figcaption>
+  </figure>
 
   <p>これは丸め誤差ではありません。1,500試合（18,000ラウンド）の合計で、<b>5勝17,135敗</b>です。あいこ以外はほぼ全部負けています。</p>
 
