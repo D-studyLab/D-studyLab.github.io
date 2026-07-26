@@ -46,6 +46,15 @@
   @media (prefers-reduced-motion: reduce) { * { animation:none !important; } }
   a.play { color:#04101d !important; }
   @media (prefers-color-scheme: light) { a.play { color:#eef4ff !important; } }
+
+  .relgame { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.12);
+             border-radius:10px; padding:15px 18px; margin:28px 0 0; }
+  .relgame .rt { font-size:13px; opacity:.72; margin-bottom:9px; letter-spacing:.05em; }
+  .relgame a { display:block; text-decoration:none; color:inherit; padding:8px 0;
+               border-bottom:1px dashed rgba(255,255,255,.12); }
+  .relgame a:last-of-type { border-bottom:none; }
+  .relgame .gn { display:block; font-weight:bold; font-size:15px; }
+  .relgame .gd { display:block; font-size:12.5px; opacity:.66; margin-top:2px; }
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"積みバトルの遊び方と見どころ","description":"先読みAIと交互にブロックを積む3D対戦。物理ルールは「重心が支えの外に出たら崩れる」の一つだけ。置く前に重心メーターが見えるので、安全な手と、相手が置きにくくなる形を同時に狙えます。無料・登録不要。","url":"https://d-studylab.com/games/guide/tsumi-battle.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"積みバトル","url":"https://d-studylab.com/tsumi-battle/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/tsumi-battle.html"}}</script>
 </head>
@@ -75,5 +84,13 @@
   </div>
 </div>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+  <div class="relgame">
+    <div class="rt">近いものを遊ぶ</div>
+    <a href="/yomikiri/"><span class="gn">✂️ ヨミキリ</span><span class="gd">あなたの癖を学習する限定ジャンケン</span></a>
+    <a href="/games/guide/yomikiri.html" style="padding-top:0;font-size:12.5px;opacity:.6">　└ ヨミキリの解説を読む</a>
+    <a href="/untetris/"><span class="gn">🧩 つみおろし</span><span class="gd">逆向きテトリス。積んだ順を暴く</span></a>
+    <a href="/games/guide/untetris.html" style="padding-top:0;font-size:12.5px;opacity:.6">　└ つみおろしの解説を読む</a>
+  </div>
+
 </body>
 </html>
