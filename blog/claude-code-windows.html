@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>WindowsでClaude Codeを使うと、日本語で3回つまずく——実際に踏んだ順に書く｜D-studyLab ブログ</title>
+<meta name="description" content="WindowsでClaude Codeを使うときに実際にハマった場所を、踏んだ順に書きます。日本語の文字化け（cp932）、パスの変換、改行コード、PowerShellとbashの使い分け。入門記事の写しではなく、この環境で実際に出たエラーだけを扱います。">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="WindowsでClaude Codeを使うと、日本語で3回つまずく——実際に踏んだ順に書く">
+<meta property="og:description" content="cp932の文字化け、日本語パス、CRLF、PowerShellとbashの使い分け。Windows特有のつまずきを、実際に踏んだ順に。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/claude-code-windows.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og/claude-code-windows.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://d-studylab.com/blog/og/claude-code-windows.png">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+
+  .morelinks { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+               padding:16px 18px; margin:30px 0 0; }
+  .morelinks .mt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .morelinks a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+                 border-bottom:1px dashed var(--line); }
+  .morelinks a:last-child { border-bottom:none; }
+  .morelinks .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .morelinks .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+
+  .noteout { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+             padding:16px 18px; margin:34px 0 0; }
+  .noteout .nt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .noteout a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+               border-bottom:1px dashed var(--line); }
+  .noteout a:last-of-type { border-bottom:none; }
+  .noteout .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .noteout .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+  td.warn { color:var(--bad); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">🪟 Windows × AI</div>
+  <h1>WindowsでClaude Codeを使うと、日本語で3回つまずく——実際に踏んだ順に書く</h1>
+  <div class="date">2026年7月27日</div>
+
+  <p>WindowsでClaude Codeを使い始めると、たいてい同じ場所でつまずきます。しかもそのほとんどが
+  <b>日本語がらみ</b>です。文字化け、パス、改行コード。</p>
+
+  <p>この記事は入門記事の写しではありません。<b>この環境で実際に出たエラーだけ</b>を、踏んだ順に書きます。
+  ゲームを11本とブログを十数本、全部Windowsで作ってきて、繰り返し当たった場所です。</p>
+
+  <h2>1. Pythonの出力が文字化けして落ちる（いちばん最初に当たる）</h2>
+
+  <p>Claude Codeにスクリプトを書かせて実行すると、こういうエラーで止まります。</p>
+
+  <p><code>UnicodeEncodeError: 'cp932' codec can't encode character '\u274c'</code></p>
+
+  <p>原因は<b>Windowsの標準の文字コードがcp932（Shift_JIS系）</b>だからです。
+  UTF-8で書かれた絵文字や一部の記号が、そのままでは出力できません。</p>
+
+  <p>厄介なのは、<b>処理そのものは成功しているのに、結果を表示する最後の1行で落ちる</b>ことです。
+  実際、記事を公開するスクリプトが「品質チェックは通ったのに、結果を出力するprintで落ちる」という
+  形で止まったことがあります。原因が分かるまで、処理が失敗したのだと勘違いしました。</p>
+
+  <p><b>対処はどちらかです。</b></p>
+
+  <ul>
+    <li>実行するときに環境変数を渡す：<code>PYTHONIOENCODING=utf-8 python script.py</code></li>
+    <li>スクリプトの先頭で自分で差し替える：<br>
+    <code>sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')</code></li>
+  </ul>
+
+  <p>前者が手軽ですが、<b>AIに書かせるスクリプトが増えるほど、後者を最初から入れておくほうが楽</b>です。
+  毎回思い出さなくて済みます。</p>
+
+  <h2>2. 日本語のパスが、シェルによって壊れる</h2>
+
+  <p>作業フォルダの名前に日本語が入っていると、ここで詰まります。</p>
+
+  <p>Claude Codeでは、PowerShellとbash（Git Bash）のどちらでもコマンドを実行できます。ところが
+  <b>同じパスの書き方が、両方では通りません。</b></p>
+
+  <table>
+    <tr><th></th><th>PowerShell</th><th>bash（Git Bash）</th></tr>
+    <tr><td>区切り</td><td><code>D:\共有フォルダ\_Tools</code></td><td><code>D:/共有フォルダ/_Tools</code></td></tr>
+    <tr><td>環境変数</td><td><code>$env:NAME</code></td><td><code>$NAME</code></td></tr>
+    <tr><td>スラッシュ始まりの文字列</td><td>そのまま渡る</td><td class="warn"><b>勝手にパスとして変換される</b></td></tr>
+  </table>
+
+  <p>最後の行がとくに厄介です。bashに <code>/api/items</code> のような文字列を渡すと、
+  MSYSのパス変換が働いて <code>C:/Program Files/Git/api/items</code> のような
+  <b>まったく別の文字列に化けます</b>。APIを叩くときに何度かこれで詰まりました。</p>
+
+  <p><b>使い分けの目安はこうです。</b></p>
+
+  <ul>
+    <li><b>PowerShell</b>：Windowsのツールを呼ぶとき、スラッシュ始まりの引数を渡すとき、クリップボードを触るとき</li>
+    <li><b>bash</b>：gitやテキスト処理など、UNIX系のコマンドを使うとき</li>
+    <li><b>迷ったら、パスは必ず絶対パスで、引用符で囲む</b></li>
+  </ul>
+
+  <h2>3. 改行コードが勝手に変わって、差分が真っ赤になる</h2>
+
+  <p>gitを使っていると、こういう警告が延々と出ます。</p>
+
+  <p><code>warning: LF will be replaced by CRLF in index.html</code></p>
+
+  <p>Windowsの改行はCRLF、多くのツールが吐くのはLF。gitがその間で変換してくれているのですが、
+  結果として<b>1文字も内容を変えていないのに、diffが「全行変わった」ように見える</b>ことがあります。</p>
+
+  <p>これは実際に、AIに文章を直させたときに起きました。中身は1段落しか変えていないのに、
+  差分を見ると数百行が変更扱い。<b>レビューが不可能になります。</b></p>
+
+  <p><b>差分を見るときは、改行を無視して比べてください。</b></p>
+
+  <ul>
+    <li><code>git diff --word-diff</code> …… 単語単位で見る。意味のある変更だけが浮かぶ</li>
+    <li><code>git diff --stat</code> …… まず規模だけ見る</li>
+    <li><code>diff --strip-trailing-cr 旧 新</code> …… gitの外で比べるとき</li>
+  </ul>
+
+  <p>なお、<b><code>.cmd</code> や <code>.ps1</code> を書くときは、中身をASCIIに保ってCRLFで保存する</b>のが安全です。
+  日本語のコメントを入れたスクリプトが、実行時に文字化けして動かないことがあります。</p>
+
+  <h2>4. 「動いているのに固まって見える」問題</h2>
+
+  <p>これは日本語とは関係ありませんが、Windows特有なので書いておきます。</p>
+
+  <p>PowerShellで外部コマンドの出力を <code>Out-String</code> などでいったん受けると、
+  <b>出力がバッファされて、最後まで何も表示されません。</b>実際には動いているのに、固まったように見えます。</p>
+
+  <p>長い処理を走らせるときは、<b>出力をそのまま流す</b>のが基本です。あわせて、
+  <b>必ずタイムアウトを付ける</b>ことをおすすめします。応答しなくなったときに、
+  自分で止められる状態にしておかないと、待つしかなくなります。</p>
+
+  <h2>5. これらをAIに毎回説明しなくて済むようにする</h2>
+
+  <p>ここまでの話は、<b>全部プロジェクトの設定ファイルに書いておけます。</b></p>
+
+  <p>Claude Codeは、作業フォルダに置いた <code>CLAUDE.md</code> を起動時に読みます。そこに
+  「この環境ではこうする」を書いておけば、毎回説明しなくても、その前提で動くようになります。</p>
+
+  <p>実際に書いてあるのは、たとえばこういうことです。</p>
+
+  <ul>
+    <li>共有フォルダの場所（Windowsならこのパス、Macならこのパス）</li>
+    <li>PowerShellとbashのどちらを使うかの目安</li>
+    <li><code>.cmd</code> / <code>.ps1</code> はASCII＋CRLFで書く</li>
+    <li>長い処理は必ずタイムアウトを付ける</li>
+  </ul>
+
+  <p><b>ここに書いた分だけ、同じ失敗を繰り返さなくなります。</b>
+  逆に言えば、書いていないことは何度でも繰り返します。エラーで詰まったら、
+  直すだけでなく<b>「次に同じ場所で止まらないための1行」を設定ファイルに足す</b>のが、いちばん効きます。</p>
+
+  <h2>この記事の要点</h2>
+
+  <ul>
+    <li><b>cp932の文字化け</b>——処理は成功しているのに最後のprintで落ちる。
+    <code>PYTHONIOENCODING=utf-8</code> か、スクリプト先頭で標準出力を差し替える</li>
+    <li><b>日本語パス</b>——PowerShellとbashで書き方が違う。bashはスラッシュ始まりの文字列を勝手に変換する</li>
+    <li><b>改行コード</b>——CRLF変換でdiffが真っ赤になる。<code>--word-diff</code> で見る</li>
+    <li><b>バッファ</b>——出力を受け止めると固まって見える。そのまま流し、タイムアウトを付ける</li>
+    <li><b>全部 <code>CLAUDE.md</code> に書けば、毎回説明しなくて済む</b></li>
+  </ul>
+
+  <p style="font-size:13.5px;color:var(--sub)">
+  ※すべてWindows 11 ＋ Claude Code の環境で、実際に踏んだものです。
+  一般論として集めたものではなく、この環境で出たエラーメッセージをもとに書いています。</p>
+
+  <div class="related">
+    <div class="rt">関連するもの</div>
+    <a href="/blog/claude-code-reality.html">🤖 Claude Codeでどこまで作れるのか</a>——4日で11本公開して分かった、できることとできないこと<br>
+    <a href="/blog/dev-setup.html">🛠 AIと1日1ゲーム作る開発環境</a>——実際に使っている道具<br>
+    <a href="/blog/">📝 ブログ一覧</a>
+  </div>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
