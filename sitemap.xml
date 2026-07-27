@@ -206,4 +206,39 @@
     <lastmod>2026-07-27</lastmod>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://d-studylab.com/memory-test/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://d-studylab.com/birthday-paradox/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://d-studylab.com/takarakuji-ev/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://d-studylab.com/games/guide/memory-test.html</loc>
+    <lastmod>2026-07-28</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://d-studylab.com/games/guide/birthday-paradox.html</loc>
+    <lastmod>2026-07-28</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://d-studylab.com/games/guide/takarakuji-ev.html</loc>
+    <lastmod>2026-07-28</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://d-studylab.com/web/shindan.html</loc>
+    <lastmod>2026-07-28</lastmod>
+    <priority>0.7</priority>
+  </url>
 </urlset>
