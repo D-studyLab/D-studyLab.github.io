@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>料金のかんたん診断｜まちのウェブ屋さん</title>
+<meta name="description" content="やりたいことにチェックを入れると、おおよその金額がその場で出ます。まちのウェブ屋さん（D-studyLab）の料金診断。">
+<meta name="robots" content="noindex,nofollow">
+<style>
+  @font-face {
+    font-family:"Zen Old Mincho"; font-style:normal; font-weight:600;
+    font-display:swap; src:url("/assets/fonts/ZenOldMincho-600-subset.woff2") format("woff2");
+  }
+  /* 岩手の工房: 暖白×鉄黒×常磐緑×銅（南部鉄器）——/web/ と同じ */
+  :root { --bg:#FAFAF6; --bg2:#F2F1EA; --panel:#FFFFFF; --line:#E2E0D8; --txt:#20221F;
+          --sub:#5C5E56; --acc:#156B4A; --acc-hover:#0F5238; --cu:#A56A35; --acc-soft:#EAF2ED; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#15201B; --bg2:#182620; --panel:#1B2822; --line:#2A3A32; --txt:#E2EAE4;
+            --sub:#9BB0A4; --acc:#7FC8A9; --acc-hover:#9BD8BE; --cu:#C08A55; --acc-soft:#1F312A; }
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.85;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+         overflow-x:hidden; }
+  .mincho { font-family:"Zen Old Mincho","Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; }
+  .wrap { max-width:780px; margin:0 auto; padding:26px 20px 150px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:22px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .hd { display:flex; align-items:center; gap:12px; margin-bottom:6px; }
+  .hd .ic { width:30px; height:30px; color:var(--acc); flex:none; }
+  h1 { font-size:clamp(24px,4.4vw,32px); margin:0; letter-spacing:.04em; }
+  .lead { color:var(--sub); font-size:15.5px; margin:10px 0 26px; max-width:34em; }
+  h2 { font-size:19px; margin:40px 0 6px; letter-spacing:.05em; display:flex; align-items:center; gap:11px; }
+  h2::before { content:""; width:22px; height:1px; background:var(--cu); flex:none; }
+  .qnote { font-size:13.5px; color:var(--sub); margin:0 0 14px; }
+  p, li { font-size:15px; }
+  a { color:var(--acc); text-decoration-color:var(--cu); }
+
+  /* 選択肢カード */
+  .opts { display:grid; gap:11px; margin:6px 0 2px; }
+  .opt { display:block; position:relative; background:var(--panel); border:1px solid var(--line);
+         border-radius:4px; padding:15px 16px 14px 50px; cursor:pointer; transition:border-color .18s, background .18s; }
+  .opt:hover { border-color:var(--acc); }
+  .opt input { position:absolute; left:17px; top:19px; width:17px; height:17px; accent-color:var(--acc); margin:0; cursor:pointer; }
+  .opt .nm { font-size:15.5px; font-weight:bold; display:block; }
+  .opt .ds { font-size:13px; color:var(--sub); display:block; margin-top:2px; }
+  .opt .pr { font-size:13.5px; color:var(--cu); font-weight:bold; display:block; margin-top:5px;
+             font-variant-numeric:tabular-nums; }
+  .opt:has(input:checked) { border-color:var(--acc); background:var(--acc-soft); }
+  .opt:has(input:focus-visible) { outline:2px solid var(--cu); outline-offset:2px; }
+
+  /* 数量つきの行（ページ追加） */
+  .qty { display:flex; align-items:center; gap:9px; margin-top:9px; font-size:14px; color:var(--sub); }
+  .qty button { width:32px; height:32px; border:1px solid var(--line); background:var(--panel);
+                color:var(--txt); border-radius:4px; font-size:17px; line-height:1; cursor:pointer; }
+  .qty button:hover { border-color:var(--acc); }
+  .qty output { min-width:2.2em; text-align:center; font-weight:bold; color:var(--txt);
+                font-variant-numeric:tabular-nums; }
+
+  /* 合計（下に固定） */
+  .totalbar { position:fixed; left:0; right:0; bottom:0; background:var(--panel);
+              border-top:1px solid var(--txt); padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+              z-index:20; }
+  .totalinner { max-width:780px; margin:0 auto; display:flex; align-items:center;
+                justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  .tlabel { font-size:12px; color:var(--sub); letter-spacing:.06em; }
+  .tval { font-size:clamp(17px,3.6vw,21px); font-weight:bold; font-variant-numeric:tabular-nums;
+          letter-spacing:.01em; line-height:1.4; }
+  .tmo { font-size:13px; color:var(--sub); font-variant-numeric:tabular-nums; }
+  .tbtn { display:inline-flex; align-items:center; gap:7px; background:var(--acc); color:#FAFAF6;
+          font-weight:bold; border:0; border-radius:4px; padding:12px 20px; font-size:14.5px;
+          cursor:pointer; font-family:inherit; flex:none; }
+  .tbtn:hover { background:var(--acc-hover); }
+  @media (prefers-color-scheme: dark) { .tbtn { color:#15201B; } }
+  .tbtn svg { width:16px; height:16px; }
+
+  /* 結果 */
+  .result { background:var(--bg2); border:1px solid var(--line); border-radius:4px;
+            padding:18px 18px 16px; margin:22px 0 0; display:none; }
+  .result.on { display:block; }
+  .result h3 { margin:0 0 10px; font-size:16px; letter-spacing:.04em; }
+  .result pre { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+                padding:14px 15px; font-size:13.5px; line-height:1.8; white-space:pre-wrap;
+                word-break:break-word; margin:0 0 12px; color:var(--txt);
+                font-family:inherit; }
+  .rowbtn { display:flex; gap:10px; flex-wrap:wrap; }
+  .copybtn { background:var(--acc); color:#FAFAF6; border:0; border-radius:4px; padding:11px 20px;
+             font-size:14.5px; font-weight:bold; cursor:pointer; font-family:inherit; }
+  .copybtn:hover { background:var(--acc-hover); }
+  @media (prefers-color-scheme: dark) { .copybtn { color:#15201B; } }
+  .copybtn.done { background:var(--cu); }
+  .xlink { display:inline-flex; align-items:center; gap:7px; border:1px solid var(--acc); color:var(--acc);
+           border-radius:4px; padding:11px 20px; font-size:14.5px; font-weight:bold; text-decoration:none; }
+  .xlink:hover { background:var(--acc-soft); }
+
+  .status { background:var(--acc-soft); border:1px solid var(--line); border-radius:4px;
+            padding:14px 16px; font-size:14px; margin:24px 0 0; }
+  .note { font-size:13.5px; color:var(--sub); margin-top:12px; }
+  .foot { margin-top:46px; border-top:1px solid var(--line); padding-top:18px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  table { border-collapse:collapse; width:100%; font-size:14px; margin:10px 0; }
+  th,td { border:1px solid var(--line); padding:8px 11px; text-align:left; }
+  th { background:var(--bg2); font-weight:600; }
+  td.n { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">D-studyLab</a> ／ <a href="/web/">まちのウェブ屋さん</a> ／ 料金のかんたん診断</div>
+
+  <div class="hd">
+    <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h4"/></svg>
+    <h1 class="mincho">料金のかんたん診断</h1>
+  </div>
+  <p class="lead">やりたいことにチェックを入れると、おおよその金額がその場で出ます。入力も送信もありません。<b>金額は目安の幅で出します</b>——お店の状況で変わるので、1円単位では出しません。</p>
+
+  <h2 class="mincho">まず、どれくらいのものが要りますか</h2>
+  <p class="qnote">迷ったら「かんたん1ページ」で大丈夫です。あとから増やせます。</p>
+  <div class="opts" id="plans">
+    <label class="opt">
+      <input type="radio" name="plan" value="a" checked>
+      <span class="nm">かんたん1ページ</span>
+      <span class="ds">お店の顔になる1枚。地図・営業時間・メニュー・写真をまとめて載せます。ホームページの住所は無料のもの（例：shop.github.io）。</span>
+      <span class="pr">初期 35,000〜45,000円 ／ 月 3,000円</span>
+    </label>
+    <label class="opt">
+      <input type="radio" name="plan" value="b">
+      <span class="nm">お店専用の住所つき 1〜3ページ</span>
+      <span class="ds">お店だけのURL（例：shop-morioka.jp）を取ります。トップのほかにメニューやアクセスのページを分けられます。</span>
+      <span class="pr">初期 55,000〜75,000円 ／ 月 5,000円</span>
+    </label>
+    <label class="opt">
+      <input type="radio" name="plan" value="c">
+      <span class="nm">しっかり 4〜6ページ</span>
+      <span class="ds">サービス紹介・料金・よくある質問なども分けて載せたい場合。写真の点数が多いお店向け。</span>
+      <span class="pr">初期 90,000〜115,000円 ／ 月 5,000円</span>
+    </label>
+  </div>
+
+  <h2 class="mincho">追加したいものはありますか</h2>
+  <p class="qnote">いらなければ、ひとつも選ばなくて構いません。</p>
+  <div class="opts" id="opts">
+    <label class="opt">
+      <input type="checkbox" data-k="line">
+      <span class="nm">LINE公式アカウントの開設・設定</span>
+      <span class="ds">予約やお問い合わせの受け口になります。開設から使い方のご説明まで。</span>
+      <span class="pr">25,000〜35,000円</span>
+    </label>
+    <label class="opt">
+      <input type="checkbox" data-k="gbp">
+      <span class="nm">Googleマップへの登録代行</span>
+      <span class="ds">「盛岡 カフェ」で地図に出るようにします。写真の掲載まで。</span>
+      <span class="pr">8,000〜12,000円</span>
+    </label>
+    <label class="opt">
+      <input type="checkbox" data-k="form">
+      <span class="nm">予約・お問い合わせフォームの設置</span>
+      <span class="ds">メールで届く形にします（外部サービスを使います）。</span>
+      <span class="pr">17,000〜23,000円</span>
+    </label>
+    <label class="opt">
+      <input type="checkbox" data-k="text">
+      <span class="nm">文章を代わりに書く（1ページぶん）</span>
+      <span class="ds">お話をうかがって、こちらで原稿にします。「何を書けばいいか分からない」方へ。</span>
+      <span class="pr">8,000〜12,000円</span>
+    </label>
+    <label class="opt">
+      <input type="checkbox" data-k="photo">
+      <span class="nm">写真の撮影におうかがいする</span>
+      <span class="ds">お店で撮影して、明るさなどを整えます（盛岡・滝沢の近隣）。</span>
+      <span class="pr">12,000〜18,000円</span>
+    </label>
+    <label class="opt">
+      <input type="checkbox" data-k="upd">
+      <span class="nm">お知らせの更新を増やす（月4回まで）</span>
+      <span class="ds">季節メニューやイベントが多いお店向け。月額に加算されます。</span>
+      <span class="pr">月 +2,000円</span>
+    </label>
+    <label class="opt">
+      <input type="checkbox" data-k="page">
+      <span class="nm">ページを追加する</span>
+      <span class="ds">上のプランに含まれるぶんより多くページが要る場合。</span>
+      <span class="pr">1ページにつき 13,000〜17,000円</span>
+      <span class="qty">
+        <button type="button" id="pminus" aria-label="ページを減らす">−</button>
+        <output id="pnum">1</output>
+        <button type="button" id="pplus" aria-label="ページを増やす">＋</button>
+        <span>ページ</span>
+      </span>
+    </label>
+  </div>
+
+  <div class="result" id="result">
+    <h3 class="mincho">この内容をそのままコピーできます</h3>
+    <pre id="rtext"></pre>
+    <div class="rowbtn">
+      <button class="copybtn" id="copy">内容をコピーする</button>
+      <a class="xlink" href="https://x.com/info_prog_study" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:15px;height:15px"><path d="M18.2 2h3.3l-7.2 8.3L23 22h-6.6l-5.2-6.8L5.2 22H1.9l7.7-8.8L1 2h6.8l4.7 6.2L18.2 2Zm-1.2 18h1.8L7.1 3.9H5.2L17 20Z"/></svg>
+        Xで相談する
+      </a>
+    </div>
+    <p class="note">コピーした文章を、そのままメッセージに貼っていただければ大丈夫です。</p>
+  </div>
+
+  <div class="status">
+    <b>ここで出た金額は「おおよその目安」です。</b> 実際のお見積りは、お店の状況をうかがってからお出しします。
+    診断だけで料金は発生しませんし、この画面から送信されるものは何もありません。
+  </div>
+
+  <h2 class="mincho">料金に含まれるもの・含まれないもの</h2>
+  <div class="scroll">
+  <table>
+    <tr><th>含まれます</th><th>含まれません</th></tr>
+    <tr>
+      <td>制作一式（スマホ・パソコン両対応）／公開までの作業（サーバー手配・設定）／SSL（鍵マーク）／公開後の見守りと不具合対応／文章・写真の差し替え（月1〜2回）／ご相談・お打ち合わせ</td>
+      <td>写真の撮影（オプション）／チラシ・名刺などの印刷物／大幅な作り直し・ページ追加（オプション）／独自ドメインの年間費用（実費・年1,000〜3,000円程度）</td>
+    </tr>
+  </table>
+  </div>
+  <p class="note">月々のお支払いはいつでもやめられます。違約金・解約金はありません。やめるときは文章・写真をお返しします（お店のものです）。</p>
+
+  <div class="foot">
+    <a href="/web/">← まちのウェブ屋さんに戻る</a>　／　<a href="/">D-studyLab トップ</a><br>
+    <span style="font-size:12.5px">この診断ページの金額は2026年7月時点のものです。</span>
+  </div>
+</div>
+
+<div class="totalbar">
+  <div class="totalinner">
+    <div>
+      <div class="tlabel">おおよその目安</div>
+      <div class="tval" id="tinit">初期 35,000〜45,000円</div>
+      <div class="tmo" id="tmonth">月々 3,000円</div>
+    </div>
+    <button class="tbtn" id="go">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      この内容で相談する
+    </button>
+  </div>
+</div>
+
+<script>
+(function () {
+  var PLANS = {
+    a: { nm:"かんたん1ページ",              min:35000,  max:45000,  mo:3000, pages:1 },
+    b: { nm:"お店専用の住所つき 1〜3ページ", min:55000,  max:75000,  mo:5000, pages:3 },
+    c: { nm:"しっかり 4〜6ページ",           min:90000,  max:115000, mo:5000, pages:6 }
+  };
+  var OPTS = {
+    line:  { nm:"LINE公式アカウントの開設・設定",     min:25000, max:35000, mo:0 },
+    gbp:   { nm:"Googleマップへの登録代行",           min:8000,  max:12000, mo:0 },
+    form:  { nm:"予約・お問い合わせフォームの設置",   min:17000, max:23000, mo:0 },
+    text:  { nm:"文章を代わりに書く（1ページぶん）",  min:8000,  max:12000, mo:0 },
+    photo: { nm:"写真の撮影におうかがいする",         min:12000, max:18000, mo:0 },
+    upd:   { nm:"お知らせの更新を増やす（月4回まで）", min:0,     max:0,     mo:2000 },
+    page:  { nm:"ページを追加する",                   min:13000, max:17000, mo:0, perUnit:true }
+  };
+  var pages = 1;
+  var $ = function (id) { return document.getElementById(id); };
+  var yen = function (n) { return n.toLocaleString("ja-JP") + "円"; };
+
+  function chosen() {
+    var planKey = document.querySelector('input[name=plan]:checked').value;
+    var picked = [];
+    document.querySelectorAll('#opts input[type=checkbox]').forEach(function (c) {
+      if (c.checked) picked.push(c.getAttribute("data-k"));
+    });
+    return { planKey: planKey, picked: picked };
+  }
+
+  function calc() {
+    var s = chosen(), p = PLANS[s.planKey];
+    var min = p.min, max = p.max, mo = p.mo;
+    s.picked.forEach(function (k) {
+      var o = OPTS[k], n = o.perUnit ? pages : 1;
+      min += o.min * n; max += o.max * n; mo += o.mo * n;
+    });
+    return { min: min, max: max, mo: mo, plan: p, picked: s.picked };
+  }
+
+  function render() {
+    var r = calc();
+    $("tinit").textContent = "初期 " + r.min.toLocaleString("ja-JP") + "〜" + yen(r.max);
+    $("tmonth").textContent = "月々 " + yen(r.mo);
+    $("pnum").textContent = pages;
+    if ($("result").classList.contains("on")) buildText();
+  }
+
+  function buildText() {
+    var r = calc(), L = [];
+    L.push("【まちのウェブ屋さん 料金診断の結果】");
+    L.push("");
+    L.push("■ 選んだプラン");
+    L.push("　" + r.plan.nm);
+    if (r.picked.length) {
+      L.push("");
+      L.push("■ 追加するもの");
+      r.picked.forEach(function (k) {
+        var o = OPTS[k];
+        L.push("　・" + o.nm + (o.perUnit ? "（" + pages + "ページ）" : ""));
+      });
+    } else {
+      L.push("");
+      L.push("■ 追加するもの：なし");
+    }
+    L.push("");
+    L.push("■ おおよその目安");
+    L.push("　初期費用：" + r.min.toLocaleString("ja-JP") + "〜" + yen(r.max));
+    L.push("　月々：" + yen(r.mo));
+    L.push("");
+    L.push("※ 診断ページの自動計算による概算です。この内容で相談させてください。");
+    $("rtext").textContent = L.join("\n");
+  }
+
+  document.querySelectorAll('input[name=plan], #opts input[type=checkbox]').forEach(function (el) {
+    el.addEventListener("change", render);
+  });
+  $("pplus").addEventListener("click", function (e) {
+    e.preventDefault(); if (pages < 10) pages++;
+    var c = document.querySelector('#opts input[data-k=page]'); if (!c.checked) c.checked = true;
+    render();
+  });
+  $("pminus").addEventListener("click", function (e) {
+    e.preventDefault(); if (pages > 1) pages--; render();
+  });
+  $("go").addEventListener("click", function () {
+    $("result").classList.add("on");
+    buildText();
+    $("result").scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+  $("copy").addEventListener("click", function () {
+    var b = this, t = $("rtext").textContent;
+    var done = function () {
+      b.textContent = "コピーしました"; b.classList.add("done");
+      setTimeout(function () { b.textContent = "内容をコピーする"; b.classList.remove("done"); }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(t).then(done, fallback);
+    } else { fallback(); }
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = t; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); done(); } catch (err) {
+        b.textContent = "上の文章を長押しでコピーしてください";
+      }
+      document.body.removeChild(ta);
+    }
+  });
+  render();
+})();
+</script>
+</body>
+</html>
