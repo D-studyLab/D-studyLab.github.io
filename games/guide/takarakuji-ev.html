@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>宝くじの期待値の遊び方と見どころ｜ミニゲームゲームズ D-studyLab</title>
+<meta name="description" content="年末ジャンボの公表データ（等級・当せん金・本数）で計算。1枚300円の期待値は150円、還元率50.0%。1万人が同じだけ買ったときの中央値や、1円も戻らない人の割合まで実際に引いて出します。無料・登録不要。">
+<meta name="robots" content="index,follow">
+<style>
+  @font-face {
+    font-family:"DotGothic16"; font-style:normal; font-weight:400;
+    font-display:swap; src:url("/assets/fonts/DotGothic16-subset.woff2") format("woff2");
+  }
+  :root { --bg:#131019; --panel:#1C1727; --line:#332B44; --txt:#EFEAF6; --sub:#A79DBE;
+          --acc:#FF4D9D; --good:#6bdf9a; --bad:#ff5db1; --gold:#FFD644; --play-tx:#131019; }
+  @media (prefers-color-scheme: light) {
+    /* 明灰（緑黄の色被りなし）×濃マゼンタ×深紫（games世界観の軽量版） */
+    :root { --bg:#F1EFEA; --panel:#FBFAF7; --line:#B9B0C9; --txt:#26222E; --sub:#5C5566;
+            --acc:#C21F6B; --good:#1f8a52; --bad:#a83b73; --gold:#4A2C82; --play-tx:#FFFFFF; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.9;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .hero { display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+  .hero .emj { font-size:52px; line-height:1; }
+  h1 { font-size:23px; margin:0; }
+  .meta { color:var(--sub); font-size:13px; margin:2px 0 20px; }
+  .play { display:inline-block; background:var(--acc); color:var(--play-tx); font-weight:bold;
+          text-decoration:none; border-radius:10px; padding:11px 22px; font-size:15px; margin:6px 0 26px; }
+  h2 { font-size:18px; margin:30px 0 8px; padding-left:11px; border-left:4px solid var(--acc); }
+  p { font-size:15.5px; }
+  a { color:var(--acc); }
+  .foot { margin-top:44px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  .crumb, h1, h2 { font-family:"DotGothic16","Hiragino Kaku Gothic ProN",monospace; letter-spacing:.01em; }
+  body::before { content:""; position:fixed; inset:0; z-index:9; pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,.05), rgba(0,0,0,.05) 1px, transparent 1px, transparent 3px);
+    mix-blend-mode:multiply; }
+  @media (prefers-color-scheme: light) { body::before { opacity:.5; } }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; } }
+  a.play { color:#04101d !important; }
+  @media (prefers-color-scheme: light) { a.play { color:#eef4ff !important; } }
+
+  .relgame { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.12);
+             border-radius:10px; padding:15px 18px; margin:28px 0 0; }
+  .relgame .rt { font-size:13px; opacity:.72; margin-bottom:9px; letter-spacing:.05em; }
+  .relgame a { display:block; text-decoration:none; color:inherit; padding:8px 0;
+               border-bottom:1px dashed rgba(255,255,255,.12); }
+  .relgame a:last-of-type { border-bottom:none; }
+  .relgame .gn { display:block; font-weight:bold; font-size:15px; }
+  .relgame .gd { display:block; font-size:12.5px; opacity:.66; margin-top:2px; }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"宝くじの期待値の遊び方と見どころ","description":"年末ジャンボの公表データ（等級・当せん金・本数）で計算。1枚300円の期待値は150円、還元率50.0%。1万人が同じだけ買ったときの中央値や、1円も戻らない人の割合まで実際に引いて出します。無料・登録不要。","url":"https://d-studylab.com/games/guide/takarakuji-ev.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"宝くじの期待値","url":"https://d-studylab.com/takarakuji-ev/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/takarakuji-ev.html"}}</script>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../">🕹️ ミニゲームゲームズ</a> ／ 宝くじの期待値 の遊び方</div>
+  <div class="hero"><div class="emj">🎫</div><h1>宝くじの期待値</h1></div>
+  <div class="meta">確率・シミュ・所要 約3分・ブラウザで無料・インストール不要</div>
+
+  <a class="play" href="https://d-studylab.com/takarakuji-ev/" target="_blank" rel="noopener">▶ 宝くじの期待値 を遊ぶ</a>
+
+  <h2>ルール</h2>
+  <p>買う枚数と、連番かバラかを選ぶと、期待値と還元率がその場で出ます。「1万人で引いてみる」を押すと、同じ買い方をした1万人ぶんを実際に抽せんして、戻り額の分布を出します。使っているのは宝くじ公式サイトが公表している等級・当せん金・本数です。</p>
+
+  <h2>攻略のコツ</h2>
+  <p>いちばん見てほしいのは<b>平均と中央値の差</b>です。1枚の期待値は150円ですが、期待値の36.7%は1ユニット2,000万枚に4本しかない上位当せん（1等・前後賞・2等）が作っています。<b>その4本を引かない大多数にとって、平均は自分の話ではありません。</b>連番とバラも切り替えてみてください。平均はほぼぴったり同じで、違うのはブレ方だけです。</p>
+
+  <h2>この作品を作った理由</h2>
+  <p>「宝くじ 期待値」で調べると還元率の数字は出てきますが、<b>自分の買い方だと何が起きるのか</b>が出てこない。1万人ガチャシミュレータと同じ考え方で、確率を自分の財布の話に翻訳するために作りました。</p>
+
+  <h2>技術的な仕掛け</h2>
+  <p>本数は発売ユニット全体で公表されているので、1ユニットあたりに割り戻して計算しています。抽せんは1枚ずつ独立に引く近似で、連番だけ「10枚に1枚は末等が当たる」を再現しています。公表の発売総額（1,380億円）と当せん金合計が一致することをテスト42件で検査済み。なおこのページは宝くじの購入をすすめるものでも、当せんを保証するものでもありません。</p>
+
+  <div class="foot">
+    <a class="play" href="https://d-studylab.com/takarakuji-ev/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>
+    © D-studyLab ／ <a href="../">ミニゲームゲームズトップへ</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+  <div class="relgame">
+    <div class="rt">近いものを遊ぶ</div>
+    <a href="/gacha-sim/"><span class="gn">🎰 1万人ガチャシミュレータ</span><span class="gd">「平均90連」の裏の地獄と天国</span></a>
+    <a href="/games/guide/gacha-sim.html" style="padding-top:0;font-size:12.5px;opacity:.6">　└ 1万人ガチャシミュレータの解説を読む</a>
+    <a href="/monty/"><span class="gn">🚪 モンティホール100連</span><span class="gd">「変える」となぜ2倍勝てるのか</span></a>
+    <a href="/games/guide/monty.html" style="padding-top:0;font-size:12.5px;opacity:.6">　└ モンティホール100連の解説を読む</a>
+  </div>
+
+</body>
+</html>

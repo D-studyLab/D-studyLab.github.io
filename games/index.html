@@ -137,16 +137,19 @@
 
   <div class="about" id="all-works">
     <h2 class="pix">全作品リスト</h2>
-    <p>いま遊べるのは11本です。どれもインストール不要、登録不要、スマホでも動きます。計算はすべて端末の中で完結し、遊んだ内容がどこかへ送られることはありません。</p>
+    <p>いま遊べるのは14本です。どれもインストール不要、登録不要、スマホでも動きます。計算はすべて端末の中で完結し、遊んだ内容がどこかへ送られることはありません。</p>
     <ul class="worklist">
       <li><a href="/tsumi-battle/">🐧 積みバトル</a><span class="sd">ペンギンを積んで、先に崩した方が負け（5分・AI対戦／物理）</span></li>
       <li><a href="/kage-ate/">🌗 かげ当てパズル</a><span class="sd">光の向きから影の形を当てろ（3分・空間／パズル）</span></li>
       <li><a href="/kukan-test/">🧠 空間認識偏差値テスト</a><span class="sd">頭の中で3Dを回せるか（3分・空間／診断）</span></li>
+      <li><a href="/memory-test/">🧠 記憶力テスト</a><span class="sd">数字は何桁、場所は何手まで覚えられるか（3分・記憶／診断）</span></li>
       <li><a href="/answer-shoot/">🎯 アンサーシュート</a><span class="sd">答えがわかっても届けなきゃ正解じゃない（5分・クイズ／アクション）</span></li>
       <li><a href="/yomiate/">🔢 ヨミアテ</a><span class="sd">情報を「買う」数字当て（5分・推理／数字）</span></li>
       <li><a href="/untetris/">🧩 つみおろし</a><span class="sd">逆向きテトリス、積んだ順を暴け（4分・推理／パズル）</span></li>
       <li><a href="/monty/">🚪 モンティホール100連</a><span class="sd">「変える」となぜ2倍勝てるのか（3分・確率／体感）</span></li>
       <li><a href="/toru-card/">🃏 そのカード、取る？</a><span class="sd">デッキ構築の直感を1万回シミュで検算（4分・確率／シミュ）</span></li>
+      <li><a href="/birthday-paradox/">🎂 誕生日のパラドックス</a><span class="sd">23人で50%が信じられない人へ（3分・確率／体感）</span></li>
+      <li><a href="/takarakuji-ev/">🎫 宝くじの期待値</a><span class="sd">1万人が同じだけ買ったら何が起きるか（3分・確率／シミュ）</span></li>
       <li><a href="/gacha-sim/">🎰 1万人ガチャシミュレータ</a><span class="sd">「平均90連」の裏の地獄と天国（3分・確率／体感）</span></li>
       <li><a href="/yomikiri/">✂️ ヨミキリ</a><span class="sd">あなたの癖を学習する限定ジャンケン（5分・AI対戦）</span></li>
       <li><a href="/damashi-ai/">🤖 AIを騙せ！</a><span class="sd">騙すとその場で学習して強くなる（5分・AI対戦）</span></li>
@@ -176,11 +179,14 @@ const GAMES = [
   { slug:'tsumi-battle',name:'積みバトル',               emoji:'🐧', tags:['AI対戦','物理'],       desc:'ペンギンを積んで、先に崩した方が負け',              time:'5分', added:'2026-07-21' },
   { slug:'kage-ate',    name:'かげ当てパズル',           emoji:'🌗', tags:['空間','パズル'],       desc:'光の向きから影の形を当てろ',                    time:'3分', added:'2026-07-21' },
   { slug:'kukan-test',  name:'空間認識偏差値テスト',     emoji:'🧠', tags:['空間','診断'],         desc:'頭の中で3Dを回せるか',                          time:'3分', added:'2026-07-20' },
+  { slug:'memory-test', name:'記憶力テスト',             emoji:'🧠', tags:['記憶','診断'],         desc:'数字は何桁、場所は何手まで覚えられるか',        time:'3分', added:'2026-07-27' },
   { slug:'answer-shoot',name:'アンサーシュート',         emoji:'🎯', tags:['クイズ','アクション'], desc:'答えがわかっても届けなきゃ正解じゃない',        time:'5分', added:'2026-07-21' },
   { slug:'yomiate',     name:'ヨミアテ',                 emoji:'🔢', tags:['推理','数字'],         desc:'情報を「買う」数字当て',                        time:'5分', added:'2026-07-21' },
   { slug:'untetris',    name:'つみおろし',               emoji:'🧩', tags:['推理','パズル'],       desc:'逆向きテトリス、積んだ順を暴け',                time:'4分', added:'2026-07-21' },
   { slug:'monty',       name:'モンティホール100連',      emoji:'🚪', tags:['確率','体感'],         desc:'「変える」となぜ2倍勝てるのか',                 time:'3分', added:'2026-07-21' },
   { slug:'toru-card',   name:'そのカード、取る？',       emoji:'🃏', tags:['確率','シミュ'],       desc:'デッキ構築の直感を1万回シミュで検算',          time:'4分', added:'2026-07-21' },
+  { slug:'birthday-paradox',name:'誕生日のパラドックス',  emoji:'🎂', tags:['確率','体感'],         desc:'23人で50%が信じられない人へ',                  time:'3分', added:'2026-07-27' },
+  { slug:'takarakuji-ev',name:'宝くじの期待値',          emoji:'🎫', tags:['確率','シミュ'],       desc:'1万人が同じだけ買ったら何が起きるか',          time:'3分', added:'2026-07-27' },
   { slug:'gacha-sim',   name:'1万人ガチャシミュレータ',  emoji:'🎰', tags:['確率','体感'],         desc:'「平均90連」の裏の地獄と天国',                  time:'3分', added:'2026-07-18' },
   { slug:'yomikiri',    name:'ヨミキリ',                 emoji:'✂️', tags:['AI対戦'],              desc:'あなたの癖を学習する限定ジャンケン',            time:'5分', added:'2026-07-19' },
   { slug:'damashi-ai',  name:'AIを騙せ！',               emoji:'🤖', tags:['AI対戦'],              desc:'騙すとその場で学習して強くなる',                time:'5分', added:'2026-07-19' },
