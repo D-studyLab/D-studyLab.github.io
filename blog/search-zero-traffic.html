@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>47ページ公開して3か月、検索からの訪問は0だった——原因を順番に切り分けた記録｜D-studyLab ブログ</title>
+<meta name="description" content="個人サイトが検索に出てこないとき、何をどの順番で確かめるか。実データ付きの切り分け記録です。クリック0・表示回数4・平均掲載順位66位。「表示0のクリック0」と「表示ありのクリック0」では打つ手が正反対になります。">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://d-studylab.com/blog/search-zero-traffic.html">
+<meta property="og:title" content="47ページ公開して3か月、検索からの訪問は0だった">
+<meta property="og:description" content="クリック0・表示4・平均掲載順位66位。個人サイトが検索に出ないときの切り分けを、実データ付きで順番に。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/search-zero-traffic.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og/search-zero-traffic.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://d-studylab.com/blog/og/search-zero-traffic.png">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+
+  .morelinks { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+               padding:16px 18px; margin:30px 0 0; }
+  .morelinks .mt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .morelinks a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+                 border-bottom:1px dashed var(--line); }
+  .morelinks a:last-child { border-bottom:none; }
+  .morelinks .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .morelinks .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+
+  .noteout { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+             padding:16px 18px; margin:34px 0 0; }
+  .noteout .nt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .noteout a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+               border-bottom:1px dashed var(--line); }
+  .noteout a:last-of-type { border-bottom:none; }
+  .noteout .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .noteout .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+  td.warn { color:var(--bad); }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"47ページ公開して3か月、検索からの訪問は0だった——原因を順番に切り分けた記録","description":"個人サイトが検索に出てこないとき、何をどの順番で確かめるか。実データ付きの切り分け記録です。クリック0・表示回数4・平均掲載順位66位。「表示0のクリック0」と「表示ありのクリック0」では打つ手が正反対になります。","url":"https://d-studylab.com/blog/search-zero-traffic.html","datePublished":"2026-07-31","dateModified":"2026-07-31","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/search-zero-traffic.html"}}</script>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">🔍 検索とアクセス</div>
+  <h1>47ページ公開して3か月、検索からの訪問は0だった——原因を順番に切り分けた記録</h1>
+  <div class="date">2026年7月31日</div>
+
+
+  <p>自分のサイトを開いて3か月、47ページ公開しました。ゲームが14本、ブログが12本、あとは説明ページ。
+  アクセス解析を入れて直近7日をまとめたのが、この数字です。</p>
+
+  <table>
+    <tr><th>直近7日</th><th></th></tr>
+    <tr><td>訪問</td><td>208</td></tr>
+    <tr><td>うち検索エンジンから</td><td class="warn"><b>0</b></td></tr>
+    <tr><td>うち外部サイトから</td><td>5</td></tr>
+    <tr><td>直接アクセス</td><td>203</td></tr>
+  </table>
+
+  <p>直接アクセスの203は、ほぼ全部が自分の動作確認です。告知もしていないし検索にも出ていないのだから、
+  それ以外の説明がつきません。<b>外から来た人は、7日間で5人</b>。全員、自分が書いたnote記事からの流入でした。</p>
+
+  <p>「作ったのに誰も来ない」を数字にすると、こうなります。ここから原因を順番に切り分けました。</p>
+
+  <h2>最初に疑ったこと（そして全部ハズレだった）</h2>
+
+  <h2>1. そもそも検索エンジンに登録されているか</h2>
+
+  <p><code>site:自分のドメイン</code> で検索して1件も出なければ、登録されていない——
+  私はこれで出なかったので「サイトマップを送っていないからだ」と結論しました。</p>
+
+  <p><b>これが間違いでした。</b>実際に Search Console を開いたら、サイトマップは5日前に受理済みで、
+  トップページのインデックス登録も完了していました。<code>site:</code> 検索で出てこなかったのは、
+  登録されていないからではなく、<b>出る順位があまりに低かったから</b>です。</p>
+
+  <p>教訓として、<code>site:</code> 検索が空振りしても「未登録」と決めつけてはいけません。
+  <b>Search Console の実画面を見る</b>しかありません。</p>
+
+  <h2>2. robots.txt や sitemap.xml が壊れていないか</h2>
+
+  <p>これは正常でした。確認方法は単純で、ブラウザで直接開けば済みます。</p>
+
+  <ul>
+    <li><code>https://自分のドメイン/robots.txt</code> —— <code>Disallow: /</code> が入っていないか、<code>Sitemap:</code> の行があるか</li>
+    <li><code>https://自分のドメイン/sitemap.xml</code> —— 実際に中身が返ってくるか</li>
+  </ul>
+
+  <h2>3. CDN やセキュリティ設定がクローラーを弾いていないか</h2>
+
+  <p>Cloudflare を使っていると、Bot Fight Mode のような設定がクローラーを止めることがあります。
+  これも疑いましたが、調べたらDNSレコードが全部「DNSのみ（プロキシOFF）」で、
+  <b>そもそもCloudflareがリクエストの経路に入っていませんでした</b>。止めようがない構成です。</p>
+
+  <p>ここでのコツは、設定画面を眺めるより<b>外から実際に叩く</b>ことです。
+  トップページが200を返すか、wwwと非wwwが正しく片方に寄っているか。
+  後者が崩れていると重複コンテンツになります。</p>
+
+  <h2>4. ページの中身が薄いのではないか</h2>
+
+  <p>これも違いました。ブログ12本を実測したら、1本あたり1,963〜3,550字。中身の量は問題ではありません。</p>
+
+  <h2>実際の原因：順位が付いていないだけだった</h2>
+
+  <p>Search Console の検索パフォーマンスを開いて、答えが出ました。</p>
+
+  <table>
+    <tr><th>3か月間の合計</th><th></th></tr>
+    <tr><td>クリック数</td><td><b>0</b></td></tr>
+    <tr><td>表示回数</td><td><b>4</b></td></tr>
+    <tr><td>平均掲載順位</td><td class="warn"><b>66位</b></td></tr>
+  </table>
+
+  <p>66位は検索結果の<b>7ページ目</b>です。人間は到達しません。
+  そして表示回数が3か月で4回しかない。つまり「クリックされない」以前に、<b>そもそも表示されていない</b>。</p>
+
+  <p>さらに、47ページのうち検索結果に出たことがあるのは<b>3ページだけ</b>でした。
+  残りの44ページは、どの検索語とも結びついていません。</p>
+
+  <h2>ここが分かれ目：「クリック0」には2種類ある</h2>
+
+  <p>今回いちばん書きたかったのはここです。</p>
+
+  <table>
+    <tr><th>表示回数</th><th>クリック</th><th>意味</th><th>打つ手</th></tr>
+    <tr><td>0（ごく少ない）</td><td>0</td><td>そもそも検索結果に出ていない</td><td>待つ／外からの入口を作る</td></tr>
+    <tr><td>多い</td><td>0</td><td>出ているが選ばれていない</td><td>タイトルと説明文を書き直す</td></tr>
+  </table>
+
+  <p><b>この2つは打ち手が正反対です。</b>前者でタイトルをいじっても何も起きませんし、
+  後者で「待てばいい」と考えるのは時間の無駄になります。</p>
+
+  <p>私の場合は前者でした。表示回数4＝ほぼ出ていない。
+  <b>タイトルを書き直しても意味がない状態</b>だと分かりました。</p>
+
+  <h2>出ていないなら、どうするか</h2>
+
+  <p>新しいドメインは、しばらく順位が付きません。ここは待つしかない部分があります。
+  ただ、待つだけではない部分もあって、次にやることを3つに決めました。</p>
+
+  <p><b>1. 外からのリンクを1本でも作る。</b>
+  検索エンジンは「他所からリンクされているか」を見ます。どこからもリンクされていないサイトは、
+  評価のしようがありません。SNSに出す、コミュニティに出す、掲載リストに載せてもらう。
+  どれも検索とは別の入口ですが、同時に検索への評価材料にもなります。</p>
+
+  <p><b>2. 検索されない物ばかり作らない。</b>
+  うちのサイトはゲームが14本あります。しかし実際に検索結果に出たのは、
+  「空間把握能力」で表示されたブログ記事でした。<b>ゲーム本体ではなく、記事が入口になっていた</b>。
+  考えてみれば当たり前で、人は「面白いゲーム」を検索しません。困りごとや知りたいことを検索します。</p>
+
+  <p><b>3. 標本が増えるまで結論を出さない。</b>
+  表示回数4回で「この記事はダメだった」と判定するのは早すぎます。
+  数字が動くまで、施策の良し悪しは分かりません。ここで焦って全部作り直すのが、いちばんまずい。</p>
+
+  <h2>まとめ：確認する順番</h2>
+
+  <ul>
+    <li><b>Search Console の実画面</b>を見る（<code>site:</code> 検索の結果で判断しない）</li>
+    <li>robots.txt と sitemap.xml をブラウザで直接開く</li>
+    <li>CDN・セキュリティ設定がクローラーを弾いていないか、<b>外から叩いて</b>確かめる</li>
+    <li>検索パフォーマンスで<b>表示回数</b>を見る。
+      表示0なら入口を作る側の問題、表示あり・クリック0ならタイトルの問題</li>
+  </ul>
+
+  <p>「検索に出ない」は原因が複数あるのに、全部同じ症状に見えます。だから順番に切り分けるしかない。
+  私は最初の1つを飛ばして間違えました。</p>
+
+  <p style="font-size:13.5px;color:var(--sub)">
+  ※数字はすべて自分のサイトの実測です（2026年7月時点・3か月分）。
+  表示回数4回という小さな標本なので、施策の効果を判定できる段階ではありません。</p>
+
+
+  <div class="related">
+    <div class="rt">関連するもの</div>
+    <a href="/blog/note-data.html">📊 noteのデータを自分で取る</a>——数字を自分で測る話<br>
+    <a href="/blog/claude-code-reality.html">🤖 Claude Codeでどこまで作れるのか</a>——4日で11本公開して分かったこと<br>
+    <a href="/blog/">📝 ブログ一覧</a>
+  </div>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

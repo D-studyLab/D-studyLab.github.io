@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>AIに、別のAIへ指示を渡させる——2アカウント連携で実際に踏んだ3つの穴｜D-studyLab ブログ</title>
+<meta name="description" content="Claude Codeの2アカウントを端末マネージャ越しに連携させ、人間のコピペなしで指示を渡す手順と、実際に踏んだ失敗の記録。--enterの取りこぼし、相手の画面が読めない問題、長い指示が壊れる問題。停止7時間57分を減らすための段取りの話です。">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://d-studylab.com/blog/ai-account-relay.html">
+<meta property="og:title" content="AIに、別のAIへ指示を渡させる——2アカウント連携で実際に踏んだ3つの穴">
+<meta property="og:description" content="--enterの取りこぼし、画面が読めない問題、長い指示が壊れる問題。人間のコピペをゼロにする手順と失敗の記録。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/ai-account-relay.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og/ai-account-relay.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://d-studylab.com/blog/og/ai-account-relay.png">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+
+  .morelinks { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+               padding:16px 18px; margin:30px 0 0; }
+  .morelinks .mt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .morelinks a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+                 border-bottom:1px dashed var(--line); }
+  .morelinks a:last-child { border-bottom:none; }
+  .morelinks .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .morelinks .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+
+  .noteout { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+             padding:16px 18px; margin:34px 0 0; }
+  .noteout .nt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .noteout a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+               border-bottom:1px dashed var(--line); }
+  .noteout a:last-of-type { border-bottom:none; }
+  .noteout .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .noteout .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+  td.warn { color:var(--bad); }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"AIに、別のAIへ指示を渡させる——2アカウント連携で実際に踏んだ3つの穴","description":"Claude Codeの2アカウントを端末マネージャ越しに連携させ、人間のコピペなしで指示を渡す手順と、実際に踏んだ失敗の記録。--enterの取りこぼし、相手の画面が読めない問題、長い指示が壊れる問題。停止7時間57分を減らすための段取りの話です。","url":"https://d-studylab.com/blog/ai-account-relay.html","datePublished":"2026-07-31","dateModified":"2026-07-31","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/ai-account-relay.html"}}</script>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">🔗 AI連携</div>
+  <h1>AIに、別のAIへ指示を渡させる——2アカウント連携で実際に踏んだ3つの穴</h1>
+  <div class="date">2026年7月31日</div>
+
+
+  <p>Claude Code で作業していて、片方のアカウントが週間の利用制限に当たりました。手元にはもう一つ、
+  別契約のアカウントがあります。ならそちらで続ければいい——のですが、これが思ったより面倒でした。</p>
+
+  <p>何をどこまでやったか、どのファイルが正本か、何をやってはいけないか。<b>経緯を全部貼り直す</b>必要があります。
+  それが面倒で、結局しばらく作業が止まっていました。</p>
+
+  <p>止まっていた時間を後から数えたら、<b>実稼働2時間45分に対して停止7時間57分</b>。
+  そのうち3時間50分は「作業を終えて報告し、次の指示を待っていた」だけの時間でした。
+  道具ではなく、段取りの問題です。</p>
+
+  <p>この記事は、その段取りを直したときの<b>具体的な手順と、実際に踏んだ失敗</b>の記録です。
+  2台で分担させること自体の考え方は
+  <a href="/blog/ai-two-seats.html">別の記事</a>に書いたので、ここでは手を動かす側だけを扱います。</p>
+
+  <h2>やったこと：片方から片方へ、人間を経由せずに指示を投げる</h2>
+
+  <p>2つのアカウントを、同じ端末マネージャ（ここでは Orca）の左右のペインで開きます。
+  そのうえで、片方のターミナルからもう片方のターミナルへ直接文字を送れるようにしました。</p>
+
+  <p>まず相手のIDを調べます。</p>
+
+  <p><code>orca terminal list</code></p>
+
+  <p>返ってきた一覧から相手のターミナルIDを拾って、指示を送ります。</p>
+
+  <p><code>orca terminal send --terminal term_yyyy --text "指示の本文" --enter</code></p>
+
+  <p>これだけです。左のペインで動いている Claude Code が、右のペインの Claude Code にタスクを渡せます。
+  人間がコピペする必要はありません。</p>
+
+  <h2>踏んだ穴 1：<code>--enter</code> を忘れると、送信は成功するのに何も起きない</h2>
+
+  <p>これで一度、30分近く無駄にしました。</p>
+
+  <p><code>--enter</code> を付け忘れると、<b>文字は相手の入力欄に入りますが、実行されません</b>。
+  厄介なのは、送った側には <code>Sent 383 bytes</code> のように<b>成功が返ってくる</b>ことです。
+  相手が黙っているので「考え込んでいるのかな」と待ってしまいます。</p>
+
+  <p>対処は2つあります。</p>
+
+  <ul>
+    <li>送信後に必ず <code>orca terminal read</code> で相手の状態を見る。実行中の表示が出ていれば通っている</li>
+    <li>取り残しに気づいたら、改行だけを送れば実行される</li>
+  </ul>
+
+  <p><b>「送信成功」と「実行開始」は別物</b>——これが最初の教訓でした。</p>
+
+  <h2>踏んだ穴 2：相手の画面は「読めない」と思ったほうがいい</h2>
+
+  <p><code>orca terminal read</code> で相手の画面は取れます。ただ、ターミナル上で動くUIは
+  書き換えが激しく、<b>結論だけを綺麗に抜き出すことはできません</b>。
+  実行中かどうかの判定には使えますが、成果物の中身をここから拾おうとすると失敗します。</p>
+
+  <p>そこで<b>結果は必ずファイル経由</b>にしました。指示の中にこう書いておきます。</p>
+
+  <blockquote>結果は D:/path/to/RESULT.md に書いてください。<br>
+  終わったら末尾に STATUS: DONE と入れてください。</blockquote>
+
+  <p>司令塔側はそのファイルだけを読みます。画面を読み取ろうとするのをやめた時点で、確実になりました。</p>
+
+  <h2>踏んだ穴 3：長い指示は、そのまま送らない</h2>
+
+  <p>シェル経由で長文を送ると、引用符やバックスラッシュで壊れます。
+  日本語のWindowsパスは特に危ない。<code>D:\共有フォルダ\2026...</code> の <code>\2</code> が
+  制御文字として解釈されて、パスが別物になる事故を実際に起こしました。</p>
+
+  <p>対策は単純で、<b>長い指示はファイルに書いて、パスを1行だけ送る</b>ことです。</p>
+
+  <p><code>orca terminal send --terminal term_yyyy --text 'D:/path/to/handoff.md を読んで、そのまま作業に入ってください' --enter</code></p>
+
+  <p>ファイルの中に、文脈・担当・禁止事項・完了条件を書いておきます。
+  ここで大事なのは、<b>受け取る側はコンテキストがゼロだと想定して書くこと</b>です。
+  チャットをリセットした直後の相手が、そのファイルだけで動き出せるか。それが基準になります。</p>
+
+  <h2>実際に使っている引き継ぎファイルの形</h2>
+
+  <ul>
+    <li><b>1. 何が起きているか（30秒で）</b>——今の状況。数字を入れる</li>
+    <li><b>2. あなたの担当</b>——何を、どこまで</li>
+    <li><b>3. 手順</b>——順番に</li>
+    <li><b>4. 禁止事項</b>——やってほしくないこと</li>
+    <li><b>5. 終わったら</b>——結果をどこに書くか、何を記録するか</li>
+  </ul>
+
+  <p>意外に効いたのが<b>禁止事項</b>でした。自律的に動く相手ほど、
+  「やること」より<b>「やってほしくないこと」</b>を明示する必要があります。
+  実際にこちらで書いているのは、たとえば「push しない」「個人情報を公開側に持ち込まない」といった行です。</p>
+
+  <h2>効果と、向いていないこと</h2>
+
+  <p>効果は3つありました。人間がコピペする回数がゼロになったこと。片方が制限に当たっても、
+  もう片方が続きを持てるようになったこと。そして<b>片方が調べ物、もう片方が文章、という同時並行ができるようになったこと</b>。
+  制限対策として始めたのに、いちばん大きかったのは最後の並列性でした。</p>
+
+  <p>正直に書いておくと、万能ではありません。</p>
+
+  <table>
+    <tr><th>向いていない</th><th>理由</th></tr>
+    <tr><td>細かい往復</td><td>投げて、待って、ファイルで受け取るので1往復に数分かかる。3行の修正には重い</td></tr>
+    <tr><td>品質の担保</td><td>成果物を読んでレビューする手間は消えない。むしろ増える</td></tr>
+    <tr><td>同じファイルの同時編集</td><td class="warn">どちらが正本を持つか決めておかないと簡単に壊れる</td></tr>
+  </table>
+
+  <p>粒度としては<b>「30分〜数時間で完結し、成果物がファイルで渡せるもの」</b>がちょうどよかったです。
+  調査、下書き、独立した実装、レビュー。このあたり。</p>
+
+  <h2>この記事の要点</h2>
+
+  <ul>
+    <li>送信は <code>--enter</code> を忘れない。<b>送信成功と実行開始は別</b></li>
+    <li>相手の画面は読めない前提で、<b>結果はファイルで受け取る</b></li>
+    <li>長い指示はファイルに書いてパスだけ送る。<b>受け手はコンテキストゼロと想定して書く</b></li>
+    <li><b>禁止事項を明示する</b>。自律的な相手ほど効く</li>
+    <li>粒度は30分〜数時間。細かい往復には向かない</li>
+  </ul>
+
+  <p style="font-size:13.5px;color:var(--sub)">
+  ※2つの正規契約を並行して使っている運用の記録です。利用制限そのものを回避する方法ではありません。
+  数字はすべてこの環境での実測です。</p>
+
+
+  <div class="related">
+    <div class="rt">関連するもの</div>
+    <a href="/blog/ai-two-seats.html">🛠️ AIを2台同時に走らせるとき、いちばん大事だったこと</a>——こちらは分担の考え方<br>
+    <a href="/blog/claude-code-windows.html">🪟 WindowsでClaude Codeを使うと、日本語で3回つまずく</a>——同じ環境で踏んだ別の穴<br>
+    <a href="/blog/">📝 ブログ一覧</a>
+  </div>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

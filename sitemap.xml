@@ -241,4 +241,34 @@
     <lastmod>2026-07-28</lastmod>
     <priority>0.7</priority>
   </url>
+
+  <url>
+    <loc>https://d-studylab.com/blog/ai-account-relay.html</loc>
+    <lastmod>2026-07-31</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://d-studylab.com/blog/search-zero-traffic.html</loc>
+    <lastmod>2026-07-31</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://d-studylab.com/contact.html</loc>
+    <lastmod>2026-07-31</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://d-studylab.com/blog/note-table.html</loc>
+    <lastmod>2026-07-31</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://d-studylab.com/blog/git-binary-file.html</loc>
+    <lastmod>2026-07-31</lastmod>
+    <priority>1.0</priority>
+  </url>
 </urlset>

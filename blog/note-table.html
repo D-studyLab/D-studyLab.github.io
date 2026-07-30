@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>noteに表を貼ると崩れる問題の、いちばん簡単な解決法｜D-studyLab ブログ</title>
+<meta name="description" content="noteのエディタに表の機能はなく、Markdownの表記法も解釈されません。書き方の問題ではないので、直しようがない。2列は箇条書きに畳む、見た目を保つなら幅620px・4列までの画像にする——実際に4本連続で踏んで決めた運用を書きます。">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://d-studylab.com/blog/note-table.html">
+<meta property="og:title" content="noteに表を貼ると崩れる問題の、いちばん簡単な解決法">
+<meta property="og:description" content="noteに表の機能はありません。書き方の問題ではない。箇条書きに畳む／620px・4列までの画像にする、の2択です。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/note-table.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og/note-table.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://d-studylab.com/blog/og/note-table.png">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+
+  .morelinks { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+               padding:16px 18px; margin:30px 0 0; }
+  .morelinks .mt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .morelinks a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+                 border-bottom:1px dashed var(--line); }
+  .morelinks a:last-child { border-bottom:none; }
+  .morelinks .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .morelinks .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+
+  .noteout { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+             padding:16px 18px; margin:34px 0 0; }
+  .noteout .nt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .noteout a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+               border-bottom:1px dashed var(--line); }
+  .noteout a:last-of-type { border-bottom:none; }
+  .noteout .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .noteout .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+  td.warn { color:var(--bad); }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"noteに表を貼ると崩れる問題の、いちばん簡単な解決法","description":"noteのエディタに表の機能はなく、Markdownの表記法も解釈されません。書き方の問題ではないので、直しようがない。2列は箇条書きに畳む、見た目を保つなら幅620px・4列までの画像にする——実際に4本連続で踏んで決めた運用を書きます。","url":"https://d-studylab.com/blog/note-table.html","datePublished":"2026-07-31","dateModified":"2026-07-31","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/note-table.html"}}</script>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">📝 noteの使い方</div>
+  <h1>noteに表を貼ると崩れる問題の、いちばん簡単な解決法</h1>
+  <div class="date">2026年7月31日</div>
+
+
+  <p>noteで記事を書いていて、比較表を入れたくなりました。手元のMarkdownはこう書いてあります。</p>
+
+  <p><code>| 項目 | 前回 | 今回 |</code><br>
+  <code>|---|---|---|</code><br>
+  <code>| 勝率 | 12% | 28% |</code></p>
+
+  <p>これをnoteのエディタに貼ると、こうなります。</p>
+
+  <p><code>| 項目 | 前回 | 今回 | |---|---|---| | 勝率 | 12% | 28% |</code></p>
+
+  <p><b>表ではなく、縦棒とハイフンの羅列がそのまま出ます。</b>しかも改行まで潰れます。</p>
+
+  <p>これを4本の記事で連続して踏みました。毎回「あ、そうだった」と思い出して、毎回手作業で直していました。</p>
+
+  <h2>理由：noteのエディタは表に対応していない</h2>
+
+  <p>先に結論を書くと、<b>noteのエディタには表の機能がありません</b>。
+  見出し・太字・引用・箇条書き・コード・画像・埋め込みはありますが、表はない。</p>
+
+  <p>Markdownの表の書き方（<code>|</code> で区切る書き方）は、そもそも解釈されません。
+  つまり<b>「書き方が悪い」のではなく、機能として存在しない</b>。
+  ここを知らないと、書き方を変えながら延々と試行錯誤することになります。</p>
+
+  <h2>回避策は3つある</h2>
+
+  <h2>1. 箇条書きに畳む（いちばん手軽）</h2>
+
+  <p>2列の表なら、たいてい箇条書きで足ります。</p>
+
+  <ul>
+    <li>勝率：12% → 28%</li>
+    <li>段数：2.2 → 4.8</li>
+  </ul>
+
+  <p>3列以上になると途端に読みにくくなりますが、
+  <b>そもそも3列以上の表は、記事本文には重すぎることが多い</b>です。
+  畳めるなら畳んだほうがいい。最終的にはこれで済ませることが増えました。</p>
+
+  <h2>2. 画像にする（見た目を保ちたいとき）</h2>
+
+  <p>比較表のように「並んでいること自体に意味がある」場合は、画像にするしかありません。手順は3つです。</p>
+
+  <ul>
+    <li>どこかで表を綺麗に表示させる（HTMLで書いてブラウザで開く、表計算ソフト、Markdownのプレビューなど）</li>
+    <li>スクリーンショットを撮る</li>
+    <li>noteに画像として貼る</li>
+  </ul>
+
+  <p>このとき<b>幅に注意</b>します。noteの本文の幅はおよそ<b>620px</b>で、それより大きい画像は縮小されます。
+  横に広い表を貼ると、スマホで見たときに文字が潰れて読めません。</p>
+
+  <p>実際に決めたルールは2つです。</p>
+
+  <table>
+    <tr><th>決めたこと</th><th>理由</th></tr>
+    <tr><td>列は4つまで</td><td>それ以上は本文の幅に収まらない。収まっても読めない</td></tr>
+    <tr><td>横幅620pxで作る</td><td class="warn">大きく作って縮小させると線がにじむ</td></tr>
+  </table>
+
+  <h2>ただし、画像にすると失うものがある</h2>
+
+  <p>画像は手軽ですが、代償があります。ここを承知のうえで選んだほうがいいです。</p>
+
+  <table>
+    <tr><th>失うもの</th><th>どういうことか</th></tr>
+    <tr><td>検索に引っかからない</td><td>画像の中の文字は本文として読まれない。表に入れた言葉では見つけてもらえなくなる</td></tr>
+    <tr><td>読み上げに乗らない</td><td>音声読み上げを使っている読者には、内容がまったく伝わらない</td></tr>
+    <tr><td>あとから直せない</td><td class="warn">数字が1つ変わっただけでも、作り直して貼り直すことになる</td></tr>
+  </table>
+
+  <p>とくに3つ目が効きます。<b>更新する可能性がある表ほど、画像にしないほうがいい。</b>
+  逆に「この記事のこの時点の記録」として固定される表なら、画像で困りません。</p>
+
+  <h2>3. 外部サービスの埋め込み（正直おすすめしない）</h2>
+
+  <p>スプレッドシートなどを埋め込む方法もあります。ただ、<b>外部サービスが消えたら記事も壊れます</b>。
+  数年後も読まれる記事にするなら、画像のほうが安全だと考えています。</p>
+
+  <h2>やっている運用</h2>
+
+  <p>記事の下書きはMarkdownで書きます。そのまま貼れないので、<b>公開の直前に表だけを処理します</b>。</p>
+
+  <ul>
+    <li>2列 → 箇条書きに畳む</li>
+    <li>3列以上で意味がある → 画像にする</li>
+    <li>どちらでもない → <b>その表は要らなかった</b>、と判断して消す</li>
+  </ul>
+
+  <p>3つ目が意外と多いです。表にしようとしたけれど、実は文章で1行書けば済む内容だった、ということがよくあります。</p>
+
+  <h2>捨てる表かどうかの見分け方</h2>
+
+  <p>「この表は要るのか」を毎回悩むと時間が溶けるので、判断を決めておきました。
+  <b>行と列のどちらかが2つしかないなら、たいてい文章のほうが速い</b>です。</p>
+
+  <ul>
+    <li><b>比べる軸が1つ</b>（前と後、AとB）→ 文章か箇条書きで足りる</li>
+    <li><b>比べる軸が2つ以上</b>（項目 × 条件）→ ここで初めて表の出番。画像にする価値がある</li>
+    <li><b>並びに意味がない</b>（順不同の列挙）→ そもそも表ではなく箇条書き</li>
+  </ul>
+
+  <p>検索すると「noteで表を作る方法」の答えは<b>「箇条書きにしましょう」で終わっている記事が多い</b>のですが、
+  それは半分正しくて半分不親切だと思っています。
+  畳める表は畳めばいい。<b>畳めない表のときにどうするか</b>——幅620px・4列まで、というのがその答えです。</p>
+
+  <p>さらに、同じ失敗を繰り返さないために、<b>下書きに表が残っていたら公開前に止める仕組み</b>を入れました。
+  記事を出力するスクリプトの中で、<code>|</code> で始まる行が2行以上続いていたら警告を出すだけの、
+  10行程度の処理です。</p>
+
+  <p>これで4本連続の手直しが止まりました。
+  <b>人間の注意力ではなく、道具の側に覚えさせる</b>のが、結局いちばん確実でした。</p>
+
+  <h2>まとめ</h2>
+
+  <ul>
+    <li>noteに<b>表の機能はない</b>。Markdownの表記法は解釈されない（書き方の問題ではない）</li>
+    <li>2列なら<b>箇条書きに畳む</b>のがいちばん速い</li>
+    <li>見た目を保ちたいなら<b>画像</b>にする。<b>幅620px・4列まで</b></li>
+    <li>外部埋め込みは、記事の寿命を外部サービスに預けることになるので避けている</li>
+    <li>そして<b>表にしようとした内容の3割くらいは、そもそも表が要らない</b></li>
+  </ul>
+
+  <p style="font-size:13.5px;color:var(--sub)">
+  ※2026年7月時点のnoteのエディタで確認した挙動です。仕様は変わることがあります。</p>
+
+
+  <div class="related">
+    <div class="rt">関連するもの</div>
+    <a href="/blog/note-data.html">📊 noteのデータを自分で取る</a>——note関連のもう1本<br>
+    <a href="/blog/claude-code-windows.html">🪟 WindowsでClaude Codeを使うと、日本語で3回つまずく</a>——同じ「毎回踏む」系の話<br>
+    <a href="/blog/">📝 ブログ一覧</a>
+  </div>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

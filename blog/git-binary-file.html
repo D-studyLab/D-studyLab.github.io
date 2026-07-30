@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>GitHubが差分を表示しなくなった——原因は文字コードではなかった｜D-studyLab ブログ</title>
+<meta name="description" content="テキストのはずのJavaScriptがgitにバイナリ扱いされ、差分が読めなくなりました。原因は文字コードでも改行コードでもなく、正規表現の中に生の制御文字が2バイト入っていたことでした。fileコマンドから1分で特定する手順を書きます。">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://d-studylab.com/blog/git-binary-file.html">
+<meta property="og:title" content="GitHubが差分を表示しなくなった——原因は文字コードではなかった">
+<meta property="og:description" content="142,619バイト中の2バイト。gitはNULバイトが1つでもあればバイナリ扱いにします。特定手順を実測で。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/git-binary-file.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og/git-binary-file.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://d-studylab.com/blog/og/git-binary-file.png">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+
+  .morelinks { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+               padding:16px 18px; margin:30px 0 0; }
+  .morelinks .mt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .morelinks a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+                 border-bottom:1px dashed var(--line); }
+  .morelinks a:last-child { border-bottom:none; }
+  .morelinks .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .morelinks .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+
+  .noteout { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+             padding:16px 18px; margin:34px 0 0; }
+  .noteout .nt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .noteout a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+               border-bottom:1px dashed var(--line); }
+  .noteout a:last-of-type { border-bottom:none; }
+  .noteout .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .noteout .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+  td.warn { color:var(--bad); }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"GitHubが差分を表示しなくなった——原因は文字コードではなかった","description":"テキストのはずのJavaScriptがgitにバイナリ扱いされ、差分が読めなくなりました。原因は文字コードでも改行コードでもなく、正規表現の中に生の制御文字が2バイト入っていたことでした。fileコマンドから1分で特定する手順を書きます。","url":"https://d-studylab.com/blog/git-binary-file.html","datePublished":"2026-07-31","dateModified":"2026-07-31","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/git-binary-file.html"}}</script>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">🧩 開発のつまずき</div>
+  <h1>GitHubが差分を表示しなくなった——原因は文字コードではなかった</h1>
+  <div class="date">2026年7月31日</div>
+
+
+  <p>公開用のリポジトリにJavaScriptのファイルを1つ足したら、GitHubが差分を出さなくなりました。
+  画面に出るのはこの1行だけです。</p>
+
+  <p><code>static/app.js | Bin 138544 -&gt; 142619 bytes</code></p>
+
+  <p><b><code>Bin</code></b> ——バイナリ扱いです。テキストのはずのJavaScriptが、
+  画像や実行ファイルと同じ扱いになっている。差分が読めないので、レビューもできません。</p>
+
+  <p>最初は文字コードか改行コードを疑いました。<b>どちらも違いました。</b>
+  原因が分かるまでの手順と、実際の原因を書きます。</p>
+
+  <h2>1. 何が起きているかを確かめる</h2>
+
+  <p>まず、そのファイルが本当にテキストとして読めるのかを見ます。</p>
+
+  <p><code>file static/app.js</code></p>
+
+  <p>返ってきたのは <code>data</code> でした。同じ種類の別ファイルは <code>UTF-8 Unicode text</code> と出ます。
+  つまり<b>gitの気まぐれではなく、ファイルの中身がテキストとして扱えない状態</b>だと分かります。</p>
+
+  <p>ここで文字コードの破損を疑いましたが、Pythonで <code>decode('utf-8')</code> は通りました。
+  UTF-8としては正しい。壊れているわけではありません。</p>
+
+  <h2>2. gitが「バイナリ」と判定する条件</h2>
+
+  <p>gitは、ファイルの先頭のかたまりを見て<b>NULバイト（<code>0x00</code>）が含まれていればバイナリ</b>と判定します。
+  拡張子は見ていません。<code>.js</code> でも <code>.txt</code> でも、NULが1つ入っていればバイナリです。</p>
+
+  <p>つまり探すべきものは「文字化け」ではなく、<b>本来テキストに入らないはずの制御文字</b>でした。</p>
+
+  <h2>3. 制御文字を探す</h2>
+
+  <p>ファイルを1バイトずつ見て、制御文字の位置を出します。</p>
+
+  <p><code>bad = [(i, c) for i, c in enumerate(open('app.js','rb').read()) if c &lt; 9 or 13 &lt; c &lt; 32]</code></p>
+
+  <p>結果は<b>2バイトだけ</b>。142,619バイト中の2バイトです。しかも隣り合っていました。
+  <code>0x00</code> と <code>0x1F</code>。前後の文字列を出すと、こう書かれていました。</p>
+
+  <blockquote>if (p.length &gt; 3 &amp;&amp; !/[■-■]/.test(p) &amp;&amp; ...<br>
+  <span style="font-size:12.5px">※ ■ の位置に入っていたのが問題のバイト。<b>画面上は何も見えません</b>（幅ゼロで表示されるため、
+  ここでは便宜的に ■ と書いています）</span></blockquote>
+
+  <p>正規表現です。<b>「制御文字を除外する」という意図のコードに、制御文字が生で入っていた。</b>
+  そして見えないので、コードを目で追っても気づけません。</p>
+
+  <p>本来は <code>/[\x00-\x1f]/</code> と<b>4文字の文字列として</b>書くべきところが、
+  <code>\x00</code> と <code>\x1f</code> が<b>実際のバイトそのもの</b>として保存されていました。
+  正規表現としては同じ意味なので、コードは正しく動きます。エラーも出ません。
+  <b>動くのに、ファイルがバイナリになる</b>——これが厄介なところでした。</p>
+
+  <h2>4. 直す</h2>
+
+  <p>生のバイトを、エスケープした文字列に置き換えます。意味は変わりません。</p>
+
+  <p>置換したら <code>file</code> の結果は <code>UTF-8 Unicode text</code> に戻り、
+  差分も <code>Bin</code> ではなく <code>104 insertions(+), 17 deletions(-)</code> と、
+  ふつうの行単位の表示になりました。</p>
+
+  <h2>なぜ混入したのか</h2>
+
+  <p>はっきりした原因は、エディタやツールを経由するあいだに
+  <b>エスケープ表記が「解釈されて」実体のバイトになった</b>ことだと考えています。
+  たとえば文字列としてこの正規表現を組み立てて、どこかで一度展開してからファイルに書けば、こうなります。</p>
+
+  <p>実際、この記事を書くために調査していたときも、シェル経由でバックスラッシュを渡そうとして
+  <b>同じ取り違えを起こしました</b>。<code>\\x00</code> と書いたつもりが <code>\x00</code> になって届き、
+  「置換したのに何も変わらない」という状態になった。バックスラッシュは、経路の数だけ消えます。</p>
+
+  <h2>この症状のときに見る順番</h2>
+
+  <ul>
+    <li><b><code>file</code> で確かめる</b>——<code>data</code> と出たら中身の問題。gitの設定ではない</li>
+    <li><b>UTF-8として復号できるか試す</b>——通るなら文字コードの破損ではない</li>
+    <li><b>制御文字を数える</b>——<code>0x00</code> が1つでもあればgitはバイナリと判定する</li>
+    <li><b>正規表現・文字列リテラルの中を疑う</b>——「制御文字を扱うコード」がいちばん怪しい</li>
+    <li>直したら <b><code>file</code> と <code>git diff --stat</code> の両方で戻ったことを確認する</b></li>
+  </ul>
+
+  <p>ちなみに <code>.gitattributes</code> に <code>*.js text</code> と書けば、
+  gitに「これはテキストだ」と強制することもできます。
+  ただし<b>それは表示を変えるだけで、混入した制御文字は残ります</b>。
+  症状を隠すことになるので、まず中身を直したほうがいいと思います。</p>
+
+  <h2>まとめ</h2>
+
+  <ul>
+    <li>gitは<b>NULバイトが1つでもあればバイナリ扱い</b>にする。拡張子は関係ない</li>
+    <li>今回の原因は<b>正規表現の中に生の制御文字が入っていたこと</b>。コードは正しく動いていた</li>
+    <li><b>動くのに差分が読めない</b>という形で出るので、実行時のエラーを探しても見つからない</li>
+    <li><code>file</code> → UTF-8復号 → 制御文字の位置、の順で1分で特定できる</li>
+    <li>バックスラッシュは<b>経路の数だけ消える</b>。置換したのに変わらないときは、まずそれを疑う</li>
+  </ul>
+
+  <p style="font-size:13.5px;color:var(--sub)">
+  ※Windows 11・Git for Windows の環境で実際に踏んだものです。バイト数や差分の行数は実測値です。</p>
+
+
+  <div class="related">
+    <div class="rt">関連するもの</div>
+    <a href="/blog/claude-code-windows.html">🪟 WindowsでClaude Codeを使うと、日本語で3回つまずく</a>——改行コードと文字コードの話<br>
+    <a href="/blog/ai-account-relay.html">🔗 AIに、別のAIへ指示を渡させる</a>——ここでもバックスラッシュに引っかかった<br>
+    <a href="/blog/">📝 ブログ一覧</a>
+  </div>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
