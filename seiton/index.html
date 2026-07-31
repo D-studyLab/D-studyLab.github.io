@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="星頓は、メモやフォルダを放り込むだけで関係を星図にする、手元で完結する個人ハブです。クラウドなし、サブスクなし、アカウント登録なし。">
+  <link rel="canonical" href="https://d-studylab.com/seiton/">
+  <link rel="alternate" hreflang="ja" href="https://d-studylab.com/seiton/">
+  <link rel="alternate" hreflang="en" href="https://d-studylab.com/seiton/en/">
+  <meta property="og:title" content="星頓（Seiton） - 散らかしたまま、片づく。">
+  <meta property="og:description" content="星頓は、メモやフォルダを放り込むだけで関係を星図にする、手元で完結する個人ハブです。クラウドなし、サブスクなし、アカウント登録なし。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://d-studylab.com/seiton/">
+  <meta property="og:image" content="https://d-studylab.com/seiton/assets/press/screenshot-galaxy.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <title>星頓（Seiton） - 散らかしたまま、片づく。</title>
+  <style>
+:root {
+  --ink: #0d1219;
+  --ink-2: #111825;
+  --panel: #151d2a;
+  --panel-2: #1a2434;
+  --line: rgba(212, 180, 120, .34);
+  --line-soft: rgba(212, 180, 120, .16);
+  --gold: #d4b378;
+  --gold-hi: #f0d9a8;
+  --text: #f2ecdd;
+  --sub: #b4bdcc;
+  --faint: #8a93a5;
+  --time: #d4b378;
+  --hier: #8cc6b9;
+  --orbit: #b0a3d8;
+  --danger: #d08d80;
+  --ok: #9fc08d;
+  --serif: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", "MS PMincho", Georgia, serif;
+  --sans: "Yu Gothic UI", "Yu Gothic", Meiryo, Verdana, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--ink); }
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+#stars {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  background:
+    radial-gradient(circle at 50% 10%, rgba(45,62,93,.48), transparent 36%),
+    linear-gradient(180deg, #10192d 0%, #07101f 100%);
+}
+.page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(240,217,168,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240,217,168,.028) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(180deg, rgba(0,0,0,.85), rgba(0,0,0,.18));
+}
+.wrap { width: min(1120px, calc(100% - 48px)); margin: 0 auto; }
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(18px);
+  background: rgba(13,18,25,.78);
+  border-bottom: 1px solid var(--line-soft);
+}
+.nav-inner { height: 66px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.wordmark { display: flex; align-items: baseline; gap: 10px; font-family: var(--serif); color: var(--gold-hi); }
+.wordmark b { font-size: 21px; font-weight: 600; }
+.wordmark span { color: var(--sub); font-size: 13px; }
+.nav-links { display: flex; align-items: center; gap: 8px; color: var(--sub); font-size: 13px; }
+.nav-links a { border: 1px solid transparent; border-radius: 999px; padding: 6px 11px; }
+.nav-links a:hover, .nav-links a.current { color: var(--gold-hi); border-color: var(--line); background: rgba(212,180,120,.08); }
+.hero { min-height: calc(100svh - 66px); display: grid; align-items: center; padding: 84px 0 64px; position: relative; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) 430px; gap: 48px; align-items: center; }
+.kicker { color: var(--hier); font-size: 13px; margin: 0 0 18px; }
+h1 { font-family: var(--serif); color: var(--gold-hi); font-size: 76px; font-weight: 500; line-height: 1.05; margin: 0; }
+h1 ruby rt { color: var(--sub); font-size: 15px; }
+.hero h2 { font-family: var(--serif); font-size: 34px; line-height: 1.35; font-weight: 400; margin: 18px 0 0; color: var(--text); }
+.hero-copy { color: var(--sub); font-size: 17px; max-width: 650px; margin: 22px 0 0; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.hero-nos { display: flex; flex-wrap: wrap; gap: 6px 20px; margin: 20px 0 0; color: var(--gold-hi); font-size: 13.5px; letter-spacing: .05em; }
+.hero-nos span::before { content: "\2726"; color: var(--gold); opacity: .65; margin-right: 7px; font-size: 10px; vertical-align: 1px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0 18px; border-radius: 8px; border: 1px solid var(--line); color: var(--gold-hi); font-weight: 600; }
+.btn.primary { color: #101827; background: linear-gradient(180deg, var(--gold-hi), var(--gold)); border-color: transparent; }
+.btn:hover { transform: translateY(-1px); }
+.hero-figure { position: relative; min-height: 430px; }
+.constellation { position: absolute; inset: 0; }
+.constellation svg { width: 100%; height: 100%; overflow: visible; }
+.constellation path { stroke: rgba(212,180,120,.42); stroke-width: 1.2; fill: none; }
+.constellation circle { filter: drop-shadow(0 0 10px rgba(240,217,168,.42)); }
+.badge {
+  position: absolute;
+  right: 12px;
+  bottom: 18px;
+  width: 230px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(13,18,25,.72);
+  padding: 16px;
+}
+.badge strong { color: var(--gold-hi); font-family: var(--serif); font-weight: 500; }
+.badge p { color: var(--sub); font-size: 13px; margin: 8px 0 0; }
+section { padding: 76px 0; }
+.section-head { margin-bottom: 28px; max-width: 820px; }
+.eyebrow { color: var(--gold); font-size: 13px; margin: 0 0 8px; }
+h2 { font-family: var(--serif); font-size: 38px; line-height: 1.25; margin: 0; color: var(--gold-hi); font-weight: 500; }
+.section-head p { color: var(--sub); margin: 14px 0 0; font-size: 16px; }
+.demo-frame { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #07101f; box-shadow: 0 18px 60px rgba(0,0,0,.28); }
+.demo-frame img { width: 100%; }
+.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.card { border: 1px solid var(--line-soft); border-radius: 8px; background: linear-gradient(180deg, rgba(21,29,42,.94), rgba(26,36,52,.8)); padding: 22px; }
+.card .mark { width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--gold-hi); font-family: var(--serif); margin-bottom: 18px; }
+.card h3 { margin: 0; color: var(--gold-hi); font-family: var(--serif); font-weight: 500; font-size: 22px; }
+.card p { color: var(--sub); margin: 10px 0 0; font-size: 14px; }
+.scale-list { display: grid; gap: 18px; }
+.scale-item { display: grid; grid-template-columns: 1fr 1.25fr; gap: 24px; align-items: center; border-top: 1px solid var(--line-soft); padding-top: 24px; }
+.scale-copy h3 { font-family: var(--serif); color: var(--gold-hi); font-size: 26px; font-weight: 500; margin: 0; }
+.scale-copy p { color: var(--sub); margin: 10px 0 0; }
+.screen { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #07101f; }
+.privacy { background: #05080e; border-top: 1px solid rgba(212,180,120,.16); border-bottom: 1px solid rgba(212,180,120,.16); }
+.privacy-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 36px; align-items: center; }
+.principles { display: grid; gap: 12px; }
+.principle { display: grid; grid-template-columns: 28px 1fr; gap: 12px; color: var(--sub); }
+.principle b { color: var(--text); }
+.dot { width: 12px; height: 12px; margin-top: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 18px rgba(212,180,120,.55); }
+.download-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.download-card { min-height: 244px; display: flex; flex-direction: column; }
+.download-card code { color: var(--hier); word-break: break-word; font-size: 13px; }
+.download-card .btn { margin-top: auto; width: 100%; }
+.note { margin-top: 18px; color: var(--faint); font-size: 13px; border-left: 2px solid var(--line); padding-left: 14px; }
+footer { padding: 36px 0 46px; color: var(--faint); border-top: 1px solid var(--line-soft); }
+.footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
+.footer-links { display: flex; gap: 14px; }
+.footer-links a:hover { color: var(--gold-hi); }
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.in { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .btn:hover { transform: none; }
+}
+@media (max-width: 860px) {
+  .wrap { width: min(100% - 32px, 680px); }
+  .nav-inner { height: auto; min-height: 62px; align-items: flex-start; flex-direction: column; padding: 12px 0; }
+  .nav-links { width: 100%; overflow-x: auto; padding-bottom: 2px; }
+  .hero { min-height: auto; padding: 64px 0 44px; }
+  .hero-grid, .scale-item, .privacy-grid { grid-template-columns: 1fr; }
+  .hero-figure { min-height: 310px; order: -1; }
+  h1 { font-size: 54px; }
+  .hero h2 { font-size: 28px; }
+  .feature-grid, .download-grid { grid-template-columns: 1fr; }
+  section { padding: 56px 0; }
+  h2 { font-size: 31px; }
+  .badge { right: 0; bottom: 0; width: 210px; }
+}
+@media (max-width: 430px) {
+  .wrap { width: calc(100% - 24px); }
+  .wordmark span { display: none; }
+  h1 { font-size: 45px; }
+  .hero h2 { font-size: 24px; }
+  .hero-copy { font-size: 15px; }
+  .cta-row .btn { width: 100%; }
+  .hero-figure { min-height: 260px; }
+  .badge { position: relative; width: 100%; margin-top: 12px; }
+  .constellation { inset: 0 0 54px; }
+  .card { padding: 18px; }
+  .footer-inner { display: block; }
+  .footer-links { margin-top: 12px; flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="page">
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="wordmark" href="#top"><b>Seiton</b><span>仕事の星図</span></a>
+      <nav class="nav-links" aria-label="Primary navigation"><a href="/" title="D-studyLab">D-studyLab</a><a href="#features">特徴</a><a href="#scale">3スケール</a><a href="#privacy">プライバシー</a><a href="#download">ダウンロード</a><a class="current" href="./">JA</a><a class="" href="en/">EN</a></nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-text reveal">
+          <p class="kicker">手元で完結する個人ハブ</p>
+          <h1><ruby>星頓<rt>せいとん</rt></ruby></h1>
+          <h2>散らかしたまま、片づく。</h2>
+          <p class="hero-copy">メモ、リンク、ファイル、フォルダをそのまま置く。タグと関係があとから編まれ、あなたの仕事が銀河、星系、星として見えてきます。</p>
+          <p class="hero-nos"><span>クラウドに送らない。</span><span>アカウント登録なし。</span><span>依存ゼロ。</span></p>
+          <div class="cta-row">
+            <a class="btn primary" href="https://github.com/D-studyLab/seiton">GitHubで見る</a>
+            <a class="btn" href="https://github.com/D-studyLab/seiton/releases">ダウンロード</a>
+          </div>
+        </div>
+        <div class="hero-figure reveal">
+          <div class="constellation" aria-hidden="true"><svg viewBox="0 0 430 430">
+      <path d="M82 210 C134 128 248 112 340 172" />
+      <path d="M94 246 C172 322 278 316 352 232" />
+      <path d="M178 104 C236 194 236 260 180 340" />
+      <path d="M100 210 L194 176 L302 218 L214 286 L100 210" />
+      <circle cx="100" cy="210" r="9" fill="#d4b378" />
+      <circle cx="194" cy="176" r="13" fill="#f0d9a8" />
+      <circle cx="302" cy="218" r="10" fill="#8cc6b9" />
+      <circle cx="214" cy="286" r="12" fill="#b0a3d8" />
+      <circle cx="180" cy="340" r="7" fill="#d08d80" />
+      <circle cx="340" cy="172" r="6" fill="#d4b378" />
+    </svg></div>
+          <div class="badge"><strong>5秒で文脈復帰</strong><p>直前、いま、次の一手を航路として残します。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo" aria-labelledby="demo-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Motion</p>
+          <h2 id="demo-title">ベタ置きから星図へ</h2>
+          <p>放り込む・編む・辿る。星頓の基本の流れを短いデモで。</p>
+        </div>
+        <figure class="demo-frame reveal">
+          <video src="assets/seiton-demo.mp4" autoplay loop muted playsinline preload="metadata" aria-label="星頓の概要デモ" style="width:100%;display:block"></video>
+        </figure>
+      </div>
+    </section>
+
+    <section id="features" aria-labelledby="features-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Why Seiton?</p>
+          <h2 id="features-title">整理しない勇気を、後から編める形に。</h2>
+          <p>星頓はノート帳でもタスク管理でもなく、散らかった仕事の関係地図です。</p>
+        </div>
+        <div class="feature-grid">
+      <article class="card reveal">
+        <div class="mark">一</div>
+        <h3>ベタ置きでいい</h3>
+        <p>置き場所を決める前に、いまの断片を逃さず受信箱へ。整理はあとで、AIと一緒に。</p>
+      </article>
+      <article class="card reveal">
+        <div class="mark">二</div>
+        <h3>関係が星図になる</h3>
+        <p>after、part_of、related。意味を持つ方向で、フォルダ階層より速く文脈へ戻れます。</p>
+      </article>
+      <article class="card reveal">
+        <div class="mark">三</div>
+        <h3>あなたのAIが、あなたのPCで</h3>
+        <p>AI連携は任意CLIか手動コピペ。テレメトリも隠れたクラウド同期もありません。</p>
+      </article></div>
+      </div>
+    </section>
+
+    <section id="scale" aria-labelledby="scale-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Three Scales</p>
+          <h2 id="scale-title">銀河、星系、星。見る粒度を変える。</h2>
+          <p>全体を見て、中心へ寄り、最後はひとつの星に触れる。</p>
+        </div>
+        <div class="scale-list">
+      <article class="scale-item reveal">
+        <div class="scale-copy">
+          <h3>銀河</h3>
+          <p>タグのまとまりと大きな流れを俯瞰します。散らばった作業がどの領域に集まっているかが見えます。</p>
+        </div>
+        <figure class="screen">
+          <img src="assets/press/screenshot-galaxy.png" loading="lazy" decoding="async" alt="銀河俯瞰">
+        </figure>
+      </article>
+      <article class="scale-item reveal">
+        <div class="scale-copy">
+          <h3>星系</h3>
+          <p>ひとつの項目を中心に、前後・上下・周囲の関係を意味のある方向で読みます。</p>
+        </div>
+        <figure class="screen">
+          <img src="assets/press/screenshot-system.png" loading="lazy" decoding="async" alt="星の詳細と関係">
+        </figure>
+      </article>
+      <article class="scale-item reveal">
+        <div class="scale-copy">
+          <h3>星</h3>
+          <p>デスクで今日の航路、最近の作業、受信箱を確認し、次の一手へ戻ります。</p>
+        </div>
+        <figure class="screen">
+          <img src="assets/press/screenshot-desk.png" loading="lazy" decoding="async" alt="デスク画面">
+        </figure>
+      </article></div>
+      </div>
+    </section>
+
+    <section id="privacy" class="privacy" aria-labelledby="privacy-title">
+      <div class="wrap privacy-grid">
+        <div class="section-head reveal">
+          <p class="eyebrow">Privacy</p>
+          <h2 id="privacy-title">プライバシー原則</h2>
+          <p>黒い箱ではなく、あなたの机の上で動く道具です。読んでよい場所はあなたが決めます。</p>
+        </div>
+        <div class="principles">
+      <div class="principle reveal"><span class="dot"></span><p><b>完全ローカル</b><br>127.0.0.1 のローカルサーバーと SQLite。クラウド同期はありません。</p></div>
+      <div class="principle reveal"><span class="dot"></span><p><b>許可した場所しか読まない</b><br>設定した許可ルートだけを読みます。名前だけ/内容も解析をルートごとに選べます。</p></div>
+      <div class="principle reveal"><span class="dot"></span><p><b>テレメトリなし</b><br>使用状況を送信しません。AIはあなたが設定したCLIか手動コピペだけです。</p></div></div>
+      </div>
+    </section>
+
+    <section id="download" aria-labelledby="download-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Download</p>
+          <h2 id="download-title">好きな配り方で始める。</h2>
+          <p>成果物はGitHub Releasesで配布しています。Windows版、ソース版、クローンの3通りから選べます。</p>
+        </div>
+        <div class="download-grid">
+      <article class="card download-card reveal">
+        <h3>Windows版</h3>
+        <p>展開して起動するだけ。Pythonは要りません。<code>seiton.exe</code> か、タスクトレイに常駐させるなら <code>seiton-tray.exe</code> を。</p>
+        <p><code>seiton-v1.1.0-win64.zip</code></p>
+        <a class="btn" href="https://github.com/D-studyLab/seiton/releases/latest">Releasesからダウンロード</a>
+      </article>
+      <article class="card download-card reveal">
+        <h3>ソース版</h3>
+        <p>Python 3.9以上だけで動きます。<code>pip install</code>もNode.jsもDockerも要りません。</p>
+        <p><code>seiton-v1.1.0-portable.zip</code></p>
+        <a class="btn" href="https://github.com/D-studyLab/seiton/releases/latest">Releasesからダウンロード</a>
+      </article>
+      <article class="card download-card reveal">
+        <h3>クローン</h3>
+        <p>開発者向け。依存ゼロなので、cloneしてseiton.cmdを押すだけです。</p>
+        <p><code>git clone https://github.com/D-studyLab/seiton.git</code></p>
+        <a class="btn" href="https://github.com/D-studyLab/seiton">GitHubで見る</a>
+      </article></div>
+        <p class="note reveal">v1.1.0 は上記のzip 2種のみの配布で、インストーラーは次のリリースを予定しています。未署名のWindowsビルドではSmartScreen警告が出る場合があります。公式Releasesから取得したものだけを実行し、信頼できる場合は「詳細情報」→「実行」を選んでください。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div>D-studyLab / MIT / Stay messy. Get sorted.</div>
+      <div class="footer-links"><a href="https://github.com/D-studyLab/seiton">GitHub</a><a href="https://github.com/D-studyLab/seiton/releases">Releases</a></div>
+    </div>
+  </footer>
+</div>
+<script>
+(() => {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  const resize = () => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.floor(innerWidth * dpr);
+    canvas.height = Math.floor(innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const count = Math.min(150, Math.max(60, Math.floor(innerWidth * innerHeight / 9000)));
+    stars = Array.from({ length: count }, (_, i) => ({
+      x: Math.random() * innerWidth,
+      y: Math.random() * innerHeight,
+      r: Math.random() * 1.4 + .35,
+      a: Math.random() * .55 + .15,
+      p: Math.random() * Math.PI * 2,
+      h: i % 7 === 0 ? '#d4b378' : '#d7deee'
+    }));
+  };
+  const draw = (t = 0) => {
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    for (const s of stars) {
+      const alpha = reduce ? s.a : s.a + Math.sin(t / 1400 + s.p) * .16;
+      ctx.globalAlpha = Math.max(.06, alpha);
+      ctx.fillStyle = s.h;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    if (!reduce) requestAnimationFrame(draw);
+  };
+  resize();
+  addEventListener('resize', resize, { passive: true });
+  draw();
+  const io = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) entry.target.classList.add('in');
+  }, { threshold: .12 }) : null;
+  document.querySelectorAll('.reveal').forEach(el => io ? io.observe(el) : el.classList.add('in'));
+})();
+</script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
