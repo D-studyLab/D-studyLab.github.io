@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>ほぐし処 やまぶき｜盛岡市内の整体・もみほぐし 50分3,000円均一</title>
+<style>
+  :root {
+    --green: #2f6b4f;
+    --green-dark: #24523d;
+    --green-pale: #e8f0ea;
+    --cream: #faf7f1;
+    --ink: #33322e;
+    --ink-soft: #6b6a63;
+    --line: #e5e0d5;
+    --accent: #c96f4a;
+    --accent-soft: #f7e9e2;
+    --radius: 14px;
+    --maxw: 1040px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic Medium", "Yu Gothic", "Noto Sans JP", "Meiryo", sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 64px; /* 下部固定CTAぶん */
+  }
+  img { max-width: 100%; }
+  a { color: var(--green); }
+
+  /* ---------- header ---------- */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250,247,241,.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .header-inner {
+    max-width: var(--maxw); margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 20px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand-mark {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--green);
+    display: grid; place-items: center;
+    color: #fff; font-size: 19px; flex: none;
+  }
+  .brand-name { font-weight: 700; font-size: 18px; color: var(--ink); letter-spacing: .06em; }
+  .brand-sub { font-size: 10.5px; color: var(--ink-soft); letter-spacing: .1em; display: block; line-height: 1.3; }
+  nav { display: flex; gap: 22px; }
+  nav a { text-decoration: none; color: var(--ink); font-size: 14px; font-weight: 500; }
+  nav a:hover { color: var(--green); }
+  .header-tel {
+    display: none;
+    background: var(--green); color: #fff; text-decoration: none;
+    padding: 9px 18px; border-radius: 999px; font-weight: 700; font-size: 14px;
+  }
+  @media (min-width: 760px) {
+    .header-tel { display: inline-block; }
+  }
+  @media (max-width: 759px) {
+    nav { display: none; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative; overflow: hidden;
+    background: linear-gradient(160deg, #dcebe0 0%, #f2ede1 55%, #faf7f1 100%);
+  }
+  .hero::before {
+    content: "";
+    position: absolute; right: -120px; top: -120px;
+    width: 420px; height: 420px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(47,107,79,.14), rgba(47,107,79,0) 70%);
+  }
+  .hero-inner {
+    max-width: var(--maxw); margin: 0 auto;
+    padding: 64px 20px 56px; position: relative;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--accent); color: #fff;
+    font-weight: 700; font-size: 14px;
+    padding: 6px 16px; border-radius: 999px;
+    letter-spacing: .05em; margin-bottom: 18px;
+    box-shadow: 0 4px 12px rgba(201,111,74,.3);
+  }
+  h1 {
+    font-size: clamp(30px, 5.4vw, 46px);
+    line-height: 1.4; font-weight: 700; letter-spacing: .04em;
+    margin-bottom: 14px;
+  }
+  h1 .soft { color: var(--green); }
+  .hero-lead { font-size: clamp(15px, 2.4vw, 17px); color: var(--ink-soft); max-width: 34em; margin-bottom: 30px; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    text-decoration: none; font-weight: 700;
+    padding: 15px 30px; border-radius: 999px; font-size: 16px;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-tel { background: var(--green); color: #fff; box-shadow: 0 6px 16px rgba(47,107,79,.3); }
+  .btn-line { background: #fff; color: var(--green); border: 2px solid var(--green); }
+  .hero-note { font-size: 12.5px; color: var(--ink-soft); margin-top: 14px; }
+  .hero-info {
+    margin-top: 34px; display: flex; flex-wrap: wrap; gap: 10px 26px;
+    font-size: 13.5px; color: var(--ink-soft);
+  }
+  .hero-info span::before { content: "●"; color: var(--green); font-size: 8px; vertical-align: 2px; margin-right: 6px; }
+
+  /* ---------- sections ---------- */
+  section { padding: 64px 20px; }
+  .inner { max-width: var(--maxw); margin: 0 auto; }
+  .sec-label {
+    text-align: center; color: var(--green); font-size: 12.5px;
+    letter-spacing: .28em; font-weight: 700; margin-bottom: 8px;
+  }
+  h2 {
+    text-align: center; font-size: clamp(23px, 4vw, 30px);
+    letter-spacing: .06em; margin-bottom: 40px; line-height: 1.5;
+  }
+
+  /* お悩み */
+  .worries { background: #fff; }
+  .worry-list {
+    max-width: 620px; margin: 0 auto; display: grid; gap: 12px;
+  }
+  .worry-list li {
+    list-style: none; background: var(--cream);
+    border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 14px 18px 14px 46px; position: relative; font-size: 15px;
+  }
+  .worry-list li::before {
+    content: "✓"; position: absolute; left: 16px; top: 13px;
+    color: var(--accent); font-weight: 700;
+  }
+  .worry-close {
+    text-align: center; margin-top: 30px; font-size: clamp(17px,3vw,20px); font-weight: 700;
+  }
+  .worry-close strong { color: var(--green); border-bottom: 3px solid var(--accent-soft); }
+
+  /* 選ばれる理由 */
+  .reasons-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .reason {
+    background: #fff; border-radius: var(--radius);
+    padding: 30px 24px; border: 1px solid var(--line);
+    box-shadow: 0 2px 10px rgba(51,50,46,.04);
+  }
+  .reason-num {
+    font-size: 13px; color: var(--accent); font-weight: 700; letter-spacing: .18em;
+  }
+  .reason h3 { font-size: 19px; margin: 6px 0 12px; letter-spacing: .04em; }
+  .reason p { font-size: 14.5px; color: var(--ink-soft); }
+  .reason .big { font-size: 26px; color: var(--green); font-weight: 700; }
+
+  /* 写真プレースホルダ */
+  .ph {
+    border-radius: var(--radius);
+    background: repeating-linear-gradient(45deg, #edf2ee, #edf2ee 12px, #e4ece6 12px, #e4ece6 24px);
+    border: 1.5px dashed #b9c9be;
+    display: grid; place-items: center;
+    color: #7d9486; font-size: 13px; font-weight: 500;
+    min-height: 180px; text-align: center; padding: 12px;
+  }
+
+  /* メニュー・料金 */
+  .price { background: var(--green); color: #fff; }
+  .price .sec-label { color: #bcd9c6; }
+  .price h2 { color: #fff; }
+  .price-flat {
+    text-align: center; margin-bottom: 36px;
+  }
+  .price-flat .flat-badge {
+    display: inline-block; background: #fff; color: var(--green);
+    font-size: clamp(20px, 4vw, 28px); font-weight: 700;
+    padding: 14px 34px; border-radius: 999px; letter-spacing: .04em;
+    box-shadow: 0 6px 20px rgba(0,0,0,.15);
+  }
+  .price-flat .flat-badge small { font-size: .6em; font-weight: 600; }
+  .price-flat p { margin-top: 12px; font-size: 14px; color: #d7e7dc; }
+  .menu-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+  .menu-card {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: var(--radius); padding: 24px 22px;
+  }
+  .menu-card .icon { font-size: 30px; margin-bottom: 8px; }
+  .menu-card h3 { font-size: 17.5px; margin-bottom: 8px; letter-spacing: .04em; }
+  .menu-card p { font-size: 13.5px; color: #d7e7dc; }
+  .price-note { margin-top: 26px; text-align: center; font-size: 12.5px; color: #bcd9c6; }
+
+  /* 流れ */
+  .flow-list { max-width: 640px; margin: 0 auto; display: grid; gap: 0; }
+  .flow-step {
+    display: flex; gap: 18px; padding: 20px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .flow-step:last-child { border-bottom: none; }
+  .flow-num {
+    flex: none; width: 44px; height: 44px; border-radius: 50%;
+    background: var(--green-pale); color: var(--green);
+    display: grid; place-items: center; font-weight: 700; font-size: 17px;
+  }
+  .flow-step h3 { font-size: 16.5px; margin-bottom: 4px; }
+  .flow-step p { font-size: 14px; color: var(--ink-soft); }
+
+  /* 声 */
+  .voices { background: #fff; }
+  .voice-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); }
+  .voice {
+    background: var(--cream); border-radius: var(--radius);
+    padding: 26px 24px; border: 1px solid var(--line); position: relative;
+  }
+  .voice::before {
+    content: "\201C"; position: absolute; top: 6px; left: 16px;
+    font-size: 48px; color: var(--green-pale); font-family: Georgia, serif; line-height: 1;
+  }
+  .voice p { font-size: 14.5px; position: relative; }
+  .voice .who { margin-top: 14px; font-size: 12.5px; color: var(--ink-soft); font-weight: 600; }
+  .voice .stars { color: #e2a44a; letter-spacing: 2px; font-size: 13px; }
+  .sample-tag {
+    display: inline-block; background: var(--accent-soft); color: var(--accent);
+    font-size: 11px; font-weight: 700; border-radius: 6px; padding: 2px 8px; margin-bottom: 8px;
+  }
+  .voices-note { text-align: center; margin-top: 22px; font-size: 12.5px; color: var(--ink-soft); }
+
+  /* FAQ */
+  .faq-list { max-width: 680px; margin: 0 auto; }
+  details {
+    background: #fff; border: 1px solid var(--line);
+    border-radius: var(--radius); margin-bottom: 12px; overflow: hidden;
+  }
+  summary {
+    cursor: pointer; list-style: none;
+    padding: 17px 44px 17px 48px; font-weight: 700; font-size: 15px; position: relative;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::before {
+    content: "Q"; position: absolute; left: 18px; top: 16px;
+    color: var(--green); font-weight: 700;
+  }
+  summary::after {
+    content: "+"; position: absolute; right: 18px; top: 14px;
+    color: var(--ink-soft); font-size: 20px; font-weight: 400; transition: transform .2s;
+  }
+  details[open] summary::after { transform: rotate(45deg); }
+  .faq-a {
+    padding: 0 20px 18px 48px; font-size: 14px; color: var(--ink-soft); position: relative;
+  }
+  .faq-a::before {
+    content: "A"; position: absolute; left: 18px; top: -1px;
+    color: var(--accent); font-weight: 700; font-size: 15px;
+  }
+
+  /* アクセス */
+  .access { background: #fff; }
+  .access-grid { display: grid; gap: 28px; grid-template-columns: 1fr; }
+  @media (min-width: 820px) { .access-grid { grid-template-columns: 1fr 1fr; } }
+  .shop-table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  .shop-table th, .shop-table td {
+    text-align: left; padding: 13px 10px;
+    border-bottom: 1px solid var(--line); vertical-align: top;
+  }
+  .shop-table th { width: 7.5em; color: var(--ink-soft); font-weight: 600; white-space: nowrap; }
+  .map-ph { min-height: 280px; }
+
+  /* CTA帯 */
+  .cta-band {
+    background: linear-gradient(150deg, var(--green-dark), var(--green));
+    color: #fff; text-align: center;
+  }
+  .cta-band h2 { color: #fff; margin-bottom: 12px; }
+  .cta-band p { color: #d7e7dc; font-size: 14.5px; margin-bottom: 26px; }
+  .cta-band .btn-tel { background: #fff; color: var(--green); }
+  .cta-band .btn-line { border-color: #fff; color: #fff; background: transparent; }
+  .cta-band .tel-big {
+    display: block; font-size: clamp(26px, 5vw, 34px); font-weight: 700;
+    letter-spacing: .05em; color: #fff; text-decoration: none; margin-bottom: 6px;
+  }
+  .cta-band .tel-hours { font-size: 13px; color: #bcd9c6; margin-bottom: 22px; }
+
+  footer {
+    background: #2b2a26; color: #a7a599;
+    text-align: center; padding: 34px 20px 40px; font-size: 12.5px;
+  }
+  footer .fbrand { color: #e8e5da; font-weight: 700; font-size: 15px; letter-spacing: .08em; margin-bottom: 8px; }
+  .demo-note {
+    margin-top: 18px; padding-top: 14px; border-top: 1px solid #44423b;
+    font-size: 11.5px; color: #807e72;
+  }
+
+  /* 下部固定CTA（スマホ） */
+  .fixed-cta {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 110;
+    display: flex; box-shadow: 0 -4px 14px rgba(0,0,0,.12);
+  }
+  .fixed-cta a {
+    flex: 1; text-align: center; padding: 15px 8px;
+    font-weight: 700; font-size: 15px; text-decoration: none;
+  }
+  .fixed-cta .f-tel { background: var(--green); color: #fff; }
+  .fixed-cta .f-line { background: #06c755; color: #fff; }
+  @media (min-width: 760px) {
+    .fixed-cta { display: none; }
+    body { padding-bottom: 0; }
+  }
+</style>
+</head>
+<body>
+<div style="background:#2b2b28;color:#f0ece2;font-size:13px;line-height:1.7;
+ padding:9px 16px;text-align:center;font-family:system-ui,sans-serif">
+ これは <strong>まちのウェブ屋さん</strong> の制作見本です。
+ 店名・住所・電話番号・営業時間はすべて<strong>架空</strong>で、実在する店舗とは関係ありません。
+ <a href="https://d-studylab.com/web/" style="color:#e0b070">制作の相談はこちら</a>
+</div>
+
+
+<header>
+  <div class="header-inner">
+    <a class="brand" href="#">
+      <span class="brand-mark">🍃</span>
+      <span>
+        <span class="brand-name">ほぐし処 やまぶき</span>
+        <span class="brand-sub">盛岡市内｜整体・もみほぐし</span>
+      </span>
+    </a>
+    <nav>
+      <a href="#menu">メニュー・料金</a>
+      <a href="#flow">ご利用の流れ</a>
+      <a href="#faq">よくある質問</a>
+      <a href="#access">アクセス</a>
+    </nav>
+    <a class="header-tel" href="tel:0190000000">📞 019-000-0000</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <span class="hero-badge">全コース 50分 3,000円 均一</span>
+    <h1>肩も、腰も、気持ちも。<br><span class="soft">まとめてほぐす</span>50分。</h1>
+    <p class="hero-lead">盛岡市内の「ほぐし処 やまぶき」は、全身もみほぐし・足裏・小顔美顔矯正まで、わかりやすい均一料金で通える街の整体院です。がんばった体を、今日ちゃんと休ませてあげませんか。</p>
+    <div class="hero-cta">
+      <a class="btn btn-tel" href="tel:0190000000">📞 電話で予約する</a>
+      <a class="btn btn-line" href="#">💬 LINEで相談する</a>
+    </div>
+    <p class="hero-note">受付 9:00〜19:00（日曜定休）／当日予約もお気軽にどうぞ</p>
+    <div class="hero-info">
+      <span>盛岡市内〇〇一丁目1-1</span>
+      <span>営業 9:00〜19:00</span>
+      <span>定休日 日曜</span>
+    </div>
+  </div>
+</div>
+
+<section class="worries">
+  <div class="inner">
+    <p class="sec-label">CHECK</p>
+    <h2>こんなお悩み、ありませんか？</h2>
+    <ul class="worry-list">
+      <li>デスクワークで肩・首がガチガチにこっている</li>
+      <li>立ち仕事・家事で腰が重い、朝がつらい</li>
+      <li>足がむくんで、夕方には靴がきつく感じる</li>
+      <li>マッサージに行きたいけれど、料金がわかりにくいお店は不安</li>
+      <li>強すぎる施術は苦手。自分に合わせてほしい</li>
+    </ul>
+    <p class="worry-close">ひとつでも当てはまったら、<strong>ほぐし処 やまぶきにおまかせください。</strong></p>
+  </div>
+</section>
+
+<section>
+  <div class="inner">
+    <p class="sec-label">REASON</p>
+    <h2>ほぐし処 やまぶきが選ばれる3つの理由</h2>
+    <div class="reasons-grid">
+      <div class="reason">
+        <p class="reason-num">REASON 01</p>
+        <h3>迷わない、均一料金</h3>
+        <p>どのコースも<span class="big">50分3,000円</span>。オプションでどんどん高くなる…という心配がありません。会計まで安心して受けられます。</p>
+      </div>
+      <div class="reason">
+        <p class="reason-num">REASON 02</p>
+        <h3>その日の体に合わせた施術</h3>
+        <p>もみほぐし・足裏・美顔矯正まで幅広く対応。力加減やつらい箇所を丁寧に伺い、その日のお体の状態に合わせて施術します。</p>
+      </div>
+      <div class="reason">
+        <p class="reason-num">REASON 03</p>
+        <h3>市内エリアで通いやすい</h3>
+        <p>盛岡市内の住宅街にあり、お仕事帰りや買い物ついでに立ち寄れる気軽さ。「疲れたらここ」と決めておける、街の整体院です。</p>
+      </div>
+    </div>
+    <div style="display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); margin-top:28px;">
+      <div class="ph">📷 店内・施術風景の写真が入ります</div>
+      <div class="ph">📷 外観・受付の写真が入ります</div>
+    </div>
+  </div>
+</section>
+
+<section class="price" id="menu">
+  <div class="inner">
+    <p class="sec-label">MENU / PRICE</p>
+    <h2>メニュー・料金</h2>
+    <div class="price-flat">
+      <span class="flat-badge">全コース 50分 <small>／</small> 3,000<small>円（税込）</small></span>
+      <p>初めての方も、料金表とにらめっこする必要はありません。</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card">
+        <div class="icon">💆</div>
+        <h3>全身もみほぐし</h3>
+        <p>肩・首・背中・腰まで全身をじっくりほぐす一番人気のコース。デスクワーク・立ち仕事の疲れに。</p>
+      </div>
+      <div class="menu-card">
+        <div class="icon">🦶</div>
+        
+        <h3>足裏マッサージ</h3>
+        <p>足裏のツボを刺激して、むくみ・だるさをすっきり。歩き疲れた足、夕方のむくみが気になる方に。</p>
+      </div>
+      <div class="menu-card">
+        <div class="icon">✨</div>
+        <h3>小顔・美顔矯正</h3>
+        <p>お顔まわりの筋肉をやさしく整え、すっきりした印象へ。フェイスラインが気になる方におすすめ。</p>
+      </div>
+      <div class="menu-card">
+        <div class="icon">🔀</div>
+        <h3>組み合わせも自由</h3>
+        <p>「肩を中心に、最後は足裏も」など、50分の中でのご希望の組み合わせもお気軽にご相談ください。</p>
+      </div>
+    </div>
+    <p class="price-note">※メニュー構成・説明文は仮です。実際のコース内容に合わせて調整します。</p>
+  </div>
+</section>
+
+<section id="flow">
+  <div class="inner">
+    <p class="sec-label">FLOW</p>
+    <h2>ご利用の流れ</h2>
+    <div class="flow-list">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div>
+          <h3>お電話・LINEでご予約</h3>
+          <p>「はじめてです」とお伝えいただくだけでOK。ご希望の日時とコースを伺います。</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div>
+          <h3>ご来店・カウンセリング</h3>
+          <p>つらい箇所・力加減のお好みなどを簡単にお伺いします。着替えのご用意もあります。</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div>
+          <h3>施術（50分）</h3>
+          <p>お体の状態に合わせてじっくり施術。痛気持ちいい〜やさしめまで、遠慮なくお声がけください。</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div>
+          <h3>お会計・アフターケア</h3>
+          <p>3,000円ぽっきり。ご自宅でできる簡単なストレッチなどもお伝えします。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="voices">
+  <div class="inner">
+    <p class="sec-label">VOICE</p>
+    <h2>お客様の声</h2>
+    <div class="voice-grid">
+      <div class="voice">
+        <span class="sample-tag">サンプル文</span>
+        <p>肩こりがひどくて月1で通っています。毎回その日つらいところを聞いてくれるので、終わったあとの軽さが全然違います。</p>
+        <p class="who">40代・女性・デスクワーク　<span class="stars">★★★★★</span></p>
+      </div>
+      <div class="voice">
+        <span class="sample-tag">サンプル文</span>
+        <p>料金が均一なので、初めてでも安心して入れました。足裏をやってもらった日は、夜ぐっすり眠れます。</p>
+        <p class="who">50代・男性・立ち仕事　<span class="stars">★★★★★</span></p>
+      </div>
+      <div class="voice">
+        <span class="sample-tag">サンプル文</span>
+        <p>強すぎない施術が好みなのですが、力加減を丁寧に合わせてくれるのがありがたいです。市内で通いやすいのも◎。</p>
+        <p class="who">30代・女性　<span class="stars">★★★★☆</span></p>
+      </div>
+    </div>
+    <p class="voices-note">※上記はデモ用のサンプル文です。公開時は実際のお客様の声（掲載許可済み）に差し替えます。</p>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="inner">
+    <p class="sec-label">FAQ</p>
+    <h2>よくある質問</h2>
+    <div class="faq-list">
+      <details>
+        <summary>予約なしでも利用できますか？</summary>
+        <p class="faq-a">空きがあればご案内できますが、お待たせしないためにもお電話・LINEでのご予約がおすすめです。当日のご予約も承ります。</p>
+      </details>
+      <details>
+        <summary>支払い方法は何が使えますか？</summary>
+        <p class="faq-a">現金でのお支払いをお願いしています。（※キャッシュレス対応の有無は要確認・仮の記載です）</p>
+      </details>
+      <details>
+        <summary>駐車場はありますか？</summary>
+        <p class="faq-a">店舗前に駐車スペースがございます。（※台数・場所は要確認・仮の記載です）</p>
+      </details>
+      <details>
+        <summary>男性でも利用できますか？</summary>
+        <p class="faq-a">はい、男女問わずご利用いただけます。お仕事帰りの男性のお客様も多くいらっしゃいます。</p>
+      </details>
+      <details>
+        <summary>どのくらいのペースで通えばいいですか？</summary>
+        <p class="faq-a">お体の状態によりますが、こりが強い方は2〜3週間に1回、メンテナンスなら月1回程度がおすすめです。施術時にご相談ください。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="access" id="access">
+  <div class="inner">
+    <p class="sec-label">ACCESS</p>
+    <h2>店舗情報・アクセス</h2>
+    <div class="access-grid">
+      <table class="shop-table">
+        <tr><th>店名</th><td>ほぐし処 やまぶき</td></tr>
+        <tr><th>住所</th><td>〒000-0000 岩手県盛岡市内〇〇一丁目1-1</td></tr>
+        <tr><th>電話</th><td><a href="tel:0190000000">019-000-0000</a></td></tr>
+        <tr><th>営業時間</th><td>9:00〜19:00</td></tr>
+        <tr><th>定休日</th><td>日曜日</td></tr>
+        <tr><th>駐車場</th><td>あり（※要確認・仮の記載）</td></tr>
+        <tr><th>最寄り</th><td>IGRいわて銀河鉄道「市内駅」エリア（※徒歩分数は要確認）</td></tr>
+      </table>
+      <div class="ph map-ph">🗺 Googleマップ埋め込みが入ります<br>（公開時に地図APIなしの埋め込みで設置）</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="inner">
+    <p class="sec-label" style="color:#bcd9c6">RESERVE</p>
+    <h2>今日の疲れは、今日のうちに。</h2>
+    <p>ご予約・ご相談はお電話またはLINEからどうぞ。「はじめて」の方、大歓迎です。</p>
+    <a class="tel-big" href="tel:0190000000">📞 019-000-0000</a>
+    <p class="tel-hours">受付 9:00〜19:00（日曜定休）</p>
+    <div class="hero-cta" style="justify-content:center">
+      <a class="btn btn-tel" href="tel:0190000000">電話で予約する</a>
+      <a class="btn btn-line" href="#">LINEで相談する</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="fbrand">ほぐし処 やまぶき</p>
+  <p>岩手県盛岡市内〇〇一丁目1-1｜019-000-0000｜9:00〜19:00（日曜定休）</p>
+  <p class="demo-note">このページは「まちのウェブ屋さん」（運営：D-studylab）による提案用デモサイトです。<br>掲載情報の一部は仮のものであり、実店舗の公式サイトではありません。</p>
+</footer>
+
+<div class="fixed-cta">
+  <a class="f-tel" href="tel:0190000000">📞 電話で予約</a>
+  <a class="f-line" href="#">💬 LINEで相談</a>
+</div>
+</body>
+</html>

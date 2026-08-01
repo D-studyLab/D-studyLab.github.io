@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>まどべのパン｜盛岡市内・自家培養の天然酵母のテイクアウト専門パン屋</title>
+<style>
+  :root {
+    --brown: #7a5230;
+    --brown-dark: #5c3d22;
+    --wheat: #f8f2e6;
+    --wheat-deep: #efe4cf;
+    --ink: #3a332b;
+    --ink-soft: #776e61;
+    --line: #e6dcc9;
+    --sakura: #d4728c;
+    --sakura-soft: #f9e8ed;
+    --green: #6b8f5e;
+    --radius: 14px;
+    --maxw: 1040px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic Medium", "Yu Gothic", "Noto Sans JP", "Meiryo", sans-serif;
+    color: var(--ink);
+    background: var(--wheat);
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 64px; /* 下部固定CTAぶん */
+  }
+  img { max-width: 100%; }
+  a { color: var(--brown); }
+
+  /* ---------- header ---------- */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(248,242,230,.93);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .header-inner {
+    max-width: var(--maxw); margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 20px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand-mark {
+    width: 38px; height: 38px; border-radius: 12px;
+    background: var(--brown);
+    display: grid; place-items: center;
+    color: #fff; font-size: 19px; flex: none;
+  }
+  .brand-name { font-weight: 700; font-size: 18px; color: var(--ink); letter-spacing: .08em; }
+  .brand-sub { font-size: 10.5px; color: var(--ink-soft); letter-spacing: .1em; display: block; line-height: 1.3; }
+  nav { display: flex; gap: 22px; }
+  nav a { text-decoration: none; color: var(--ink); font-size: 14px; font-weight: 500; }
+  nav a:hover { color: var(--sakura); }
+  .header-insta {
+    display: none;
+    background: var(--brown); color: #fff; text-decoration: none;
+    padding: 9px 18px; border-radius: 999px; font-weight: 700; font-size: 14px;
+  }
+  @media (min-width: 760px) { .header-insta { display: inline-block; } }
+  @media (max-width: 759px) { nav { display: none; } }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative; overflow: hidden;
+    background: linear-gradient(165deg, var(--sakura-soft) 0%, #f6ecd9 45%, var(--wheat) 100%);
+  }
+  .hero::before {
+    content: "🌸";
+    position: absolute; right: -30px; top: -40px;
+    font-size: 220px; opacity: .12; transform: rotate(18deg);
+  }
+  .hero-inner {
+    max-width: var(--maxw); margin: 0 auto;
+    padding: 64px 20px 56px; position: relative;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--sakura); color: #fff;
+    font-weight: 700; font-size: 13.5px;
+    padding: 6px 16px; border-radius: 999px;
+    letter-spacing: .05em; margin-bottom: 18px;
+    box-shadow: 0 4px 12px rgba(212,114,140,.3);
+  }
+  h1 {
+    font-size: clamp(29px, 5.4vw, 46px);
+    line-height: 1.45; font-weight: 700; letter-spacing: .05em;
+    margin-bottom: 14px;
+  }
+  h1 .soft { color: var(--sakura); }
+  .hero-lead { font-size: clamp(15px, 2.4vw, 17px); color: var(--ink-soft); max-width: 36em; margin-bottom: 30px; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    text-decoration: none; font-weight: 700;
+    padding: 15px 30px; border-radius: 999px; font-size: 16px;
+    transition: transform .15s ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-main { background: var(--brown); color: #fff; box-shadow: 0 6px 16px rgba(122,82,48,.3); }
+  .btn-sub { background: #fff; color: var(--brown); border: 2px solid var(--brown); }
+  .hero-note { font-size: 12.5px; color: var(--ink-soft); margin-top: 14px; }
+  .hero-info {
+    margin-top: 34px; display: flex; flex-wrap: wrap; gap: 10px 26px;
+    font-size: 13.5px; color: var(--ink-soft);
+  }
+  .hero-info span::before { content: "●"; color: var(--sakura); font-size: 8px; vertical-align: 2px; margin-right: 6px; }
+
+  /* ---------- sections ---------- */
+  section { padding: 64px 20px; }
+  .inner { max-width: var(--maxw); margin: 0 auto; }
+  .sec-label {
+    text-align: center; color: var(--sakura); font-size: 12.5px;
+    letter-spacing: .28em; font-weight: 700; margin-bottom: 8px;
+  }
+  h2 {
+    text-align: center; font-size: clamp(23px, 4vw, 30px);
+    letter-spacing: .06em; margin-bottom: 40px; line-height: 1.5;
+  }
+
+  /* 物語（自家培養の天然酵母） */
+  .story { background: #fff; }
+  .story-grid { display: grid; gap: 30px; grid-template-columns: 1fr; align-items: center; }
+  @media (min-width: 820px) { .story-grid { grid-template-columns: 1.1fr .9fr; } }
+  .story-text p { margin-bottom: 16px; font-size: 15px; }
+  .story-text strong { color: var(--brown); }
+  .story-text .em { background: linear-gradient(transparent 65%, var(--sakura-soft) 65%); font-weight: 700; }
+
+  /* こだわり3つ */
+  .points-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .point {
+    background: #fff; border-radius: var(--radius);
+    padding: 30px 24px; border: 1px solid var(--line);
+    box-shadow: 0 2px 10px rgba(58,51,43,.04);
+  }
+  .point .icon { font-size: 34px; margin-bottom: 10px; }
+  .point h3 { font-size: 18.5px; margin-bottom: 12px; letter-spacing: .04em; }
+  .point p { font-size: 14.5px; color: var(--ink-soft); }
+
+  /* 写真プレースホルダ */
+  .ph {
+    border-radius: var(--radius);
+    background: repeating-linear-gradient(45deg, #f3ead8, #f3ead8 12px, #ece0c8 12px, #ece0c8 24px);
+    border: 1.5px dashed #c9b48d;
+    display: grid; place-items: center;
+    color: #9a8360; font-size: 13px; font-weight: 500;
+    min-height: 180px; text-align: center; padding: 12px;
+  }
+
+  /* 今日のパン */
+  .today { background: var(--brown); color: #fff; }
+  .today .sec-label { color: #e8cdb2; }
+  .today h2 { color: #fff; }
+  .today-lead { text-align: center; margin: -24px auto 32px; max-width: 38em; font-size: 14.5px; color: #ecd9c3; }
+  .bread-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .bread-card {
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: var(--radius); overflow: hidden;
+  }
+  .bread-card .ph { border-radius: 0; border: none; border-bottom: 1px solid rgba(255,255,255,.2); min-height: 140px; background: repeating-linear-gradient(45deg, rgba(255,255,255,.10), rgba(255,255,255,.10) 12px, rgba(255,255,255,.04) 12px, rgba(255,255,255,.04) 24px); color: #d9c2a8; }
+  .bread-body { padding: 16px 18px 18px; }
+  .bread-body h3 { font-size: 16.5px; letter-spacing: .04em; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .bread-body .yen { font-size: 14px; color: #ecd9c3; font-weight: 700; }
+  .bread-body p { font-size: 13px; color: #dcc6ae; margin-top: 6px; }
+  .tag {
+    display: inline-block; font-size: 10.5px; font-weight: 700;
+    border-radius: 6px; padding: 2px 8px; vertical-align: 2px;
+  }
+  .tag-soldout { background: #fff; color: var(--brown); }
+  .tag-sample { background: var(--sakura-soft); color: var(--sakura); }
+  .today-note { margin-top: 26px; text-align: center; font-size: 12.5px; color: #e8cdb2; }
+  .insta-band {
+    margin-top: 34px; text-align: center;
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.22);
+    border-radius: var(--radius); padding: 24px 20px;
+  }
+  .insta-band p { font-size: 14px; color: #ecd9c3; margin-bottom: 14px; }
+  .insta-band .btn-main { background: #fff; color: var(--brown); }
+
+  /* 営業日カレンダー */
+  .calendar-wrap { max-width: 560px; margin: 0 auto; }
+  .cal-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+  .cal-head h3 { font-size: 18px; letter-spacing: .06em; }
+  .cal-head span { font-size: 12px; color: var(--ink-soft); }
+  table.cal { width: 100%; border-collapse: collapse; background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: 0 2px 10px rgba(58,51,43,.05); }
+  .cal th {
+    background: var(--wheat-deep); font-size: 12.5px; padding: 9px 0;
+    color: var(--ink-soft); font-weight: 700; letter-spacing: .1em;
+  }
+  .cal th.sun, .cal td.sun .d { color: #c25a5a; }
+  .cal td {
+    border: 1px solid var(--line); text-align: center;
+    padding: 8px 2px 9px; font-size: 13px; width: 14.28%;
+  }
+  .cal .d { font-weight: 700; display: block; font-size: 14px; }
+  .cal .st { display: block; font-size: 10.5px; margin-top: 2px; border-radius: 5px; padding: 1px 0; }
+  .st-open { background: #eef4ea; color: var(--green); }
+  .st-close { background: #f4ecec; color: #c25a5a; }
+  .cal-legend { margin-top: 14px; font-size: 12.5px; color: var(--ink-soft); text-align: center; }
+  .cal-note { margin-top: 10px; font-size: 12px; color: var(--ink-soft); text-align: center; }
+
+  /* 買い方の流れ */
+  .flow { background: #fff; }
+  .flow-list { max-width: 640px; margin: 0 auto; }
+  .flow-step {
+    display: flex; gap: 18px; padding: 20px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .flow-step:last-child { border-bottom: none; }
+  .flow-num {
+    flex: none; width: 44px; height: 44px; border-radius: 50%;
+    background: var(--sakura-soft); color: var(--sakura);
+    display: grid; place-items: center; font-weight: 700; font-size: 17px;
+  }
+  .flow-step h3 { font-size: 16.5px; margin-bottom: 4px; }
+  .flow-step p { font-size: 14px; color: var(--ink-soft); }
+
+  /* アクセス */
+  .access-grid { display: grid; gap: 28px; grid-template-columns: 1fr; }
+  @media (min-width: 820px) { .access-grid { grid-template-columns: 1fr 1fr; } }
+  .shop-table { width: 100%; border-collapse: collapse; font-size: 14.5px; background: #fff; border-radius: var(--radius); overflow: hidden; }
+  .shop-table th, .shop-table td {
+    text-align: left; padding: 13px 14px;
+    border-bottom: 1px solid var(--line); vertical-align: top;
+  }
+  .shop-table th { width: 7.5em; color: var(--ink-soft); font-weight: 600; white-space: nowrap; background: var(--wheat-deep); }
+  .kakunin {
+    display: inline-block; background: var(--sakura-soft); color: var(--sakura);
+    font-size: 11px; font-weight: 700; border-radius: 6px; padding: 2px 8px;
+  }
+  .map-ph { min-height: 280px; }
+
+  footer {
+    background: #35291d; color: #b3a58f;
+    text-align: center; padding: 34px 20px 40px; font-size: 12.5px;
+  }
+  footer .fbrand { color: #efe6d5; font-weight: 700; font-size: 15px; letter-spacing: .08em; margin-bottom: 8px; }
+  .demo-note {
+    margin-top: 18px; padding-top: 14px; border-top: 1px solid #4d3f2e;
+    font-size: 11.5px; color: #8f8271;
+  }
+
+  /* 下部固定CTA（スマホ） */
+  .fixed-cta {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 110;
+    display: flex; box-shadow: 0 -4px 14px rgba(0,0,0,.12);
+  }
+  .fixed-cta a {
+    flex: 1; text-align: center; padding: 15px 8px;
+    font-weight: 700; font-size: 15px; text-decoration: none;
+  }
+  .fixed-cta .f-insta { background: var(--sakura); color: #fff; }
+  .fixed-cta .f-map { background: var(--brown); color: #fff; }
+  @media (min-width: 760px) {
+    .fixed-cta { display: none; }
+    body { padding-bottom: 0; }
+  }
+</style>
+</head>
+<body>
+<div style="background:#2b2b28;color:#f0ece2;font-size:13px;line-height:1.7;
+ padding:9px 16px;text-align:center;font-family:system-ui,sans-serif">
+ これは <strong>まちのウェブ屋さん</strong> の制作見本です。
+ 店名・住所・電話番号・営業時間はすべて<strong>架空</strong>で、実在する店舗とは関係ありません。
+ <a href="https://d-studylab.com/web/" style="color:#e0b070">制作の相談はこちら</a>
+</div>
+
+
+<header>
+  <div class="header-inner">
+    <a class="brand" href="#">
+      <span class="brand-mark">🍞</span>
+      <span>
+        <span class="brand-name">まどべのパン</span>
+        <span class="brand-sub">盛岡市内｜自家培養の天然酵母のパン</span>
+      </span>
+    </a>
+    <nav>
+      <a href="#story">酵母の物語</a>
+      <a href="#today">今日のパン</a>
+      <a href="#calendar">営業カレンダー</a>
+      <a href="#access">アクセス</a>
+    </nav>
+    <a class="header-insta" href="https://www.instagram.com/madokarapan/" target="_blank" rel="noopener">📷 Instagram</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <span class="hero-badge">盛岡の春から生まれた、自家培養の天然酵母のパン</span>
+    <h1>小さな窓から、<br><span class="soft">焼きたての「おいしい」</span>を。</h1>
+    <p class="hero-lead">盛岡市内のテイクアウト専門パン屋「まどべのパン」。盛岡のシンボル・地元の桜の花びらから採った酵母と、8割岩手県産の小麦で、卵・乳製品を使わないパンを毎日焼いています。ショーウィンドウに並んだパンを選んだら、受け取りは小さな窓から。</p>
+    <div class="hero-cta">
+      <a class="btn btn-main" href="https://www.instagram.com/madokarapan/" target="_blank" rel="noopener">📷 今日のパンをInstagramで見る</a>
+      <a class="btn btn-sub" href="#access">🚗 お店への行き方</a>
+    </div>
+    <p class="hero-note">売り切れ次第終了です。ご来店前にInstagramのチェックがおすすめ。</p>
+    <div class="hero-info">
+      <span>盛岡市内1-1-1</span>
+      <span>テイクアウト専門</span>
+      <span>常時約10種類＋自家焙煎珈琲</span>
+    </div>
+  </div>
+</div>
+
+<section class="story" id="story">
+  <div class="inner">
+    <p class="sec-label">STORY</p>
+    <h2>地元の桜の花びらから、パンがはじまる。</h2>
+    <div class="story-grid">
+      <div class="story-text">
+        <p>盛岡地方裁判所の前で、巨大な花崗岩を割って咲く<strong>「地元の桜」</strong>。樹齢350年を超えるといわれる、盛岡の春のシンボルです。</p>
+        <p>まどべのパンのパンは、<span class="em">その地元の桜の花びらから採取した酵母</span>で生地を起こしています。盛岡の春が、一年じゅうパンの中で生きている——そんなパン屋です。</p>
+        <p>小麦は8割が岩手県産。卵・乳製品は使いません。シンプルな材料だから、毎日食べても飽きのこない、素朴でやさしい味わいに焼き上がります。</p>
+        <p>2024年6月、この場所で長く愛されたパン屋「tuk-tuk」から店を受け継ぎ、「まどべのパン」として新しくオープンしました。</p>
+      </div>
+      <div class="ph">📷 地元の桜 or 窓越しのパンの写真が入ります<br>（撮影 or 店舗提供写真）</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="inner">
+    <p class="sec-label">POINT</p>
+    <h2>まどべのパンの3つのこだわり</h2>
+    <div class="points-grid">
+      <div class="point">
+        <div class="icon">🌸</div>
+        <h3>地元の桜の自家製酵母</h3>
+        <p>盛岡のシンボル・地元の桜の花びらから採った酵母を使用。ここでしか出会えない、盛岡生まれの発酵の力でじっくり生地を育てます。</p>
+      </div>
+      <div class="point">
+        <div class="icon">🌾</div>
+        <h3>岩手の小麦、卵・乳不使用</h3>
+        <p>小麦は8割が岩手県産。卵と乳製品は使わないシンプルな配合なので、素材の味がまっすぐ届きます。毎日の食卓のパンにどうぞ。</p>
+      </div>
+      <div class="point">
+        <div class="icon">🪟</div>
+        <h3>窓から受け取るスタイル</h3>
+        <p>ショーウィンドウに並ぶ約10種類のパンから選んだら、受け取りは小さな窓から。テイクアウト専門ならではの、ちょっと楽しいお買い物です。</p>
+      </div>
+    </div>
+    <div style="display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); margin-top:28px;">
+      <div class="ph">📷 ショーウィンドウに並ぶパンの写真</div>
+      <div class="ph">📷 かわいい看板・外観の写真</div>
+    </div>
+  </div>
+</section>
+
+<section class="today" id="today">
+  <div class="inner">
+    <p class="sec-label">TODAY'S BREAD</p>
+    <h2>今日のパン</h2>
+    <p class="today-lead">その日の焼き上がりをここでお知らせします。売り切れ次第終了なので、お目当てのパンはお早めに。<br>（この枠は毎日スマホから1分で更新できます＝保守プランのご提案ポイント）</p>
+    <div class="bread-grid">
+      <div class="bread-card">
+        <div class="ph">📷 パンの写真</div>
+        <div class="bread-body">
+          <h3>カンパーニュ <span class="tag tag-sample">サンプル</span></h3>
+          <p class="yen">◯◯◯円</p>
+          <p>自家培養の天然酵母の香りをいちばん感じられる看板パン（説明文はサンプルです）。</p>
+        </div>
+      </div>
+      <div class="bread-card">
+        <div class="ph">📷 パンの写真</div>
+        <div class="bread-body">
+          <h3>山型食パン <span class="tag tag-sample">サンプル</span></h3>
+          <p class="yen">◯◯◯円</p>
+          <p>卵・乳不使用でも、しっとりもちもち（説明文はサンプルです）。</p>
+        </div>
+      </div>
+      <div class="bread-card">
+        <div class="ph">📷 パンの写真</div>
+        <div class="bread-body">
+          <h3>あんぱん <span class="tag tag-soldout">本日売り切れ</span> <span class="tag tag-sample">サンプル</span></h3>
+          <p class="yen">◯◯◯円</p>
+          <p>売り切れ表示のイメージです（サンプル）。</p>
+        </div>
+      </div>
+      <div class="bread-card">
+        <div class="ph">📷 珈琲の写真</div>
+        <div class="bread-body">
+          <h3>自家焙煎珈琲 <span class="tag tag-sample">サンプル</span></h3>
+          <p class="yen">◯◯◯円</p>
+          <p>パンのお供に。テイクアウトでどうぞ（説明文はサンプルです）。</p>
+        </div>
+      </div>
+    </div>
+    <p class="today-note">※パンの品名・価格・説明はすべて仮のサンプルです。実際のラインナップ（常時約10種類）に差し替えます。</p>
+    <div class="insta-band">
+      <p>最新の焼き上がり・お休みのお知らせはInstagramで発信中</p>
+      <a class="btn btn-main" href="https://www.instagram.com/madokarapan/" target="_blank" rel="noopener">📷 @madokarapan をフォローする</a>
+    </div>
+  </div>
+</section>
+
+<section id="calendar">
+  <div class="inner">
+    <p class="sec-label">CALENDAR</p>
+    <h2>今月の営業日カレンダー</h2>
+    <div class="calendar-wrap">
+      <div class="cal-head">
+        <h3>2026年8月（表示イメージ）</h3>
+        <span>更新はスマホから1分</span>
+      </div>
+      <table class="cal">
+        <tr>
+          <th class="sun">日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th>
+        </tr>
+        <tr>
+          <td class="sun"><span class="d">2</span><span class="st st-close">休</span></td>
+          <td><span class="d">3</span><span class="st st-open">営業</span></td>
+          <td><span class="d">4</span><span class="st st-open">営業</span></td>
+          <td><span class="d">5</span><span class="st st-open">営業</span></td>
+          <td><span class="d">6</span><span class="st st-close">休</span></td>
+          <td><span class="d">7</span><span class="st st-open">営業</span></td>
+          <td><span class="d">8</span><span class="st st-open">営業</span></td>
+        </tr>
+        <tr>
+          <td class="sun"><span class="d">9</span><span class="st st-close">休</span></td>
+          <td><span class="d">10</span><span class="st st-open">営業</span></td>
+          <td><span class="d">11</span><span class="st st-open">営業</span></td>
+          <td><span class="d">12</span><span class="st st-close">臨時休</span></td>
+          <td><span class="d">13</span><span class="st st-close">休</span></td>
+          <td><span class="d">14</span><span class="st st-open">営業</span></td>
+          <td><span class="d">15</span><span class="st st-open">営業</span></td>
+        </tr>
+        <tr>
+          <td class="sun"><span class="d">16</span><span class="st st-close">休</span></td>
+          <td><span class="d">17</span><span class="st st-open">営業</span></td>
+          <td><span class="d">18</span><span class="st st-open">営業</span></td>
+          <td><span class="d">19</span><span class="st st-open">営業</span></td>
+          <td><span class="d">20</span><span class="st st-close">休</span></td>
+          <td><span class="d">21</span><span class="st st-open">営業</span></td>
+          <td><span class="d">22</span><span class="st st-open">営業</span></td>
+        </tr>
+      </table>
+      <p class="cal-legend"><span class="st st-open" style="display:inline;padding:1px 8px;">営業</span>＝パンが焼き上がる日／<span class="st st-close" style="display:inline;padding:1px 8px;">休</span>＝お休み（臨時休業もここでお知らせ）</p>
+      <p class="cal-note">※このカレンダーはレイアウト提案用のサンプルです（日付・営業日は実データではありません）。<br>※実際の営業時間・定休日は<strong>要確認</strong>（Web上の情報が「10:30〜売切れ次第・不定休」と「月〜水・金・土 11:00〜14:00」で分かれているため、取材時に確定します）。</p>
+    </div>
+  </div>
+</section>
+
+<section class="flow">
+  <div class="inner">
+    <p class="sec-label">HOW TO BUY</p>
+    <h2>はじめての方へ：買い方はかんたん</h2>
+    <div class="flow-list">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div>
+          <h3>Instagramで今日の営業をチェック</h3>
+          <p>焼き上がりの写真とお休みのお知らせが届きます。売り切れ次第終了なので出発前にどうぞ。</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div>
+          <h3>ショーウィンドウでパンを選ぶ</h3>
+          <p>窓に並んだ約10種類のパンを外から眺めて、食べたいパンを決めます。</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div>
+          <h3>小さな窓から受け取り</h3>
+          <p>注文とお会計をしたら、窓からパンを受け取って完了。自家焙煎珈琲もご一緒にどうぞ。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="access">
+  <div class="inner">
+    <p class="sec-label">ACCESS</p>
+    <h2>お店の場所</h2>
+    <div class="access-grid">
+      <table class="shop-table">
+        <tr><th>店名</th><td>まどべのパン</td></tr>
+        <tr><th>住所</th><td>岩手県盛岡市内</td></tr>
+        <tr><th>目印</th><td>「ファミアール月が丘」向かい／「麺匠さくら家」近く</td></tr>
+        <tr><th>営業時間</th><td>売り切れ次第終了 <span class="kakunin">仮・要確認</span><br><small>Web上では「10:30〜」「11:00〜14:00」の2説あり。取材時に確定します。</small></td></tr>
+        <tr><th>定休日</th><td>不定休（日・木休みの情報あり） <span class="kakunin">仮・要確認</span></td></tr>
+        <tr><th>電話</th><td>— <span class="kakunin">要確認</span></td></tr>
+        <tr><th>駐車場</th><td>— <span class="kakunin">要確認</span></td></tr>
+        <tr><th>Instagram</th><td><a href="https://www.instagram.com/madokarapan/" target="_blank" rel="noopener">@madokarapan</a></td></tr>
+        <tr><th>販売形態</th><td>テイクアウト専門（窓口販売）</td></tr>
+      </table>
+      <div class="ph map-ph">🗺 Googleマップ埋め込みが入ります<br>（公開時に地図APIなしの埋め込みで設置）</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="fbrand">まどべのパン</p>
+  <p>岩手県盛岡市内｜テイクアウト専門｜Instagram @madokarapan</p>
+  <p class="demo-note">このページは「まちのウェブ屋さん」（運営：D-studylab）による提案用デモサイトです。<br>掲載情報の一部は仮のものであり、実店舗の公式サイトではありません。</p>
+</footer>
+
+<div class="fixed-cta">
+  <a class="f-insta" href="https://www.instagram.com/madokarapan/" target="_blank" rel="noopener">📷 今日のパンを見る</a>
+  <a class="f-map" href="#access">🗺 お店への行き方</a>
+</div>
+</body>
+</html>

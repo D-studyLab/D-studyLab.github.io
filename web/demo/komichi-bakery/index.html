@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>もりのパン工房 こみち｜滝沢市内・平日だけ開く小さな森のパン屋</title>
+<style>
+  :root {
+    /* 配色v2（2026-07-12）: 小麦×バター×焼き色の暖色ベース。
+       森の緑（Petite Forêt由来）は --leaf 系の差し色として残す */
+    --forest: #7a4f16;        /* 主色: 焼き色（パンのクラスト） */
+    --forest-deep: #5b3a0f;   /* 主色の濃色 */
+    --moss: #6d8a63;          /* 差し色: 森の緑（リーフ飾り用） */
+    --leaf: #4f6b45;          /* 差し色: 森の緑（バッジ・引用タグ用） */
+    --leaf-pale: #e9f0e4;     /* 差し色の淡色 */
+    --cream: #fbf4e3;         /* 背景: バタークリーム */
+    --cream-deep: #f3e7c8;    /* 背景の濃色: 小麦 */
+    --ink: #37342c;
+    --ink-soft: #73705c;
+    --line: #e8dcbd;
+    --terra: #96501f;         /* 強調: テラコッタ（クリーム背景で5.4:1を確保） */
+    --terra-soft: #f6e8de;
+    --radius: 18px;
+    --maxw: 1000px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic Medium", "Yu Gothic", "Noto Sans JP", "Meiryo", sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 64px; /* 下部固定CTAぶん */
+  }
+  img { max-width: 100%; }
+  a { color: var(--forest); }
+  .serif { font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif; }
+
+  /* ---------- header ---------- */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250,246,236,.93);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .header-inner {
+    max-width: var(--maxw); margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 20px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand-mark {
+    width: 38px; height: 38px; border-radius: 50% 50% 50% 6px;
+    background: var(--forest);
+    display: grid; place-items: center;
+    color: #fff; font-size: 18px; flex: none;
+  }
+  .brand-name { font-weight: 700; font-size: 16.5px; color: var(--ink); letter-spacing: .05em; font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; }
+  .brand-sub { font-size: 10.5px; color: var(--ink-soft); letter-spacing: .1em; display: block; line-height: 1.3; }
+  nav { display: flex; gap: 20px; }
+  nav a { text-decoration: none; color: var(--ink); font-size: 14px; font-weight: 500; }
+  nav a:hover { color: var(--terra); }
+  .header-tel {
+    display: none;
+    background: var(--forest); color: #fff; text-decoration: none;
+    padding: 9px 18px; border-radius: 999px; font-weight: 700; font-size: 14px;
+  }
+  @media (min-width: 760px) { .header-tel { display: inline-block; } }
+  @media (max-width: 759px) { nav { display: none; } }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative; overflow: hidden;
+    background:
+      radial-gradient(circle at 85% 20%, rgba(109,138,99,.16), transparent 45%),
+      radial-gradient(circle at 8% 90%, rgba(192,122,80,.12), transparent 40%),
+      var(--cream);
+  }
+  .hero-inner {
+    max-width: var(--maxw); margin: 0 auto;
+    padding: 70px 20px 58px; position: relative;
+    text-align: center;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: #fff; color: var(--leaf);
+    border: 1.5px solid var(--leaf);
+    font-weight: 700; font-size: 13px;
+    padding: 6px 18px; border-radius: 999px;
+    letter-spacing: .12em; margin-bottom: 20px;
+  }
+  h1 {
+    font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+    font-size: clamp(28px, 5.6vw, 44px);
+    line-height: 1.55; font-weight: 600; letter-spacing: .08em;
+    margin-bottom: 16px;
+  }
+  h1 .soft { color: var(--terra); }
+  .hero-lead {
+    font-size: clamp(14.5px, 2.4vw, 16.5px); color: var(--ink-soft);
+    max-width: 33em; margin: 0 auto 30px;
+  }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    text-decoration: none; font-weight: 700;
+    padding: 15px 30px; border-radius: 999px; font-size: 16px;
+    transition: transform .15s ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-main { background: var(--forest); color: #fff; box-shadow: 0 6px 16px rgba(63,93,67,.3); }
+  .btn-sub { background: #fff; color: var(--forest); border: 2px solid var(--forest); }
+  .hero-note { font-size: 12.5px; color: var(--ink-soft); margin-top: 14px; }
+  .hero-info {
+    margin-top: 34px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: center;
+    font-size: 13.5px; color: var(--ink-soft);
+  }
+  .hero-info span::before { content: "🌿"; font-size: 11px; margin-right: 5px; }
+
+  /* ---------- sections ---------- */
+  section { padding: 62px 20px; }
+  .inner { max-width: var(--maxw); margin: 0 auto; }
+  .sec-label {
+    text-align: center; color: var(--terra); font-size: 12px;
+    letter-spacing: .3em; font-weight: 700; margin-bottom: 8px;
+  }
+  h2 {
+    font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+    text-align: center; font-size: clamp(22px, 4vw, 29px); font-weight: 600;
+    letter-spacing: .1em; margin-bottom: 40px; line-height: 1.6;
+  }
+  .leaf-divider { text-align: center; font-size: 15px; color: var(--moss); letter-spacing: .8em; margin-bottom: 26px; }
+
+  /* 写真プレースホルダ */
+  .ph {
+    border-radius: var(--radius);
+    background: repeating-linear-gradient(45deg, #eef0e3, #eef0e3 12px, #e5e8d6 12px, #e5e8d6 24px);
+    border: 1.5px dashed #a9b894;
+    display: grid; place-items: center;
+    color: #7d8a68; font-size: 13px; font-weight: 500;
+    min-height: 180px; text-align: center; padding: 12px;
+  }
+
+  /* ご近所の声（実口コミ引用） */
+  .voices { background: #fff; }
+  .score-band {
+    display: flex; flex-wrap: wrap; gap: 14px 30px; justify-content: center; align-items: center;
+    margin-bottom: 34px;
+  }
+  .score-badge {
+    background: var(--cream); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 16px 26px; text-align: center;
+  }
+  .score-badge .num { font-size: 32px; font-weight: 700; color: var(--forest); line-height: 1.2; font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; }
+  .score-badge .stars { color: #dfa93f; letter-spacing: 2px; font-size: 14px; }
+  .score-badge .src { font-size: 11.5px; color: var(--ink-soft); margin-top: 4px; }
+  .voice-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .voice {
+    background: var(--cream); border-radius: var(--radius);
+    padding: 24px 22px; border: 1px solid var(--line);
+  }
+  .voice p { font-size: 14.5px; }
+  .voice .src { margin-top: 12px; font-size: 12px; color: var(--ink-soft); }
+  .quote-tag {
+    display: inline-block; background: var(--leaf-pale); color: var(--leaf);
+    font-size: 11px; font-weight: 700; border-radius: 6px; padding: 2px 8px; margin-bottom: 8px;
+  }
+  .voices-note { text-align: center; margin-top: 20px; font-size: 12.5px; color: var(--ink-soft); }
+
+  /* お店のこと3つ */
+  .points-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+  .point {
+    background: #fff; border-radius: var(--radius);
+    padding: 30px 24px; border: 1px solid var(--line);
+    text-align: center;
+  }
+  .point .icon {
+    width: 62px; height: 62px; margin: 0 auto 14px;
+    background: var(--cream-deep); border-radius: 50%;
+    display: grid; place-items: center; font-size: 28px;
+  }
+  .point h3 { font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; font-size: 18px; margin-bottom: 10px; letter-spacing: .06em; }
+  .point p { font-size: 14px; color: var(--ink-soft); text-align: left; }
+
+  /* 人気のパン */
+  .breads { background: var(--forest); color: #fff; }
+  .breads .sec-label { color: #d9c7a8; }
+  .breads h2 { color: #fff; }
+  .breads-lead { text-align: center; margin: -24px auto 32px; max-width: 38em; font-size: 14.5px; color: #d3dcc9; }
+  .bread-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+  .bread-card {
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: var(--radius); overflow: hidden;
+  }
+  .bread-card .ph {
+    border-radius: 0; border: none; border-bottom: 1px solid rgba(255,255,255,.2);
+    min-height: 130px;
+    background: repeating-linear-gradient(45deg, rgba(255,255,255,.10), rgba(255,255,255,.10) 12px, rgba(255,255,255,.04) 12px, rgba(255,255,255,.04) 24px);
+    color: #c9d4bd;
+  }
+  .bread-body { padding: 15px 17px 17px; }
+  .bread-body h3 { font-size: 16px; letter-spacing: .04em; }
+  .bread-body .yen { font-size: 13.5px; color: #d9c7a8; font-weight: 700; }
+  .bread-body p { font-size: 12.5px; color: #c5d1ba; margin-top: 5px; }
+  .tag {
+    display: inline-block; font-size: 10.5px; font-weight: 700;
+    border-radius: 6px; padding: 2px 8px; margin-left: 6px; vertical-align: 2px;
+  }
+  .tag-blog { background: #fff; color: var(--forest); }
+  .breads-note { margin-top: 26px; text-align: center; font-size: 12.5px; color: #d9c7a8; }
+
+  /* はじめての方へ */
+  .guide-list { max-width: 660px; margin: 0 auto; display: grid; gap: 14px; }
+  .guide {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 20px 22px 20px 58px; position: relative;
+  }
+  .guide::before {
+    content: "🌿"; position: absolute; left: 20px; top: 20px; font-size: 20px;
+  }
+  .guide h3 { font-size: 16px; margin-bottom: 4px; letter-spacing: .04em; }
+  .guide p { font-size: 14px; color: var(--ink-soft); }
+  .kakunin {
+    display: inline-block; background: var(--terra-soft); color: var(--terra);
+    font-size: 11px; font-weight: 700; border-radius: 6px; padding: 2px 8px;
+  }
+
+  /* アクセス */
+  .access { background: #fff; }
+  .access-grid { display: grid; gap: 28px; grid-template-columns: 1fr; }
+  @media (min-width: 820px) { .access-grid { grid-template-columns: 1fr 1fr; } }
+  .shop-table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  .shop-table th, .shop-table td {
+    text-align: left; padding: 13px 12px;
+    border-bottom: 1px solid var(--line); vertical-align: top;
+  }
+  .shop-table th { width: 7.5em; color: var(--ink-soft); font-weight: 600; white-space: nowrap; }
+  .map-ph { min-height: 280px; }
+
+  /* CTA帯 */
+  .cta-band {
+    background: linear-gradient(150deg, var(--forest-deep), var(--forest));
+    color: #fff; text-align: center;
+  }
+  .cta-band h2 { color: #fff; margin-bottom: 12px; }
+  .cta-band p { color: #d3dcc9; font-size: 14.5px; margin-bottom: 26px; }
+  .cta-band .tel-big {
+    display: block; font-size: clamp(26px, 5vw, 34px); font-weight: 700;
+    letter-spacing: .05em; color: #fff; text-decoration: none; margin-bottom: 6px;
+    font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+  }
+  .cta-band .tel-hours { font-size: 13px; color: #d8c69f; }
+
+  footer {
+    background: #2c2214; color: #b3a58f;
+    text-align: center; padding: 34px 20px 40px; font-size: 12.5px;
+  }
+  footer .fbrand { color: #efe6d5; font-weight: 700; font-size: 15px; letter-spacing: .08em; margin-bottom: 8px; font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; }
+  .demo-note {
+    margin-top: 18px; padding-top: 14px; border-top: 1px solid #4a3a24;
+    font-size: 11.5px; color: #8f8271;
+  }
+
+  /* 下部固定CTA（スマホ） */
+  .fixed-cta {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 110;
+    display: flex; box-shadow: 0 -4px 14px rgba(0,0,0,.12);
+  }
+  .fixed-cta a {
+    flex: 1; text-align: center; padding: 15px 8px;
+    font-weight: 700; font-size: 15px; text-decoration: none;
+  }
+  .fixed-cta .f-tel { background: var(--forest); color: #fff; }
+  .fixed-cta .f-map { background: var(--terra); color: #fff; }
+  @media (min-width: 760px) {
+    .fixed-cta { display: none; }
+    body { padding-bottom: 0; }
+  }
+</style>
+</head>
+<body>
+<div style="background:#2b2b28;color:#f0ece2;font-size:13px;line-height:1.7;
+ padding:9px 16px;text-align:center;font-family:system-ui,sans-serif">
+ これは <strong>まちのウェブ屋さん</strong> の制作見本です。
+ 店名・住所・電話番号・営業時間はすべて<strong>架空</strong>で、実在する店舗とは関係ありません。
+ <a href="https://d-studylab.com/web/" style="color:#e0b070">制作の相談はこちら</a>
+</div>
+
+
+<header>
+  <div class="header-inner">
+    <a class="brand" href="#">
+      <span class="brand-mark">🌲</span>
+      <span>
+        <span class="brand-name">こみち</span>
+        <span class="brand-sub">滝沢市内｜ブーランジェリー</span>
+      </span>
+    </a>
+    <nav>
+      <a href="#voices">ご近所の声</a>
+      <a href="#breads">人気のパン</a>
+      <a href="#guide">はじめての方へ</a>
+      <a href="#access">アクセス</a>
+    </nav>
+    <a class="header-tel" href="tel:0190000000">📞 019-000-0000</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <span class="hero-badge">Boulangerie Petite Forêt ─ 小さな森のパン屋</span>
+    <h1>平日だけ、ひっそり開く。<br><span class="soft">市内のご近所パン屋</span>です。</h1>
+    <p class="hero-lead">滝沢市内の住宅街に、パンの焼ける匂いがふわり。「こみち」は、ハードパンと手頃な価格が自慢の小さなブーランジェリーです。100円台のパンから、食事に合わせたいバゲットまで。売り切れたらその日はおしまい、の気ままな森の店です。</p>
+    <div class="hero-cta">
+      <a class="btn btn-main" href="tel:0190000000">📞 今日のパンを電話で聞く</a>
+      <a class="btn btn-sub" href="#access">🚗 お店への行き方</a>
+    </div>
+    <p class="hero-note">営業は平日のみ。パンがなくなり次第閉店します。</p>
+    <div class="hero-info">
+      <span>滝沢市内422-8</span>
+      <span>平日 10:00〜17:00</span>
+      <span>土・日 おやすみ</span>
+      <span>駐車場あり</span>
+    </div>
+  </div>
+</div>
+
+<section class="voices" id="voices">
+  <div class="inner">
+    <p class="sec-label">VOICE</p>
+    <h2>ご近所さんの声</h2>
+    <div class="score-band">
+      <div class="score-badge">
+        <div class="num">4.21</div>
+        <div class="stars">★★★★☆</div>
+        <div class="src">Yahoo!マップ 口コミ14件（2026-07時点）</div>
+      </div>
+    </div>
+    <div class="voice-grid">
+      <div class="voice">
+        <span class="quote-tag">実際の口コミ（Yahoo!マップより要旨）</span>
+        <p>とても美味しく、お値段もお手頃で素晴らしいパン屋さん。</p>
+        <p class="src">出典: Yahoo!マップ口コミ</p>
+      </div>
+      <div class="voice">
+        <span class="quote-tag">実際の紹介記事（ブログより要旨）</span>
+        <p>100円台のパンもある、ハードパンが人気のお店。焼きたての匂いに包まれる。</p>
+        <p class="src">出典: 訪問ブログ（2025年）</p>
+      </div>
+      <div class="voice">
+        <span class="quote-tag">実際の口コミ（Yahoo!マップより要旨）</span>
+        <p>こぢんまりとした雰囲気の、隠れ家のようなパン屋さん。</p>
+        <p class="src">出典: Yahoo!マップ口コミ</p>
+      </div>
+    </div>
+    <p class="voices-note">※公開時は、掲載許可を得た口コミ・お客様の声に差し替え（引用元の利用規約も確認）します。</p>
+  </div>
+</section>
+
+<section>
+  <div class="inner">
+    <p class="sec-label">ABOUT</p>
+    <h2>こみちのこと</h2>
+    <p class="leaf-divider">🌿 🍞 🌿</p>
+    <div class="points-grid">
+      <div class="point">
+        <div class="icon">🥖</div>
+        <h3>ハードパンが自慢</h3>
+        <p>バゲットやカンパーニュなど、皮パリッ・中しっとりのハードパンが看板。毎日の食事に合わせるパンを探しに来てください。</p>
+      </div>
+      <div class="point">
+        <div class="icon">🥬</div>
+        <h3>地元野菜の惣菜パン</h3>
+        <p>農業がさかんな滝沢ならでは。季節の地元野菜を使った惣菜パンも並びます。その日の畑しだいの、一期一会のラインナップです。</p>
+      </div>
+      <div class="point">
+        <div class="icon">🕰</div>
+        <h3>平日だけ・売り切れ仕舞い</h3>
+        <p>営業は月〜金の10時から17時まで。焼いたぶんがなくなったら、その日はおしまい。お目当てがある日は、お早めにどうぞ。</p>
+      </div>
+    </div>
+    <div style="display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); margin-top:28px;">
+      <div class="ph">📷 外観・住宅街の中のお店の写真</div>
+      <div class="ph">📷 パンが並ぶ棚の写真</div>
+    </div>
+  </div>
+</section>
+
+<section class="breads" id="breads">
+  <div class="inner">
+    <p class="sec-label">BREAD</p>
+    <h2>人気のパンたち</h2>
+    <p class="breads-lead">口コミやブログで名前が挙がったパンたちです。その日の焼き上がりはお電話でどうぞ。</p>
+    <div class="bread-grid">
+      <div class="bread-card">
+        <div class="ph">📷 パンの写真</div>
+        <div class="bread-body">
+          <h3>ミルクフランス<span class="tag tag-blog">ブログ紹介例</span></h3>
+          <p class="yen">◯◯◯円</p>
+          <p>口コミでも名前の挙がる評判の一本（説明文はサンプルです）。</p>
+        </div>
+      </div>
+      <div class="bread-card">
+        <div class="ph">📷 パンの写真</div>
+        <div class="bread-body">
+          <h3>おいもさん<span class="tag tag-blog">ブログ紹介例</span></h3>
+          <p class="yen">◯◯◯円</p>
+          <p>さつまいも×クリームチーズ（説明文はサンプルです）。</p>
+        </div>
+      </div>
+      <div class="bread-card">
+        <div class="ph">📷 パンの写真</div>
+        <div class="bread-body">
+          <h3>きのこのパイ<span class="tag tag-blog">ブログ紹介例</span></h3>
+          <p class="yen">◯◯◯円</p>
+          <p>森の店らしい一品（説明文はサンプルです）。</p>
+        </div>
+      </div>
+      <div class="bread-card">
+        <div class="ph">📷 パンの写真</div>
+        <div class="bread-body">
+          <h3>カレーパン<span class="tag tag-blog">ブログ紹介例</span></h3>
+          <p class="yen">◯◯◯円</p>
+          <p>お昼どきの人気者（説明文はサンプルです）。</p>
+        </div>
+      </div>
+    </div>
+    <p class="breads-note">※品名は訪問ブログ・口コミで紹介された例で、現在のラインナップ・価格は<strong>要確認</strong>です。取材時に実物へ差し替えます。</p>
+  </div>
+</section>
+
+<section id="guide">
+  <div class="inner">
+    <p class="sec-label">GUIDE</p>
+    <h2>はじめての方へ</h2>
+    <div class="guide-list">
+      <div class="guide">
+        <h3>営業は平日だけです</h3>
+        <p>月〜金の10:00〜17:00。土曜・日曜はおやすみです。パンがなくなり次第、早めに閉まることがあります。</p>
+      </div>
+      <div class="guide">
+        <h3>お支払いについて <span class="kakunin">仮・要確認</span></h3>
+        <p>現金でのお支払いをお願いしています（※キャッシュレス対応の有無は取材時に確認のうえ確定します）。</p>
+      </div>
+      <div class="guide">
+        <h3>お車でお越しの方へ</h3>
+        <p>無料の駐車スペースがあります（台数は少なめ・<span class="kakunin">台数要確認</span>）。お店の先の道は行き止まりのため、来た道を戻ってお帰りください。</p>
+      </div>
+      <div class="guide">
+        <h3>確実に買いたい日は</h3>
+        <p>お電話（019-000-0000）で焼き上がりと残りぐあいを聞いてからのご来店がおすすめです。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="access" id="access">
+  <div class="inner">
+    <p class="sec-label">ACCESS</p>
+    <h2>お店の場所</h2>
+    <div class="access-grid">
+      <table class="shop-table">
+        <tr><th>店名</th><td>もりのパン工房 こみち</td></tr>
+        <tr><th>住所</th><td>岩手県滝沢市内422-8（〒は公開時に確認のうえ記載）</td></tr>
+        <tr><th>電話</th><td><a href="tel:0190000000">019-000-0000</a></td></tr>
+        <tr><th>営業時間</th><td>平日（月〜金）10:00〜17:00<br><small>※パンがなくなり次第終了</small></td></tr>
+        <tr><th>定休日</th><td>土曜・日曜</td></tr>
+        <tr><th>駐車場</th><td>あり・無料（台数少なめ <span class="kakunin">台数要確認</span>）</td></tr>
+        <tr><th>支払い</th><td>現金 <span class="kakunin">仮・要確認</span></td></tr>
+        <tr><th>SNS</th><td>Instagram <span class="kakunin">公式アカウントの有無・要確認</span></td></tr>
+      </table>
+      <div class="ph map-ph">🗺 Googleマップ埋め込みが入ります<br>（公開時に地図APIなしの埋め込みで設置）</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="inner">
+    <p class="sec-label" style="color:#d9c7a8">TEL</p>
+    <h2>今日のパン、まだありますか？</h2>
+    <p>焼き上がり・残りぐあいは、お気軽にお電話でどうぞ。</p>
+    <a class="tel-big" href="tel:0190000000">📞 019-000-0000</a>
+    <p class="tel-hours">平日 10:00〜17:00（土日定休・売り切れ次第終了）</p>
+  </div>
+</section>
+
+<footer>
+  <p class="fbrand">Boulangerie Petite Forêt</p>
+  <p>岩手県滝沢市内422-8｜019-000-0000｜平日10:00〜17:00（土日定休）</p>
+  <p class="demo-note">このページは「まちのウェブ屋さん」（運営：D-studylab）による提案用デモサイトです。<br>掲載情報の一部は仮のものであり、実店舗の公式サイトではありません。</p>
+</footer>
+
+<div class="fixed-cta">
+  <a class="f-tel" href="tel:0190000000">📞 電話で聞く</a>
+  <a class="f-map" href="#access">🗺 行き方を見る</a>
+</div>
+</body>
+</html>
