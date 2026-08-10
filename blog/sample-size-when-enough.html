@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>3,000回で出した数字を10万回で測り直したら、ほとんど動かなかった——標本はいくつ必要か｜D-studyLab ブログ</title>
+<meta name="description" content="同じ人が同じ月に測った2つの数字。片方は18回→500回で差が消え、もう片方は3,000回→10万回でほとんど動きませんでした。何回測れば足りるのかを、実際の2例で説明します。">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="3,000回で出した数字を10万回で測り直したら、ほとんど動かなかった——標本はいくつ必要か">
+<meta property="og:description" content="同じ人が同じ月に測った2つの数字。片方は18回→500回で差が消え、もう片方は3,000回→10万回でほとんど動きませんでした。何回測れば足りるのかを、実際の2例で説明します。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/monty-hall.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og/monty-hall.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://d-studylab.com/blog/og/monty-hall.png">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+
+  .morelinks { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+               padding:16px 18px; margin:30px 0 0; }
+  .morelinks .mt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .morelinks a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+                 border-bottom:1px dashed var(--line); }
+  .morelinks a:last-child { border-bottom:none; }
+  .morelinks .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .morelinks .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+
+  figure { margin:26px 0; }
+  figure img { width:100%; height:auto; border:1px solid var(--line); border-radius:6px; display:block; }
+  figure figcaption { font-size:13px; color:var(--sub); margin-top:8px; text-align:center; }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"モンティホール問題がどうしても納得できない人へ——あなたの直感は、実は間違っていない","description":"モンティホール問題を10万回シミュレーションした実測データで解説します。「変えると2/3」の理由と、多くの人が感じる「50%じゃないの？」という直感が正しくなる条件まで、実際に回した数字で示します。","url":"https://d-studylab.com/blog/monty-hall.html","datePublished":"2026-07-26","dateModified":"2026-07-26","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/monty-hall.html"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">🎲 数字の読み方</div>
+  <h1>3,000回で出した数字を10万回で測り直したら、ほとんど動かなかった——標本はいくつ必要か</h1>
+  <div class="date">2026年8月11日</div>
+
+  <p>「何回測れば足りるんですか」という問いに、一般的な答えはありません。
+    <b>測るものによって、必要な回数が桁で変わる</b>からです。</p>
+
+  <p>この記事では、私が同じ月に測った<b>2つの実例</b>を並べます。
+    片方は<b>18回では足りず、500回で結論がひっくり返りました</b>。
+    もう片方は<b>3,000回で十分で、10万回に増やしてもほとんど動きませんでした</b>。</p>
+
+  <p>違いはどこにあったのか。<b>測る前に見分ける方法</b>まで書きます。</p>
+
+  <a class="cta" href="/study-type/">🧭 この記事で使う診断を試す（登録不要・ブラウザで完結）</a>
+
+  <h2>例1：18回では足りなかった</h2>
+
+  <p>ペンギンを積むゲームを作っていて、いちばん易しいAIの強さを調整していました。
+    「人間にも勝ち目がある」状態にしたい。<b>18回</b>対戦させて、勝率を測りました。</p>
+
+  <p>手を入れる前と後で、<b>12% → 28%</b>。倍以上になっています。
+    「土台を広げたから勝てるようになった」と結論しました。</p>
+
+  <p>気になって、<b>500回</b>で測り直しました。</p>
+
+  <table>
+    <tr><th>測った回数</th><th>手を入れる前</th><th>手を入れた後</th></tr>
+    <tr><td>18回</td><td>12%</td><td><b>28%</b></td></tr>
+    <tr><td><b>500回</b></td><td>19%</td><td><b>19%</b></td></tr>
+  </table>
+
+  <p><b>差はゼロでした。</b>18回で見えた「倍以上」は、たまたまです。
+    しかもこの状態だと、<b>コードを1行も変えていないのにテストが赤くなったり緑になったりします</b>。</p>
+
+  <h2>例2：3,000回で十分だった</h2>
+
+  <p>もうひとつは診断です。勉強のつまずき方を8つの型に分けて、
+    15問こたえると自分がどれに近いかが出るものを作りました。</p>
+
+  <p>作るときに確かめたかったのは、<b>「8つ全部に到達するか」</b>と
+    <b>「1つが半分を超えていないか」</b>の2つです。
+    ランダムに答えるプログラムで <b>3,000回</b>まわして、出方を数えました。</p>
+
+  <p>そのあと、<b>10万回</b>で測り直しました。</p>
+
+  <table>
+    <tr><th>型</th><th>3,000回</th><th>10万回</th><th>差</th></tr>
+    <tr><td>何から手をつけるか決まらない型</td><td>26.7%</td><td><b>26.4%</b></td><td>0.3pt</td></tr>
+    <tr><td>質問できない型</td><td>15.7%</td><td><b>15.1%</b></td><td>0.6pt</td></tr>
+    <tr><td>前日にまとめてやる型</td><td>14.5%</td><td><b>14.5%</b></td><td>0.0pt</td></tr>
+    <tr><td>わかった気になる型</td><td>12.0%</td><td><b>11.7%</b></td><td>0.3pt</td></tr>
+    <tr><td>完璧主義で止まる型</td><td>10.5%</td><td><b>10.7%</b></td><td>0.2pt</td></tr>
+    <tr><td>人と比べて凹む型</td><td>7.6%</td><td><b>7.8%</b></td><td>0.2pt</td></tr>
+    <tr><td>量はやるが伸びない型</td><td>6.5%</td><td><b>7.4%</b></td><td>0.9pt</td></tr>
+    <tr><td>集中が続かない型</td><td>6.5%</td><td><b>6.3%</b></td><td>0.2pt</td></tr>
+  </table>
+
+  <p><b>いちばん動いたもので0.9ポイント。</b>順位も変わっていません。
+    33倍に増やして、結論は1つも変わりませんでした。</p>
+
+  <h2>何が違ったのか</h2>
+
+  <p>同じ人が同じ月に測って、片方は足りず、片方は足りた。違いは3つあります。</p>
+
+  <h3>1. 何を知りたかったか</h3>
+
+  <p>例1で知りたかったのは<b>「2つの数字に差があるか」</b>でした。
+    これは<b>いちばん回数が要る</b>問いです。12%と28%のような
+    「ありそうな差」を確かめるには、数百回では足りないことがあります。</p>
+
+  <p>例2で知りたかったのは<b>「0のものがあるか」「半分を超えるものがあるか」</b>でした。
+    これは<b>粗い問い</b>です。26%と6%くらい離れていれば、数千回で十分に見分けがつきます。</p>
+
+  <h3>2. 1回あたりのブレの大きさ</h3>
+
+  <p>例1のゲームは、1回の対戦で積み木が崩れるかどうかが物理演算で決まります。
+    <b>ちょっとした初期値で結果が変わる</b>ので、1回1回のブレが大きい。</p>
+
+  <p>例2の診断は、15問それぞれで点が入るだけです。
+    <b>1回の中で15回ぶんの平均が取られている</b>ので、そもそもブレが小さい。</p>
+
+  <h3>3. 差の大きさ</h3>
+
+  <p>これがいちばん効きます。<b>見たい差が小さいほど、必要な回数は跳ね上がります。</b></p>
+
+  <p>目安として、<b>差が半分になると、必要な回数は4倍</b>になります。
+    10ポイントの差を見るのに100回で足りるなら、
+    5ポイントの差には400回、2.5ポイントには1,600回要る、という増え方です。</p>
+
+  <h2>測る前に見分ける</h2>
+
+  <p>3つを組み合わせると、測る前にだいたい判断できます。</p>
+
+  <table>
+    <tr><th>こういうときは</th><th>回数</th></tr>
+    <tr><td>「0か、0でないか」を見たい</td><td>少なくてよい</td></tr>
+    <tr><td>「大きく違うか」を見たい（3倍以上など）</td><td>数百回</td></tr>
+    <tr><td><b>「わずかに違うか」を見たい</b></td><td><b>桁が変わる。数千〜数万回</b></td></tr>
+    <tr><td>1回ごとのブレが大きい（物理・運の要素が強い）</td><td>さらに増やす</td></tr>
+  </table>
+
+  <p>そして、いちばん大事なことがあります。</p>
+
+  <h2>実は、あなたの「なんか怪しい」は正しい</h2>
+
+  <p>例1のとき、私は数字を見て納得しました。12%が28%になっている。
+    グラフにすれば、きれいに伸びて見えます。</p>
+
+  <p>それでも<b>「なんか怪しいな」と思った</b>ので測り直しました。
+    その違和感は正しかった。</p>
+
+  <p>なぜ怪しいと思えたのか。あとから考えると、
+    <b>18という数字が小さすぎることを、感覚が知っていた</b>からです。
+    18回のうち2〜3回結果が変われば、勝率は10ポイント以上動きます。
+    人は「サイコロを18回振っただけで偏りは分からない」ことを、
+    説明できなくても<b>知っています</b>。</p>
+
+  <p>だから、覚えることは1つだけで足ります。</p>
+
+  <p><b>数字を見たら、母数を聞く。</b>
+    「何回測ったんですか」。それだけです。
+    答えが返ってこない数字、あるいは2桁の数字だったら、
+    <b>いったん結論を保留して、桁を1つ増やして測り直す。</b></p>
+
+  <p>正しさを判定する必要はありません。<b>根拠が書いてあるかを見るだけ</b>です。</p>
+
+  <h2>この記事の要点</h2>
+
+  <ul>
+    <li>必要な回数は<b>測るものによって桁で変わる</b>。一般的な目安は無い</li>
+    <li><b>18回では足りなかった例</b>（差が消えた）と、
+      <b>3,000回で足りた例</b>（33倍にしても動かなかった）を並べた</li>
+    <li>違いは<b>①何を知りたいか ②1回ごとのブレ ③見たい差の大きさ</b></li>
+    <li><b>差が半分になると、必要な回数は4倍</b>になる</li>
+    <li>覚えるのは1つ。<b>数字を見たら母数を聞く</b></li>
+  </ul>
+
+  <a class="cta" href="/study-type/">🧭 例2で使った診断を試してみる（15問・2分）</a>
+
+  <p style="font-size:13px;color:var(--sub);margin-top:26px">
+    ※ 例2の数字は、公開している診断と同じコードに対して、
+    各設問をランダムに選ぶプログラムを走らせた実測値です
+    （3,000回と100,000回。2026年8月に測定）。
+    「ランダムに答えた場合の出方」であって、<b>世の中の人の割合ではありません</b>。</p>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
