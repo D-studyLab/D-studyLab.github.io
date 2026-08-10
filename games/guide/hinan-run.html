@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>避難ラン × デッキの遊び方と見どころ｜ミニゲームゲームズ D-studyLab</title>
+<meta name="description" content="走って物資を集め、それがそのまま後半の手札になるランゲーム＋デッキ構築。体力はなく、負けるのは「進める道が無くなったとき」だけ。災害は攻撃せず、通れる道を1つずつ閉じてくる。無料・登録不要。">
+<meta name="robots" content="index,follow">
+<style>
+  @font-face {
+    font-family:"DotGothic16"; font-style:normal; font-weight:400;
+    font-display:swap; src:url("/assets/fonts/DotGothic16-subset.woff2") format("woff2");
+  }
+  :root { --bg:#131019; --panel:#1C1727; --line:#332B44; --txt:#EFEAF6; --sub:#A79DBE;
+          --acc:#FF4D9D; --good:#6bdf9a; --bad:#ff5db1; --gold:#FFD644; --play-tx:#131019; }
+  @media (prefers-color-scheme: light) {
+    /* 明灰（緑黄の色被りなし）×濃マゼンタ×深紫（games世界観の軽量版） */
+    :root { --bg:#F1EFEA; --panel:#FBFAF7; --line:#B9B0C9; --txt:#26222E; --sub:#5C5566;
+            --acc:#C21F6B; --good:#1f8a52; --bad:#a83b73; --gold:#4A2C82; --play-tx:#FFFFFF; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.9;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .hero { display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+  .hero .emj { font-size:52px; line-height:1; }
+  h1 { font-size:23px; margin:0; }
+  .meta { color:var(--sub); font-size:13px; margin:2px 0 20px; }
+  .play { display:inline-block; background:var(--acc); color:var(--play-tx); font-weight:bold;
+          text-decoration:none; border-radius:10px; padding:11px 22px; font-size:15px; margin:6px 0 26px; }
+  h2 { font-size:18px; margin:30px 0 8px; padding-left:11px; border-left:4px solid var(--acc); }
+  p { font-size:15.5px; }
+  a { color:var(--acc); }
+  .foot { margin-top:44px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  .crumb, h1, h2 { font-family:"DotGothic16","Hiragino Kaku Gothic ProN",monospace; letter-spacing:.01em; }
+  body::before { content:""; position:fixed; inset:0; z-index:9; pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,.05), rgba(0,0,0,.05) 1px, transparent 1px, transparent 3px);
+    mix-blend-mode:multiply; }
+  @media (prefers-color-scheme: light) { body::before { opacity:.5; } }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; } }
+  a.play { color:#04101d !important; }
+  @media (prefers-color-scheme: light) { a.play { color:#eef4ff !important; } }
+
+  .relgame { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.12);
+             border-radius:10px; padding:15px 18px; margin:28px 0 0; }
+  .relgame .rt { font-size:13px; opacity:.72; margin-bottom:9px; letter-spacing:.05em; }
+  .relgame a { display:block; text-decoration:none; color:inherit; padding:8px 0;
+               border-bottom:1px dashed rgba(255,255,255,.12); }
+  .relgame a:last-of-type { border-bottom:none; }
+  .relgame .gn { display:block; font-weight:bold; font-size:15px; }
+  .relgame .gd { display:block; font-size:12.5px; opacity:.66; margin-top:2px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../">🕹️ ミニゲームゲームズ</a> ／ 避難ラン × デッキ の遊び方</div>
+  <div class="hero"><div class="emj">🏃</div><h1>避難ラン × デッキ</h1></div>
+  <div class="meta">防災・デッキ構築ジャンル・所要 約8分・ブラウザで無料・インストール不要</div>
+
+  <a class="play" href="https://d-studylab.com/hinan-run/" target="_blank" rel="noopener">▶ 避難ラン × デッキ を遊ぶ</a>
+
+  <h2>ルール</h2>
+  <p>前半45秒はランです。3レーンを左右に避けながら、水・携帯食料・懐中電灯・電池・作業用手袋を拾います。スマホは走行エリアの左半分／右半分をタップするか、左右にフリック。PCは ← → か A / D キーです。後半は6ターンの避難パートで、前半に拾った物資がそのままカードになります。上へ1段ずつ進み、避難所にたどり着けば勝ち。体力ゲージはありません。負けるのは「進める道が無くなったとき」だけです。</p>
+
+  <h2>攻略のコツ</h2>
+  <p>前半で安全に走ると手札が貧しくなり、拾いに行くと瓦礫を踏みます。物資の約半分は危険と同じ行の、しかも隣のレーンに出るように作ってあるので、「寄り道するかどうか」が毎回の判断になります。後半は、上の災害予告を必ず見てから道を選んでください。このターンの終わりに何が起きるか、次のターンに何が起きるかが先に出ています。知らされていないことで負けることはありません。エナジーが足りないと感じたら「一息つく」を使ってください。コスト0で、そのターンだけエナジーが2増えます（1ターン1回）。</p>
+
+  <h2>体力を置かなかった理由</h2>
+  <p>避難は殴り合いではありません。実際に起きるのは「判断を間違えると、選べる道が減る」ことです。だからHPを削る代わりに、災害は道を閉じます。その結果、「まだ動けるのに詰んでいる」という状態が発生します。これは防災の話としても、ゲームの緊張としても、体力を削り合うより正直だと考えました。</p>
+
+  <h2>知識クイズにしなかった理由</h2>
+  <p>防災を題材にすると「正解を知っているか」を問う形になりがちですが、それだと知らない人は間違えて終わるだけで、何も残りません。このゲームは知識を答えさせません。代わりに知識を**カードの性能そのもの**にしてあります。懐中電灯は暗い道へ進めるが、暗所に入るたび電池が減り、0になるとその道が閉じる。ハザードマップは高台の経路を見せてくれるが、計画枠を1つ占有する。遊ぶと「なぜ電池の予備が要るのか」が、説明ではなく負けたときの実感として残ります。</p>
+
+  <h2>技術的な仕掛け</h2>
+  <p>HTML1枚で完結しています。主人公と物資の絵は生成AIで描いたものを、背景のマゼンタを機械的に抜き、コマごとに最大の塊だけ残す処理（生成ツールの透かしを落とすため）にかけて使っています。BGMと効果音は音声ファイルを同梱せず、Web Audio API でその場で合成しています。計算も描画も音もすべて端末の中で完結し、遊んだ内容が外部へ送られることはありません。</p>
+
+  <div class="foot">
+    <a class="play" href="https://d-studylab.com/hinan-run/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>
+    © D-studyLab ／ <a href="../">ミニゲームゲームズトップへ</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+  <div class="relgame">
+    <div class="rt">近いものを遊ぶ</div>
+    <a href="/study-type/"><span class="gn">🧭 勉強のつまずき方診断</span><span class="gd">15問で、いま詰まっている場所が出る</span></a>
+    <a href="/tsumi-battle/"><span class="gn">🐧 積みバトル</span><span class="gd">ペンギンを積んで、先に崩した方が負け</span></a>
+  </div>
+</body>
+</html>
