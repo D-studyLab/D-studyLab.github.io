@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>そのカード、取る？の遊び方と見どころ｜ミニゲームゲームズ D-studyLab</title>
-<meta name="description" content="「この強そうなカード、デッキに入れるべき？」という直感を、1万回のシミュレーションで検算するツール。追加した場合としない場合の勝率を並べて、単体で強いカードがデッキ全体の勝率を下げる場面を可視化します。">
+<meta name="description" content="デッキ構築の「このカード入れるべき？」を1万回×2の対戦シミュレーションで即答。強いカードを足したのに勝率が下がる「デッキ太らせの罠」を数字で確認できます。敵HP95・ドロー4など数値は全公開。無料・登録不要。">
 <meta name="robots" content="index,follow">
 <style>
   @font-face {
@@ -56,7 +56,7 @@
   .relgame .gn { display:block; font-weight:bold; font-size:15px; }
   .relgame .gd { display:block; font-size:12.5px; opacity:.66; margin-top:2px; }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"そのカード、取る？の遊び方と見どころ","description":"「この強そうなカード、デッキに入れるべき？」という直感を、1万回のシミュレーションで検算するツール。追加した場合としない場合の勝率を並べて、単体で強いカードがデッキ全体の勝率を下げる場面を可視化します。","url":"https://d-studylab.com/games/guide/toru-card.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"そのカード、取る？","url":"https://d-studylab.com/toru-card/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/toru-card.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"そのカード、取る？の遊び方と見どころ","description":"デッキ構築の「このカード入れるべき？」を1万回×2の対戦シミュレーションで即答。強いカードを足したのに勝率が下がる「デッキ太らせの罠」を数字で確認できます。敵HP95・ドロー4など数値は全公開。無料・登録不要。","url":"https://d-studylab.com/games/guide/toru-card.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"そのカード、取る？","url":"https://d-studylab.com/toru-card/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/toru-card.html"}}</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -78,6 +78,23 @@
 
   <h2>技術的な仕掛け</h2>
   <p>方策を固定した貪欲AIどうしを、同一シードで1万回対戦させて勝率を比較します。同じシードを使うので、条件を1つだけ変えたときの差が純粋に見えるのが特徴です。実在ゲームの再現ではなく、確率の直感を鍛えるための簡略化した抽象モデルであり、計算はすべて端末内で完結します。数字を触りながら『この一枚が勝率を何パーセント動かすか』を確かめる、電卓のような使い方ができます。</p>
+
+
+  <h2>最初の1手</h2>
+  <p>画面上部でデッキのプリセットを選びます（<strong>初期デッキ／コンボ軸／弱デッキ</strong>）。あとは候補カードの行にある<strong>「取る？」</strong>を押すだけ。押した瞬間に「今のデッキ」と「＋候補1枚」の2通りについて、それぞれ<strong>1万回ずつの対戦</strong>が走り、最終勝率が並びます。結果はそのままコピーできます。</p>
+  <p>最初にやってほしいのは、<strong>コンボ軸のデッキに「中途半端」を1枚足してみること</strong>です。単体では悪くないカードなのに勝率が下がります。これがこのシミュレータの主題です。</p>
+
+  <h2>戦闘モデルの中身</h2>
+  <p>抽象モデルですが、数値は公開されています。敵は<strong>HP95・攻撃6</strong>で毎ターン+1ずつ強化され、そこに0〜+12の乱高下が乗ります。あなたは<strong>HP70・エナジー3・毎ターン4枚ドロー</strong>。14ターンで決着がつかなければ敗北扱いです（敵が無限に強くなるため引き分けは存在しません）。</p>
+  <p>カードは8種類。ストライク（1コスト6ダメージ）、ヘビーブロー（2コスト14ダメージ）、ガード（1コストでブロック6）、大城壁（2コストでブロック14）、サイクル（0コストで1枚引く）、中途半端（1コストで4ダメージ＋ブロック3の器用貧乏）、呪い（使えない・手札を圧迫するだけ）、そして<strong>コンボ</strong>——手札にあるコンボ1枚につき2ダメージ×枚数、つまり<strong>枚数の2乗で伸びます</strong>。コンボ軸が「薄まると弱い」のはこの2乗のせいです。</p>
+  <p>方策は固定の貪欲AIで、死にそうなターンはブロックを優先し、そうでなければコスト当たりダメージの高い順に切ります。<strong>同一シードで1万回</strong>を回して比較するので、変えた条件の影響だけが純粋に取り出せます。</p>
+
+  <h2>このシミュレータで見えること</h2>
+  <p>ひとつめ、<strong>強いカードを足したのに勝率が下がる</strong>瞬間。キーカードを引く確率が薄まる「デッキ太らせの罠」です。ふたつめ、<strong>同じカードが弱いデッキでは正解になる</strong>こと——カードに絶対評価はなく、デッキ文脈がすべてです。みっつめ、<strong>呪いの本当の値段</strong>。使えないカード1枚が勝率を何ポイント削るのかが数字で出ます。</p>
+
+  <h2>数字の裏づけ</h2>
+  <p><code>deckev.test.js</code> の6ゲートで検査しています。同じシードなら結果が完全一致すること（決定論）。10枚の初期デッキ相当が勝率30〜90%の帯に収まり、勝ちすぎも負けすぎもしないこと——<strong>この初期デッキは勝率およそ69%になるようキャリブレートしてあり</strong>、上にも下にも動かす余地が見えるようにしてあります。呪い2枚を入れると勝率が明確に下がること。そして<strong>コンボ軸に「中途半端」を1枚足すと勝率が下がり</strong>、<strong>同じカードを素直なデッキに足すと下がらない</strong>こと——この2つが同時に成り立つよう、毎ターン4枚ドローという手札の狭さをグリッドサーチで決めています。速度も1万回の試行が1.5秒未満で終わることを確認済みです。</p>
+  <p>実在のカードゲームの再現ではなく、確率感覚を鍛えるための抽象モデルです。計算はすべてブラウザ内で完結し、外部送信はありません。</p>
 
   <div class="foot">
     <a class="play" href="https://d-studylab.com/toru-card/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>
