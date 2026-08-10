@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>ヨミアテの遊び方と見どころ｜ミニゲームゲームズ D-studyLab</title>
-<meta name="description" content="数字当て（ヒット＆ブロー）に、ヒント購入と残り候補数メーターを足した推理ゲーム。最初の1手は当てにいかず候補を削る手を打つ——5040→1440→369と減っていく数字が「良い質問」を教えてくれます。無料・登録不要。">
+<meta name="description" content="4桁の数字当て（ヒット&ブロー）に「ヒント購入」と「残り候補数メーター」を足した推理ゲーム。5040通りがどう絞られたかが常時見えるので、情報量そのものを体感できます。デイリーはネタバレなしで共有可。無料・登録不要。">
 <meta name="robots" content="index,follow">
 <style>
   @font-face {
@@ -56,7 +56,7 @@
   .relgame .gn { display:block; font-weight:bold; font-size:15px; }
   .relgame .gd { display:block; font-size:12.5px; opacity:.66; margin-top:2px; }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"ヨミアテの遊び方と見どころ","description":"数字当て（ヒット＆ブロー）に、ヒント購入と残り候補数メーターを足した推理ゲーム。最初の1手は当てにいかず候補を削る手を打つ——5040→1440→369と減っていく数字が「良い質問」を教えてくれます。無料・登録不要。","url":"https://d-studylab.com/games/guide/yomiate.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"ヨミアテ","url":"https://d-studylab.com/yomiate/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/yomiate.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"ヨミアテの遊び方と見どころ","description":"4桁の数字当て（ヒット&ブロー）に「ヒント購入」と「残り候補数メーター」を足した推理ゲーム。5040通りがどう絞られたかが常時見えるので、情報量そのものを体感できます。デイリーはネタバレなしで共有可。無料・登録不要。","url":"https://d-studylab.com/games/guide/yomiate.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"ヨミアテ","url":"https://d-studylab.com/yomiate/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/yomiate.html"}}</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -78,6 +78,22 @@
 
   <h2>技術的な仕掛け</h2>
   <p>推理エンジンは全候補（4桁なら5040通り）を保持し、毎手すべての情報と矛盾しない候補だけを残して数えます。この計算がゲームの候補数表示と一致することを1000局で検証済み。デイリー問題は日付から決まる固定シード方式で、全員が同じ盤面を、ネタバレなしの絞り込み履歴つきで共有できます。</p>
+
+
+  <h2>ルールと操作</h2>
+  <p>隠された数字（各桁重複なし）を当てます。予想を出すと<strong>H（位置も数字も一致）</strong>と<strong>B（数字だけ一致）</strong>が返ってくる、いわゆるヒット&amp;ブローです。桁数はフリーモードで選べて、<strong>4桁（5040通り・8手）／5桁（30240通り・10手）／6桁鬼（151200通り・12手）</strong>。デイリーは4桁です。</p>
+  <p>入力は電卓ではなく<strong>テンキー配列</strong>（789/456/123/⌫0）。物理キーボードでも数字・Backspace・Enterで操作でき、置いたマスをタップして直接置き換えることもできます。スコアは最大1000点で、速いほど高得点、ヒント1回につき−100、手数超過は−50/手です。</p>
+
+  <h2>ヒントは「買う」もの——推理は情報の買い物だ</h2>
+  <p>💰ヒント購入は<strong>1回につき1手を消費</strong>し、それぞれ1回だけ使えます。「合計は？」「偶数は何個？」「最大は？」「1桁開示」「Xはある？」の5種類。手数もスコアも減るので、<strong>どのヒントをいつ買うか</strong>そのものが勝負になります。</p>
+  <p>そして本作の中心が📉<strong>残り候補数メーター</strong>です。これまでに得た全ての情報と矛盾しない候補が今いくつ残っているかを、常時表示します。「その質問は候補を1/40にした」が数字で見えるので、<strong>情報量そのものを体感できる教材</strong>になっています。良い手と悪い手の差が、勘ではなくメーターの落ち幅で分かります。</p>
+
+  <h2>デイリーは、ネタバレせずに上手さが伝わる</h2>
+  <p>📅きょうのヨミアテは全員が同じ日替わり問題を解きます（通し番号つき・1日1回・連続記録あり）。結果は絞り込みの履歴つきでコピーでき、<code>候補: 5040→680→95→3→✅</code> のような形になります。答えを漏らさずに、自分の推理の鋭さだけが伝わる形式です。♾フリーモードは何度でも遊べます。</p>
+
+  <h2>数字の裏づけ</h2>
+  <p><code>core.test.js</code> で全PASSを確認しているのは次の点です。候補空間5040の完全性、H&amp;B判定が既知ケースと一致すること、<strong>正解が常に候補集合の中に残っていること</strong>（1000局で検証——ここが壊れると「論理的に解けない問題」が出てしまいます）、4H揃った時点で候補が1に確定すること、そしてデイリーのシードが安定していて、かつ<strong>30日で30問すべて異なる</strong>こと。</p>
+  <p>発案は作者本人の「ヒントをもらえるヌメロン」という一言から。完全にブラウザ内で動作し、依存ライブラリはゼロ、外部送信もありません。</p>
 
   <div class="foot">
     <a class="play" href="https://d-studylab.com/yomiate/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>

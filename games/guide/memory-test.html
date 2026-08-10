@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>記憶力テストの遊び方と見どころ｜ミニゲームゲームズ D-studyLab</title>
-<meta name="description" content="数字は何桁まで、場所は何手まで覚えられるか。順唱・逆唱・視空間の3課題を階段法で測る記憶力テスト。10問固定ではなく、正解するほど長くなるので必ず限界が出ます。約3分・無料・登録不要。">
+<meta name="description" content="数字は何桁まで、場所は何手まで覚えられるか。順唱・逆唱・Corsi課題の3つを階段法で測り、誰でも必ず限界まで到達します。逆唱を1.4倍で重く見る採点モデルと、偏りから読む弱点診断つき。無料・登録不要。">
 <meta name="robots" content="index,follow">
 <style>
   @font-face {
@@ -56,7 +56,7 @@
   .relgame .gn { display:block; font-weight:bold; font-size:15px; }
   .relgame .gd { display:block; font-size:12.5px; opacity:.66; margin-top:2px; }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"記憶力テストの遊び方と見どころ","description":"数字は何桁まで、場所は何手まで覚えられるか。順唱・逆唱・視空間の3課題を階段法で測る記憶力テスト。10問固定ではなく、正解するほど長くなるので必ず限界が出ます。約3分・無料・登録不要。","url":"https://d-studylab.com/games/guide/memory-test.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"記憶力テスト","url":"https://d-studylab.com/memory-test/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/memory-test.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"記憶力テストの遊び方と見どころ","description":"数字は何桁まで、場所は何手まで覚えられるか。順唱・逆唱・Corsi課題の3つを階段法で測り、誰でも必ず限界まで到達します。逆唱を1.4倍で重く見る採点モデルと、偏りから読む弱点診断つき。無料・登録不要。","url":"https://d-studylab.com/games/guide/memory-test.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"記憶力テスト","url":"https://d-studylab.com/memory-test/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/memory-test.html"}}</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -78,6 +78,25 @@
 
   <h2>技術的な仕掛け</h2>
   <p>偏差値は「順唱7・逆唱5・場所5」を50に置いた、このテスト独自の擬似値です（全国調査ではありません。画面にも明記しています）。順唱の目安7±2は Miller (1956) の古典的な指摘によります。逆唱はワーキングメモリの中核なので重み1.4で重く見ています。純ロジック層を分けてあり、階段法が「必ず終わる」ことをテスト32件で検査しています——作った直後は、正解し続けると永久に終わらないバグがありました。</p>
+
+
+  <h2>3つの課題と、その元ネタ</h2>
+  <p>測るのは3つです。<strong>① 順唱</strong>——数字が1つずつ出るので、出た順に答えます（心理学でいう数唱スパン／forward digit span）。<strong>② 逆唱</strong>——同じように出た数字を<strong>逆から</strong>答えます（逆唱スパン。ワーキングメモリの中核とされる課題）。<strong>③ 場所</strong>——マスが順に光るので、同じ順にタップします（Corsiブロック課題、視空間スパン）。</p>
+
+  <h2>10問固定ではなく「階段法」で測る</h2>
+  <p>このテストは問題数が決まっていません。長さ3から始めて、<strong>正解したら1つ長く、間違えたら1つ短く</strong>。そして<strong>同じ長さで2回落ちたら</strong>その課題は終了します。つまり<strong>誰でも必ず最後は間違える</strong>設計で、そこがその人の限界というわけです。「全問正解して終わる」ことはありません。</p>
+  <p>ひとつ実装上の注意として、1課題あたり<strong>9回の上限</strong>を入れてあります。これが無いと、メモを取るなどして正解し続けるかぎり永久に終わりません。実装当初これに気づかず、ブラウザで自動プレイさせて発覚しました。</p>
+
+  <h2>偏差値はどう出しているか</h2>
+  <p>素点は <strong>順唱×1.0 ＋ 逆唱×1.4 ＋ 場所×1.2</strong>。逆唱を重く見ています。基準は「順唱7・逆唱5・場所5」を偏差値50に置きました。順唱7±2 は Miller (1956) の古典的な指摘で、逆唱5前後・視空間5前後は一般的に言われる目安です。上下は25〜80で頭打ちにしてあります。</p>
+  <p>ただし、これは<strong>全国調査による数値ではなく、あくまでこのテストの採点モデルによる擬似値</strong>です（画面にも明記しています）。</p>
+
+  <h2>結果から返す「弱点の読み方」</h2>
+  <p>3課題の偏りを見て、次のような指摘を返します。<strong>順唱は高いのに逆唱が3以上低い</strong>なら、覚える力よりも「頭の中で並べ替える力」のほうが弱い。<strong>場所だけ2以上高い</strong>なら、場所法（覚えたいものを部屋の風景に置く記憶術）が向いている。<strong>言語系だけ2以上高い</strong>なら、図で覚えるより声に出すほうが残るタイプ、という具合です。</p>
+
+  <h2>数字の裏づけ</h2>
+  <p><code>memory.test.js</code> の32件で、決定論・出題の性質・逆唱の正解・階段法・偏差値・称号を検査しています。階段法については特に「正解し続けても必ず終わる」「正解と誤答が混ざっても必ず終わる」「上限・下限を割らない」「元の状態を書き換えない」を確認しています。</p>
+  <p>three.jsのような外部ライブラリは使っていません（数字とマスを表示するだけなので不要でした）。計算はすべてブラウザ内で完結し、回答が外部へ送信されることはありません。</p>
 
   <div class="foot">
     <a class="play" href="https://d-studylab.com/memory-test/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>

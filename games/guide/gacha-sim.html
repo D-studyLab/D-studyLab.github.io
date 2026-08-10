@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>1万人ガチャシミュレータの遊び方と見どころ｜ミニゲームゲームズ D-studyLab</title>
-<meta name="description" content="「排出率1%なら100連で出る」という思い込みを、1万人ぶんの分布で崩すツール。見るべきは平均ではなく分布の裾で、300連を超えても出ない人が一定数いること。排出率・天井・単価を変えて即再計算できます。">
+<meta name="description" content="「排出率1%＝100連で出る」ではない。1%なら100連で出る確率は63%、つまり3人に1人は出ません。1万人が一斉に引いた分布をモンテカルロ法で描き、天井が切り落としている「右の裾」を体感できます。無料・登録不要。">
 <meta name="robots" content="index,follow">
 <style>
   @font-face {
@@ -56,7 +56,7 @@
   .relgame .gn { display:block; font-weight:bold; font-size:15px; }
   .relgame .gd { display:block; font-size:12.5px; opacity:.66; margin-top:2px; }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"1万人ガチャシミュレータの遊び方と見どころ","description":"「排出率1%なら100連で出る」という思い込みを、1万人ぶんの分布で崩すツール。見るべきは平均ではなく分布の裾で、300連を超えても出ない人が一定数いること。排出率・天井・単価を変えて即再計算できます。","url":"https://d-studylab.com/games/guide/gacha-sim.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"1万人ガチャシミュレータ","url":"https://d-studylab.com/gacha-sim/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/gacha-sim.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"1万人ガチャシミュレータの遊び方と見どころ","description":"「排出率1%＝100連で出る」ではない。1%なら100連で出る確率は63%、つまり3人に1人は出ません。1万人が一斉に引いた分布をモンテカルロ法で描き、天井が切り落としている「右の裾」を体感できます。無料・登録不要。","url":"https://d-studylab.com/games/guide/gacha-sim.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"1万人ガチャシミュレータ","url":"https://d-studylab.com/gacha-sim/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/gacha-sim.html"}}</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -78,6 +78,19 @@
 
   <h2>技術的な仕掛け</h2>
   <p>モンテカルロ法で、1万試行それぞれを毎回独立に引き直してシミュレーションします。だから毎回わずかに違う分布が出て、確率が『固定された運命』ではなく『振れ幅のある現象』であることが実感できます。実在するゲームの確率仕様とは無関係の、確率分布を学ぶための教材デモであり、計算はすべてブラウザ内で行われ、何も外部に送信されません。排出率や試行回数を変えて、天井（一定回数で確定）の有無が分布をどう変えるかも試せます。</p>
+
+
+  <h2>最初にどこを触るか</h2>
+  <p>条件は3つのスライダーで、動かすと即座に再計算されます——<strong>排出率（ピックアップ）</strong>、<strong>天井（保証）</strong>、<strong>1連の価格</strong>。初期値は排出率1.0%・天井200連・300円です。「🎲 1万人が引く」を押すと、仮想の1万人が一斉にガチャを回し、「お目当てが出るまでに何連かかったか」の分布グラフが描かれます。</p>
+  <p>最初にやってほしいのは、<strong>天井のスライダーを0にして引き直すこと</strong>です。天井という保証を外した瞬間、分布の右側の尾がどこまで伸びるのかが見えます。ここがこのシミュレータの一番の見どころです。</p>
+
+  <h2>見るべきは平均ではなく、右端の裾</h2>
+  <p>排出率p%のガチャがN連以内に出る確率は 1−(1−p)<sup>N</sup> です。p=1%なら100連で<strong>63%</strong>——裏を返せば<strong>3人に1人は100連回しても出ない</strong>。期待値（平均）はおよそ100連ですが、その平均は「早々に引き当てた運のいい人」が引き下げている数字で、あなたの体験を保証してはくれません。</p>
+  <p>グラフでは、序盤で当てた幸運な人の山と、平均を大きく超えても出ない少数の不運な人が、同じ画面に同時に映ります。300連を超えても出ない人が確実に一定割合いる——ここがガチャの怖さの本体です。ゲームの設計者が天井を付けるのは、まさにこの<strong>右側の長い尾（悲劇ゾーン）を切り落とすため</strong>です。排出率と天井をいろいろ変えて引き直すと、どの条件が裾を断ち切るのかが見えてきます。</p>
+
+  <h2>技術的な前提と、断っておくこと</h2>
+  <p>内部はモンテカルロ法で、1万試行を<strong>毎回独立に引き直しています</strong>。だから実行するたびに分布は少しずつ変わります（同じ条件でも結果が動くこと自体が、ばらつきの実感になります）。計算はすべてブラウザ内で完結し、外部への送信はありません。</p>
+  <p>これは<strong>実在するゲームの確率仕様とは無関係の、抽象的な教材デモ</strong>です。特定タイトルの再現ではありません。「平均90連」という表現の裏には必ず平均を超えても出ない人がいる——その振れ幅を隠さず見せて、確率を正しく怖がれるようになってほしい、という動機で確率教材シリーズの一本として作りました。ガチャはあくまでエンタメとして適度に、課金は計画的にどうぞ。</p>
 
   <div class="foot">
     <a class="play" href="https://d-studylab.com/gacha-sim/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>

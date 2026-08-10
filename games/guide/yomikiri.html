@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>ヨミキリの遊び方と見どころ｜ミニゲームゲームズ D-studyLab</title>
-<meta name="description" content="あなたの癖をその場で学習してくるカイジ風の限定ジャンケン。グー・チョキ・パー4枚ずつの消費制で、残り札は公開。終盤は札読みの詰将棋になります。AIが何を根拠に読んだかを毎ラウンド開示。無料・登録不要。">
+<meta name="description" content="AIがあなたの癖をその場で学習する、限定ジャンケン賭博。毎ラウンド読み筋を開示し、後出し編集していないことをSHA-256のコミット・リベールで担保。ラプラスは対戦を重ねると勝率44.8%→60.4%へ。無料・登録不要。">
 <meta name="robots" content="index,follow">
 <style>
   @font-face {
@@ -56,7 +56,7 @@
   .relgame .gn { display:block; font-weight:bold; font-size:15px; }
   .relgame .gd { display:block; font-size:12.5px; opacity:.66; margin-top:2px; }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"ヨミキリの遊び方と見どころ","description":"あなたの癖をその場で学習してくるカイジ風の限定ジャンケン。グー・チョキ・パー4枚ずつの消費制で、残り札は公開。終盤は札読みの詰将棋になります。AIが何を根拠に読んだかを毎ラウンド開示。無料・登録不要。","url":"https://d-studylab.com/games/guide/yomikiri.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"ヨミキリ","url":"https://d-studylab.com/yomikiri/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/yomikiri.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"ヨミキリの遊び方と見どころ","description":"AIがあなたの癖をその場で学習する、限定ジャンケン賭博。毎ラウンド読み筋を開示し、後出し編集していないことをSHA-256のコミット・リベールで担保。ラプラスは対戦を重ねると勝率44.8%→60.4%へ。無料・登録不要。","url":"https://d-studylab.com/games/guide/yomikiri.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"ヨミキリ","url":"https://d-studylab.com/yomikiri/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/yomikiri.html"}}</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -78,6 +78,25 @@
 
   <h2>技術的な仕掛け</h2>
   <p>AIはあなたの手をラウンドごとにオンライン学習（勾配降下）で覚えます。さらに『後出ししているのでは』という疑いに答えるため、AIは手を選ぶ前に自分の手をSHA-256ハッシュで封印して画面に置き、後で開封して一致を検証できます（コミットメント方式）。後出しは数学的に不可能です。すべてブラウザ内・ライブラリゼロで動きます。</p>
+
+
+  <h2>ルール</h2>
+  <p>互いに✊✌️🖐を4枚ずつ、計12枚の消費制ジャンケンです。<strong>残り札は互いに公開</strong>されるので、終盤は札読みの詰将棋になります。チップは10枚持ちで、毎ラウンド1〜3枚をベット。勝者が総取りし、あいこはポットに持ち越し（札だけが減ります）。</p>
+  <p>特徴的なのが<strong>ヨミキリ宣言</strong>で、AIは確信が高いとき、あなたが出す前に「次はこれだ」と宣言してきます。宣言されたうえで的中されて負けると+2枚多く毟られ、逆に裏をかいて勝てば+2枚多く奪えます。</p>
+
+  <h2>3人のボス</h2>
+  <p><strong>🐣 見習いデク</strong>は頻度カウントと札カウントだけで動き、宣言も詰みの時にしかしません。記憶は試合内のみ。<strong>👁 中堅サトリ</strong>は隠れ層8のニューラルネットで、毎ラウンド本物のSGDによるオンライン学習をします（記憶は試合内）。<strong>😈 悪魔ラプラス</strong>は隠れ層16で、<strong>全対戦をlocalStorageに永続保存</strong>します。つまり、あなた専用に育っていきます。</p>
+
+  <h2>「なぜその手を読んだか」を毎回開示する</h2>
+  <p>毎ラウンド後、AIは<strong>あなたの実測統計にもとづいて</strong>読み筋を開示します。しかも後出しで都合よく書き換えていないことを、⛓<strong>コミット・リベール</strong>で担保しています——選択前に「手＋読み＋確信度＋nonce」のSHA-256ハッシュを🔒表示し、ラウンド後に🔓元の文字列を黙って表示するだけ。「一致✓」のような自己申告は<strong>あえて出しません</strong>。検証は疑う人が自分でやればいい、という方針です（自己申告の一致表示は証拠として意味がないため）。純JS実装のSHA-256は、Node.jsのcryptoと505ケースで一致を検証済みです。</p>
+
+  <h2>バランスは実測で確認してある</h2>
+  <p><code>sim_balance.js</code> で全PASSを確認している内容です。まず<strong>ズルはしていません</strong>——堅実プレイ（残り札に比例して出す相手）に対して、全ボスのラウンド勝率は50%±1に収まります。次に<strong>読めば勝てます</strong>——デクは思考が公開情報だけなので、逆読みボットを当てると平均+5チップ勝ち越します。</p>
+  <p>逆に、癖のあるボット（勝った後に同じ手を出す・循環する・お気に入りの手がある）に対してはAI勝率60〜67%で搾取されます。後追いカウンター型のボットは試合内で45%→55%に読み返され、ラプラスに至っては持ち越し学習によって<strong>試合1の44.8%から試合4-5では60.4%</strong>へと勝率を上げます——<strong>対戦するほど強くなる</strong>のは演出ではなく実測値です。開示された読み筋の数値が内部統計と完全に一致することも検査しています。</p>
+
+  <h2>技術</h2>
+  <p>予測は24次元の特徴量（直近3手・直前の結果・両者の残り札・負けた後に手を変える傾向・連続長・AIの直前手）を小型ニューラルネットに通してsoftmaxを取ります。学習エンジンは、姉妹作「AIを騙せ！」でPyTorchとのパリティ検証を済ませたSGD実装（<code>cnn.js</code> の headTrainStep）を流用しています。AIの出し手は、予測分布に対する期待値最適応手に、確信度に応じたスタック平衡の混合を加えて決めています。</p>
+  <p>なお原作IPは一切使用しておらず、メカニクスのオマージュとオリジナルのキャラクター・世界観で構成しています。完全にブラウザ内で動作し、依存ライブラリはゼロ、外部送信もありません。</p>
 
   <div class="foot">
     <a class="play" href="https://d-studylab.com/yomikiri/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>

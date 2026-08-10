@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>かげ当てパズルの遊び方と見どころ｜ミニゲームゲームズ D-studyLab</title>
-<meta name="description" content="斜め45度の光の下で、3Dの積み木がつくる影を3択から当てるパズル。ルールは「1段高くなるごとに影が光の向きへ1マスずれる」だけ。高いブロックから順にずれを足していくと、複雑な形でも崩れません。無料・登録不要。">
+<meta name="description" content="斜め45度の光——1段登るごとに影は1マスずれる。3Dの積み木の影を3択で当てる10問・約3分。影は見た目の演出ではなく厳密な平行投影で計算しており、3択が実質同じにならないことをテストで保証。無料・登録不要。">
 <meta name="robots" content="index,follow">
 <style>
   @font-face {
@@ -56,7 +56,7 @@
   .relgame .gn { display:block; font-weight:bold; font-size:15px; }
   .relgame .gd { display:block; font-size:12.5px; opacity:.66; margin-top:2px; }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"かげ当てパズルの遊び方と見どころ","description":"斜め45度の光の下で、3Dの積み木がつくる影を3択から当てるパズル。ルールは「1段高くなるごとに影が光の向きへ1マスずれる」だけ。高いブロックから順にずれを足していくと、複雑な形でも崩れません。無料・登録不要。","url":"https://d-studylab.com/games/guide/kage-ate.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"かげ当てパズル","url":"https://d-studylab.com/kage-ate/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/kage-ate.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"かげ当てパズルの遊び方と見どころ","description":"斜め45度の光——1段登るごとに影は1マスずれる。3Dの積み木の影を3択で当てる10問・約3分。影は見た目の演出ではなく厳密な平行投影で計算しており、3択が実質同じにならないことをテストで保証。無料・登録不要。","url":"https://d-studylab.com/games/guide/kage-ate.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"かげ当てパズル","url":"https://d-studylab.com/kage-ate/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/kage-ate.html"}}</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -78,6 +78,23 @@
 
   <h2>技術的な仕掛け</h2>
   <p>影の位置は乱数ではなく、光線ベクトルと各ブロックの高さから幾何学的に厳密計算しています。だからハズレの選択肢も「惜しいけれど物理的にありえない影」を狙って生成でき、運ではなく理解で解けるパズルになっています。表示は three.js による軽量な3D描画で、すべてブラウザ内で完結します。</p>
+
+
+  <h2>ルールは1つだけ</h2>
+  <p>覚えることは実質1行です——<strong>1段登るごとに、影は光の向きへ1マスずれる</strong>。光は東西南北のいずれかから斜め45度に差します。積み木が1段高くなるほど影は光の向きに伸び、浮いているブロックにも影はできます。3D表示はドラッグで回せるので、裏側や隠れているブロックを確認してから答えて構いません。</p>
+  <p>方位で迷わないように、<strong>赤＝+X側／青＝+Y側</strong>の目印を、3D表示と影グリッドの<strong>両方に共通で</strong>置いてあります。どちらが手前かわからなくなったら、この色を基準にしてください。全10問・約3分です。</p>
+
+  <h2>影は「それっぽく描いた絵」ではなく厳密な投影</h2>
+  <p>このゲームの影は、見栄えのためにスタイル化したものではありません。<strong>斜め45度の平行光による厳密な平行投影（せん断投影）</strong>として計算しています（<code>shadow.js</code> の <code>shadowGrid</code>）。</p>
+  <p>だから「立方体1個の影は1×2マスのドミノ型になる」「2段積むと1×3マスに伸びる」という結果は、作者が決めた恣意的なルールではなく<strong>幾何学的に導出された厳密解</strong>です（<code>shadow.test.js</code> のT1・T2で検証しています）。1問目で違和感があっても、この1×2から数え上げていけば必ず答えは出ます。</p>
+
+  <h2>3択が「実質同じ」にならないようにしてある</h2>
+  <p>3択パズルでいちばん興ざめなのは、ハズレが正解と見分けられない、あるいは消去法だけで解けてしまうことです。<code>shadow.test.js</code> では次を全PASSで保証しています。</p>
+  <p>ひとつめ、距離のある2つのハズレグリッドは、正解グリッドに対しても互いに対しても<strong>必ず異なる</strong>こと。同一問題の中で3択が実質同じになることはありません。ふたつめ、姉妹作の空間認識偏差値テストの俯瞰問題で起きた「方位の基準がないと、回転した盤面も正解になってしまう」というバグは、ここでは構造的に発生しません——光の向きも物体の向きも問題ごとに固定されているため、単一マスの反転は常に一意に誤りになります。みっつめ、積み木は<strong>必ず高さ方向に2段以上使います</strong>。真っ平らな配置だと影が単なる足跡と同じになってしまい、投影を学ぶ意味がなくなるからです。</p>
+
+  <h2>作者が見送ったこと</h2>
+  <p>逆方向の出題——<strong>影のグリッドだけを見せて、3つの3D候補からどれが元の形かを当てる</strong>——は面白いアイデアとして検討しましたが、候補ごとに独立したインタラクティブな3Dビューアが必要になるため、今回は見送っています。次サイクルの候補として残っている、というのが現状です。</p>
+  <p>3D表示にはthree.js（r128・MIT）を同梱しており、計算はすべてブラウザ内で完結します。回答内容が外部へ送信されることはありません。</p>
 
   <div class="foot">
     <a class="play" href="https://d-studylab.com/kage-ate/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>

@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>積みバトルの遊び方と見どころ｜ミニゲームゲームズ D-studyLab</title>
-<meta name="description" content="AIと交互にペンギンを積む2D物理の対戦。1体でも台から落ちたら、落とした側の負け。位置と角度を決めて落とすだけですが、予測表示はありません——置いてみるまで分かりません。無料・登録不要。">
+<meta name="description" content="ペンギンを1体ずつ積んで、先に崩した方が負け。Matter.jsの本物の剛体物理で「置いてみるまで分からない」。AIは専用の評価式を持たず同じ物理で実際に試す方式。王冠幅や落下高さは実測で決定。無料・登録不要。">
 <meta name="robots" content="index,follow">
 <style>
   @font-face {
@@ -56,7 +56,7 @@
   .relgame .gn { display:block; font-weight:bold; font-size:15px; }
   .relgame .gd { display:block; font-size:12.5px; opacity:.66; margin-top:2px; }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"積みバトルの遊び方と見どころ","description":"AIと交互にペンギンを積む2D物理の対戦。1体でも台から落ちたら、落とした側の負け。位置と角度を決めて落とすだけですが、予測表示はありません——置いてみるまで分かりません。無料・登録不要。","url":"https://d-studylab.com/games/guide/tsumi-battle.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"積みバトル","url":"https://d-studylab.com/tsumi-battle/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/tsumi-battle.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"積みバトルの遊び方と見どころ","description":"ペンギンを1体ずつ積んで、先に崩した方が負け。Matter.jsの本物の剛体物理で「置いてみるまで分からない」。AIは専用の評価式を持たず同じ物理で実際に試す方式。王冠幅や落下高さは実測で決定。無料・登録不要。","url":"https://d-studylab.com/games/guide/tsumi-battle.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"積みバトル","url":"https://d-studylab.com/tsumi-battle/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/tsumi-battle.html"}}</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -84,6 +84,23 @@
   <p>AIは3段階ありますが、いずれも<strong>AI専用の評価式を持ちません</strong>。プレイヤーとまったく同じ物理エンジンで、候補の手を<strong>実際に落としてみて</strong>結果を見るだけです。見習いは候補を順不同に見て「落ちない手」が1つ見つかった時点で決め、本気は候補11手を全部試していちばん揺れない手を選び、鬼は候補65手を試したうえで、上位6手について「<strong>その形を渡されたら相手はどれだけ置けるか</strong>」まで数えます。思考は Web Worker で別スレッドに逃がしています（メインスレッドでやると盤面によっては1秒以上固まるためです）。</p>
   <p>王冠の幅と両端の高さ・落下の高さ・台座の幅といった数値は、AI同士に延々と積ませて実測して決めました。既定の難易度（本気）どうしで<strong>500局</strong>回すと、崩れるまでに積めたのは<strong>平均8.9体・いちばん多いときで20体・高さは平均4.4段</strong>でした。見習いAIと本気AIを戦わせると、先に崩すのは見習い側が65%です。ただしこれはAI同士の話で、人の勝ちやすさとは別物でした。「いちばん高いペンギンの真上に、角度をつけずに落とす」だけで挑む打ち手を500局ぶん自動で回すと、勝率は<strong>見習い19%・本気9%・鬼6%</strong>でした。すべてブラウザ内で完結します。</p>
   <p style="font-size:13px;color:var(--sub)">※数値は、公開しているゲームと同じコードを使い、AI同士は各500局、人の勝率は「てっぺんの真上・角度0」の打ち手で各500局試行した実測値です（誤差は約±3ポイント）。</p>
+
+
+  <h2>v1を捨てて作り直した理由</h2>
+  <p>最初のバージョンは「重心が支えの外に出たら倒れる」という<strong>計算式</strong>で判定していました。升目に板を置くだけなので、傾かないし、ずれないし、<strong>置く前に結果が確定していた</strong>のです。だから「ここに置くと崩れます」と赤で表示するしかなく、それは遊びとして意味がありませんでした。</p>
+  <p>v2は本物の2D剛体物理（Matter.js）に載せ替えました。落として、当たって、回って、ずれる。<strong>置いてみるまで分からない</strong>。予測表示（赤／緑で結果をネタバレする表示）は廃止し、操作も「ドラッグして離す」から「位置＋<strong>角度</strong>を決めて落とす」に変えました。積むものも板からペンギン6種になり、形も重さも違います。</p>
+
+  <h2>ペンギン6種と、王冠の話</h2>
+  <p><strong>ふつう</strong>はクセがない基本。<strong>ぽっちゃり</strong>は重く、下の段がきしみます。<strong>ほっそり</strong>は背が高くて立たせにくい。<strong>ばんざい</strong>は翼が横に広いので、引っかけて橋にできます。<strong>まんまる</strong>は足がなく転がります。<strong>ヒナ</strong>は小さくて軽く、すき間に置けます。</p>
+  <p>覚えておくと得なのは、頭の<strong>王冠は飾りではなく足場</strong>だということ。上面が平らなので、そこに次のペンギンが乗ります。</p>
+
+  <h2>AIは専用の評価式を持っていない</h2>
+  <p>3段階のAIはいずれも、<strong>プレイヤーとまったく同じ物理で実際に落としてみる</strong>だけで、AI専用の評価式を持ちません。<strong>見習い(L1)</strong>は落ちない手を3つ見つけた時点で満足します。<strong>本気(L2)</strong>は候補33手を全部試して、いちばん揺れない手を選びます。<strong>鬼(L3)</strong>は候補65手を試したうえで、上位6手について「その形を渡されたら相手はどれだけ置けるか」まで数えます。思考はWeb Worker（<code>ai.worker.js</code>）で別スレッドに逃がしています——メインスレッドでやると盤面によって1秒以上固まるためです。</p>
+
+  <h2>数値は実測で決めた</h2>
+  <p>パラメータは思いつきではなく、AI同士に積ませて実測して決めています。王冠の幅（頭の半径比）は x1.55→平均5.9体 / x1.9→6.3体 / <strong>x2.2→8.1体</strong> / x2.5→6.5体 という結果から x2.2 を採用。落下の高さは74pxが最良（58pxで7.6体、46pxで7.1体）。台座の幅は170px（150pxで6.6体、190pxで7.8体）。手番の変わり目で揺れを止める処理を入れると5.6体→<strong>6.2体</strong>に改善しました。</p>
+  <p>本番とまったく同じ進め方（1つのエンジンを回し続ける）での対局は<strong>平均6.2体・最長9体</strong>。そして<strong>10局中7局は見習いAI側が崩しました</strong>——人間にも十分勝ち目があるということです。検証は <code>world.test.js</code>（ペンギンの剛体・落下・AIで12件）と <code>match.test.js</code>（本番と同じ進め方での対局5件）で行っています。</p>
+  <p>物理エンジンはMatter.js 0.20.0（MIT・同梱）。計算はすべてブラウザ内で完結し、外部送信はありません。</p>
 
   <div class="foot">
     <a class="play" href="https://d-studylab.com/tsumi-battle/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>

@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>空間認識偏差値テストの遊び方と見どころ｜ミニゲームゲームズ D-studyLab</title>
-<meta name="description" content="頭の中で立体を回す力（メンタルローテーション）を10問3分で測る診断。回転・俯瞰・数えの3タイプがあり、どこで間違えるかで弱点が分かります。鏡像の見抜き方と、俯瞰問題のアンカーの使い方も解説。無料・登録不要。">
+<meta name="description" content="頭の中で3Dを回せるか。メンタルローテーション課題をベースにした10問・約3分。24回転群の同値判定で「正解が2つある」ことが起きないよう保証し、俯瞰問題は遮蔽判定つき。擬似偏差値と称号つき。無料・登録不要。">
 <meta name="robots" content="index,follow">
 <style>
   @font-face {
@@ -56,7 +56,7 @@
   .relgame .gn { display:block; font-weight:bold; font-size:15px; }
   .relgame .gd { display:block; font-size:12.5px; opacity:.66; margin-top:2px; }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"空間認識偏差値テストの遊び方と見どころ","description":"頭の中で立体を回す力（メンタルローテーション）を10問3分で測る診断。回転・俯瞰・数えの3タイプがあり、どこで間違えるかで弱点が分かります。鏡像の見抜き方と、俯瞰問題のアンカーの使い方も解説。無料・登録不要。","url":"https://d-studylab.com/games/guide/kukan-test.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"空間認識偏差値テスト","url":"https://d-studylab.com/kukan-test/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/kukan-test.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"空間認識偏差値テストの遊び方と見どころ","description":"頭の中で3Dを回せるか。メンタルローテーション課題をベースにした10問・約3分。24回転群の同値判定で「正解が2つある」ことが起きないよう保証し、俯瞰問題は遮蔽判定つき。擬似偏差値と称号つき。無料・登録不要。","url":"https://d-studylab.com/games/guide/kukan-test.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"空間認識偏差値テスト","url":"https://d-studylab.com/kukan-test/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/kukan-test.html"}}</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -78,6 +78,20 @@
 
   <h2>技術的な仕掛け</h2>
   <p>問題は毎回ランダム生成ですが、品質を数学的に保証しています。立方体の24通りの回転群をすべて計算し、鏡像が本当に回転で一致しないもの（キラルな形）だけを出題。俯瞰・数え問題も、選択肢が偶然かぶらないよう検証してから出しています。3D表示は three.js、判定ロジックは three.js に依存しない純粋な JavaScript として分離してあり、正しさをテストで担保しています。</p>
+
+
+<h2>出題は3種類</h2>
+  <p>ベースにしているのは心理学の実験課題（メンタルローテーション, Shepard &amp; Metzler 1971）で、全10問・約3分です。出題は次の3種類が混ざります。</p>
+  <p><strong>① 回転「本物はどれ？」</strong>——回転しただけの本物1つに、<strong>鏡像</strong>と別物が混ざります。選択肢はすべてゆっくり自動回転する3Dビューなので、死角で損をすることはありません。ここでいちばん引っかかるのが鏡像で、回転させても絶対に重ならない相手です。<strong>② 俯瞰「真上から見た形は？」</strong>——こちらは<strong>視点固定</strong>。ハズレは1マスだけ違うので、目印の🟥赤い縁（手前の方位アンカー）を基準に数えてください。<strong>③ 数え「全部でいくつ？」</strong>——隠れているブロックも含めた総数を答えます。こちらはドラッグで回して数えて構いません。</p>
+  <p>正答率と回答速度から擬似偏差値と称号（「頭の中に3Dプリンタ」〜「方向音痴の才能」）を判定し、結果はコピーしてXに貼れます。</p>
+
+  <h2>「正解が2つある」が起きないようにしてある</h2>
+  <p>この手のテストでいちばん起きやすい事故が、<strong>ハズレのつもりの選択肢が実は正解と同じ形</strong>だった、というものです。<code>spatial.test.js</code> では次を全PASSで保証しています。</p>
+  <p>回転問題については、<strong>24回転群での形状同値判定</strong>により「正解が2つある」ことが数学的に起きないことを、60問ぶん検証しています。鏡像ディストラクタはキラルな形状（＝鏡像が回転では一致しない形）からのみ生成し、毎回その性質を確認しています。俯瞰問題のハズレは<strong>固定視点から見えるマスだけ</strong>を変更しており、レイマーチによる遮蔽判定で「見えないから解けない」問題を排除しています。</p>
+
+  <h2>俯瞰のハズレを「回転した盤面」にしなかった理由</h2>
+  <p>初版では、俯瞰問題のハズレとして盤面を回転させたものを出していました。しかしこれは設計ミスで、<strong>方位の基準がなければ、回転した盤面も正解になってしまう</strong>のです。本人テストで発覚し、現在の「1マスだけ違う・視点固定・方位アンカーあり」という形に作り直しました。姉妹作のかげ当てパズルで光の向きと物体の向きを問題ごとに固定しているのも、同じ失敗を繰り返さないためです。</p>
+  <p>なお偏差値は<strong>全国調査に基づくものではなく、このテストの採点モデルによる擬似値</strong>です。3D表示にはthree.js（r128・MIT）を同梱し、計算はすべてブラウザ内で完結します。回答が外部に送信されることはありません。</p>
 
   <div class="foot">
     <a class="play" href="https://d-studylab.com/kukan-test/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>
