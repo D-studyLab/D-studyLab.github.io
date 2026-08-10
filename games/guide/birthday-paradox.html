@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>誕生日のパラドックスの遊び方と見どころ｜ミニゲームゲームズ D-studyLab</title>
-<meta name="description" content="23人で50.7%。信じられない人のために1万部屋をその場で作って確かめられるページ。「誰かと誰かが同じ」（253通り）と「自分と同じ」（22通り）の取り違えが誤解の正体です。テスト30件で教科書値と照合済み。無料・登録不要。">
+<meta name="description" content="教室に23人いれば、同じ誕生日のペアが50%の確率でいる。信じられない人のために、人数を動かして1万部屋ぶん実際に試せるページ。「自分と同じ誕生日」との違いも並べて表示します。無料・登録不要。">
 <meta name="robots" content="index,follow">
 <style>
   @font-face {
@@ -56,7 +56,7 @@
   .relgame .gn { display:block; font-weight:bold; font-size:15px; }
   .relgame .gd { display:block; font-size:12.5px; opacity:.66; margin-top:2px; }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"誕生日のパラドックスの遊び方と見どころ","description":"23人で50.7%。信じられない人のために1万部屋をその場で作って確かめられるページ。「誰かと誰かが同じ」（253通り）と「自分と同じ」（22通り）の取り違えが誤解の正体です。テスト30件で教科書値と照合済み。無料・登録不要。","url":"https://d-studylab.com/games/guide/birthday-paradox.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"誕生日のパラドックス","url":"https://d-studylab.com/birthday-paradox/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/birthday-paradox.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"誕生日のパラドックスの遊び方と見どころ","description":"教室に23人いれば、同じ誕生日のペアが50%の確率でいる。信じられない人のために、人数を動かして1万部屋ぶん実際に試せるページ。「自分と同じ誕生日」との違いも並べて表示します。無料・登録不要。","url":"https://d-studylab.com/games/guide/birthday-paradox.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"誕生日のパラドックス","url":"https://d-studylab.com/birthday-paradox/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/birthday-paradox.html"}}</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -78,22 +78,6 @@
 
   <h2>技術的な仕掛け</h2>
   <p>全員バラバラの確率を掛け合わせて1から引いています。掛け算をそのまま回すと桁が飛ぶので対数で足してから戻しています。うるう年は扱っていません（実際の出生日には季節の偏りがあり、偏りがあると確率はさらに上がります）。教科書的に知られている値と一致することをテスト30件で検査しています。</p>
-
-
-  <h2>何ができるページか</h2>
-  <p>中身は5つです。①<strong>人数スライダー</strong>（2〜80人）を動かすと確率が即座に変わり、身近な人数を選べるチップも付いています。②<strong>「1万部屋つくる」</strong>ボタンで、その人数の教室を1万個つくって全員の誕生日をくじ引きし、実測が理論値に寄っていくのを見せます（最初の200部屋は色つきの点で表示されます）。③<strong>誤解の正体</strong>を左右に並べた比較。④2〜80人の曲線を2本引いたグラフ（50%の破線と、いま選んでいる人数の縦線つき）。⑤身近な人数の表。</p>
-
-  <h2>よくある誤解——「自分と同じ誕生日」を探していませんか</h2>
-  <p>23人が少なく感じる原因ははっきりしています。多くの人が頭の中で<strong>「自分と同じ誕生日の人」</strong>を探しているからです。しかし実際に数えているのは<strong>すべてのペア</strong>で、23人なら 23×22÷2 = <strong>253通り</strong>あります。自分がからむのはそのうち22通りだけ。つまり<strong>11倍以上の組み合わせを見ている</strong>ことになります。</p>
-  <p>数字で並べると、23人のとき「誰かと誰かが同じ」は<strong>50.7%</strong>、「自分と同じ」は<strong>6.1%</strong>。ちなみに「自分と同じ誕生日の人がいる確率」が50%を超えるには<strong>253人</strong>必要です。この2つを取り違えているかぎり、23人という答えは一生ピンときません。</p>
-
-  <h2>計算の中身と、数字の裏づけ</h2>
-  <p>計算は「全員バラバラの確率」を 365/365 × 364/365 × … と掛けて1から引くだけですが、そのまま掛けると桁が飛ぶので、<strong>対数で足してから戻して</strong>います。</p>
-  <p>ひとつ正直に書いておくと、365人でも数学的には確率は1未満（全員バラバラの確率がおよそ 1.45e-157）ですが、倍精度浮動小数点では <code>1 - 1.45e-157</code> が 1 に丸まります。これは実装の誤りではなく浮動小数点の限界で、テストにもその旨を書いてあります（366人は鳩の巣原理で早期に1を返します）。</p>
-  <p>検証は <code>birthday.test.js</code> の30件。教科書的に知られている値と突き合わせてあります——23人=50.7%、30人=70.6%、50人=97.0%、70人=99.9%、99%を超えるのは57人、「自分と同じ」が50%を超えるのは253人。さらに、シミュレーションが<strong>2万部屋で理論値±1.5ポイント</strong>に入ることも検査しています。</p>
-
-  <h2>前提として置いていること</h2>
-  <p>画面にも書いてありますが、<strong>うるう年（2月29日）は扱っていません</strong>。365日すべて同じ確率で生まれる前提です。現実の出生日には季節の偏りがあり、<strong>偏りがあると確率はさらに上がります</strong>（同じ日に集まりやすくなるため）。つまり23人という答えは、現実では「やや保守的な数字」だということです。計算もシミュレーションもすべてブラウザ内で完結し、外部への送信はありません。</p>
 
   <div class="foot">
     <a class="play" href="https://d-studylab.com/birthday-paradox/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>

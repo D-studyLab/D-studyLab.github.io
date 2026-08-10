@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>つみおろしの遊び方と見どころ｜ミニゲームゲームズ D-studyLab</title>
-<meta name="description" content="完成した山をテトロミノに切り分ける逆向きテトリス。形が全部合っていても「上から落として作れた順序」が実在しなければ不正解。生成盤のタイリングの約33%は順序が存在しないことを全列挙で実測。無料・登録不要。">
+<meta name="description" content="完成した山を、テトロミノに切り分ける逆向きのテトリス。形が合っていても「上から落として作れる順序が実在しない」切り分けは不正解です。最後に置かれたピースから逆再生で外していくのがコツ。無料・登録不要。">
 <meta name="robots" content="index,follow">
 <style>
   @font-face {
@@ -56,7 +56,7 @@
   .relgame .gn { display:block; font-weight:bold; font-size:15px; }
   .relgame .gd { display:block; font-size:12.5px; opacity:.66; margin-top:2px; }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"つみおろしの遊び方と見どころ","description":"完成した山をテトロミノに切り分ける逆向きテトリス。形が全部合っていても「上から落として作れた順序」が実在しなければ不正解。生成盤のタイリングの約33%は順序が存在しないことを全列挙で実測。無料・登録不要。","url":"https://d-studylab.com/games/guide/untetris.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"つみおろし","url":"https://d-studylab.com/untetris/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/untetris.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"つみおろしの遊び方と見どころ","description":"完成した山を、テトロミノに切り分ける逆向きのテトリス。形が合っていても「上から落として作れる順序が実在しない」切り分けは不正解です。最後に置かれたピースから逆再生で外していくのがコツ。無料・登録不要。","url":"https://d-studylab.com/games/guide/untetris.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"つみおろし","url":"https://d-studylab.com/untetris/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/untetris.html"}}</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -78,22 +78,6 @@
 
   <h2>技術的な仕掛け</h2>
   <p>切り分けの正誤判定は、形の一致だけでなく「重力に従った落下順が存在するか」をアルゴリズムで検証しています。成立した瞬間、ピースが落下の逆再生で空へ帰っていく演出は、その順序が実在することの証明でもあります。ロジックは純粋な JavaScript として分離してあります。</p>
-
-
-  <h2>遊び方と、最初に戸惑うところ</h2>
-  <p>完成した山を、なぞって4マスずつ塗っていきます。有効なのはテトロミノ7種の形だけ。塗った塊はタップで崩して塗り直せます。全部塗れると自動で判定され、成立していれば<strong>ピースが落下の逆再生で空へ帰っていきます</strong>。モードは📅きょうの一山（日替わり・7ピース）と♾フリー（6・8・10ピース）。</p>
-  <p>ここが本作の肝ですが——<strong>形が全部合っていても、「上から落として作れた順序」が実在しない切り分けは不正解</strong>です。ただのタイリングパズルではなく、<strong>落下の歴史を推理する</strong>ゲームです。「全部きれいに埋まったのに不正解」と言われたら、それはバグではなく、そういうゲームだということです。</p>
-
-  <h2>判定に使っている「物理の公理」</h2>
-  <p>順序が実在するかどうかは、次の2条件で判定します。<strong>経路条件</strong>——各列で、自分の最上マスより上が当時すべて空いていたこと（つまり、そのピースが上から降りてこられたこと）。<strong>着地条件</strong>——ピースのどこかのマスの真下が、床か既に置かれたブロックであること。片持ちの支持（1点だけ接触している状態）は本家テトリスと同様に合法です。</p>
-  <p>ライン消去は存在しない世界にしてあります。消去があると歴史そのものが消えてしまい、逆算が成立しなくなるためです。</p>
-
-  <h2>パズルとして成立していることの裏づけ</h2>
-  <p>3点あります。ひとつめ、出題は<strong>実際にランダムプレイした結果から生成</strong>しているので、必ず解が存在します（500盤で検証）。ふたつめ、判定は落下順序の実在をメモ化バックトラックで厳密に検証しており、<strong>作者の想定と違う切り分けでも、正しければ正解</strong>になります。</p>
-  <p>みっつめが重要で、全列挙実験によれば、生成された盤のタイリングのうち<strong>約33%（346/1033）は、形が正しくても順序が存在しません</strong>。つまり「形さえ合えばいい塗り分けパズル」に退化しておらず、このパズル固有の推理が実測で確かに存在する、ということです。</p>
-
-  <h2>どこから出てきた発想か</h2>
-  <p>チェスのレトログレード解析（盤面から過去の手順を逆算する分野）と、テトリス（計算量研究の定番題材）と、ニコリ系のタイリングパズル——この3つの交差点にあります。2026年7月19日深夜、作者本人の「逆テトリスってあるかな？」という一言から生まれました。完全にブラウザ内で動作し、外部ライブラリはゼロ、送信もありません。</p>
 
   <div class="foot">
     <a class="play" href="https://d-studylab.com/untetris/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>

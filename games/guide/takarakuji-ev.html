@@ -6,8 +6,8 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>宝くじの期待値シミュレータの遊び方と見どころ｜ミニゲームゲームズ D-studyLab</title>
-<meta name="description" content="年末ジャンボの公表データで期待値150円・還元率50.0%を計算し、1万人が30枚買ったらどうなるかを実際に引いて見せます。平均2,869円に対し中央値900円。連番とバラの違いも実測表つき。無料・登録不要。">
+<title>宝くじの期待値の遊び方と見どころ｜ミニゲームゲームズ D-studyLab</title>
+<meta name="description" content="年末ジャンボの公表データ（等級・当せん金・本数）で計算。1枚300円の期待値は150円、還元率50.0%。1万人が同じだけ買ったときの中央値や、1円も戻らない人の割合まで実際に引いて出します。無料・登録不要。">
 <meta name="robots" content="index,follow">
 <style>
   @font-face {
@@ -56,7 +56,7 @@
   .relgame .gn { display:block; font-weight:bold; font-size:15px; }
   .relgame .gd { display:block; font-size:12.5px; opacity:.66; margin-top:2px; }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"宝くじの期待値の遊び方と見どころ","description":"年末ジャンボの公表データで期待値150円・還元率50.0%を計算し、1万人が30枚買ったらどうなるかを実際に引いて見せます。平均2,869円に対し中央値900円。連番とバラの違いも実測表つき。無料・登録不要。","url":"https://d-studylab.com/games/guide/takarakuji-ev.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"宝くじの期待値","url":"https://d-studylab.com/takarakuji-ev/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/takarakuji-ev.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"宝くじの期待値の遊び方と見どころ","description":"年末ジャンボの公表データ（等級・当せん金・本数）で計算。1枚300円の期待値は150円、還元率50.0%。1万人が同じだけ買ったときの中央値や、1円も戻らない人の割合まで実際に引いて出します。無料・登録不要。","url":"https://d-studylab.com/games/guide/takarakuji-ev.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"宝くじの期待値","url":"https://d-studylab.com/takarakuji-ev/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/takarakuji-ev.html"}}</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -78,26 +78,6 @@
 
   <h2>技術的な仕掛け</h2>
   <p>本数は発売ユニット全体で公表されているので、1ユニットあたりに割り戻して計算しています。抽せんは1枚ずつ独立に引く近似で、連番だけ「10枚に1枚は末等が当たる」を再現しています。公表の発売総額（1,380億円）と当せん金合計が一致することをテスト42件で検査済み。なおこのページは宝くじの購入をすすめるものでも、当せんを保証するものでもありません。</p>
-
-
-  <h2>使っているのは公表データです</h2>
-  <p>数字は宝くじ公式サイトの発売情報から取っています。年末ジャンボ（第1082回）は1ユニット2,000万枚・発売23ユニット・1枚300円・発売総額1,380億円。年末ジャンボミニ（第1083回）は1ユニット1,000万枚・発売15ユニット・1枚300円・発売総額450億円です。当せん本数は発売ユニット全体で公表されているので、<strong>1ユニットあたりに割り戻して</strong>保持しています（テストで「ユニット数で割り切れること」と「発売総額が公表値と一致すること」を検査しています）。</p>
-
-  <h2>計算で出てくる数字</h2>
-  <p><strong>1枚の期待値は150円</strong>（300円で買うもの）、<strong>還元率50.0%</strong>。これはジャンボもミニも同じです。1ユニットの当せん金合計は<strong>29億9,990万円</strong>（ジャンボ）。そして何か当たる確率は<strong>11.3%</strong>——つまり<strong>約89%の券は1円にもなりません</strong>。</p>
-
-  <h2>このページの主張——平均は、ほとんどの人には起きない</h2>
-  <p>期待値150円の<strong>36.7%</strong>は、1ユニット2,000万枚の中に<strong>4本しかない</strong>上位当せん（1等・前後賞・2等）が作っています。その4本を引かない大多数にとって、150円という平均は自分の話ではありません。</p>
-  <p>実測（30枚＝9,000円を1万人が買った場合）はこうなります。連番は平均の戻り2,869円・中央値900円・1円も戻らない人0.0%。バラは平均の戻り2,872円・中央値1,200円・1円も戻らない人2.7%。<strong>平均と中央値がここまで離れる</strong>ことが、期待値という言葉の限界そのものです。</p>
-
-  <h2>連番とバラ——期待値は同じ、違うのはブレ方だけ</h2>
-  <p>連番は10枚ひと組で末等が必ず1枚当たるため、<strong>1円も戻らない人が出ません</strong>。1等と前後賞を同時に取れるのも連番だけです。バラは末等の枚数も運次第なので、10枚だと<strong>約3割が1円も戻りません</strong>。そのかわり末等が4枚5枚当たることもあり、<strong>中央値はわずかに上に出ます</strong>。</p>
-  <p>この「バラのほうが中央値が高い」は、作ってから実測で気づいた点です。直感と逆なので、画面にも表を載せています。</p>
-
-  <h2>近似について、正直に</h2>
-  <p>抽せんは1枚ずつ独立に引く近似で計算しています。実際は2,000万枚から非復元で引くので厳密には違いますが、買う枚数が数百枚までなら差は無視できます。<strong>連番だけは「10枚に1枚は末等」を再現</strong>してあります。</p>
-  <p>検証は <code>lottery.test.js</code> の42件。公表値との突き合わせ（発売総額・本数の割り切れ・当せん金合計）、期待値と還元率、確率、連番の末等保証、大勢で買ったときの中央値・0円率・倍以上率まで検査しています。<br>ちなみにテストを書いたとき、作者は<strong>中央値0円・倍以上1%未満と予想して2件落としました</strong>（実際は中央値300円・倍以上3.4%）。直感が当たらないことを身をもって確認したので、その数字をそのままページの主題にしています。</p>
-  <p>なおこのページは、宝くじの購入をすすめるものでも、当せんを保証するものでもありません（画面にも明記しています）。計算はすべてブラウザ内で完結し、外部送信はありません。</p>
 
   <div class="foot">
     <a class="play" href="https://d-studylab.com/takarakuji-ev/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>

@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>AIを騙せ！の遊び方と見どころ｜ミニゲームゲームズ D-studyLab</title>
-<meta name="description" content="審判AIには読めて相手AIには誤答させる手書き数字バトル。騙すとその場で勾配降下により特訓し、同じ技が二度と通じなくなる「しんかAI」搭載。学習1周はPyTorchと誤差1e-9台で一致検証済み。全部ブラウザ内・送信なし。無料・登録不要。">
+<meta name="description" content="審判AIには「読める」と言わせつつ、相手AIには誤読させる手書き数字の心理戦。人間には9に見えるギリギリまで8へ寄せる——その匙加減を探ります。成功した崩し方は学習されて封じられます。無料・登録不要。">
 <meta name="robots" content="index,follow">
 <style>
   @font-face {
@@ -56,7 +56,7 @@
   .relgame .gn { display:block; font-weight:bold; font-size:15px; }
   .relgame .gd { display:block; font-size:12.5px; opacity:.66; margin-top:2px; }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"AIを騙せ！の遊び方と見どころ","description":"審判AIには読めて相手AIには誤答させる手書き数字バトル。騙すとその場で勾配降下により特訓し、同じ技が二度と通じなくなる「しんかAI」搭載。学習1周はPyTorchと誤差1e-9台で一致検証済み。全部ブラウザ内・送信なし。無料・登録不要。","url":"https://d-studylab.com/games/guide/damashi-ai.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"AIを騙せ！","url":"https://d-studylab.com/damashi-ai/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/damashi-ai.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"AIを騙せ！の遊び方と見どころ","description":"審判AIには「読める」と言わせつつ、相手AIには誤読させる手書き数字の心理戦。人間には9に見えるギリギリまで8へ寄せる——その匙加減を探ります。成功した崩し方は学習されて封じられます。無料・登録不要。","url":"https://d-studylab.com/games/guide/damashi-ai.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"AIを騙せ！","url":"https://d-studylab.com/damashi-ai/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/damashi-ai.html"}}</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -78,23 +78,6 @@
 
   <h2>技術的な仕掛け</h2>
   <p>数字認識も学習も、外部ライブラリを使わず素の JavaScript で実装し、勾配計算が PyTorch と一致すること（誤差1e-9）を検証しています。ブラウザ内でリアルタイムに再学習が走り、サーバー通信は一切ありません。英語のインタラクティブ解説記事も用意しています。</p>
-
-
-  <h2>4つのモードと、最初にやること</h2>
-  <p>まずは<strong>🥊 たいせん（Lv1／Lv2）</strong>から。お題の数字を、審判AI（大型・精度99.0%）には読めて、相手AI（小型）には誤答させる形で描けば騙し成功です。スコアは「相手の誤答確信度×コンボ倍率」。0〜9をすべて騙すと図鑑にバッジが付きます。ほかに<strong>⏱ 60秒ラッシュ</strong>（時間内に何回騙せるか）、<strong>🔬 けんきゅうしつ</strong>（特徴マップと判断根拠ヒートマップの観察）、そして本命の<strong>🔥 リベンジ</strong>があります。スマホは指で描けます。</p>
-
-  <h2>「しんかAI」は本当に学習している</h2>
-  <p>🔥リベンジモードの敵は、騙されるとその場で<strong>ブラウザ内の本物の機械学習（勾配降下）</strong>で特訓し、同じ技が二度と通じなくなります。特訓画面ではライブの損失曲線と確信度メーターが動き、そのあと<strong>同じ絵をもう一度判定させて、看破されるところまで見せます</strong>。特訓回数に応じて得点倍率が上がり、最大×3。</p>
-  <p>中身は、畳み込み層を凍結したうえで全結合ヘッド（hidden64＋fc10・約5.2万パラメータ）だけを純粋なJavaScriptのSGD（クロスエントロピー）で学習させています。ただ学習させると元の性能を忘れてしまうので、忘却防止として<strong>クリーンMNIST特徴300本のリプレイバッファ</strong>を同梱し、復習ステップと<strong>元の重みへのL2アンカー</strong>（長期的な漂流を有界化する）を入れ、さらに過去の騙し技12件を混ぜて再学習しています。確信度95%に達したら早期終了する設計で、1回の特訓は実測<strong>53ms</strong>——演出のためにわざと2秒に引き伸ばしています。学習した重みはlocalStorageに残るので、この敵は<strong>あなたの騙し技だけを喰って育った、世界に一体の個体</strong>になります（図鑑から初期化できます）。</p>
-
-  <h2>仕様上の見どころ——「強くすると弱くなる」</h2>
-  <p>特訓を重ねると、クリーンな数字に対する精度が98.5%から96%台に下がることがあります。これは不具合ではなく、機械学習で実在する現象<strong>「頑健性と精度のトレードオフ」</strong>です。ゲーム内では「AI学力テスト」として可視化してあり、<strong>あえて学習させて隙を作る</strong>——いわゆるデータポイズニング——まで戦略として成立します。</p>
-
-  <h2>数字の裏づけ（すべて自動テスト）</h2>
-  <p>「本物のMLだ」と言い張るだけでは意味がないので、参照実装との一致で確かめています。<code>test_parity.js</code> / <code>test_parity_v2.js</code> は、JSでの推論がPyTorchと一致することを誤差およそ5e-7で確認。<code>test_learn_parity.js</code> は<strong>JS側の学習1周がPyTorchのfloat64 autogradと一致すること</strong>（同一バッチ・同一学習率・アンカー込み40ステップ）を誤差1e-9台で確認しています。<code>test_learning.js</code> では、自然に騙せたサンプル15件が特訓後にすべて看破される（15/15）こと、10連続で特訓してもクリーン精度96.5%を保ち技の記憶が15/15残ること、速度が53ms/回であることを検査。<code>test_winnable.py</code> ではゲームとして成立するか——審判の可読率98.9%、Lv2の「8」が裏ボス級に難しいこと——まで測っています。</p>
-
-  <h2>データはどこにも送られません</h2>
-  <p>推論も学習もすべてブラウザ内で完結し、サーバーはありません（依存ライブラリもゼロ）。図鑑の<strong>🧪研究データ書き出し</strong>では、自分のプレイログ（手描き画像と判定結果）をJSONとして<strong>自分の端末にダウンロード</strong>できます。送信は一切ありません。</p>
 
   <div class="foot">
     <a class="play" href="https://d-studylab.com/damashi-ai/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>

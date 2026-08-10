@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>アンサーシュートの遊び方と見どころ｜ミニゲームゲームズ D-studyLab</title>
-<meta name="description" content="答えがわかっても、届けなきゃ正解じゃない。クイズ×3種の解答デリバリー（射出・あみだ・迷路）の二段構造。難易度は問題とミニゲームの2軸。Lv2解率100%・Lv3=95%をリトライボットで実測、罠つき迷路の可解性は300面のBFSで保証。無料・登録不要。">
+<meta name="description" content="答えが分かっても、正解のブロックをゴールへ届けないと得点にならない二段構造クイズ。射出・あみだ・迷路の3モードをローテーション。不正解の玉をシールド割りの道具に使うのが攻略の鍵です。無料・登録不要。">
 <meta name="robots" content="index,follow">
 <style>
   @font-face {
@@ -56,7 +56,7 @@
   .relgame .gn { display:block; font-weight:bold; font-size:15px; }
   .relgame .gd { display:block; font-size:12.5px; opacity:.66; margin-top:2px; }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"アンサーシュートの遊び方と見どころ","description":"答えがわかっても、届けなきゃ正解じゃない。クイズ×3種の解答デリバリー（射出・あみだ・迷路）の二段構造。難易度は問題とミニゲームの2軸。Lv2解率100%・Lv3=95%をリトライボットで実測、罠つき迷路の可解性は300面のBFSで保証。無料・登録不要。","url":"https://d-studylab.com/games/guide/answer-shoot.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"アンサーシュート","url":"https://d-studylab.com/answer-shoot/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/answer-shoot.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"アンサーシュートの遊び方と見どころ","description":"答えが分かっても、正解のブロックをゴールへ届けないと得点にならない二段構造クイズ。射出・あみだ・迷路の3モードをローテーション。不正解の玉をシールド割りの道具に使うのが攻略の鍵です。無料・登録不要。","url":"https://d-studylab.com/games/guide/answer-shoot.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"アンサーシュート","url":"https://d-studylab.com/answer-shoot/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/answer-shoot.html"}}</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -78,18 +78,6 @@
 
   <h2>技術的な仕掛け</h2>
   <p>あみだは「素の状態では正解に届かず、1本足せば必ず届く」盤面だけを生成器が保証しています（数百パターンで検証）。迷路も全入口から出口へ到達可能なことを確認済み。射出の物理は連続シミュレーションで、当たり判定も含めてすべてブラウザ内で計算しています。</p>
-
-
-  <h2>最初の1手と、詰まりやすいところ</h2>
-  <p>タイトル画面では難易度を2軸で選びます。<strong>問題</strong>が「やさしい（常識）／ふつう／むずかしい（ひっかけ・うんちく）」、<strong>ミニゲーム</strong>が「Lv1 素直／Lv2 シールド／Lv3 岩と壁」。この2つは独立しているので、「問題やさしい×ミニゲームLv3」のように、知識で遊ぶか腕で遊ぶかを自分で決められます。選んだ難易度は保存されるので、次に開いたときは同じ設定から始まります。</p>
-  <p>出題は英語の知識を必要としない雑学38問のバンク（算数・理科・ことば・地理）から出ます。答えがわかったら、そこからが本番です。解答の届け方は問題ごとに3種類がローテーションします。</p>
-  <p>🎯 <strong>射出</strong>では、正解の玉を引っ張って離してゴールへ飛ばします。ここでいちばん詰まるのは「各玉1発制」であること——一度撃った玉はもう撃てません。Lv2以上ではゴールにシールドが張られていて、まずどれかの玉を1発ぶつけて割ってから、正解の玉を撃ち込む必要があります。つまり<strong>不正解の玉は捨て駒であり、道具</strong>です。なお、シールドを割った玉が同じフライトでそのままゴールに入っても得点にはなりません（捨て駒が偶然入って事故になることはない設計です）。Lv3では壁の隙間に岩が詰まっているので、撃って押し出して道を作ります。手詰まりになったら🔄リセットで配置を元に戻せますが、撃った数は記録されてスコアの減点として残ります。</p>
-  <p>🪜 <strong>あみだ</strong>は、横線を1本だけ引き足して、正解の文字をGOALへ導きます。出題の生成器が「そのままでは届かない・1本足せば必ず届く」ことを保証しているので、正解の線は必ず存在します。Lv2以上はリアルタイム進行で、文字をタップすると玉が落ち始め、<strong>落下中に</strong>線を差し込むことになります。すでに通過した段には置けないので、玉より先の段を先読みして手を出すのがコツです（Lv3は落下がさらに速くなります）。</p>
-  <p>🌀 <strong>迷路</strong>は、正解の入口を押したらそのままなぞって出口へ運びます。<strong>入口に入った時点で解答は確定</strong>するので、押す前に答えを決めてください（矢印キーでも動かせます）。Lv2以上には🔺罠と🪨岩があり、罠を踏むと−8秒。手前の岩を押し込むと罠が埋まって道になります。岩は罠の穴にしか落ちない設計なので、押し間違えて詰むことはありません。</p>
-
-  <h2>この難易度で本当に解けるのか（数字の裏づけ）</h2>
-  <p>「腕前ゲート」を足すと、運が悪いと理不尽に解けない問題が混ざりがちです。そこはテストで潰してあります。物理側の <code>physics.test.js</code> は11個のゲートを持っていて、玉の収束・場外に出ないこと・シールド越しに得点することが不可能であること・リセットで配置が完全復元されること・同じ入力なら同じ結果になること（決定論）・問題バンクの整合を検査します。</p>
-  <p>とくに時間をかけたのが<strong>トンネリングの根絶</strong>で、玉が最大速度で飛んでも当たり判定をすり抜けないよう、物理をサブステップに刻んで計算しています（このバグはQAで発見されたものです）。実際に解けるかどうかもリトライボットで測っていて、<strong>Lv2は解率100%、Lv3は95%</strong>という実測値が出ています。モード側の <code>modes.test.js</code> では、あみだの出題保証を500問、迷路の全入口到達性を200面ぶん検証。罠つき迷路については、ゲームのルールそのままのBFSで<strong>300面ぶんの可解性を機械的に保証</strong>しています。さらにPlaywrightで3モードすべてに実際の入力を流し、3種類の画面サイズでスクロールが出ないこと、シェア文面が一致することまで確認しています。</p>
 
   <div class="foot">
     <a class="play" href="https://d-studylab.com/answer-shoot/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>

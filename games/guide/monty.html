@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>モンティホール100連の遊び方と見どころ｜ミニゲームゲームズ D-studyLab</title>
-<meta name="description" content="「変えると2倍勝てる」を100連・1万連で体感するゲーム。司会者が答えを知っていて必ずハズレを開ける——この一点が2/3を生みます。10万回のテストで理論値との一致を確認済み。すべてブラウザ内で計算。無料・登録不要。">
+<meta name="description" content="「変えると2倍勝てる」を100連・1万連の試行で体感するゲーム。司会者が答えを知っていてハズレを開ける——この一点がなぜ2/3を生むのかを、勝率が理論値へ収束するグラフで確かめられます。無料・登録不要。">
 <meta name="robots" content="index,follow">
 <style>
   @font-face {
@@ -56,7 +56,7 @@
   .relgame .gn { display:block; font-weight:bold; font-size:15px; }
   .relgame .gd { display:block; font-size:12.5px; opacity:.66; margin-top:2px; }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"モンティホール100連の遊び方と見どころ","description":"「変えると2倍勝てる」を100連・1万連で体感するゲーム。司会者が答えを知っていて必ずハズレを開ける——この一点が2/3を生みます。10万回のテストで理論値との一致を確認済み。すべてブラウザ内で計算。無料・登録不要。","url":"https://d-studylab.com/games/guide/monty.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"モンティホール100連","url":"https://d-studylab.com/monty/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/monty.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"モンティホール100連の遊び方と見どころ","description":"「変えると2倍勝てる」を100連・1万連の試行で体感するゲーム。司会者が答えを知っていてハズレを開ける——この一点がなぜ2/3を生むのかを、勝率が理論値へ収束するグラフで確かめられます。無料・登録不要。","url":"https://d-studylab.com/games/guide/monty.html","inLanguage":"ja","about":{"@type":"VideoGame","name":"モンティホール100連","url":"https://d-studylab.com/monty/"},"author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/games/guide/monty.html"}}</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -78,20 +78,6 @@
 
   <h2>技術的な仕掛け</h2>
   <p>連続試行はモンテカルロ法で、変える戦略・変えない戦略を同じ条件で走らせて勝率を比較します。計算はすべてブラウザ内。実在の番組やゲームの再現ではなく、確率の原理を体感するための抽象モデルです。</p>
-
-
-  <h2>最初の1手と、オートの使い方</h2>
-  <p>まずドアを1枚選びます。すると司会者がハズレを1枚開けて「変えますか？」と聞いてくるので、<strong>変えない／変える！</strong>のどちらかを押します。画面には「変えない勝率」「変える勝率」「プレイ回数」が並んで出るので、自分の手の結果がそのまま統計になっていきます。</p>
-  <p>手で回すのが面倒になったら、<strong>🤖 100連オート</strong>と<strong>⚡ 1万連</strong>のボタンを使ってください。勝率の推移グラフには、緑＝変える／赤＝変えない の2本の線と、理論値 2/3 と 1/3 の破線が引かれます。押すたびに線が破線へ吸い寄せられていくのが、この作品の見どころです。</p>
-
-  <h2>納得できないのは正常です</h2>
-  <p>「残り2枚なら五分五分では？」という感覚は、ほとんどの人が最初に通る道です。数学者ポール・エルデシュもシミュレーションを見るまで納得しなかったと言われています。</p>
-  <p>カギは<strong>司会者が答えを知っていて、必ずハズレのドアを開ける</strong>という点です。最初の選択が当たりの確率は 1/3。裏を返せば<strong>「外れている確率が 2/3」</strong>。司会者の行動は、その2/3ぶんの確率を、開けられずに残った1枚のドアへ丸ごと集約します。だから「変える」とは、<strong>「最初の自分は外れていた」ほうに賭けること</strong>と同じで、2/3で勝ちます。もし司会者がランダムに開けていたり、たまたま車を開けてしまう余地があったりすれば、この結論は成立しません。「知っていて、必ずハズレを開ける」がすべてです。</p>
-
-  <h2>実装と、確かめていること</h2>
-  <p>1ラウンドの処理は <code>monty.js</code> に切り出してあり、画面とテストで同じコードを共有しています。司会者は「あなたが選んだドアでも、車のドアでもない」ものだけを開ける実装で、乗り換え先は残った1枚に決まります。乱数はmulberry32でシードを与えられるので、同じ条件なら同じ結果が再現できます。</p>
-  <p>検証は <code>monty.test.js</code> の3ゲート。<strong>T1</strong>は5000ラウンド回して、司会者が車のドアも選択済みのドアも決して開けないこと、乗り換え先が正しく残りの1枚になることを確認。<strong>T2</strong>は<strong>10万回ずつ</strong>のシミュレーションで、変える戦略が 2/3、変えない戦略が 1/3 から誤差1ポイント以内に収まることを確認。<strong>T3</strong>は同じシードなら結果が完全一致すること（決定論）を確認しています。</p>
-  <p>計算はすべてブラウザ内で完結し、外部への送信はありません。実在の番組の再現ではなく、確率の原理を体感するための抽象モデルです。</p>
 
   <div class="foot">
     <a class="play" href="https://d-studylab.com/monty/" target="_blank" rel="noopener" style="margin-bottom:14px">▶ 実際に遊んでみる</a><br>
