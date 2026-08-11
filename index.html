@@ -204,6 +204,16 @@
                padding:2px 9px; color:#fff; }
   .news .tag.g { background:#C21F6B; } .news .tag.b { background:var(--b-acc); } .news .tag.w { background:var(--w-acc); }
   .news .tt { flex:1 1 16em; font-size:14.5px; min-width:0; }
+  /* 記事が増えるとニュースだけ縦に伸びてページが間延びするので、
+     既定は新しい6件だけ出す。残りはボタンで開く（HTMLには全件入っている）。 */
+  .news ul:not(.open) > li:nth-child(n+7) { display:none; }
+  .news .nmore { display:inline-flex; align-items:center; gap:8px; margin-top:16px;
+    background:none; border:1px solid var(--line-l); border-radius:999px;
+    padding:9px 18px; color:var(--amber-deep); font-size:13.5px; font-weight:bold;
+    font-family:inherit; cursor:pointer; transition:background .2s, border-color .2s; }
+  .news .nmore:hover { background:rgba(184,122,31,.08); border-color:var(--amber-deep); }
+  .news .nmore .ch { transition:transform .25s; }
+  .news .nmore[aria-expanded="true"] .ch { transform:rotate(180deg); }
   .news .more { display:inline-block; margin-top:18px; color:var(--amber-deep); font-size:13.5px;
                 text-decoration:none; font-weight:bold; }
   .news .more:hover { text-decoration:underline; }
@@ -414,7 +424,7 @@
   <div class="in">
     <span class="sec-en">NEWS</span>
     <h2 class="sec jp-head reveal">ニュース<span class="dweller pg-news" id="pgNews" aria-hidden="true"><img class="f0" src="/assets/mascot/front.webp" alt="" loading="lazy" decoding="async"><img class="f1" src="/assets/mascot/tilt.webp" alt="" loading="lazy" decoding="async"></span></h2>
-    <ul class="reveal">
+    <ul class="reveal" id="newsList">
       <li><a href="/blog/adsense-low-value-content.html"><span class="dt">2026.08.11</span><span class="tag b">記事</span><span class="tt">ブログ「AdSenseに「有用性の低いコンテンツ」で落ちた——何を測って、何を直したかの全記録」</span></a></li>
       <li><a href="/blog/eight-types-of-stumbling.html"><span class="dt">2026.08.11</span><span class="tag b">記事</span><span class="tt">ブログ「勉強のつまずき方は、だいたい8つに分けられる——8つ全部の説明と、それぞれの「やってはいけないこと」」</span></a></li>
       <li><a href="/blog/understanding-is-explaining.html"><span class="dt">2026.08.11</span><span class="tag b">記事</span><span class="tt">ブログ「「理解した」かどうかは、心の中で説明できるかで決まる」</span></a></li>
@@ -439,6 +449,8 @@
       <li><a href="/blog/ai-upload-limit.html"><span class="dt">2026.07.25</span><span class="tag b">記事</span><span class="tt">ブログ「AIに任せられない作業——画像アップロードの壁」</span></a></li>
       <li><a href="/blog/note-data.html"><span class="dt">2026.07.25</span><span class="tag b">記事</span><span class="tt">ブログ「noteの人気記事58本を実測した」</span></a></li>
     </ul>
+    <div><button class="nmore" id="newsMore" type="button" aria-expanded="false"
+      aria-controls="newsList" hidden>過去のニュースも見る<span class="ch">▾</span></button></div>
     <a class="more" href="/games/">作ったもの一覧 →</a>
   </div>
 </section>
@@ -636,6 +648,27 @@
 
   // --- 各セクションの住人（§17.2・トリガー1回型はここ／ループ型はframe内） ---
   const $g = id => document.getElementById(id);
+  // --- ニュースの「もっと見る」（既定は6件だけ表示） ---
+  (() => {
+    const ul = $g('newsList'), btn = $g('newsMore');
+    if (!ul || !btn) return;
+    const SHOWN = 6, rest = ul.children.length - SHOWN;
+    if (rest <= 0) return;                       // 6件以下なら何も出さない
+    btn.hidden = false;
+    const label = () => btn.firstChild.nodeValue =
+      ul.classList.contains('open') ? '最近のものだけ表示' : `過去のニュースも見る（あと${rest}件）`;
+    label();
+    btn.addEventListener('click', () => {
+      const opening = !ul.classList.contains('open');
+      ul.classList.toggle('open', opening);
+      btn.setAttribute('aria-expanded', String(opening));
+      label();
+      // 閉じたときは見出しが画面外に飛ばないよう、ニュースの頭に戻す
+      if (!opening) document.getElementById('news')
+        .scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    });
+  })();
+
   const pn = $g('pgNews');                                     // ニュース: 行ホバーで首かしげ0.6秒
   if (pn && !reduce) {
     document.querySelectorAll('.news li a').forEach(a =>
