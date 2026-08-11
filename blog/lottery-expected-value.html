@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>宝くじは「買えば買うほど損」なのに、なぜ人は買うのか——期待値150円の中身を実データで開けてみた｜D-studyLab ブログ</title>
+<meta name="description" content="年末ジャンボの公表データで期待値を計算し、10万人ぶんを実際に引いてみました。1枚300円の期待値は150円。ところが平均150円は、ほとんどの人には起きません。中央値・0円率まで実測した数字で、その理由と「それでも買う意味」を説明します。">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="宝くじは「買えば買うほど損」なのに、なぜ人は買うのか——期待値150円の中身を実データで開けてみた">
+<meta property="og:description" content="1枚300円の期待値は150円。でもその平均は、2,000万枚に4本しかない当たりが作っています。10万人ぶんを実際に引いた実測データで説明します。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/takarakuji-ev.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og/takarakuji-ev.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://d-studylab.com/blog/og/takarakuji-ev.png">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+
+  .morelinks { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+               padding:16px 18px; margin:30px 0 0; }
+  .morelinks .mt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .morelinks a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+                 border-bottom:1px dashed var(--line); }
+  .morelinks a:last-child { border-bottom:none; }
+  .morelinks .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .morelinks .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+
+  figure { margin:26px 0; }
+  figure img { width:100%; height:auto; border:1px solid var(--line); border-radius:6px; display:block; }
+  figure figcaption { font-size:13px; color:var(--sub); margin-top:8px; text-align:center; }
+
+  .tablewrap { overflow-x:auto; -webkit-overflow-scrolling:touch; margin:16px 0; }
+  .tablewrap table { margin:0; }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"宝くじは「買えば買うほど損」なのに、なぜ人は買うのか——期待値150円の中身を実データで開けてみた","description":"年末ジャンボの公表データで期待値を計算し、10万人ぶんを実際に引いてみました。1枚300円の期待値は150円。ところが平均150円は、ほとんどの人には起きません。","url":"https://d-studylab.com/blog/takarakuji-ev.html","datePublished":"2026-08-11","dateModified":"2026-08-11","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/takarakuji-ev.html"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">🎫 確率の直感</div>
+  <h1>宝くじは「買えば買うほど損」なのに、なぜ人は買うのか——期待値150円の中身を開けてみた</h1>
+  <div class="date">2026年8月11日</div>
+
+  <p>宝くじの話になると、必ず出てくる一文があります。<b>「期待値は半分。買えば買うほど損をする」</b>。</p>
+
+  <p>これは正しいです。あとで実際のデータで計算しますが、1枚300円に対して戻ってくる平均は約150円。還元率はちょうど50%程度です。数字としては疑いようがありません。</p>
+
+  <p>それでも、多くの人がこう思います。<b>「そんなことは知ってる。でも、だから何なんだ」</b>と。</p>
+
+  <p>この記事では、宝くじの公表データをそのまま使って期待値を計算し、さらに<b>10万人が同じだけ買ったらどうなるかを実際に引いて</b>みました。そして最後に、ひとつ大事なことを書きます。<b>「期待値が半分だから買うな」という説得は、実は論点がずれています。</b>あなたが買う理由は、はじめから期待値の話ではないからです。</p>
+
+  <a class="cta" href="/takarakuji-ev/">🎫 1万人ぶんの宝くじを実際に引いてみる（登録不要・ブラウザで完結）</a>
+
+  <h2>まず、10万人に同じだけ買わせてみた結果</h2>
+
+  <p>議論の前に数字を出します。年末ジャンボの公表された等級・当せん金・本数をそのまま使って、<b>10万人が1人10枚（3,000円ぶん）買う</b>という試行を回しました。バラの場合の結果がこれです。</p>
+
+  <div class="tablewrap">
+  <table>
+    <tr><th>10枚（3,000円）買った10万人</th><th>実測</th></tr>
+    <tr><td>戻ってきた金額の<b>平均</b></td><td>931円</td></tr>
+    <tr><td>戻ってきた金額の<b>中央値</b></td><td><b>300円</b></td></tr>
+    <tr><td><b>1円も戻らなかった人</b></td><td><b>30.4%</b></td></tr>
+    <tr><td>3,000円より多く戻った人（元が取れた人）</td><td>8.9%</td></tr>
+  </table>
+  </div>
+
+  <p>まず目を引くのは<b>中央値300円</b>のほうです。3,000円払って、真ん中の人の手元に戻るのは300円。ちょうど1枚ぶんです。そして<b>3人に1人は1円も戻りません。</b></p>
+
+  <p>そして<b>平均の931円ですら、実際には誰も体験していません。</b>当せん金は300円・3,000円・1万円…と飛び飛びなので、「931円戻ってきた人」はそもそも存在しないからです。</p>
+
+  <h2>期待値150円の3分の1は、2,000万枚に4本の当たりが作っている</h2>
+
+  <p>理論値のほうも計算しました。1ユニット2,000万枚あたりの当せん金の合計は<b>29億9,990万円</b>。2,000万で割ると、<b>1枚の期待値は149.995円</b>。1枚300円なので還元率は<b>約50.0%</b>です。冒頭の「半分」は正確でした。</p>
+
+  <p>問題は、その150円の<b>中身</b>です。等級ごとに「期待値のうち何円ぶんを担当しているか」を分けると、こうなります。</p>
+
+  <div class="tablewrap">
+  <table>
+    <tr><th>等級</th><th>当せん金</th><th>1ユニット2,000万枚あたりの本数</th></tr>
+    <tr><td>1等</td><td>7億円</td><td><b>1本</b></td></tr>
+    <tr><td>1等の前後賞</td><td>1億5,000万円</td><td><b>2本</b></td></tr>
+    <tr><td>2等</td><td>1億円</td><td><b>1本</b></td></tr>
+    <tr><td>3等</td><td>1,000万円</td><td>4本</td></tr>
+    <tr><td>4等</td><td>100万円</td><td>40本</td></tr>
+    <tr><td>5等</td><td>1万円</td><td>6万本</td></tr>
+    <tr><td>6等</td><td>3,000円</td><td>20万本</td></tr>
+    <tr><td>7等（末等）</td><td>300円</td><td>200万本</td></tr>
+  </table>
+  </div>
+
+  <p>上の3行、<b>1等・前後賞・2等を合わせて4本</b>。2,000万枚のうちのたった4本です。ところがこの4本だけで、<b>期待値150円のうち36.7%を占めています。</b></p>
+
+  <p>つまり期待値150円というのは、「150円ぶん戻ってくる」という意味ではありません。<b>2,000万分の1を引いた誰かの7億円を、2,000万人で頭割りした数字</b>です。その4本を引かない大多数にとって、150円という平均は最初から自分の話ではないのです。</p>
+
+  <p>実際、<b>何かしら当たる確率は11.3%</b>しかありません。裏を返せば<b>約89%の券は、1円にもなりません。</b>宝くじの本当の姿は「半分戻る」ではなく、「ほとんど戻らない券が大量にあって、ごく一部が巨額を持っていく」です。</p>
+
+  <a class="cta" href="/takarakuji-ev/">🎫 枚数を変えて、分布の形を見てみる</a>
+
+  <h2>「平均」という言葉が、いかにあてにならないか</h2>
+
+  <p>面白い現象を見つけたので書いておきます。<b>1万人に10枚ずつ買わせる試行を、独立に20回</b>やりました。20回ぶんの「平均の戻り」がこれです。</p>
+
+  <p><code>892, 871, 1131, 893, 1040, 1015, 920, 1071, 904, 926, 921, 880, 934, 911, 903, 974, 928, 992, 907, 898</code>（単位：円）</p>
+
+  <p>871円から1,131円までばらついています。<b>1万人も集めているのに、平均が3割近く動く。</b>その1万人のなかに100万円が当たった人が1人いるかどうかで、変わってしまうからです。一方、同じ20回の<b>中央値は、すべて300円で一致</b>していました。真ん中の人の体験は、まったくブレません。</p>
+
+  <p>人数を増やしていくと、平均はちゃんと理論値に近づきます。</p>
+
+  <div class="tablewrap">
+  <table>
+    <tr><th>買った人数（1人10枚）</th><th>1枚あたりの戻り（実測）</th></tr>
+    <tr><td>1万人</td><td>90.7円</td></tr>
+    <tr><td>10万人</td><td>92.0円</td></tr>
+    <tr><td><b>100万人</b></td><td><b>149.5円</b>（理論値 149.995円）</td></tr>
+  </table>
+  </div>
+
+  <p>10万人でもまだ92円です。1等が1本も出ていないからです。<b>100万人まで増やしてようやく150円に届きます。</b>期待値というのは、これだけの回数を重ねてはじめて姿を現す数字なのです。</p>
+
+  <h2>ここからが本題：あなたが買う理由は、期待値の話ではない</h2>
+
+  <p>ここまでの数字は、全部「買うな」の材料に見えると思います。でも、そこから「だから買うのは不合理だ」と結論するのは、少し乱暴です。</p>
+
+  <p><b>期待値が損だから避ける、という基準を本気で適用すると、生活のかなりの部分が消えます。</b>保険は期待値では確実に損です（そうでなければ保険会社が潰れます）。それでも入るのは、期待値ではなく<b>「起きたら困る事態を、金で消す」</b>ために買っているからです。</p>
+
+  <p>宝くじは、その逆向きの取引です。</p>
+
+  <blockquote>保険＝<b>小さく確実に払って、大きな不幸を消す</b><br>宝くじ＝<b>小さく確実に払って、小さな幸運の可能性を買う</b></blockquote>
+
+  <p>どちらも期待値はマイナスで、どちらも「期待値以外のもの」を買っています。保険を合理的と呼んで宝くじだけを不合理と呼ぶなら、その線引きの理由を説明する必要があります。</p>
+
+  <p>もうひとつ。<b>300円で買えるものの中に、「7億円が当たるかもしれない状態」は他にありません。</b>貯金でも投資でも、300円は300円のままです。確率は2,000万分の1ですが、<b>買わなければ0</b>です。</p>
+
+  <p>だから「期待値が半分だと知らないんですか」という説得は的外れです。たいていの人は知っています。知ったうえで、<b>3,000円ぶんの「もしかしたら」を買っている</b>。それは投資判断ではなく消費です。映画のチケットに期待値を計算しないのと同じことです。</p>
+
+  <p>期待値が本当に効いてくるのは、<b>買う枚数が増えたとき</b>です。3,000円なら消費ですが、これを毎回3万円、10万円と積み上げていくと、話が変わります。回数が増えるほど結果は平均に近づく——つまり<b>着実に半分を失う方向に収束していく</b>からです。上のシミュレータで枚数を増やしていくと、分布の山が支出線の左側に固まっていく様子が見えます。</p>
+
+  <p>まとめると、こうです。<b>宝くじが不合理なのではなく、「宝くじを投資として扱うこと」が不合理</b>なのです。</p>
+
+  <h2>「自分は当たったことがある」という人へ</h2>
+
+  <p>「自分は前に1万円当たった」「知り合いが10万円当てた」という話は、よく聞きます。そしてそれは、まったく嘘ではありません。</p>
+
+  <p>実測でも、10枚買った10万人のうち<b>8.9%は元が取れています。</b>そして1万人ずつの試行を20回回した中では、<b>100万円の当せんが出た回が複数ありました。</b>珍しいことではないのです。</p>
+
+  <p>問題は、当たった話だけが人に伝わることです。1円も戻らなかった30.4%の人は、それを誰にも話しません。<b>あなたの周りに流れてくる宝くじの話は、最初から当たった話だけで構成されています。</b>だから「意外と当たるものだ」という体感ができあがります。</p>
+
+  <p>これはガチャの「爆死した」「引きが良い」という話とまったく同じ構造です。<b>数十枚から数百枚ていどの個人の経験は、確率を判定する道具としては弱すぎます。</b>10万人ぶんを一気に引いてはじめて、分布の形が見えてきます。</p>
+
+  <p>そこで、公表データそのままで1万人ぶんを一気に引けるものを作りました。枚数・連番かバラかを変えると、中央値と0円率がどう動くかがその場で見られます。</p>
+
+  <a class="cta" href="/takarakuji-ev/">🎫 宝くじの期待値シミュレータ（1万人を一気に引きます）</a>
+
+  <h2>この記事の要点</h2>
+
+  <ul>
+    <li><b>1枚300円の期待値は149.995円、還元率は約50%。</b>「半分」は正確</li>
+    <li>ただし<b>その期待値の36.7%は、2,000万枚に4本しかない当たり</b>（1等・前後賞・2等）が作っている</li>
+    <li>10枚買った10万人の<b>中央値は300円、30.4%は1円も戻らない</b>。平均150円は多数派の体験ではない</li>
+    <li>1万人でも平均は<b>871〜1,131円とブレる</b>。100万人まで増やして、ようやく理論値150円に届いた</li>
+    <li><b>宝くじが不合理なのではなく、宝くじを投資として扱うのが不合理。</b>3,000円ぶんなら消費、積み上げると期待値が効いてくる</li>
+    <li>「当たったことがある」は本当。ただし<b>1円も戻らなかった人は、その話をしない</b></li>
+  </ul>
+
+  <p style="font-size:13.5px;color:var(--sub)">
+  ※等級・当せん金・本数は、年末ジャンボ（第1082回）・年末ジャンボミニ（第1083回）の発売情報にもとづく公表データです。本数は発売ユニット全体で公表されているため、1ユニットあたりに割り戻して使っています（発売総額が公表値と一致することを検査済み）。シミュレーションは1枚ずつ独立に引く近似で、連番のみ「10枚に1枚は末等」を再現しています。実測値はすべて乱数の種を固定して実際に計算したもので、本文中の人数はそのまま試行人数です。理論値とのずれは試行回数に由来します。このページは宝くじの購入をすすめるものでも、当せんを保証するものでもありません。</p>
+
+  <div class="related">
+    <div class="rt">関連するもの</div>
+    <a href="/takarakuji-ev/">🎫 宝くじの期待値シミュレータ</a>——公表データで1万人ぶんを実際に引いて分布を見る<br>
+    <a href="/gacha-sim/">🎰 1万人ガチャシミュレータ</a>　<a href="/games/">🕹️ ミニゲーム一覧</a>
+  </div>
+  <div class="morelinks">
+    <div class="mt">つづけて読む</div>
+    <a href="/blog/gacha-probability.html"><span class="lt">🎰 ガチャの確率を正しく計算する</span><span class="ld">「平均100連」が多数派の体験ではない理由</span></a>
+    <a href="/blog/monty-hall.html"><span class="lt">🚪 モンティホール問題がどうしても納得できない人へ</span><span class="ld">あなたの直感が正しくなる条件を10万回の実測で</span></a>
+    <a href="/blog/janken-strategy.html"><span class="lt">✊ じゃんけんに必勝法はあるか</span><span class="ld">癖があると何%まで落ちるかを27万ラウンドで実測</span></a>
+  </div>
+
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

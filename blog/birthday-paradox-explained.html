@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>「23人で50%」がどうしても納得できない人へ——あなたの直感は、実は正しい｜D-studyLab ブログ</title>
+<meta name="description" content="誕生日のパラドックスを20万回シミュレーションした実測データで解説します。23人で50.84%という実測値と、その理由。そして「そんなに簡単に被るわけがない」というあなたの直感が、実は正しい問題まで、すべて実際に回した数字で示します。">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="「23人で50%」がどうしても納得できない人へ——あなたの直感は、実は正しい">
+<meta property="og:description" content="誕生日のパラドックスを20万回の実測で確認。そして、あなたの直感が正しくなる条件も実測しました。ブラウザで試せます。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/birthday-paradox.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og/birthday-paradox.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://d-studylab.com/blog/og/birthday-paradox.png">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+
+  .morelinks { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+               padding:16px 18px; margin:30px 0 0; }
+  .morelinks .mt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .morelinks a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+                 border-bottom:1px dashed var(--line); }
+  .morelinks a:last-child { border-bottom:none; }
+  .morelinks .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .morelinks .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+
+  figure { margin:26px 0; }
+  figure img { width:100%; height:auto; border:1px solid var(--line); border-radius:6px; display:block; }
+  figure figcaption { font-size:13px; color:var(--sub); margin-top:8px; text-align:center; }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"「23人で50%」がどうしても納得できない人へ——あなたの直感は、実は正しい","description":"誕生日のパラドックスを20万回シミュレーションした実測データで解説します。23人で50.84%という実測値と、その理由。そして「そんなに簡単に被るわけがない」というあなたの直感が、実は正しい問題まで、すべて実際に回した数字で示します。","url":"https://d-studylab.com/blog/birthday-paradox.html","datePublished":"2026-08-11","dateModified":"2026-08-11","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/birthday-paradox.html"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">🎂 確率の直感</div>
+  <h1>「23人で50%」がどうしても納得できない人へ——あなたの直感は、実は正しい</h1>
+  <div class="date">2026年8月11日</div>
+
+  <p>誕生日は365通りある。なのに、<b>23人集まれば、同じ誕生日のペアがいる確率が50%を超える</b>。教室の後ろから3列ぶんくらいの人数です。</p>
+
+  <p>この話を聞いて、素直に「そうか」と思える人はまずいません。だいたいこう思います。<b>「365日あるのに23人？　少なすぎないか」</b>と。半分なら182人くらい必要そうなものです。</p>
+
+  <p>この記事では、この問題を<b>実際に20万回シミュレーションした数字</b>で説明します。そして最後に、大事なことを書きます。<b>「そんなに簡単には被らないだろう」というあなたの直感は、間違っていません。</b>あなたが頭の中で解いていた問題では、答えは本当に「182人くらい」なのです。</p>
+
+  <a class="cta" href="/birthday-paradox/">🎂 人数を動かして確かめる（登録不要・ブラウザで完結）</a>
+
+  <h2>まず、実際に20万回やってみた結果</h2>
+
+  <p>議論の前に数字を出します。「n人の部屋」をランダムに20万部屋つくって、同じ誕生日のペアが1組でもいた部屋の割合を数えました（うるう年なしの365日均等、乱数の種は固定）。</p>
+
+  <table>
+    <tr><th>人数</th><th>20万回の実測</th><th>理論値</th></tr>
+    <tr><td>10人</td><td><b>11.65%</b></td><td>11.69%</td></tr>
+    <tr><td>20人</td><td><b>41.14%</b></td><td>41.14%</td></tr>
+    <tr><td>22人</td><td><b>47.59%</b></td><td>47.57%</td></tr>
+    <tr><td><b>23人</b></td><td><b>50.84%</b></td><td><b>50.73%</b></td></tr>
+    <tr><td>30人</td><td><b>70.53%</b></td><td>70.63%</td></tr>
+    <tr><td>40人</td><td><b>89.08%</b></td><td>89.12%</td></tr>
+    <tr><td>50人</td><td><b>97.09%</b></td><td>97.04%</td></tr>
+    <tr><td>70人</td><td><b>99.92%</b></td><td>99.92%</td></tr>
+  </table>
+
+  <p>22人では50%に届かず、23人で超える。実測も理論もぴたりと一致しました。<b>ここは議論の余地がありません。</b></p>
+
+  <p>むしろ驚くのは30人以降です。40人学級なら<b>89%</b>。日本の教室のサイズなら、同じ誕生日のペアがいるほうがふつうです。50人集まれば97%で、いないほうが珍しい。心当たりのある人もいるはずです。</p>
+
+  <h2>なぜ23人で足りるのか——数えているのは「人」ではなく「ペア」</h2>
+
+  <p>からくりはひとつだけです。</p>
+
+  <blockquote>この問題が数えているのは<b>人数</b>ではありません。<b>「2人組の数」</b>です。</blockquote>
+
+  <p>「同じ誕生日のペアがいる」かどうかを判定するには、部屋の中の<b>すべての2人組</b>を総当たりで見比べる必要があります。AとB、AとC、BとC……と。</p>
+
+  <p>その組み合わせの数は、人が1人増えるたびに<b>すでにいる全員ぶん</b>増えます。3人目は2組、4人目は3組、10人目は9組を新しく連れてきます。人数は足し算でしか増えないのに、ペアの数は積み上がっていく。</p>
+
+  <table>
+    <tr><th>人数</th><th>比べるペアの数</th></tr>
+    <tr><td>5人</td><td>10組</td></tr>
+    <tr><td>10人</td><td>45組</td></tr>
+    <tr><td><b>23人</b></td><td><b>253組</b></td></tr>
+    <tr><td>40人</td><td>780組</td></tr>
+  </table>
+
+  <p>23人しかいない部屋に、<b>253組</b>のペアがあります。365日に対して253回の抽選です。この数字を見れば、5割に届いても不思議はないと感じられるはずです。</p>
+
+  <p>実際、20万回のシミュレーションで「23人の部屋にできた同じ誕生日のペアの数」の平均を数えたら、<b>0.6909組</b>でした（理論値 253÷365 = 0.6932組）。1部屋あたり0.69組ぶんの当たりが出ている計算です。</p>
+
+  <h2>それでも納得できない人へ：全員が「違う」を引き続ける必要がある</h2>
+
+  <p>もう一つの見方があります。確率を「起きる側」ではなく<b>「起きない側」</b>から数えるやり方です。</p>
+
+  <p>部屋に1人ずつ入れていきます。2人目が1人目と違う誕生日である確率は 364/365。3人目が先の2人どちらとも違う確率は 363/365。4人目は 362/365。<b>「誰も被らない」が成立するには、この全員が違いを引き続けなければいけません。</b></p>
+
+  <p>1回あたりの成功率は99%を超えていて、どれも高い。ですが、これを22回かけ算します。かけ算は容赦がなくて、23人目まで来ると全体では49%まで落ちます。<b>「ほぼ確実」を何十回も続けるのは、まったくほぼ確実ではない</b>ということです。</p>
+
+  <p>ちなみに、現実にはうるう年があります。2月29日を4年に1回の重みで加えて20万回回すと、23人で<b>50.86%</b>。365日均等の場合（50.84%）とほとんど変わりませんでした。日付の種類が増えても、結論は動きません。</p>
+
+  <a class="cta" href="/birthday-paradox/">🎂 スライダーで人数を動かして、1万部屋を一気に試す</a>
+
+  <h2>ここからが本題：あなたの直感が正しくなる条件</h2>
+
+  <p>ここまで読んでも、まだどこか腑に落ちない人へ。その感覚には、はっきりした理由があります。</p>
+
+  <p><b>あなたはたぶん、無意識に別の問題を解いています。</b>そして<b>その問題では、答えは本当に「182人くらい」です。</b></p>
+
+  <p>その別の問題とは、こうです。</p>
+
+  <blockquote>その部屋に、<b>自分と</b>同じ誕生日の人がいる確率は？</blockquote>
+
+  <p>「誰かと誰かが同じ」ではなく「<b>私と</b>同じ」。これも20万回シミュレーションしました。</p>
+
+  <table>
+    <tr><th>周りの人数</th><th>自分と同じ誕生日の人がいる確率（実測）</th><th>理論値</th></tr>
+    <tr><td>23人</td><td><b>6.11%</b></td><td>6.12%</td></tr>
+    <tr><td>50人</td><td><b>12.88%</b></td><td>12.82%</td></tr>
+    <tr><td>100人</td><td><b>24.02%</b></td><td>23.99%</td></tr>
+    <tr><td>182人</td><td><b>39.49%</b></td><td>39.31%</td></tr>
+    <tr><td><b>253人</b></td><td><b>50.06%</b></td><td>50.05%</td></tr>
+  </table>
+
+  <p>23人だと<b>わずか6%</b>です。「23人程度で被るわけがない」というあなたの感覚は、こちらの問題については完全に正しい。そして50%に届くのは<b>253人</b>。あなたが直感で出した「182人くらい」に、桁として近いのはこちらです。</p>
+
+  <p>違いは一点だけ。<b>自分が比較に参加しているかどうか</b>です。「私と同じ人」を探すとき、比べているペアは22組（自分と他の全員）しかありません。一方「誰かと誰か」なら253組を見ます。同じ23人の部屋なのに、<b>見ているペアの数が11倍以上違う</b>。だから確率も 6% と 51% に分かれます。</p>
+
+  <table>
+    <tr><th>23人の部屋で</th><th>比べるペア</th><th>実測</th></tr>
+    <tr><td>誰かと誰かが同じ</td><td>253組</td><td><b>50.84%</b></td></tr>
+    <tr><td>自分と同じ人がいる</td><td>22組</td><td><b>6.11%</b></td></tr>
+  </table>
+
+  <p>ここに気持ちのいい符合があります。<b>23人の部屋にできるペアの数が253組。そして「自分と同じ誕生日」が50%に届く人数が253人。</b>偶然ではありません。どちらも「253回の抽選をした」という同じ話をしているだけです。</p>
+
+  <p>つまり「23人で50%」に驚くのは、確率の感覚が鈍いからではありません。<b>人は自分を中心にして数を数える</b>からです。部屋を見渡したとき、まず探すのは「私と同じ人」です。その視点は日常では正しく、この問題でだけ外れる。それだけのことです。</p>
+
+  <h2>「自分のクラスでは被ってなかった」という人へ</h2>
+
+  <p>「うちの30人のクラスに同じ誕生日の人はいなかった」——これも当然です。30人でも<b>約3割は被りません</b>（実測70.53%が被る側）。1クラスぶんの経験は、確率の判定材料としては弱すぎます。</p>
+
+  <p>試しに、<b>23人の部屋を10回つくる</b>のを20セット繰り返してみました。10回のうち何回ペアが出たかの記録です。</p>
+
+  <p><code>6, 3, 3, 7, 6, 7, 5, 5, 7, 5, 7, 3, 2, 6, 6, 2, 6, 4, 5, 7</code></p>
+
+  <p>理論上は10回中5回のはずですが、<b>20セット中6セットは4回以下</b>でした。10回試して2回しか出ないセットも2つあります。この経験をした人は「23人で50%なんて嘘だ」と確信するでしょう。</p>
+
+  <p>確率の話で最後に効くのは回数です。そこで、<b>人数をスライダーで動かしながら、1万部屋ぶんを一気に集めて確かめられるページ</b>を作りました。理論の曲線と、実際に集めた点が重なっていく様子が見られます。「自分と同じ誕生日」の確率も並べて表示するので、上の6%と51%の差もその場で確認できます。</p>
+
+  <a class="cta" href="/birthday-paradox/">🎂 誕生日のパラドックスを動かして確かめる</a>
+
+  <h2>この記事の要点</h2>
+
+  <ul>
+    <li><b>23人で50%を超える。</b>20万回の実測で 50.84%（理論値 50.73%）。22人では 47.59% で届かない</li>
+    <li>理由は、数えているのが人数ではなく<b>ペアの数</b>だから。23人＝<b>253組</b>の総当たり</li>
+    <li>40人学級なら<b>89.08%</b>、50人で<b>97.09%</b>。教室では被っているほうがふつう</li>
+    <li><b>「自分と同じ誕生日」なら23人でわずか 6.11%。</b>50%に届くのは253人。あなたの直感は、この問題を解いていた</li>
+    <li>1クラスぶんの経験では判定できない。10回×20セットのうち<b>6セットは4回以下</b>だった</li>
+  </ul>
+
+  <p style="font-size:13.5px;color:var(--sub)">
+  ※数値はすべて、この記事のために実際に計算した実測値です。各項目とも1条件あたり20万回の試行で、乱数の種を固定して再現可能な形で計算しています（誕生日は365日を等確率としたもの。うるう年を加えた版は本文中に別記）。理論値とのわずかな差は、試行回数に由来する誤差です。「10回×20セット」は同じコードで別に走らせた記録をそのまま載せています。</p>
+
+  <div class="related">
+    <div class="rt">関連するもの</div>
+    <a href="/birthday-paradox/">🎂 誕生日のパラドックス</a>——人数を動かして1万部屋ぶん試せる<br>
+    <a href="/games/">🕹️ ミニゲーム一覧</a>　<a href="/blog/">📝 ブログ一覧</a>
+  </div>
+  <div class="morelinks">
+    <div class="mt">つづけて読む</div>
+    <a href="/blog/monty-hall.html"><span class="lt">🚪 モンティホール問題がどうしても納得できない人へ</span><span class="ld">10万回の実測と、あなたの直感が正しくなる条件</span></a>
+    <a href="/blog/gacha-probability.html"><span class="lt">🎰 ガチャの確率を正しく計算する</span><span class="ld">「平均100連」が多数派の体験ではない理由</span></a>
+    <a href="/blog/janken-strategy.html"><span class="lt">✊ じゃんけんに必勝法はあるか</span><span class="ld">癖があると何%まで落ちるかを27万ラウンドで実測</span></a>
+  </div>
+
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
