@@ -169,6 +169,126 @@
   <p>そして3行のほうが続きます。
     <b>計画を作ることが目的になっていない</b>からです。</p>
 
+
+  <h2>図にすると、抜けているところが見えます</h2>
+
+  <p>言葉だけだと伝わりにくいので、図にします。
+    続かない計画と、続く計画のちがいはこれだけです。</p>
+
+  <!-- ⚠ 図の下地は暗い配色でも固定の明るい色にする。
+       var(--panel) にすると夜モードで下地が暗くなり、図の中の細い注記が沈む（2026-08-12） -->
+  <div style="background:#fbf7ec;border:1px solid #d8ccb4;border-radius:12px;
+       padding:18px 16px;margin:16px 0;overflow-x:auto">
+  <svg viewBox="0 0 660 250" width="660" style="max-width:100%;height:auto" role="img"
+       aria-label="続かない計画は手段だけ。続く計画は背景・目的・手段の3層になっている図">
+    <text x="8" y="20" font-size="13" fill="#b04a2f" font-weight="bold">続かない計画</text>
+    <rect x="8" y="34" width="280" height="52" rx="8" fill="#f3e2dc" stroke="#b04a2f"/>
+    <text x="24" y="58" font-size="14" fill="#7a3520" font-weight="bold">手段</text>
+    <text x="24" y="76" font-size="12.5" fill="#7a3520">毎日ワーク10ページ</text>
+    <text x="24" y="112" font-size="12" fill="#8c6a5c">3日目に疲れる</text>
+    <text x="24" y="132" font-size="12" fill="#8c6a5c">→ やめる理由に勝てない</text>
+    <text x="24" y="152" font-size="12" fill="#b04a2f" font-weight="bold">→ 計画ごと消える</text>
+
+    <text x="368" y="20" font-size="13" fill="#3f7a4a" font-weight="bold">続く計画</text>
+    <rect x="368" y="34" width="280" height="44" rx="8" fill="#eef3ea" stroke="#3f7a4a"/>
+    <text x="384" y="52" font-size="12.5" fill="#2f5a38" font-weight="bold">背景</text>
+    <text x="384" y="70" font-size="12" fill="#2f5a38">関数の応用でいつも崩れる</text>
+    <rect x="368" y="86" width="280" height="44" rx="8" fill="#eef3ea" stroke="#3f7a4a"/>
+    <text x="384" y="104" font-size="12.5" fill="#2f5a38" font-weight="bold">目的</text>
+    <text x="384" y="122" font-size="12" fill="#2f5a38">初見の応用でも式を立てられる</text>
+    <rect x="368" y="138" width="280" height="44" rx="8" fill="#eef3ea" stroke="#3f7a4a"/>
+    <text x="384" y="156" font-size="12.5" fill="#2f5a38" font-weight="bold">手段</text>
+    <text x="384" y="174" font-size="12" fill="#2f5a38">1日3問。解いたら理由を口で言う</text>
+    <text x="384" y="206" font-size="12" fill="#5c7a63">手段が崩れても</text>
+    <text x="384" y="226" font-size="12" fill="#3f7a4a" font-weight="bold">→ 手段だけ差し替えて続く</text>
+    <line x1="508" y1="78" x2="508" y2="86" stroke="#3f7a4a" stroke-width="2"/>
+    <line x1="508" y1="130" x2="508" y2="138" stroke="#3f7a4a" stroke-width="2"/>
+  </svg>
+  </div>
+
+  <p>左は、手段しか持っていません。だから<b>手段が折れると、全部なくなります。</b><br>
+    右は、上に2段あります。だから<b>いちばん下だけ取り替えれば済みます。</b></p>
+
+  <h2>ゴールから逆算する、を図にすると</h2>
+
+  <!-- ⚠ 図の下地は暗い配色でも固定の明るい色にする。
+       var(--panel) にすると夜モードで下地が暗くなり、図の中の細い注記が沈む（2026-08-12） -->
+  <div style="background:#fbf7ec;border:1px solid #d8ccb4;border-radius:12px;
+       padding:18px 16px;margin:16px 0;overflow-x:auto">
+  <svg viewBox="0 0 660 170" width="660" style="max-width:100%;height:auto" role="img"
+       aria-label="ゴールから今日へ、右から左へ矢印がのびる逆算の図">
+    <rect x="470" y="24" width="180" height="56" rx="8" fill="#f7edd8" stroke="#8A5A33"/>
+    <text x="486" y="46" font-size="12.5" fill="#6b4620" font-weight="bold">ゴール（10月）</text>
+    <text x="486" y="66" font-size="12" fill="#6b4620">数検3級に受かる</text>
+    <rect x="250" y="24" width="180" height="56" rx="8" fill="#faf6ec" stroke="#c7b48c"/>
+    <text x="266" y="46" font-size="12.5" fill="#6b4620" font-weight="bold">その1つ手前（9月）</text>
+    <text x="266" y="66" font-size="12" fill="#6b4620">過去問で6割とれる</text>
+    <rect x="30" y="24" width="180" height="56" rx="8" fill="#faf6ec" stroke="#c7b48c"/>
+    <text x="46" y="46" font-size="12.5" fill="#6b4620" font-weight="bold">さらに手前（8月）</text>
+    <text x="46" y="66" font-size="12" fill="#6b4620">中2の範囲を終わらせる</text>
+    <path d="M470 52 L436 52" stroke="#8A5A33" stroke-width="2" marker-end="url(#a1)"/>
+    <path d="M250 52 L216 52" stroke="#8A5A33" stroke-width="2" marker-end="url(#a1)"/>
+    <defs><marker id="a1" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="#8A5A33"/></marker></defs>
+    <rect x="30" y="104" width="180" height="44" rx="8" fill="#f7edd8" stroke="#8A5A33"/>
+    <text x="46" y="124" font-size="12.5" fill="#6b4620" font-weight="bold">今日やること</text>
+    <text x="46" y="142" font-size="12" fill="#6b4620">連立方程式を3問</text>
+    <path d="M120 80 L120 104" stroke="#8A5A33" stroke-width="2" marker-end="url(#a1)"/>
+    <text x="240" y="132" font-size="12" fill="#8c8270">
+      ← ここまで来て、はじめて「今日やること」が決まる</text>
+  </svg>
+  </div>
+
+  <p>右から左へたどると、<b>今日やることが自動的に出てきます。</b>
+    そして、8月に中2の範囲が終わらないと分かったら、<b>その時点で気づけます。</b>
+    ゴールを下げるか、期間を延ばすか、手段を増やすか。<b>始める前に決められます。</b></p>
+
+  <h2>目標は「点」ではなく「日付つきの状態」で書く</h2>
+
+  <p>よくある目標はこうです。</p>
+  <ul>
+    <li>「次のテストで<b>70点</b>を取る」</li>
+    <li>「<b>数検3級</b>に受かる」</li>
+  </ul>
+  <p>どちらも良い目標です。<b>日付があって、達成したかどうかが後で分かる</b>からです。
+    「数学をがんばる」はこれがありません。</p>
+
+  <p>ただ、これは<b>ゴール</b>であって、<b>今日やること</b>ではありません。
+    ここを1本の線でつなぐのが逆算です。</p>
+
+  <table>
+    <tr><th></th><th>例1</th><th>例2</th></tr>
+    <tr><td><b>ゴール</b>（いつ・何が）</td><td>11月の期末で数学70点</td><td>10月に数検3級</td></tr>
+    <tr><td><b>その手前</b></td><td>関数の応用で式が立つ</td><td>過去問で6割</td></tr>
+    <tr><td><b>今日</b></td><td>関数の応用を3問。理由を口で言う</td><td>1次関数の計算を10問</td></tr>
+  </table>
+
+  <h2>部活や筋トレでは、みんな当たり前にやっています</h2>
+
+  <p>この話、勉強だと難しく聞こえるのに、<b>部活だと誰でもやっています。</b></p>
+
+  <div class="box" style="background:var(--panel);border:1px solid var(--line);
+       border-radius:10px;padding:14px 16px;margin:14px 0">
+    <p style="margin:0 0 6px"><b>「次の大会で勝ちたい」</b>（ゴール）</p>
+    <p style="margin:0 0 6px">↓ そのためには？</p>
+    <p style="margin:0 0 6px"><b>「後半でバテない体を作る」</b>（目的）</p>
+    <p style="margin:0 0 6px">↓ そのためには？</p>
+    <p style="margin:0"><b>「今日は3km走る」</b>（手段）</p>
+  </div>
+
+  <p>誰も、いきなり<b>「毎日ダッシュ100本」</b>から始めません。
+    <b>何のために走るのか</b>が先にあって、そこから今日のメニューが決まります。
+    そしてバテる原因が体力ではなく技術だと分かれば、
+    <b>走るのをやめて、そっちに変えます。</b>目的は変わらないまま、手段だけ差し替わる。</p>
+
+  <p>筋トレも同じです。「ベンチプレスを100kg挙げたい」（ゴール）→
+    「胸と腕の筋肉を増やす」（目的）→「今日は70kgを8回×3セット」（手段）。
+    そして伸びが止まったら、<b>重さではなく回数やフォームを変えます。</b></p>
+
+  <p>勉強だけ、なぜか<b>いきなり「毎日ワーク10ページ」（手段）から始めます。</b>
+    部活で言えば、何の大会に出るかも決めずに走り出しているのと同じです。
+    3日でやめてしまうのは、意志が弱いからではありません。</p>
+
   <h2>この記事の要点</h2>
 
   <ul>
