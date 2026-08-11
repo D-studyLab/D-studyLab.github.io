@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>学校のワークを何周もして60点。そこで止まるのは「つながっていない」から｜D-studyLab ブログ</title>
+<meta name="description" content="塾でいちばんよく見る形です。周回数を増やしても抜けられません。なぜ応用で崩れるのか、どこを直すのかを書きます。">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="学校のワークを何周もして60点。そこで止まるのは「つながっていない」から">
+<meta property="og:description" content="塾でいちばんよく見る形です。周回数を増やしても抜けられません。なぜ応用で崩れるのか、どこを直すのかを書きます。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/worked-but-not-understood.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og/monty-hall.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://d-studylab.com/blog/og/monty-hall.png">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+
+  .morelinks { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+               padding:16px 18px; margin:30px 0 0; }
+  .morelinks .mt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .morelinks a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+                 border-bottom:1px dashed var(--line); }
+  .morelinks a:last-child { border-bottom:none; }
+  .morelinks .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .morelinks .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+
+  figure { margin:26px 0; }
+  figure img { width:100%; height:auto; border:1px solid var(--line); border-radius:6px; display:block; }
+  figure figcaption { font-size:13px; color:var(--sub); margin-top:8px; text-align:center; }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"モンティホール問題がどうしても納得できない人へ——あなたの直感は、実は間違っていない","description":"モンティホール問題を10万回シミュレーションした実測データで解説します。「変えると2/3」の理由と、多くの人が感じる「50%じゃないの？」という直感が正しくなる条件まで、実際に回した数字で示します。","url":"https://d-studylab.com/blog/monty-hall.html","datePublished":"2026-07-26","dateModified":"2026-07-26","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/monty-hall.html"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">📚 勉強のやり方</div>
+  <h1>学校のワークを何周もして60点。そこで止まるのは「つながっていない」から</h1>
+  <div class="date">2026年8月11日</div>
+
+  <p>塾でいちばんよく見るのが、この形です。</p>
+
+  <p><b>学校のワークを繰り返し解いている。テストで50〜60点は取れる。
+    でも、そこから上がらない。</b></p>
+
+  <p>本人は困っています。サボっていないからです。
+    むしろ、周りより多く解いている。それでも点が動かない。</p>
+
+  <h2>解けているのは、たくさん解いたからです</h2>
+
+  <p>種明かしをすると、<b>それはいっぱい解いたおかげでできているだけ</b>で、
+    <b>理解はできていない</b>ことが多い。</p>
+
+  <p>同じ問題を4周も5周もすれば、答えは手が覚えます。
+    問題文を見た瞬間に、考える前に式が出てくる。
+    <b>これは記憶であって、理解ではありません。</b></p>
+
+  <p>覚えているのは<b>「この問題文 → この答え」という組</b>であって、
+    <b>その間にある理由ではない</b>のです。</p>
+
+  <h2>だから、少しずらされると崩れる</h2>
+
+  <p>この状態の生徒は、<b>少しずらされた応用っぽい問題が苦手</b>です。</p>
+
+  <p>設定が変わる、数字の並びが変わる、聞かれ方が変わる。
+    それだけで手が止まります。覚えた組の中に、その形が無いからです。</p>
+
+  <p>私はこれを<b>「つながっていない」状態</b>と呼んでいます。
+    知識のかたまりはあるのに、<b>かたまり同士が線でつながっていない</b>。
+    だから、少しでも隣に動かされると行き先がなくなる。</p>
+
+  <h2>自分がこの状態か確かめる方法</h2>
+
+  <p>2つあります。どちらも1分で終わります。</p>
+
+  <ul>
+    <li><b>数字だけ変えた問題を作って解く。</b>
+      ワークの問題の数字を自分で書き換えて解いてみる。
+      ここで詰まるなら、答えを覚えていただけです</li>
+    <li><b>「なぜこの式なのか」を言ってみる。</b>
+      解けた問題で、なぜその式を立てたのかを説明する。
+      手順は言えるのに理由が出てこないなら、同じです</li>
+  </ul>
+
+  <h2>抜け方——周回数を増やさない</h2>
+
+  <p>この状態から抜けるとき、<b>いちばんやってはいけないのが「もう1周する」</b>です。
+    覚えている組がさらに強く焼き付くだけで、つながりは増えません。</p>
+
+  <p>やることは逆です。<b>問題の数を減らして、1問あたりにかける手間を増やします。</b></p>
+
+  <ul>
+    <li>1問解いたら、<b>問題を見ずに手順と理由を言ってみる</b></li>
+    <li>理由が出てこない箇所を見つける（ここが本体）</li>
+    <li>その箇所だけ、答えや解説を見て
+      <b>「どうやってこの方法を思いついたのか」</b>を考える</li>
+    <li>数字だけ違う問題で、同じことができるか確かめる</li>
+  </ul>
+
+  <p>10問を1周するより、<b>3問をこのやり方で通したほうが</b>、点は動きます。</p>
+
+  <h2>ワーク周回が無駄なわけではない</h2>
+
+  <p>誤解されたくないので書いておきます。
+    <b>周回そのものは無駄ではありません。</b>
+    50〜60点を取れているのは、その積み重ねの結果です。土台はできています。</p>
+
+  <p>足りないのは、<b>周回のあとに理由を通す一手間</b>だけです。
+    やる量を増やす必要はありません。<b>順番に一手間を足す</b>だけです。</p>
+
+  <h2>この記事の要点</h2>
+
+  <ul>
+    <li>ワーク周回で50〜60点は取れる。<b>それは記憶であって理解ではない</b></li>
+    <li>覚えているのは<b>問題と答えの組</b>で、<b>間の理由ではない</b></li>
+    <li>だから<b>少しずらされた応用</b>で崩れる。これが「つながっていない」状態</li>
+    <li>確かめ方は<b>数字を変えて解く</b>か<b>なぜその式かを言う</b></li>
+    <li>抜け方は周回を増やすことではなく、<b>1問あたりの手間を増やす</b>こと</li>
+  </ul>
+
+  <a class="cta" href="/study-type/">🧭 自分のつまずき方を15問でしらべる（登録不要・2分）</a>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

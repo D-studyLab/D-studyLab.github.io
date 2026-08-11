@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>「どこが分からないか分からない」と言う生徒に、私が最初にさせること｜D-studyLab ブログ</title>
+<meta name="description" content="説明を始めてはいけません。塾で6年やってきて、まずやるのは「簡単な問題を数問解いてもらって、どこで止まるかを見る」ことです。手順を全部書きます。">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="「どこが分からないか分からない」と言う生徒に、私が最初にさせること">
+<meta property="og:description" content="説明を始めてはいけません。塾で6年やってきて、まずやるのは「簡単な問題を数問解いてもらって、どこで止まるかを見る」ことです。手順を全部書きます。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/where-you-stop.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og/monty-hall.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://d-studylab.com/blog/og/monty-hall.png">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+
+  .morelinks { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+               padding:16px 18px; margin:30px 0 0; }
+  .morelinks .mt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .morelinks a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+                 border-bottom:1px dashed var(--line); }
+  .morelinks a:last-child { border-bottom:none; }
+  .morelinks .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .morelinks .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+
+  figure { margin:26px 0; }
+  figure img { width:100%; height:auto; border:1px solid var(--line); border-radius:6px; display:block; }
+  figure figcaption { font-size:13px; color:var(--sub); margin-top:8px; text-align:center; }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"モンティホール問題がどうしても納得できない人へ——あなたの直感は、実は間違っていない","description":"モンティホール問題を10万回シミュレーションした実測データで解説します。「変えると2/3」の理由と、多くの人が感じる「50%じゃないの？」という直感が正しくなる条件まで、実際に回した数字で示します。","url":"https://d-studylab.com/blog/monty-hall.html","datePublished":"2026-07-26","dateModified":"2026-07-26","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/monty-hall.html"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">📚 勉強のやり方</div>
+  <h1>「どこが分からないか分からない」と言う生徒に、私が最初にさせること</h1>
+  <div class="date">2026年8月11日</div>
+
+  <p>「どこが分からないか分からない」「全部わからない」。
+    塾でいちばんよく聞く言葉のひとつです。</p>
+
+  <p>このとき<b>やってはいけないのは、最初から説明を始めること</b>です。
+    どこが分かっていないか誰も知らない状態で説明を始めると、
+    <b>すでに分かっている話を延々と聞かせる</b>ことになります。
+    生徒は退屈し、こちらは時間を使い、何も進みません。</p>
+
+  <h2>まず、簡単な問題を数問解いてもらう</h2>
+
+  <p>私が最初にやるのはこれです。<b>簡単な問題を数問、その場で解いてもらう。</b></p>
+
+  <p>見ているのは正解か不正解かではありません。</p>
+
+  <ul>
+    <li><b>どこで手が止まるか</b></li>
+    <li><b>なぜ止まるのか</b></li>
+  </ul>
+
+  <p>簡単に言うと、<b>説明できない箇所を探す</b>作業です。</p>
+
+  <p>やってみると分かりますが、「全部わからない」と言った生徒でも、
+    <b>止まる場所はだいたい決まっています</b>。
+    そこまでは手が動くのに、ある一点から先が出てこない。
+    <b>「全部」ではなかったことが、本人の目にも見える</b>ようになります。</p>
+
+  <p>ここまで来れば、あとはその一点をやるだけです。
+    「全部わからない」は、量が多すぎて手が出ないから出る言葉でもあります。
+    <b>やることが1つに減ると、人は動けます。</b></p>
+
+  <h2>最初から手が出ない子には、順番がある</h2>
+
+  <p>1問目からまったく手が動かない子もいます。
+    このときの手順は決まっています。</p>
+
+  <h3>1. 一度、やってみせる</h3>
+
+  <p>私が解いて見せます。このとき<b>手順だけでなく、なぜそうするのかまで話します</b>。
+    「ここでこうしたいから、こうする」という流れを込みで見せる。
+    理由の入った説明は<b>ストーリーになる</b>ので、手順の羅列より残ります。</p>
+
+  <h3>2. 数字だけ違う、同じ問題を解かせる</h3>
+
+  <p>「同じように解いてみて」と言って、
+    <b>数字だけ違うような、簡単な問題</b>を解いてもらいます。
+    ここでいきなり応用に行かないのが大事です。目的は解かせることではなく、
+    <b>手が動く状態を作ること</b>だからです。</p>
+
+  <h3>3. 「できるじゃん！」と褒める</h3>
+
+  <p>解けたら褒めます。<b>調子に乗らせる</b>、と言ったほうが正確です。</p>
+
+  <p>ふざけているように聞こえるかもしれませんが、ここは真面目にやっています。
+    「全部わからない」と言う子は、
+    <b>できない前提で自分を見ることが習慣になっている</b>ことが多い。
+    1問でも「解けた」が入ると、次の1問に手が出ます。</p>
+
+  <h3>4. どんどん解いてもらう</h3>
+
+  <p>調子が出ているうちに数をこなします。手が止まらない間は口を出しません。</p>
+
+  <h3>5. 最後に、口頭で説明してもらう</h3>
+
+  <p>ひと通り解けたところで、<b>口頭で私に説明できるか聞きます</b>。
+    「なぜそうしたのか」まで言えていたら、理解OKと判断します。
+    ここが抜けると、<b>解けるけど分かっていない</b>状態のまま先に進んでしまいます。</p>
+
+  <h2>ひとりでやるときの版</h2>
+
+  <p>塾に来ていなくても、同じことはできます。</p>
+
+  <ul>
+    <li>簡単なところから解く。<b>止まった場所をメモする</b></li>
+    <li>止まった理由を一言で書く（「式は立つが、その先の変形が思いつかない」など）</li>
+    <li>そこだけを、答えを見て分析する</li>
+    <li>数字だけ違う問題で、同じことができるか確かめる</li>
+    <li>最後に、頭の中で手順と理由を通して言えるか確かめる</li>
+  </ul>
+
+  <p>「わからない」を<b>場所と理由に分解する</b>。やっているのはこれだけです。</p>
+
+  <h2>この記事の要点</h2>
+
+  <ul>
+    <li>「全部わからない」に説明で応じてはいけない。<b>まず解かせる</b></li>
+    <li>見るのは正誤ではなく<b>どこで止まるか・なぜ止まるか</b></li>
+    <li>止まる場所はだいたい1点。<b>「全部」ではなかったと本人に見える</b></li>
+    <li>手が出ない子には、<b>やってみせる→数字違い→褒める→数→口頭説明</b></li>
+    <li>褒めるのは気分の問題ではなく、<b>次の1問に手を出させるための手順</b></li>
+  </ul>
+
+  <a class="cta" href="/study-type/">🧭 自分のつまずき方を15問でしらべる（登録不要・2分）</a>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

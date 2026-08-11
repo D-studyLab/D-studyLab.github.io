@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>「理解した」かどうかは、心の中で説明できるかで決まる｜D-studyLab ブログ</title>
+<meta name="description" content="勉強時間は指標になりません。塾で6年教えてきて使っている、「理解できたか」をその場で確かめる方法を書きます。人を用意する必要はありません。">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="「理解した」かどうかは、心の中で説明できるかで決まる">
+<meta property="og:description" content="勉強時間は指標になりません。塾で6年教えてきて使っている、「理解できたか」をその場で確かめる方法を書きます。人を用意する必要はありません。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/understanding-is-explaining.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og/monty-hall.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://d-studylab.com/blog/og/monty-hall.png">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+
+  .morelinks { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+               padding:16px 18px; margin:30px 0 0; }
+  .morelinks .mt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .morelinks a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+                 border-bottom:1px dashed var(--line); }
+  .morelinks a:last-child { border-bottom:none; }
+  .morelinks .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .morelinks .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+
+  figure { margin:26px 0; }
+  figure img { width:100%; height:auto; border:1px solid var(--line); border-radius:6px; display:block; }
+  figure figcaption { font-size:13px; color:var(--sub); margin-top:8px; text-align:center; }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"モンティホール問題がどうしても納得できない人へ——あなたの直感は、実は間違っていない","description":"モンティホール問題を10万回シミュレーションした実測データで解説します。「変えると2/3」の理由と、多くの人が感じる「50%じゃないの？」という直感が正しくなる条件まで、実際に回した数字で示します。","url":"https://d-studylab.com/blog/monty-hall.html","datePublished":"2026-07-26","dateModified":"2026-07-26","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/monty-hall.html"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">📚 勉強のやり方</div>
+  <h1>「理解した」かどうかは、心の中で説明できるかで決まる</h1>
+  <div class="date">2026年8月11日</div>
+
+  <p>「今日3時間やった」と言われても、私は<b>ほとんど何も分かりません</b>。
+    3時間机に向かって、できるようになったことがゼロということは普通に起こります。</p>
+
+  <p>私にとって勉強とは、<b>何かできるようになるまで繰り返し練習して習得すること</b>です。
+    だから何時間やったか、何ページ進んだかは、正直どうでもいい。
+    <b>解けるようになっていればOK、理解できていればOK</b>です。</p>
+
+  <p>ただ、そう言うと必ず次の問いが来ます。
+    <b>「じゃあ、どうやったら理解できたって言えるんですか」</b></p>
+
+  <p>これに私が答えているのが、この記事の内容です。</p>
+
+  <h2>人に説明できたら、理解できている</h2>
+
+  <p>私の答えは<b>「人に説明できるようになったら、理解できたと言えるのでは」</b>です。</p>
+
+  <p>ここで多くの人が身構えます。友達を捕まえないといけないのか、と。
+    <b>その必要はありません。</b>実際に他人を用意しなくていい。</p>
+
+  <p><b>心の中で、流れと手順と理由を説明できるかを確認する</b>。それだけです。</p>
+
+  <ul>
+    <li><b>流れ</b>：全体として何をしようとしているのか</li>
+    <li><b>手順</b>：まず何をして、次に何をしたか</li>
+    <li><b>理由</b>：<b>なぜ</b>その手順を選んだのか</li>
+  </ul>
+
+  <p>この3つ目が本体です。1つ目と2つ目だけなら、
+    答えを覚えていれば言えてしまうからです。</p>
+
+  <h2>なぜ「説明」が判定に使えるのか</h2>
+
+  <p>説明には<b>順番</b>と<b>理由</b>が要ります。
+    そして人間は、<b>分かっていない場所では言葉が止まります</b>。</p>
+
+  <p>問題を解いているときは止まりません。手が勝手に動くからです。
+    見たことのある形なら、考えなくても式が書けてしまう。
+    <b>だから「解けた」は理解の証拠になりません。</b></p>
+
+  <p>ところが説明しようとすると、
+    「ここでこうして……なんでだっけ」が必ず出てきます。
+    <b>その「なんでだっけ」の場所が、分かっていない場所です。</b>
+    探さなくても、向こうから出てきてくれる。これがこの方法の強いところです。</p>
+
+  <h2>実際にやること</h2>
+
+  <p>問題を1問解いた直後に、<b>問題を見ないで</b>こう言ってみてください。</p>
+
+  <ul>
+    <li>「まず何をした？」</li>
+    <li>「<b>なぜ</b>それをした？」</li>
+    <li>「次に何をした？ <b>なぜ</b>？」</li>
+  </ul>
+
+  <p>声に出しても、頭の中でもかまいません。
+    途中で詰まったら、<b>そこが今日やるべき場所</b>です。
+    分かっている9問を解き直す必要はありません。</p>
+
+  <h2>今はAIに何回でも「なんで？」と聞ける</h2>
+
+  <p>詰まった場所が見つかったあと、昔は困りました。
+    先生に聞けるのは週に何回か。友達に「なんで？」を3回続けると、
+    たいてい気まずくなります。</p>
+
+  <p>いまはAIがあります。
+    <b>分からない箇所について、繰り返し「なんで？」と聞ける</b>。
+    相手は疲れないし、こちらも気を使わなくていい。</p>
+
+  <p>ここは本当に、私が学生だったころと条件が違うところです。
+    <b>「説明できるか確かめる」→「詰まったところを何回でも聞く」</b>が、
+    ひとりの部屋の中で完結するようになりました。</p>
+
+  <h2>塾で私がやっていること</h2>
+
+  <p>教えたあと、<b>口頭で私に説明できるか聞いてみます</b>。
+    「これ、どうやって解いたか説明して」と。</p>
+
+  <p>そこで<b>なぜそうしたのかまで言えていたら、理解OK</b>と判断します。
+    手順だけスラスラ言えて理由が出てこないときは、
+    <b>まだ覚えているだけ</b>なので、そこをもう一度やります。</p>
+
+  <h2>この記事の要点</h2>
+
+  <ul>
+    <li>勉強時間や進んだページ数は、できるようになったかを教えてくれない</li>
+    <li>勉強とは<b>できるようになるまで繰り返して習得すること</b></li>
+    <li>理解できたかの判定は<b>「人に説明できるか」</b></li>
+    <li>他人は要らない。<b>心の中で流れ・手順・理由を言えるか</b></li>
+    <li>言葉が詰まった場所が、分かっていない場所。<b>探さなくても出てくる</b></li>
+    <li>詰まった場所は、いまならAIに何回でも「なんで？」と聞ける</li>
+  </ul>
+
+  <a class="cta" href="/study-type/">🧭 自分のつまずき方を15問でしらべる（登録不要・2分）</a>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

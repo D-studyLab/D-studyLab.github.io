@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>テスト対策より先に「レベル上げ」をする——塾講師の、たぶん理想論｜D-studyLab ブログ</title>
+<meta name="description" content="ゲームでいうボス対策と、レベル上げの話です。そのテストにしか効かない対策を、私はギリギリまでやりません。理由を書きます。">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="テスト対策より先に「レベル上げ」をする——塾講師の、たぶん理想論">
+<meta property="og:description" content="ゲームでいうボス対策と、レベル上げの話です。そのテストにしか効かない対策を、私はギリギリまでやりません。理由を書きます。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/level-up-not-boss.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og/monty-hall.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://d-studylab.com/blog/og/monty-hall.png">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+
+  .morelinks { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+               padding:16px 18px; margin:30px 0 0; }
+  .morelinks .mt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .morelinks a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+                 border-bottom:1px dashed var(--line); }
+  .morelinks a:last-child { border-bottom:none; }
+  .morelinks .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .morelinks .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+
+  figure { margin:26px 0; }
+  figure img { width:100%; height:auto; border:1px solid var(--line); border-radius:6px; display:block; }
+  figure figcaption { font-size:13px; color:var(--sub); margin-top:8px; text-align:center; }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"モンティホール問題がどうしても納得できない人へ——あなたの直感は、実は間違っていない","description":"モンティホール問題を10万回シミュレーションした実測データで解説します。「変えると2/3」の理由と、多くの人が感じる「50%じゃないの？」という直感が正しくなる条件まで、実際に回した数字で示します。","url":"https://d-studylab.com/blog/monty-hall.html","datePublished":"2026-07-26","dateModified":"2026-07-26","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/monty-hall.html"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">📚 勉強のやり方</div>
+  <h1>テスト対策より先に「レベル上げ」をする——塾講師の、たぶん理想論</h1>
+  <div class="date">2026年8月11日</div>
+
+  <p>私が生徒に教えるときは、なるべく<b>how（どうやるか）だけでなく why（なぜそうするか）まで</b>
+    説明するようにしています。手順だけ渡したほうが、その場は速いのに、です。</p>
+
+  <p>理由は2つあります。</p>
+
+  <h2>1. 理由が入るとストーリーになり、感情が発生する</h2>
+
+  <p>手順だけの説明は、<b>意味のない記号の並び</b>です。
+    「まずこれを両辺にかけて、次にこれを移項して」。覚えられません。</p>
+
+  <p>「なぜ」が入ると、そこに<b>流れ</b>が生まれます。
+    こうしたいからこうする、という筋が通る。<b>ストーリーになる</b>。</p>
+
+  <p>そして筋が通ると、<b>感情が発生します</b>。
+    「なるほど、そういうことか」「うわ、うまいことやるな」。
+    人間は、感情の乗った話をよく覚えていて、よく思い出せます。
+    <b>覚えやすく、思い出しやすい</b>。これが1つ目です。</p>
+
+  <h2>2. 知識ではなく考え方が増えると、応用に届く</h2>
+
+  <p>2つ目のほうが本命です。</p>
+
+  <p>手順を覚えると、<b>その問題が解けるようになります</b>。
+    理由まで分かると、<b>その考え方が使える問題が全部解けるようになります</b>。</p>
+
+  <p>知識や考え方が増えれば、それが応用につながる。
+    そして私が本当に上げたいのは、
+    <b>その子の「頭のレベル」そのもの</b>です。</p>
+
+  <h2>ボス対策と、レベル上げ</h2>
+
+  <p>ここはゲームで言ったほうが早いです。</p>
+
+  <table>
+    <tr><th></th><th>勉強でいうと</th><th>効く範囲</th></tr>
+    <tr><td><b>ボス対策</b></td>
+        <td>そのテストの範囲だけを一問一答で詰める</td>
+        <td><b>そのボスにしか効かない</b></td></tr>
+    <tr><td><b>レベル上げ</b></td>
+        <td>なぜそうなるかを含めて、考え方を身につける</td>
+        <td><b>どの相手にも効く</b></td></tr>
+  </table>
+
+  <p>私の方針は<b>「まずはレベル上げ」</b>です。
+    <b>ボスにしか通用しない対策は、ギリギリまでしない。</b></p>
+
+  <p>レベルを上げておけば、別の相手をするときにも効きます。
+    要領がいい、地頭がいいと言われる状態は、
+    <b>この積み上げの結果として出てくるもの</b>だと私は思っています。</p>
+
+  <h2>ただし、時間がないなら対策でいい</h2>
+
+  <p>正直に書きます。<b>時間がないという理由があるときは、対策でいい</b>です。</p>
+
+  <p>明後日がテストで、まだ範囲の半分が白紙なら、
+    そこで「なぜ」から積み上げるのは間に合いません。
+    そういうときは割り切って、出る形を詰めます。</p>
+
+  <p>私が言いたいのは順番の話です。
+    <b>時間がないという理由がない限りは、レベル上げをする。</b>
+    そして多くの生徒は、
+    <b>「時間がない」を、時間があるうちから言っています。</b></p>
+
+  <h2>これは理想論です</h2>
+
+  <p>念のため書いておくと、これは私の理想です。
+    現実には範囲も日程も決まっていて、点数はすぐ必要になります。</p>
+
+  <p>それでも、<b>今日1問だけでいいので「なぜこの式なのか」を一言で言ってみる</b>。
+    これはテスト前でもできます。
+    レベル上げは、まとまった時間がないとできないものではありません。</p>
+
+  <h2>この記事の要点</h2>
+
+  <ul>
+    <li>手順（how）だけでなく<b>理由（why）</b>まで説明する</li>
+    <li>理由が入ると<b>ストーリーになり、感情が乗るので思い出せる</b></li>
+    <li>手順は<b>その問題</b>に効く。考え方は<b>その形の問題すべて</b>に効く</li>
+    <li><b>ボス対策</b>はそのテストにしか効かない。<b>レベル上げ</b>はどこでも効く</li>
+    <li>時間がないとき以外は、レベル上げを優先する</li>
+  </ul>
+
+  <a class="cta" href="/study-type/">🧭 自分のつまずき方を15問でしらべる（登録不要・2分）</a>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
