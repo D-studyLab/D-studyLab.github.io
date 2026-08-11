@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>AdSenseに「有用性の低いコンテンツ」で落ちた——何を測って、何を直したかの全記録｜D-studyLab ブログ</title>
+<meta name="description" content="不承認の理由がひとことしか書かれていないので、自分のサイトを1ページずつ測りました。16本のゲームページが中央値1,078字だったこと、41字のページがあったこと。※この記事を書いた時点で、まだ再審査の結果は出ていません。">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="AdSenseに「有用性の低いコンテンツ」で落ちた——何を測って、何を直したかの全記録">
+<meta property="og:description" content="不承認の理由がひとことしか書かれていないので、自分のサイトを1ページずつ測りました。16本のゲームページが中央値1,078字だったこと、41字のページがあったこと。※この記事を書いた時点で、まだ再審査の結果は出ていません。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/adsense-low-value-content.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og/monty-hall.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://d-studylab.com/blog/og/monty-hall.png">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+
+  .morelinks { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+               padding:16px 18px; margin:30px 0 0; }
+  .morelinks .mt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .morelinks a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+                 border-bottom:1px dashed var(--line); }
+  .morelinks a:last-child { border-bottom:none; }
+  .morelinks .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .morelinks .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+
+  figure { margin:26px 0; }
+  figure img { width:100%; height:auto; border:1px solid var(--line); border-radius:6px; display:block; }
+  figure figcaption { font-size:13px; color:var(--sub); margin-top:8px; text-align:center; }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"モンティホール問題がどうしても納得できない人へ——あなたの直感は、実は間違っていない","description":"モンティホール問題を10万回シミュレーションした実測データで解説します。「変えると2/3」の理由と、多くの人が感じる「50%じゃないの？」という直感が正しくなる条件まで、実際に回した数字で示します。","url":"https://d-studylab.com/blog/monty-hall.html","datePublished":"2026-07-26","dateModified":"2026-07-26","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/monty-hall.html"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">🧾 サイト運営</div>
+  <h1>AdSenseに「有用性の低いコンテンツ」で落ちた——何を測って、何を直したかの全記録</h1>
+  <div class="date">2026年8月11日</div>
+
+  <p>Google AdSense に申し込んで、<b>「有用性の低いコンテンツ」</b>で不承認になりました。</p>
+
+  <p>この通知の困るところは、<b>どのページのことなのか、何が足りないのかが書かれていない</b>ことです。
+    「コンテンツを充実させてください」としか言われません。</p>
+
+  <p>そこで、自分のサイトを<b>1ページずつ測りました</b>。この記事はその記録です。</p>
+
+  <div class="box" style="background:rgba(176,74,47,.10);border:1px solid #b04a2f;
+       border-radius:8px;padding:12px 16px;margin:18px 0">
+    <p style="margin:0"><b>先に断っておきます。この記事を書いている時点で、
+      まだ再審査の結果は出ていません。</b>
+      「これをやれば通る」という記事ではなく、
+      <b>何を測って何を直したか</b>の記録です。結果が出たら追記します。</p>
+  </div>
+
+  <h2>まず、違反ではないことを確認した</h2>
+
+  <p>「有用性の低いコンテンツ」はポリシー違反とは別枠です。実際、確認したところ：</p>
+
+  <ul>
+    <li>ポリシーセンターの違反：<b>0件</b></li>
+    <li>ads.txt：<b>承認済み</b></li>
+    <li>sitemap.xml：<b>正常に読まれている</b></li>
+  </ul>
+
+  <p>つまり、<b>技術的な不備ではなく、中身の問題として落とされている</b>ということです。</p>
+
+  <h2>公式に書いてあることだけを拾う</h2>
+
+  <p>体験談を読み始める前に、Googleが公式に書いていることを確認しました。
+    この件に関係するのは、だいたい次の3つです。</p>
+
+  <ul>
+    <li><b>十分な量の文章があること</b></li>
+    <li><b>完結した文章で書かれていること</b>（単語の羅列やリンク集ではない）</li>
+    <li><b>画像や動画が大半を占めるサイトは、承認されない可能性がある</b></li>
+    <li><b>審査はサイト全体（全ページ）が対象</b></li>
+  </ul>
+
+  <p>最後の1つが重要でした。私のサイトは<b>ブラウザゲームが主役</b>です。
+    ゲームのページは、開くとキャンバスとボタンが並ぶだけ。
+    <b>文章がほとんど無い</b>。ここが一番怪しい。</p>
+
+  <h2>測ってみたら、41字のページがあった</h2>
+
+  <p>そこで、<b>JavaScriptを実行しない状態</b>で各ページの文字数を測りました。
+    クローラーから見えるのは、基本的にこの状態だからです。</p>
+
+  <p>結果です。</p>
+
+  <table>
+    <tr><th>ページ</th><th>本文（JS抜き）</th></tr>
+    <tr><td>ゲーム16本の中央値</td><td><b>1,078字</b></td></tr>
+    <tr><td>そのうち1,000字未満</td><td><b>6本</b></td></tr>
+    <tr><td>いちばん薄いページ（診断ツール）</td><td><b>41字</b></td></tr>
+  </table>
+
+  <p>41字。これは<code>&lt;div id="app"&gt;&lt;/div&gt;</code> だけ書いて、
+    <b>中身を全部JavaScriptで描いていた</b>からです。</p>
+
+  <p>ブラウザで見れば、15問の設問も、8種類の結果も、ちゃんと表示されます。
+    でも<b>HTMLの中には1文字も入っていない</b>。
+    検索エンジンから見ると、<b>見出し0個・本文41字の空ページ</b>でした。</p>
+
+  <h2>直したこと1：JSで描いていた中身を、HTMLにも置いた</h2>
+
+  <p>ページを作り直したわけではありません。
+    <b>JavaScriptが起動する前に見えている場所（<code>#app</code> の中）に、
+    そのページが何なのかを説明する文章を静的に書いた</b>だけです。
+    JSが動けば、その文章は上書きされて消えます。</p>
+
+  <p>つまり<b>人間の見た目は1ドットも変わっていません。</b>
+    変わったのは、JSを実行しない相手から見える中身だけです。</p>
+
+  <p>この作業を16本すべてに対してやりました。</p>
+
+  <table>
+    <tr><th></th><th>前</th><th>後</th></tr>
+    <tr><td>ゲーム16本の中央値</td><td>1,078字</td><td><b>2,229字</b></td></tr>
+    <tr><td>1,000字未満のページ</td><td>6本</td><td><b>0本</b></td></tr>
+  </table>
+
+  <p>書いた中身は、宣伝文ではありません。
+    <b>なぜこのルールにしたのか、何を試してやめたのか</b>という設計の話です。
+    もともと開発メモに書いてあったものを、読める形に直して載せました。</p>
+
+  <h2>直したこと2：リンク切れを全部潰した</h2>
+
+  <p>体験談を集めていて、いちばん再現性がありそうだったのがこれです。
+    <b>「404を全部直したら24時間で承認された」</b>という記録が複数ありました。</p>
+
+  <p>サイト内を巡回して、内部リンクの飛び先を全部確認するスクリプトを書きました。
+    結果は<b>89ページ・114URLで、リンク切れ0件</b>。</p>
+
+  <p>ここで1つ失敗しています。最初のスクリプトは
+    <b>&lt;script&gt; の中の文字列までリンクとして拾って</b>、
+    存在しない404を報告してきました。
+    JavaScriptのテンプレート文字列（<code>href="$&#123;BASE&#125;$&#123;slug&#125;/"</code> のような書き方）です。
+    ブラウザもクローラーもそれをリンクとして辿らないので、完全な誤検出でした。
+    <b>script と style の中を除いてから数える</b>ように直しています。</p>
+
+  <h2>直したこと3：記事を足した。ただし本数は信用していない</h2>
+
+  <p>ここは正直に書きます。<b>「記事を◯本にしたら通る」という関係は、見つかりませんでした。</b></p>
+
+  <p>不承認から復帰した記録を集めると、こうなります。</p>
+
+  <table>
+    <tr><th>記事の本数</th><th>結果</th></tr>
+    <tr><td>39本 → 40本</td><td>通った</td></tr>
+    <tr><td>47本</td><td><b>落ち続けた</b></td></tr>
+    <tr><td>70本</td><td><b>落ち続けた</b></td></tr>
+  </table>
+
+  <p>本数で説明できていません。
+    <b>1本増やして通った人と、70本あって落ちる人が同時に存在する</b>以上、
+    効いているのは本数ではない何かです。</p>
+
+  <p>それでも記事は足しました。理由は本数のためではなく、
+    <b>1ページずつが読めるものになっているか</b>という観点でサイトを見たときに、
+    足りないと判断したからです。</p>
+
+  <h2>やらなかったこと</h2>
+
+  <p>調べていると出てくるけれど、<b>やらなかった</b>ことも書いておきます。</p>
+
+  <h3>カテゴリを整理する</h3>
+
+  <p>「カテゴリをまとめたら通った」という体験談があります。
+    ただし<b>その人は同時に他のことも直しています</b>し、
+    公式には一言も書かれていません。</p>
+
+  <p>そして何より、<b>ラベルを付け替えても中身は1文字も増えません。</b>
+    審査で見られているのが中身なら、これは効かないはずです。やめました。</p>
+
+  <h3>デモページを検索から外す</h3>
+
+  <p>うちには架空の店舗サイトの制作見本が16枚あります。
+    「薄いページは消せ」という話に照らすと外したくなりますが、
+    <b>もともと全部 noindex にしてあり</b>、
+    「これは制作見本で、店名も住所も架空です」というバナーも入っています。</p>
+
+  <p>これは<b>見せるために作ったもの</b>なので、
+    通すために消す、という判断はしませんでした。</p>
+
+  <h2>点検を自動化した</h2>
+
+  <p>最後に、同じことを毎回やらなくていいように点検スクリプトを書きました。
+    公開中の全ページについて、こう報告します。</p>
+
+  <ul>
+    <li>本文が800字未満のページ（<b>noindex のページは除く</b>）</li>
+    <li>title / description が空、または他ページと同じ</li>
+    <li>h1 が無い、または2つ以上ある</li>
+    <li>どこにも戻れないページ</li>
+  </ul>
+
+  <p>ここでも1つ失敗しました。「戻るリンクがあるか」を
+    <code>href="/..."</code> だけで判定したせいで、
+    <b>絶対URLで戻っていた17ページを「孤立している」と誤って報告</b>しました。
+    相対と絶対の両方を見るように直しています。</p>
+
+  <p>いまの結果はこうです。</p>
+
+  <table>
+    <tr><th>項目</th><th>結果</th></tr>
+    <tr><td>審査対象になるページ</td><td>63枚</td></tr>
+    <tr><td>本文の中央値</td><td><b>1,913字</b></td></tr>
+    <tr><td>800字未満</td><td>0枚</td></tr>
+    <tr><td>title / description の重複</td><td>0件</td></tr>
+    <tr><td>リンク切れ</td><td>0件</td></tr>
+  </table>
+
+  <h2>いま言えること</h2>
+
+  <ul>
+    <li>不承認の通知に理由は書かれていない。<b>自分で測るしかない</b></li>
+    <li>JSで中身を描くページは、<b>クローラーから見ると空</b>のことがある。
+      まずJSを切って自分のページを見る</li>
+    <li>公式に書いてあるのは<b>量・完結した文章・画像だけではないこと・全ページが対象</b></li>
+    <li><b>記事の本数と合否は対応していなかった</b>。本数を目標にしない</li>
+    <li>体験談は<b>同時に複数のことを直している</b>ので、因果は取り出せない</li>
+  </ul>
+
+  <p><b>そして、この記事はまだ結末を持っていません。</b>
+    再審査の結果が出たら、通っても落ちても、ここに追記します。
+    落ちた場合は、上のどれが足りなかったのかも含めて書きます。</p>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

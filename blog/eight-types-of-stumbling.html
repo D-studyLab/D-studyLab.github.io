@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>勉強のつまずき方は、だいたい8つに分けられる——8つ全部の説明と、それぞれの「やってはいけないこと」｜D-studyLab ブログ</title>
+<meta name="description" content="「勉強のやり方が分からない」は8つくらいに分けられます。8つ全部について、何が起きているか・今日やる1つ・そして効かないのにやりがちなことを書きました。診断ツールも用意しています。">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="勉強のつまずき方は、だいたい8つに分けられる——8つ全部の説明と、それぞれの「やってはいけないこと」">
+<meta property="og:description" content="「勉強のやり方が分からない」は8つくらいに分けられます。8つ全部について、何が起きているか・今日やる1つ・そして効かないのにやりがちなことを書きました。診断ツールも用意しています。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/eight-types-of-stumbling.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og/monty-hall.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://d-studylab.com/blog/og/monty-hall.png">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+
+  .morelinks { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+               padding:16px 18px; margin:30px 0 0; }
+  .morelinks .mt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .morelinks a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+                 border-bottom:1px dashed var(--line); }
+  .morelinks a:last-child { border-bottom:none; }
+  .morelinks .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .morelinks .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+
+  figure { margin:26px 0; }
+  figure img { width:100%; height:auto; border:1px solid var(--line); border-radius:6px; display:block; }
+  figure figcaption { font-size:13px; color:var(--sub); margin-top:8px; text-align:center; }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"モンティホール問題がどうしても納得できない人へ——あなたの直感は、実は間違っていない","description":"モンティホール問題を10万回シミュレーションした実測データで解説します。「変えると2/3」の理由と、多くの人が感じる「50%じゃないの？」という直感が正しくなる条件まで、実際に回した数字で示します。","url":"https://d-studylab.com/blog/monty-hall.html","datePublished":"2026-07-26","dateModified":"2026-07-26","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/monty-hall.html"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">📚 勉強のやり方</div>
+  <h1>勉強のつまずき方は、だいたい8つに分けられる——8つ全部の説明と、それぞれの「やってはいけないこと」</h1>
+  <div class="date">2026年8月11日</div>
+
+  <p>「勉強のやり方が分からない」という言葉は、<b>中身がバラバラ</b>です。</p>
+
+  <p>読んでいるだけで手を動かしていない人と、
+    手は動かしているのに間違い直しをしていない人では、
+    <b>やるべきことが正反対</b>になります。
+    前者に「もっと解け」と言うのは正しく、後者に言うのは有害です。</p>
+
+  <p>塾で教えていて、つまずき方は<b>だいたい8つ</b>に分けられると思っています。
+    この記事では、8つ全部を並べます。</p>
+
+  <p>それぞれについて<b>「やってはいけないこと」</b>も書きました。
+    こちらのほうが大事かもしれません。
+    <b>効かない努力を続けることが、いちばん人を折る</b>からです。</p>
+
+  <a class="cta" href="/study-type/">🧭 15問で自分がどれに近いか調べる（登録不要・2分）</a>
+
+  <h2>1. わかった気になる型</h2>
+  <p><b>読むと分かる。でも、白紙にすると出てこない。</b></p>
+  <p>解説を読んでいる時間が長く、自分の手で解いている時間が短い状態です。
+    読んでいるときの「わかる」は、<b>思い出せることを保証しません</b>。
+    「家ではできたのに本番でできない」が起きるのは、たいていここです。</p>
+  <p><b>今日やる1つ：</b>いま解いた問題を1問、何も見ずにもう一度解く。</p>
+  <p><b>やってはいけない：</b>解説を丁寧に読み直すこと。
+    インプットはすでに足りているので、増やしても効きません。</p>
+
+  <h2>2. 完璧主義で止まる型</h2>
+  <p><b>1問に30分かけて、結局その1問しか進まない。</b></p>
+  <p>分からない問題を飛ばせず、そこで時間が溶けている状態です。
+    真面目さが原因なので、<b>性格を直せという話ではありません</b>。
+    止まる前に手を離す仕組みを、外側に作るほうが早い。</p>
+  <p><b>今日やる1つ：</b>いま止まっている問題に印をつけて、次へ行く。</p>
+  <p><b>やってはいけない：</b>「わかるまで粘る」こと。
+    粘って解けた1問より、飛ばして進んだ10問のほうが伸びます。</p>
+
+  <h2>3. 前日にまとめてやる型</h2>
+  <p><b>やる気が出たら、が来ない。</b></p>
+  <p>計画の内容ではなく、<b>始めるきっかけ</b>が足りていない状態です。
+    「今日は2時間やる」のような量の計画は、始まらないと0になります。
+    <b>量ではなく時刻</b>で決めるほうが動きます。</p>
+  <p><b>今日やる1つ：</b>明日、机に座る時刻を1つだけ決めて、紙に書いて貼る。</p>
+  <p><b>やってはいけない：</b>完璧な計画表を作ること。
+    作ること自体が目的になって、実行されません。</p>
+
+  <h2>4. 量はやるが伸びない型</h2>
+  <p><b>新しい問題ばかり解いて、間違えた問題を放置している。</b></p>
+  <p>勉強量は十分なのに、<b>直しの工程が抜けている</b>状態です。
+    新しい問題を解くのは気持ちがいいので、つい進んでしまう。
+    でも点数を上げるのは<b>できなかったものができるようになること</b>だけです。</p>
+  <p><b>今日やる1つ：</b>今日いちばん最後に間違えた問題を、もう一度だけ解く。</p>
+  <p><b>やってはいけない：</b>新しい問題集を買うこと。
+    持っているものの直しが終わらないうちは、増えるだけです。</p>
+
+  <h2>5. 何から手をつけるか決まらない型</h2>
+  <p><b>全部やらなきゃと思って、どれも始まらない。</b></p>
+  <p>順番が決まっていないので、<b>選ぶところで止まっている</b>状態です。
+    多くの人が「一番苦手なものから」と考えますが、
+    それは<b>いちばん重くて、いちばん始めにくい</b>やり方です。</p>
+  <p><b>今日やる1つ：</b>明日の最初にやる1つを、いま紙に書く。</p>
+  <p><b>やってはいけない：</b>全教科の計画を一度に立てること。
+    立てた時点で力尽きます。</p>
+
+  <h2>6. 人と比べて凹む型</h2>
+  <p><b>隣の人の点数で、自分の努力が消える。</b></p>
+  <p>勉強のやり方ではなく、<b>ものさしの置き場所が外にある</b>状態です。
+    他人の点数は自分では動かせません。
+    動かせないものを基準にすると、努力しても手応えが残らなくなります。</p>
+  <p>この型の人は、実はちゃんと続いています。
+    足りないのは努力ではなく、<b>伸びが見えるものさし</b>のほうです。
+    比べる相手を<b>先週の自分</b>だけにして、点数ではなく
+    <b>できた問題の数</b>を記録すると、手応えが戻ります。</p>
+  <p><b>今日やる1つ：</b>今日できるようになったことを、1つだけ書き出す。</p>
+  <p><b>やってはいけない：</b>順位表を見て奮起しようとすること。
+    それで燃える人もいますが、あなたの場合は<b>削られるほうが先に来ます</b>。</p>
+
+  <h2>7. 集中が続かない型</h2>
+  <p><b>座って5分で、スマホを触っている。</b></p>
+  <p>意志の強さではなく、<b>環境の設計</b>で決まっている部分が大きい状態です。
+    机には向かえているので、いちばん重い「始める」はもうできています。</p>
+  <p>スマホは「見ないでおこう」と思っているだけで注意力を使います。
+    伏せるより<b>別の部屋に置く</b>ほうが確実です。
+    そして<b>休むのを予定に入れる</b>（25分やって5分休む）。</p>
+  <p><b>今日やる1つ：</b>次に座るとき、机の上を空にしてから座る。出すのは1冊だけ。</p>
+  <p><b>やってはいけない：</b>「気合いで我慢する」こと。
+    <b>我慢に使った分だけ、勉強に使える力が減ります。</b></p>
+
+  <h2>8. 質問できない型</h2>
+  <p><b>何が分からないのかを、うまく言えない。</b></p>
+  <p>分かっていないのではなく、
+    <b>分からない場所を切り出す言い方</b>を持っていない状態です。
+    「ここが分かりません」と言えないと、先生の側も何を説明していいか分かりません。
+    結果、聞かないまま進んでしまいます。</p>
+  <p>これは技術なので、型を覚えれば今日から使えます。
+    <b>「分かりません」ではなく「ここまでは分かります」</b>と言う。
+    その次の行が、そのまま質問になります。</p>
+  <p><b>今日やる1つ：</b>今日つまずいた問題に「ここまでは分かる」の線を引く。</p>
+  <p><b>やってはいけない：</b>全部わかってからまとめて聞こうとすること。
+    <b>溜めるほど聞きにくくなります。</b></p>
+
+  <h2>8つに分けて何がいいのか</h2>
+
+  <p>ここまで読むと気づくと思いますが、
+    <b>アドバイスが互いに矛盾しています。</b></p>
+
+  <ul>
+    <li>1番には<b>「読むな、解け」</b>と言い、4番には<b>「解くな、直せ」</b>と言っています</li>
+    <li>2番には<b>「粘るな、飛ばして進め」</b>、8番には<b>「溜めるな、早く聞け」</b></li>
+    <li>6番には<b>「順位表を見るな」</b>。同じ順位表で伸びる人もいるのに、です</li>
+  </ul>
+
+  <p>これが、一般的な勉強法の記事が効かない理由です。
+    <b>どれも誰かにとっては正しく、別の誰かにとっては逆効果</b>だからです。</p>
+
+  <p>だから最初にやるのは、方法を探すことではなく、
+    <b>自分がどれなのかを決めること</b>です。</p>
+
+  <h2>複数当てはまる場合</h2>
+
+  <p>たいてい複数当てはまります。それでかまいません。</p>
+
+  <p>そのときは<b>いちばん強く当てはまる1つだけ</b>を選んでください。
+    8つ全部を直そうとするのは、5番（何から手をつけるか決まらない型）そのものです。</p>
+
+  <a class="cta" href="/study-type/">🧭 15問で自分に近い型を調べる（結果は画像で保存できます）</a>
+
+  <p style="font-size:13px;color:var(--sub);margin-top:26px">
+    ※ この8分類は、塾で6年教えてきた中での見立てであり、
+    学術的に検証された分類ではありません。<b>自分を当てはめる箱ではなく、
+    今日やる1つを選ぶための道具</b>として使ってください。</p>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
