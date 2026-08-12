@@ -139,7 +139,9 @@
                  background:linear-gradient(90deg, transparent, rgba(255,255,255,.85)); }
   .tobo.go { animation:tobo-run 1.2s cubic-bezier(.25,.6,.35,1) forwards; }
   .tobo.go .trail { animation:tobo-trail 1.5s ease-out forwards; }
-  @keyframes tobo-run { to { left:88%; } }
+  /* ⚠ 88% だと画面幅が狭いとき（スマホ）にペンギンの右端がはみ出し、
+     ページ全体が横スクロールできてしまう。幅から自分の分を引いて止める。 */
+  @keyframes tobo-run { to { left:calc(100% - 108px); } }
   @keyframes tobo-trail { 0%{width:0; opacity:1} 60%{width:26vw; opacity:.9} 100%{width:34vw; opacity:0} }
   .tobo.bye { transition:opacity .4s; opacity:0; }
   .tobo.stand img { transform:none; }
@@ -240,6 +242,13 @@
                border-radius:10px; padding:10px 22px; transition:opacity .15s; }
   .band .cta:hover { opacity:.85; }
   .band .pv { display:flex; align-items:center; justify-content:center; min-height:120px; border-radius:14px; }
+  /* 事業紹介の絵を、飾りから**実物のスクリーンショット**に差し替えた（2026-08-11）。
+     前は抽象的な四角と線で、中身を1つも見せていなかった。 */
+  .band .pv.shotpv { padding:0; overflow:hidden; border-radius:14px; }
+  .band .pv.shotpv img { display:block; width:100%; height:auto; border-radius:14px; }
+  .band-g .pv.shotpv { background:#131019; border:1px solid var(--g-line); }
+  .band-b .pv.shotpv, .band-w .pv.shotpv { padding:0; }
+
   /* ① games = 夜のアーケード */
   .band-g { background:var(--g-bg); color:#EFEAF6; }
   .band-g h3 { font-family:"DotGothic16",monospace; font-weight:400; color:var(--g-acc); letter-spacing:.04em; }
@@ -334,6 +343,215 @@
 
   /* ---- ヒーロー直下の3つの入口（作品への最短の道） ---- */
   .entry { background:#14151a; padding:34px 0 40px; }
+
+  /* ── つくったもの：横スライドショー ───────────────── */
+  .works .stage { position:relative; margin-top:20px; }
+  .cvp { overflow-x:auto; overflow-y:hidden; scrollbar-width:none; -ms-overflow-style:none;
+    cursor:grab; overscroll-behavior-x:contain; }
+  .cvp::-webkit-scrollbar { display:none; }
+  .cvp.drag { cursor:grabbing; scroll-behavior:auto; }
+  .ctrack { display:flex; gap:16px; margin:0; padding:2px 0 6px; list-style:none; width:max-content; }
+  .ctrack > li { flex:0 0 300px; }
+  .wk { position:relative; display:block; text-decoration:none; color:inherit; background:#171a22;
+    border:1px solid #262a35; border-radius:12px; overflow:hidden; height:100%;
+    transition:transform .22s ease, border-color .22s ease; }
+  .wk:hover, .wk:focus-visible { transform:translateY(-4px); border-color:var(--acc); }
+  .wk .shot { display:block; width:100%; height:auto; aspect-ratio:3/2; object-fit:cover;
+    object-position:top center; background:#0b0d12; border-bottom:1px solid #262a35; }
+  .wk .tx { display:block; padding:11px 14px 13px; }
+  .wk .nm { font-size:14.5px; font-weight:bold; line-height:1.5; display:block; }
+  .wk .mt { font-size:11.5px; color:#7e7c74; margin-top:5px; display:block;
+    font-variant-numeric:tabular-nums; }
+  /* カーソルを合わせたときだけ出る説明。
+     ⚠ カード全体を覆うこと。下だけ覆うと、下の題名と字が重なって読めなくなる（2026-08-12） */
+  .wk .ov { position:absolute; inset:0; display:flex; flex-direction:column;
+    justify-content:flex-end; padding:16px 15px 15px;
+    background:linear-gradient(to top, #090a0e 0%, #090a0e 42%, rgba(9,10,14,.74) 100%);
+    transform:translateY(101%); transition:transform .24s ease; }
+  .wk:hover .ov, .wk:focus-visible .ov { transform:translateY(0); }
+  .wk .ov .nm2 { font-size:15px; font-weight:bold; line-height:1.5; display:block;
+    margin-bottom:6px; }
+  .wk .ov .ds { font-size:13px; color:#cfcabf; line-height:1.75; display:block; }
+  .wk .ov .go { font-size:12.5px; color:var(--acc); font-weight:bold; margin-top:10px; display:block; }
+  .cnav { position:absolute; top:calc(50% - 34px); width:40px; height:40px; border-radius:50%;
+    border:1px solid #333846; background:rgba(16,18,24,.9); color:var(--acc);
+    font-size:19px; line-height:1; cursor:pointer; z-index:3; display:grid; place-items:center;
+    transition:background .2s, border-color .2s; }
+  .cnav:hover { background:#1b1f28; border-color:var(--acc); }
+  .cnav.p { left:-6px; } .cnav.n { right:-6px; }
+  .works .stage::before, .works .stage::after { content:""; position:absolute; top:0; bottom:0;
+    width:56px; pointer-events:none; z-index:2; }
+  .works .stage::before { left:0; background:linear-gradient(to right, #101218, transparent); }
+  .works .stage::after { right:0; background:linear-gradient(to left, #101218, transparent); }
+  .works .foot { display:flex; align-items:center; gap:16px; margin-top:18px; flex-wrap:wrap; }
+  .works .allink { color:var(--acc); font-size:13.5px; font-weight:bold; text-decoration:none; }
+  .works .allink:hover { text-decoration:underline; }
+  .works .hintx { color:#7e7c74; font-size:12.5px; }
+  @media (max-width:760px){
+    .ctrack > li { flex:0 0 240px; }
+    .cnav { display:none; }
+    .works .stage::before, .works .stage::after { width:24px; }
+  }
+  @media (prefers-reduced-motion: reduce){ .wk, .wk .ov { transition:none; } }
+
+  /* ── 右端の現在地ドット ───────────────── */
+  .rail { position:fixed; right:14px; top:50%; transform:translateY(-50%); z-index:60;
+    display:flex; flex-direction:column; gap:12px; align-items:flex-end; }
+  .rail a { display:flex; align-items:center; gap:9px; text-decoration:none; color:inherit; }
+  .rail .dot { width:9px; height:9px; border-radius:50%; background:currentColor; opacity:.32;
+    color:var(--sub-d); transition:opacity .2s, transform .2s; flex:none; }
+  .rail .nmx { font-size:11.5px; font-weight:bold; letter-spacing:.04em; white-space:nowrap;
+    opacity:0; transform:translateX(6px); transition:opacity .2s, transform .2s;
+    background:rgba(16,18,24,.86); color:#EDEBE6; border-radius:999px; padding:3px 10px; }
+  .rail a:hover .nmx, .rail a:focus-visible .nmx { opacity:1; transform:none; }
+  .rail a:hover .dot { opacity:.7; }
+  .rail a.on .dot { opacity:1; transform:scale(1.5); color:var(--nav-acc, #E8A33D); }
+  .rail.light .dot { color:#6E6A5E; }
+  @media (max-width:900px){ .rail { right:8px; gap:10px; } .rail .nmx { display:none; } }
+  @media (max-width:520px){ .rail { display:none; } }
+  @media (prefers-reduced-motion: reduce){ .rail .dot, .rail .nmx { transition:none; } }
+  /* 事業紹介の絵を、飾りから**実物のスクリーンショット**に差し替えた（2026-08-11）。
+     前は抽象的な四角と線で、中身を1つも見せていなかった。 */
+  .band .pv.shotpv { padding:0; overflow:hidden; border-radius:14px; }
+  .band .pv.shotpv img { display:block; width:100%; height:auto; border-radius:14px; }
+  .band-g .pv.shotpv { background:#131019; border:1px solid var(--g-line); }
+  .band-b .pv.shotpv, .band-w .pv.shotpv { padding:0; }
+
+  /* ① games = 夜のアーケード */
+  .band-g { background:var(--g-bg); color:#EFEAF6; }
+  .band-g h3 { font-family:"DotGothic16",monospace; font-weight:400; color:var(--g-acc); letter-spacing:.04em; }
+  .band-g p { color:#C9C2D6; }
+  .band-g .cta { background:var(--g-acc); color:var(--g-bg); }
+  .band-g .pv { background:
+      repeating-linear-gradient(0deg,#17131F,#17131F 6px,#1C1727 6px,#1C1727 12px),
+      repeating-linear-gradient(90deg,transparent,transparent 11px,rgba(255,77,157,.07) 11px,rgba(255,77,157,.07) 12px);
+      border:1px solid var(--g-line); }
+  .band-g .px { width:16px; height:16px; background:var(--g-acc); image-rendering:pixelated; box-shadow:
+      0 0 0 0 var(--g-acc), 19px 0 0 0 var(--g-sub), 0 19px 0 0 var(--g-sub), 19px 19px 0 0 var(--g-acc); }
+  /* ② blog = 生成りの便箋 */
+  .band-b { background:var(--b-bg); color:#2A241E; }
+  .band-b h3 { font-family:"Hiragino Mincho ProN","Yu Mincho",serif; color:var(--b-acc); letter-spacing:.06em; }
+  .band-b p { color:#4C4438; }
+  .band-b .cta { background:var(--b-acc); color:#FBF8F0; }
+  .band-b .pv { background:#FBF8F0; border:1px solid #E4DCC8; }
+  /* 便箋の抽象モチーフ（罫線＋胡桃の封蝋） */
+  .band-b .paper-pv { width:150px; height:88px; background:#fff; border:1px solid #E4DCC8; border-radius:4px;
+      position:relative; box-shadow:0 2px 8px rgba(138,90,51,.10); }
+  .band-b .paper-pv::before { content:""; position:absolute; left:16px; right:16px; top:24px; height:1px;
+      background:#E0D6C2; box-shadow:0 14px 0 #E0D6C2, 0 28px 0 #E0D6C2; }
+  .band-b .paper-pv::after { content:""; position:absolute; right:14px; bottom:11px; width:16px; height:16px;
+      border-radius:50%; background:var(--b-acc); opacity:.85; }
+  /* ③ web = 岩手の工房 */
+  .band-w { background:var(--w-bg); color:#20221F; }
+  .band-w h3 { font-family:"Zen Old Mincho","Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; color:var(--w-acc); letter-spacing:.05em; }
+  .band-w p { color:#4A4C46; }
+  .band-w .cta { background:var(--w-acc); color:#FAFAF6; }
+  .band-w .pv { background:#fff; border:1px solid #E2E0D8; }
+  .band-w .win { width:150px; height:56px; border:1.5px solid var(--w-acc); border-radius:6px; position:relative; background:var(--w-bg); }
+  .band-w .win::before { content:""; position:absolute; left:0; right:0; top:0; height:14px;
+      background:var(--w-acc); border-radius:4px 4px 0 0; }
+  .band-w .win::after { content:""; position:absolute; left:12px; top:25px; width:72px; height:6px;
+      background:#CBDCD2; box-shadow:0 11px 0 #DCE8E0, 0 22px 0 var(--w-cu); border-radius:3px; }
+
+  /* ---- 5. プロフィール（黒鉛に回帰） ---- */
+  .profile { background:var(--ink); color:var(--txt-d); padding:66px 0 70px; position:relative; overflow:hidden; }
+  .profile::before { content:""; position:absolute; inset:0; pointer-events:none; opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"); }
+  .profile .in { position:relative; }
+  .profile .sec-en { color:var(--acc); }
+  .timeline { position:relative; margin:26px 0 0; padding-left:26px; }
+  .timeline::before { content:""; position:absolute; left:6px; top:6px; bottom:6px; width:2px;
+      background:linear-gradient(var(--acc),var(--porcelain)); opacity:.45; }
+  .tl { position:relative; margin-bottom:26px; }
+  .tl::before { content:""; position:absolute; left:-26px; top:5px; width:12px; height:12px; border-radius:50%;
+      background:var(--ink); border:2px solid var(--acc); }
+  .tl .k { font-size:12.5px; color:var(--acc); font-weight:bold; letter-spacing:.08em; margin-bottom:2px; }
+  .tl .h { font-size:16.5px; margin:0 0 4px; }
+  .tl .p { font-size:14px; color:var(--sub-d); margin:0; }
+  .profile .more { font-size:13px; color:var(--sub-d); margin:2px 0 0; }
+  .profile .more a { color:var(--acc); }
+
+  /* ---- 6. フッター（墨・コーポレート式） ---- */
+  footer { background:var(--ink2); color:var(--sub-d); padding:52px 0 40px; border-top:1px solid var(--line); }
+  .fmap { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:26px; }
+  .fmap .col h4 { font-size:12px; letter-spacing:.16em; color:var(--sub-d); margin:0 0 12px; }
+  .fmap .col > a { display:block; color:var(--txt-d); text-decoration:none; font-size:13.5px; margin-bottom:9px; }
+  .fmap .col > a:hover { color:var(--acc); }
+  .sns { display:flex; flex-wrap:wrap; gap:10px; }
+  .sns a { display:inline-flex; align-items:center; gap:7px; font-size:13px; line-height:1; text-decoration:none;
+           color:var(--txt-d); border:1px solid var(--line); border-radius:20px; padding:9px 14px;
+           transition:border-color .14s, color .14s; }
+  .sns a:hover { border-color:var(--acc); color:var(--acc); }
+  .sns svg { width:16px; height:16px; display:block; }
+  .copy { margin-top:36px; padding-top:18px; border-top:1px solid var(--line); font-size:12px;
+          display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+  .copy .logo { font-family:"Unbounded",-apple-system,sans-serif; color:var(--acc); font-size:12px; letter-spacing:.05em; }
+
+  /* ---- entry & scroll animations（各要素0.5秒・1回） ---- */
+  .fade { opacity:0; transform:translateY(14px); animation:up .5s ease forwards; }
+  .hero .l:nth-child(2) { animation-delay:.12s; } .hero .sub { animation-delay:.30s; }
+  @keyframes up { to { opacity:1; transform:none; } }
+  .reveal { opacity:0; transform:translateY(12px); transition:opacity .5s ease, transform .5s ease; }
+  .reveal.vis { opacity:1; transform:none; }
+  /* タブ非表示時=マスコットのCSSアニメも停止（JSがhtmlに.pausedを付与） */
+  .paused .hero-pg img, .paused .walker img, .paused .tobo, .paused .pg-news,
+  .paused .pg-bandwalk img, .paused .pg-doze .z { animation-play-state:paused !important; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior:auto; }
+    .fade, .reveal { opacity:1 !important; transform:none !important; animation:none !important; transition:none !important; }
+    nav .lk::after { transition:none; }
+    /* マスコット=全静止（正面立ちのみ・足跡は全表示・トボガン非表示・歩行なし） */
+    .hero-pg img, .walker img, .pg-news, .pg-bandwalk img, .pg-doze .z,
+    .pg-greet2.wave img { animation:none !important; }
+    .pg-climb { top:0 !important; }
+    .tracks svg { opacity:.85 !important; transform:scale(1) !important; transition:none !important; }
+    .tobo { display:none !important; }
+    .hero-pg .zzz { display:none; }
+  }
+
+  /* ---- ヒーロー直下の3つの入口（作品への最短の道） ---- */
+  .entry { background:#14151a; padding:34px 0 40px; }
+
+  /* ── つくったもの（実際のプレイ画面） ───────────────── */
+  .works { background:#101218; padding:56px 0 60px; color:var(--txt-d); }
+  .works .in { max-width:1120px; margin:0 auto; padding:0 clamp(16px,4vw,40px); }
+  .works .sec-en { display:block; font-size:11.5px; letter-spacing:.22em; font-weight:bold;
+    color:var(--acc); margin-bottom:6px; }
+  .works h2 { font-size:clamp(22px,3vw,28px); margin:0 0 6px; letter-spacing:.02em; }
+  .works .lead { color:#9a988f; font-size:14px; margin:0 0 24px; line-height:1.85; }
+  .wgrid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin:0; padding:0;
+    list-style:none; }
+  .wgrid > li { min-width:0; }
+  .wk { display:block; text-decoration:none; color:inherit; background:#171a22;
+    border:1px solid #262a35; border-radius:12px; overflow:hidden;
+    transition:transform .22s ease, border-color .22s ease; height:100%; }
+  .wk:hover, .wk:focus-visible { transform:translateY(-4px); border-color:var(--acc); }
+  .wk .shot { display:block; width:100%; height:auto; aspect-ratio:3/2;
+    object-fit:cover;
+    object-position:top center; background:#0b0d12;
+    border-bottom:1px solid #262a35; transition:opacity .22s; }
+  .wk:hover .shot { opacity:.88; }
+  .wk .tx { padding:12px 14px 14px; }
+  .wk .nm { font-size:14.5px; font-weight:bold; line-height:1.5; display:block; }
+  .wk .ds { font-size:12.5px; color:#9a988f; line-height:1.7; margin-top:5px; display:block; }
+  .wk .mt { font-size:11.5px; color:#7e7c74; margin-top:8px; display:block;
+    font-variant-numeric:tabular-nums; }
+  .works .wmore { display:inline-flex; align-items:center; gap:8px; margin-top:22px;
+    background:none; border:1px solid #333846; border-radius:999px; padding:10px 20px;
+    color:var(--acc); font-size:13.5px; font-weight:bold; font-family:inherit; cursor:pointer;
+    transition:background .2s, border-color .2s; }
+  .works .wmore:hover { background:#1b1f28; border-color:var(--acc); }
+  .works .wmore .ch { transition:transform .25s; }
+  .works .wmore[aria-expanded="true"] .ch { transform:rotate(180deg); }
+  .wgrid:not(.open) > li:nth-child(n+9) { display:none; }
+  .works .allink { display:inline-block; margin:22px 0 0 16px; color:var(--acc);
+    font-size:13.5px; font-weight:bold; text-decoration:none; }
+  .works .allink:hover { text-decoration:underline; }
+  @media (max-width:1000px){ .wgrid { grid-template-columns:repeat(3,1fr); } }
+  @media (max-width:760px){ .wgrid { grid-template-columns:repeat(2,1fr); gap:12px; }
+    .works { padding:40px 0 44px; } .wk .ds { display:none; } }
+  @media (prefers-reduced-motion: reduce){ .wk, .wk .shot, .works .wmore .ch { transition:none; } }
+
   .entry .in { max-width:1120px; margin:0 auto; padding:0 clamp(16px,4vw,40px);
                display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
   .ent { display:flex; flex-direction:column; gap:7px; text-decoration:none;
@@ -356,6 +574,14 @@
 </head>
 <body>
 
+<nav class="rail" id="rail" aria-label="ページ内の現在地">
+  <a href="#top"><span class="nmx">トップ</span><span class="dot"></span></a>
+  <a href="#works"><span class="nmx">つくったもの</span><span class="dot"></span></a>
+  <a href="#news"><span class="nmx">ニュース</span><span class="dot"></span></a>
+  <a href="#about"><span class="nmx">D-studyLabとは</span><span class="dot"></span></a>
+  <a href="#business"><span class="nmx">事業紹介</span><span class="dot"></span></a>
+  <a href="#profile"><span class="nmx">プロフィール</span><span class="dot"></span></a>
+</nav>
 <nav id="nav" aria-label="サイト内">
   <div class="in">
     <a class="logo" href="/">D-studyLab</a>
@@ -419,6 +645,104 @@
   </div>
 </section>
 
+<!-- つくったもの（実際のプレイ画面） -->
+<section class="works" id="works" data-acc="#E8A33D" data-k="works">
+  <div class="in">
+    <span class="sec-en">WORKS</span>
+    <h2 class="sec jp-head reveal">つくったもの</h2>
+    <p class="lead reveal">下の画像は説明用の絵ではなく、<b>実際に動いている画面</b>です。どれもブラウザだけで完結し、登録もインストールも要りません。</p>
+        <div class="stage reveal">
+      <button class="cnav p" id="wPrev" type="button" aria-label="前の作品">‹</button>
+      <div class="cvp" id="wCar" tabindex="0" role="region" aria-label="つくったもの（横にスクロールできます）">
+        <ul class="ctrack" id="wTrack">
+      <li><a class="wk" href="/hinan-run/">
+        <img class="shot" src="/assets/thumbs/hinan-run.webp" width="800" height="533"
+             alt="避難ラン × デッキ のプレイ画面" loading="eager" decoding="async">
+        <span class="tx"><span class="nm">避難ラン × デッキ</span><span class="mt">8分・登録なしで遊べます</span></span><span class="ov"><span class="nm2">避難ラン × デッキ</span><span class="ds">走って集めた物資が、そのまま後半の手札になる</span><span class="go">遊んでみる →</span></span>
+      </a></li>
+      <li><a class="wk" href="/study-type/">
+        <img class="shot" src="/assets/thumbs/study-type.webp" width="800" height="533"
+             alt="勉強のつまずき方診断 のプレイ画面" loading="eager" decoding="async">
+        <span class="tx"><span class="nm">勉強のつまずき方診断</span><span class="mt">2分・登録なしで遊べます</span></span><span class="ov"><span class="nm2">勉強のつまずき方診断</span><span class="ds">15問で、いま詰まっている場所と今日やる1つ</span><span class="go">遊んでみる →</span></span>
+      </a></li>
+      <li><a class="wk" href="/tsumi-battle/">
+        <img class="shot" src="/assets/thumbs/tsumi-battle.webp" width="800" height="533"
+             alt="積みバトル のプレイ画面" loading="eager" decoding="async">
+        <span class="tx"><span class="nm">積みバトル</span><span class="mt">5分・登録なしで遊べます</span></span><span class="ov"><span class="nm2">積みバトル</span><span class="ds">ペンギンを積んで、先に崩した方が負け</span><span class="go">遊んでみる →</span></span>
+      </a></li>
+      <li><a class="wk" href="/kage-ate/">
+        <img class="shot" src="/assets/thumbs/kage-ate.webp" width="800" height="533"
+             alt="かげ当てパズル のプレイ画面" loading="eager" decoding="async">
+        <span class="tx"><span class="nm">かげ当てパズル</span><span class="mt">3分・登録なしで遊べます</span></span><span class="ov"><span class="nm2">かげ当てパズル</span><span class="ds">光の向きから影の形を当てろ</span><span class="go">遊んでみる →</span></span>
+      </a></li>
+      <li><a class="wk" href="/kukan-test/">
+        <img class="shot" src="/assets/thumbs/kukan-test.webp" width="800" height="533"
+             alt="空間認識偏差値テスト のプレイ画面" loading="lazy" decoding="async">
+        <span class="tx"><span class="nm">空間認識偏差値テスト</span><span class="mt">3分・登録なしで遊べます</span></span><span class="ov"><span class="nm2">空間認識偏差値テスト</span><span class="ds">頭の中で3Dを回せるか</span><span class="go">遊んでみる →</span></span>
+      </a></li>
+      <li><a class="wk" href="/memory-test/">
+        <img class="shot" src="/assets/thumbs/memory-test.webp" width="800" height="533"
+             alt="記憶力テスト のプレイ画面" loading="lazy" decoding="async">
+        <span class="tx"><span class="nm">記憶力テスト</span><span class="mt">3分・登録なしで遊べます</span></span><span class="ov"><span class="nm2">記憶力テスト</span><span class="ds">数字は何桁、場所は何手まで覚えられるか</span><span class="go">遊んでみる →</span></span>
+      </a></li>
+      <li><a class="wk" href="/answer-shoot/">
+        <img class="shot" src="/assets/thumbs/answer-shoot.webp" width="800" height="533"
+             alt="アンサーシュート のプレイ画面" loading="lazy" decoding="async">
+        <span class="tx"><span class="nm">アンサーシュート</span><span class="mt">5分・登録なしで遊べます</span></span><span class="ov"><span class="nm2">アンサーシュート</span><span class="ds">答えがわかっても届けなきゃ正解じゃない</span><span class="go">遊んでみる →</span></span>
+      </a></li>
+      <li><a class="wk" href="/yomiate/">
+        <img class="shot" src="/assets/thumbs/yomiate.webp" width="800" height="533"
+             alt="ヨミアテ のプレイ画面" loading="lazy" decoding="async">
+        <span class="tx"><span class="nm">ヨミアテ</span><span class="mt">5分・登録なしで遊べます</span></span><span class="ov"><span class="nm2">ヨミアテ</span><span class="ds">情報を「買う」数字当て</span><span class="go">遊んでみる →</span></span>
+      </a></li>
+      <li><a class="wk" href="/untetris/">
+        <img class="shot" src="/assets/thumbs/untetris.webp" width="800" height="533"
+             alt="つみおろし のプレイ画面" loading="lazy" decoding="async">
+        <span class="tx"><span class="nm">つみおろし</span><span class="mt">4分・登録なしで遊べます</span></span><span class="ov"><span class="nm2">つみおろし</span><span class="ds">逆向きテトリス、積んだ順を暴け</span><span class="go">遊んでみる →</span></span>
+      </a></li>
+      <li><a class="wk" href="/monty/">
+        <img class="shot" src="/assets/thumbs/monty.webp" width="800" height="533"
+             alt="モンティホール100連 のプレイ画面" loading="lazy" decoding="async">
+        <span class="tx"><span class="nm">モンティホール100連</span><span class="mt">3分・登録なしで遊べます</span></span><span class="ov"><span class="nm2">モンティホール100連</span><span class="ds">「変える」となぜ2倍勝てるのか</span><span class="go">遊んでみる →</span></span>
+      </a></li>
+      <li><a class="wk" href="/toru-card/">
+        <img class="shot" src="/assets/thumbs/toru-card.webp" width="800" height="533"
+             alt="そのカード、取る？ のプレイ画面" loading="lazy" decoding="async">
+        <span class="tx"><span class="nm">そのカード、取る？</span><span class="mt">4分・登録なしで遊べます</span></span><span class="ov"><span class="nm2">そのカード、取る？</span><span class="ds">デッキ構築の直感を1万回シミュで検算</span><span class="go">遊んでみる →</span></span>
+      </a></li>
+      <li><a class="wk" href="/birthday-paradox/">
+        <img class="shot" src="/assets/thumbs/birthday-paradox.webp" width="800" height="533"
+             alt="誕生日のパラドックス のプレイ画面" loading="lazy" decoding="async">
+        <span class="tx"><span class="nm">誕生日のパラドックス</span><span class="mt">3分・登録なしで遊べます</span></span><span class="ov"><span class="nm2">誕生日のパラドックス</span><span class="ds">23人で50%が信じられない人へ</span><span class="go">遊んでみる →</span></span>
+      </a></li>
+      <li><a class="wk" href="/takarakuji-ev/">
+        <img class="shot" src="/assets/thumbs/takarakuji-ev.webp" width="800" height="533"
+             alt="宝くじの期待値 のプレイ画面" loading="lazy" decoding="async">
+        <span class="tx"><span class="nm">宝くじの期待値</span><span class="mt">3分・登録なしで遊べます</span></span><span class="ov"><span class="nm2">宝くじの期待値</span><span class="ds">1万人が同じだけ買ったら何が起きるか</span><span class="go">遊んでみる →</span></span>
+      </a></li>
+      <li><a class="wk" href="/gacha-sim/">
+        <img class="shot" src="/assets/thumbs/gacha-sim.webp" width="800" height="533"
+             alt="1万人ガチャシミュレータ のプレイ画面" loading="lazy" decoding="async">
+        <span class="tx"><span class="nm">1万人ガチャシミュレータ</span><span class="mt">3分・登録なしで遊べます</span></span><span class="ov"><span class="nm2">1万人ガチャシミュレータ</span><span class="ds">「平均90連」の裏の地獄と天国</span><span class="go">遊んでみる →</span></span>
+      </a></li>
+      <li><a class="wk" href="/yomikiri/">
+        <img class="shot" src="/assets/thumbs/yomikiri.webp" width="800" height="533"
+             alt="ヨミキリ のプレイ画面" loading="lazy" decoding="async">
+        <span class="tx"><span class="nm">ヨミキリ</span><span class="mt">5分・登録なしで遊べます</span></span><span class="ov"><span class="nm2">ヨミキリ</span><span class="ds">あなたの癖を学習する限定ジャンケン</span><span class="go">遊んでみる →</span></span>
+      </a></li>
+      <li><a class="wk" href="/damashi-ai/">
+        <img class="shot" src="/assets/thumbs/damashi-ai.webp" width="800" height="533"
+             alt="AIを騙せ！ のプレイ画面" loading="lazy" decoding="async">
+        <span class="tx"><span class="nm">AIを騙せ！</span><span class="mt">5分・登録なしで遊べます</span></span><span class="ov"><span class="nm2">AIを騙せ！</span><span class="ds">騙すとその場で学習して強くなる</span><span class="go">遊んでみる →</span></span>
+      </a></li>
+        </ul>
+      </div>
+      <button class="cnav n" id="wNext" type="button" aria-label="次の作品">›</button>
+    </div>
+    <div class="foot reveal"><a class="allink" href="/games/">16本ぜんぶ一覧で見る →</a><span class="hintx">カーソルを合わせると説明が出ます。‹ › とドラッグでも動きます</span></div>
+  </div>
+</section>
+
 <!-- 2. ニュース -->
 <section class="news" id="news" data-acc="#E8A33D" data-k="news">
   <div class="in">
@@ -463,7 +787,7 @@
     <h2 class="sec jp-head reveal">D-studyLabとは</h2>
     <p class="lead reveal">「読むよりさわった方が早い」——むずかしい概念を、遊べる・動くかたちにして理解する。それがこのラボの原点です。研究も、ゲームも、ウェブサイトも、根っこは同じ。考えたら作る、作ったら出す、を繰り返しています。</p>
     <div class="stats">
-      <div class="stat reveal"><div class="v">11<small>本</small></div><div class="k">公開中のブラウザゲーム</div></div>
+      <div class="stat reveal"><div class="v">16<small>本</small></div><div class="k">公開中のブラウザゲーム</div></div>
       <div class="stat reveal"><div class="v">3<small>日に1本</small></div><div class="k">ミニゲームの制作サイクル</div></div>
       <div class="stat reveal"><div class="v">2<small>サイト</small></div><div class="k">企画から運営まで自前</div></div>
     </div>
@@ -490,10 +814,12 @@
         <h3>ミニゲームゲームズ</h3>
         <p>3日に1本のペースで増える、ブラウザで遊べるミニゲームの屋台。</p>
         <p>空間認識・確率・AIとの読み合いを、3分で体感できる形に。</p>
-        <p>全部無料・インストール不要・スマホOK。現在11本。</p>
+        <p>全部無料・インストール不要・スマホOK。現在16本。</p>
         <a class="cta" href="/games/">▶ 遊びに行く</a>
       </div>
-      <div class="pv reveal" aria-hidden="true"><div class="px"></div></div>
+      <div class="pv shotpv reveal"><img src="/assets/thumbs/pv-games.webp" width="818" height="552"
+        alt="実際に動いているミニゲーム4本の画面（積みバトル・かげ当てパズル・ヨミキリ・空間認識テスト）"
+        loading="lazy" decoding="async"></div>
     </div>
     <div class="dweller pg-bandwalk" id="pgBandWalk" aria-hidden="true"><img src="/assets/mascot/walk.webp" alt="" loading="lazy" decoding="async"></div>
   </section>
@@ -505,7 +831,8 @@
         <p>飲むもの・作るもの、どちらも「実際にやってみた」ことだけを書いています。</p>
         <a class="cta" href="/blog/">▶ 読みに行く</a>
       </div>
-      <div class="pv reveal" aria-hidden="true"><div class="paper-pv"></div></div>
+      <div class="pv shotpv reveal"><img src="/assets/thumbs/pv-blog.webp" width="818" height="545"
+        alt="ブログ記事「モンティホール問題」の実際のページ" loading="lazy" decoding="async"></div>
     </div>
     <div class="dweller pg-doze" id="pgDoze" aria-hidden="true">
       <img class="f0" src="/assets/mascot/sleep.webp" alt="" loading="lazy" decoding="async">
@@ -521,7 +848,8 @@
         <p>作って動かしているサイトの実例つき。難しい言葉は使いません。</p>
         <a class="cta" href="/web/">▶ 相談してみる</a>
       </div>
-      <div class="pv reveal" aria-hidden="true"><div class="win"></div></div>
+      <div class="pv shotpv reveal"><img src="/assets/thumbs/pv-web.webp" width="818" height="545"
+        alt="制作サンプル（架空の食堂）の実際のページ" loading="lazy" decoding="async"></div>
     </div>
     <div class="dweller pg-greet2" id="pgGreet2" aria-hidden="true"><img src="/assets/mascot/greet.webp" alt="" loading="lazy" decoding="async"></div>
   </section>
@@ -648,6 +976,111 @@
 
   // --- 各セクションの住人（§17.2・トリガー1回型はここ／ループ型はframe内） ---
   const $g = id => document.getElementById(id);
+  // --- つくったもの：横スライドショー（自動 + ‹› + ドラッグ + 横ホイール） ---
+  (() => {
+    const vp = $g('wCar'), track = $g('wTrack');
+    if (!vp || !track) return;
+    const n = track.children.length;
+    if (!n) return;
+    // 途切れずに回すため、同じ並びをもう1組つなげる（クローンは読み上げ対象から外す）
+    for (let i = 0; i < n; i++) {
+      const c = track.children[i].cloneNode(true);
+      c.setAttribute('aria-hidden', 'true');
+      c.querySelectorAll('a').forEach(a => a.tabIndex = -1);
+      track.appendChild(c);
+    }
+    const half = () => track.scrollWidth / 2;
+    const step = () => track.children[0].getBoundingClientRect().width + 16;
+
+    let hold = 0;                       // >0 のあいだ自動送りを止める
+    const pause = (ms = 2200) => { hold = Math.max(hold, performance.now() + ms); };
+    const loop = () => {
+      const h = half();
+      if (vp.scrollLeft >= h) vp.scrollLeft -= h;
+      else if (vp.scrollLeft < 0) vp.scrollLeft += h;
+    };
+    // ⚠ vp.scrollLeft に小数を代入すると切り捨てられ、毎フレーム 0.4px 足しても
+    //   ずっと 0 のまま動かない（2026-08-12 に踏んだ）。位置は自前の小数で持つ。
+    let pos = 0, last = performance.now(), raf = 0;
+    const frame = (t) => {
+      const dt = Math.min(t - last, 60); last = t;
+      if (!reduce && !hold && !document.hidden) {
+        pos += dt * 0.032;
+        const h = half();
+        if (pos >= h) pos -= h;
+        vp.scrollLeft = pos;
+      } else {
+        pos = vp.scrollLeft;              // 手で動かされたら、そこから再開する
+      }
+      if (hold && t > hold) hold = 0;
+      raf = requestAnimationFrame(frame);
+    };
+    raf = requestAnimationFrame(frame);
+
+    vp.addEventListener('pointerenter', () => pause(10 ** 7), { passive: true });
+    vp.addEventListener('pointerleave', () => { hold = 0; }, { passive: true });
+    vp.addEventListener('focusin', () => pause(10 ** 7));
+    vp.addEventListener('focusout', () => { hold = 0; });
+
+    const go = (dir) => { pause(4000); vp.scrollBy({ left: dir * step(),
+      behavior: reduce ? 'auto' : 'smooth' }); };
+    $g('wPrev').addEventListener('click', () => go(-1));
+    $g('wNext').addEventListener('click', () => go(1));
+
+    // 横方向のホイール（トラックパッド）だけ受ける。
+    // ⚠ 縦ホイールは奪わない——無限に回るので、奪うとページが先へ進めなくなる
+    vp.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      pause(2500); loop();
+    }, { passive: true });
+
+    // ドラッグでめくる
+    let dx = 0, sl = 0, down = false;
+    vp.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      down = true; dx = e.clientX; sl = vp.scrollLeft; pause(10 ** 7);
+      vp.classList.add('drag');
+    });
+    vp.addEventListener('pointermove', (e) => {
+      if (!down) return;
+      const d = e.clientX - dx;
+      if (Math.abs(d) > 3) vp.setPointerCapture?.(e.pointerId);
+      vp.scrollLeft = sl - d; loop();
+    });
+    const up = (e) => {
+      if (!down) return;
+      down = false; vp.classList.remove('drag');
+      // 大きく動かしたときは、そのままリンクを開かせない
+      if (Math.abs(e.clientX - dx) > 6) {
+        const kill = (ev) => { ev.preventDefault(); ev.stopPropagation(); };
+        vp.addEventListener('click', kill, { capture: true, once: true });
+        setTimeout(() => vp.removeEventListener('click', kill, true), 0);
+      }
+      pause(2500);
+    };
+    vp.addEventListener('pointerup', up);
+    vp.addEventListener('pointercancel', () => { down = false; vp.classList.remove('drag'); });
+    vp.addEventListener('scroll', loop, { passive: true });
+  })();
+
+  // --- 右端の現在地ドット ---
+  (() => {
+    const rail = $g('rail');
+    if (!rail) return;
+    const links = [...rail.querySelectorAll('a')];
+    const secs = links.map(a => document.querySelector(a.getAttribute('href')))
+                      .filter(Boolean);
+    const light = new Set(['news', 'about']);   // 明るい背景のセクションでは点を濃くする
+    const io = new IntersectionObserver(ents => {
+      for (const en of ents) if (en.isIntersecting) {
+        const id = en.target.id;
+        links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + id));
+        rail.classList.toggle('light', light.has(id));
+      }
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+    secs.forEach(s => io.observe(s));
+  })();
+
   // --- ニュースの「もっと見る」（既定は6件だけ表示） ---
   (() => {
     const ul = $g('newsList'), btn = $g('newsMore');
