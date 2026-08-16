@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>AIに待たせるのをやめた——3体を無人で回す仕組みと、そこで踏んだ罠2つ｜D-studyLab ブログ</title>
+<meta name="description" content="司令塔のAIがポーリングをやめ、実行役が終わった側から叩き起こす仕組みを作った記録。ファイルを窓口にする／1ファイル＝1人が書く／状態はファイルにしかない、の3原則と、実際に踏んだ罠2つ（Windowsのcp932で⚠がUnicodeEncodeErrorになる、tui-idle待ちがTUIでない端末では指定時間まるごと待つ）。">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://d-studylab.com/blog/ai-unattended-relay.html">
+<meta property="og:title" content="AIに待たせるのをやめた——3体を無人で回す仕組みと、そこで踏んだ罠2つ">
+<meta property="og:description" content="cp932で⚠が落ちる。tui-idle待ちが120秒フル空振りする。AIを無人で回すときに踏んだ罠2つ。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://d-studylab.com/blog/ai-unattended-relay.html">
+<meta property="og:image" content="https://d-studylab.com/blog/og/ai-unattended-relay.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://d-studylab.com/blog/og/ai-unattended-relay.png">
+<style>
+  :root { --bg:#efe8d8; --panel:#fbf7ec; --line:#d8ccb4; --txt:#2c2620; --sub:#6b6250;
+          --acc:#8A5A33; --good:#3f7a4a; --bad:#b04a2f; --gold:#8a6410; }
+  @media (prefers-color-scheme: dark) {
+    /* 焦げ茶ベース（紙の読み物・夜) */
+    :root { --bg:#1d1712; --panel:#261e16; --line:#3d3125; --txt:#ece2d2; --sub:#ab9c86;
+            --acc:#C08A55; --good:#7bd08c; --bad:#e88a6a; --gold:#e8c35a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); line-height:1.95;
+         font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif; }
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); }
+  .wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:26px 18px 70px; }
+  .crumb { font-size:13px; color:var(--sub); margin-bottom:18px; }
+  .crumb a { color:var(--acc); text-decoration:none; }
+  .mincho, h1, h2 { font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+                    font-weight:600; letter-spacing:.02em; }
+  h1 { font-size:27px; line-height:1.45; margin:4px 0 6px; }
+  .lead { color:var(--sub); font-size:14px; margin-bottom:26px; }
+  .cat { font-size:12px; font-weight:bold; color:var(--acc); letter-spacing:.06em; }
+  .date { color:var(--sub); font-size:13px; margin-bottom:28px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-left:12px; border-left:3px solid var(--acc); }
+  p { font-size:16px; }
+  ul { padding-left:22px; } li { margin-bottom:8px; font-size:16px; }
+  a { color:var(--acc); }
+  .post { display:block; text-decoration:none; color:inherit; background:var(--panel);
+          border:1px solid var(--line); border-left:4px solid var(--acc); border-radius:3px;
+          padding:16px 20px; margin-bottom:16px; position:relative;
+          background-image:repeating-linear-gradient(var(--panel), var(--panel) 30px,
+              color-mix(in srgb, var(--line) 45%, transparent) 30px, color-mix(in srgb, var(--line) 45%, transparent) 31px);
+          transition:box-shadow .25s, transform .25s; }
+  .post:hover { box-shadow:0 8px 22px rgba(60,40,10,.14); transform:translateY(-2px); }
+  .post .ttl { font-size:19px; font-weight:600; margin:4px 0 5px;
+               font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif; }
+  .post .ex { font-size:13.5px; color:var(--sub); }
+  .post .date { font-size:12px; color:var(--sub); margin:8px 0 0; display:inline-block;
+                border:1px solid var(--line); border-radius:2px; padding:1px 8px; }
+  .aff { background:color-mix(in srgb, var(--acc) 9%, var(--panel)); border:1px dashed var(--line);
+         border-radius:6px; padding:12px 14px; margin:20px 0; font-size:13px; color:var(--sub); }
+  .aff b { color:var(--txt); }
+  .cta { display:block; text-align:center; background:var(--gold); color:#1b1400; font-weight:bold;
+         text-decoration:none; border-radius:6px; padding:14px 20px; font-size:16px; margin:24px 0; }
+  .note-caution { font-size:13px; color:var(--sub); border-top:1px solid var(--line);
+                  margin-top:34px; padding-top:14px; }
+  .related { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:26px 0 0; }
+  .related .rt { font-size:13px; color:var(--sub); margin-bottom:6px; }
+  .related a { font-weight:bold; }
+  .foot { margin-top:40px; border-top:1px solid var(--line); padding-top:16px; color:var(--sub); font-size:13px; }
+  .foot a { color:var(--acc); }
+  @media (prefers-reduced-motion: reduce) { .post { transition:none; } }
+
+  blockquote { border-left:3px solid var(--acc); margin:18px 0; padding:10px 0 10px 18px;
+               color:var(--sub); font-size:15px; background:var(--panel); }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+  th,td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; }
+  th { color:var(--sub); font-weight:bold; }
+
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+         padding:1px 6px; font-size:14px; }
+
+  .morelinks { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+               padding:16px 18px; margin:30px 0 0; }
+  .morelinks .mt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .morelinks a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+                 border-bottom:1px dashed var(--line); }
+  .morelinks a:last-child { border-bottom:none; }
+  .morelinks .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .morelinks .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+
+  .noteout { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+             padding:16px 18px; margin:34px 0 0; }
+  .noteout .nt { font-size:13.5px; color:var(--sub); margin-bottom:10px; letter-spacing:.04em; }
+  .noteout a { display:block; text-decoration:none; color:inherit; padding:9px 0;
+               border-bottom:1px dashed var(--line); }
+  .noteout a:last-of-type { border-bottom:none; }
+  .noteout .lt { display:block; font-weight:bold; font-size:15px; color:var(--acc); }
+  .noteout .ld { display:block; font-size:12.5px; color:var(--sub); margin-top:2px; }
+  td.warn { color:var(--bad); }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"AIに待たせるのをやめた——3体を無人で回す仕組みと、そこで踏んだ罠2つ","description":"司令塔のAIがポーリングをやめ、実行役が終わった側から叩き起こす仕組みを作った記録。ファイルを窓口にする／1ファイル＝1人が書く／状態はファイルにしかない、の3原則と、実際に踏んだ罠2つ（Windowsのcp932で⚠がUnicodeEncodeErrorになる、tui-idle待ちがTUIでない端末では指定時間まるごと待つ）。","url":"https://d-studylab.com/blog/ai-unattended-relay.html","datePublished":"2026-08-16","dateModified":"2026-08-16","inLanguage":"ja","author":{"@type":"Organization","name":"D-studyLab","url":"https://d-studylab.com/"},"publisher":{"@type":"Organization","name":"D-studyLab","logo":{"@type":"ImageObject","url":"https://d-studylab.com/apple-touch-icon.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://d-studylab.com/blog/ai-unattended-relay.html"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9384193584221337" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="/">🧪 D-studyLab</a> ／ <a href="/blog/">ブログ</a></div>
+
+  <div class="cat">🔗 AI連携</div>
+  <h1>AIに待たせるのをやめた——3体を無人で回す仕組みと、そこで踏んだ罠2つ</h1>
+  <div class="date">2026年8月16日</div>
+
+  <p>AIを長時間動かしていて、いちばん無駄なのは<b>待っている時間</b>です。</p>
+
+  <p>実行役のAIが長い作業をしている間、司令塔のAIは「終わった？」「まだ？」と見に行きます。
+  見に行くたびにトークンを使う。<b>何もしていないのに減る。</b></p>
+
+  <p>これをやめる仕組みを作りました。
+  <b>司令塔は一切ポーリングしません。終わった側から叩き起こされます。</b></p>
+
+  <p>作ったのは常駐スクリプト1本、280行です。
+  ただ、<b>そこで踏んだ罠2つのほうが、たぶん役に立ちます。</b>先に書いておきます。</p>
+
+  <ol>
+    <li><b>Windowsの既定コンソールは cp932。<code>⚠</code> を print した瞬間に落ちる</b></li>
+    <li><b><code>wait --for tui-idle</code> は、TUIでない相手だと指定時間まるごと待つ</b></li>
+  </ol>
+
+  <p>どちらも動かしてみるまで分からない種類のもので、
+  どちらも<b>常駐スクリプトでは致命的</b>でした。</p>
+
+  <h2>誰が何をするか（3体の分担）</h2>
+
+  <table>
+    <tr><th>役</th><th>担当</th><th>なぜそこか</th></tr>
+    <tr><td>計画</td><td>高価だが賢いAI</td><td>手順を書くのは一度きり。ここは質で選ぶ</td></tr>
+    <tr><td>実行</td><td>安価で長時間動くAI</td><td>同じことを何十回もやる。ここは単価で選ぶ</td></tr>
+    <tr><td>司令塔</td><td>判断するAI</td><td>結果と実物を突き合わせ、次を決める。<b>判断のときだけ動く</b></td></tr>
+  </table>
+
+  <p>実際の並びはこうなります。</p>
+
+  <blockquote>
+  計画役が <code>steps/STEP01.md</code> を置く<br>
+  → 実行役が実行 → <code>STEP01.result.md</code> と <code>STEP01.done</code> を置く<br>
+  → ★<b>常駐スクリプトが検知 → 司令塔のペインへ通知を投げ込む</b><br>
+  → 司令塔が result と実物を突き合わせる<br>
+  　　定型どおり → 司令塔が自分で STEP02 を書く（計画役を呼ばない＝安い）<br>
+  　　想定と違う → 計画役に要約を渡して直させる<br>
+  　　判断が要る → 人に聞く（<b>ここだけ止まる</b>）
+  </blockquote>
+
+  <p>肝は★の行です。<b>司令塔は見張りません。</b>
+  <code>STEP01.done</code> という空ファイルが置かれた瞬間、常駐スクリプトが司令塔の端末に
+  プロンプトを打ち込みます。司令塔は、呼ばれるまで完全に停止しています。</p>
+
+  <p>「長く寝ているローカルプロセスに仕事をさせ、AIは呼ばれた時だけ動く」形自体は、
+  前に作った<a href="/seiton/">ローカルハブ</a>と同じ考え方です。新しい発想ではありません。
+  新しいのは、<b>それをAIどうしの受け渡しに使った</b>ところです。</p>
+
+  <h2>設計で決めたこと（崩さない3つ）</h2>
+
+  <h3 style="font-size:17px;margin:26px 0 6px">ファイルを窓口にする</h3>
+
+  <p>AIどうしを直接つながない。<b>間にファイルを置きます。</b>
+  実行役は <code>STEP01.done</code> を置くだけ。司令塔はそれを見るだけ。
+  お互いの存在を知らなくていいので、片方を別のAIに差し替えても壊れません。</p>
+
+  <h3 style="font-size:17px;margin:26px 0 6px">1ファイル＝1人が書く</h3>
+
+  <p><code>STEP01.done</code> を置くのは実行役だけ。<b>誰も改名・編集しません。</b>
+  「処理済みかどうか」は、常駐スクリプトが<b>自分の状態ファイル</b>で持ちます。
+  人が目視で追う印が要るなら <code>STEP01.reviewed</code> という<b>別のファイル</b>を置きます。</p>
+
+  <p>2人が同じファイルを触った瞬間、どちらが最後に書いたかで結果が変わります。
+  分散システムの難しい話ではなく、<b>単に事故ります</b>。</p>
+
+  <h3 style="font-size:17px;margin:26px 0 6px">状態はファイルにしかない</h3>
+
+  <p>常駐スクリプトはメモリに何も溜めません。
+  だから<b>落ちてもいい。</b>再起動するとフォルダを全部見直し、
+  死んでいた間に置かれたマーカーも拾い直します。</p>
+
+  <blockquote>このスクリプトは「たまたま起きている便利屋」であって、<b>いなくても状態は壊れない。</b></blockquote>
+
+  <p>引き継ぎもここで効きます。別のAIに渡すとき、渡すのはファイルの場所だけでいい。
+  会話の履歴を持っていく必要がありません。</p>
+
+  <h2>罠その1 ── <code>⚠</code> を print したら落ちた</h2>
+
+  <p><b>Windowsの既定コンソールは cp932。</b>UTF-8ではありません。</p>
+
+  <pre style="background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px 14px;overflow-x:auto;font-size:14px"><code style="border:none;background:none;padding:0">print("⚠ 司令塔のペインが見つかりません")
+# UnicodeEncodeError: 'cp932' codec can't encode character '⚠'</code></pre>
+
+  <p><code>⚠</code> も <code>★</code> も cp932 にありません。<b>その行に到達した瞬間にスクリプトが死にます。</b></p>
+
+  <p>普通のスクリプトなら「文字化けした、直そう」で済みます。
+  しかし<b>常駐スクリプトでは意味が変わります。</b></p>
+
+  <p>落ちるのは正常系ではなく、<b>エラーを報告しようとした行</b>です。
+  つまり「何かおかしいことが起きた」→「それを知らせようとして死ぬ」→
+  <b>誰も気づかないまま監視が止まる</b>。いちばん困る壊れ方をします。</p>
+
+  <p>対策は冒頭に3行。</p>
+
+  <pre style="background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px 14px;overflow-x:auto;font-size:14px"><code style="border:none;background:none;padding:0">for _s in (sys.stdout, sys.stderr):
+    try:
+        _s.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass</code></pre>
+
+  <p><code>stderr</code> も一緒に直します。トレースバックのほうが先に出る場面があるからです。
+  <code>errors="replace"</code> を付けておくのは、リダイレクト先によっては
+  <code>reconfigure</code> が効かない場合の保険。<b>ここで落ちるくらいなら化けたほうがいい。</b></p>
+
+  <h2>罠その2 ── 「相手が手を止めるまで待つ」が120秒フルで待った</h2>
+
+  <p>司令塔の端末に文字を打ち込むので、<b>相手が作業中だと入力が混ざります。</b>
+  だから送る前に「手が空くまで待つ」ようにしました。使ったのはこれです。</p>
+
+  <pre style="background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px 14px;overflow-x:auto;font-size:14px"><code style="border:none;background:none;padding:0">terminal wait --for tui-idle --timeout-ms 120000</code></pre>
+
+  <p>TUI（画面を描き替えるタイプの端末）が落ち着くまで待つ、という指示です。</p>
+
+  <p><b>相手がTUIでないと、この条件は永遠に成立しません。</b>
+  素のシェルに対して投げたところ、<b>120秒まるごと待たされました</b>（実測）。
+  タイムアウトするまで、ただ止まっています。</p>
+
+  <p>5秒間隔で見に行く常駐スクリプトが、1回の通知で2分固まる。
+  その間に次の <code>.done</code> が置かれても気づきません。</p>
+
+  <p>直し方は2つあります。</p>
+
+  <ol>
+    <li><b>待ちを短くする</b>（既定60秒。0で待たない）</li>
+    <li><b>タイムアウトしても送信は続行する</b></li>
+  </ol>
+
+  <p>2つめが本題です。「待てなかった」は「送るな」ではありません。</p>
+
+  <pre style="background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px 14px;overflow-x:auto;font-size:14px"><code style="border:none;background:none;padding:0">w = orca("terminal", "wait", ...)
+if not (w and w.get("ok")):
+    log("（相手が手を止めるのを待てなかったのでそのまま送ります）")
+# ← ここで return せず、そのまま送信へ進む
+d = orca("terminal", "send", ...)</code></pre>
+
+  <p><b>待ちは best-effort。</b>成立すれば嬉しいが、成立しなくても仕事は進める。
+  これを「失敗したら中止」で書いていたら、<b>通知が1件も届かない仕組み</b>になっていました。</p>
+
+  <h2>もう1つ、地味に効いた決め事</h2>
+
+  <p><b>送信に失敗しても「処理済み」にする。</b></p>
+
+  <p>一見おかしい。失敗したのだから、次の周期でもう一度試すべきに見えます。
+  だが5秒間隔で回るループでは、それは<b>永久リトライ</b>になります。
+  相手が見つからない状態が10分続けば、120回叩きに行く。</p>
+
+  <p>なので、こうしました。</p>
+
+  <ul>
+    <li>処理済みには<b>する</b>（もう試さない）</li>
+    <li>送れなかった本文は別のファイルに<b>積む</b>（捨てない）</li>
+  </ul>
+
+  <p><b>取りこぼしは、リトライではなくキューで拾う。</b>
+  自動で消えるのは仕組みの信頼を壊しますが、
+  別の場所に残っていれば、あとから人が拾えます。</p>
+
+  <h2>いま言えること・言えないこと</h2>
+
+  <p><b>言えること。</b>作って、使い捨ての端末を立てて、通しで検証しました。</p>
+
+  <ul>
+    <li><code>STEP01.done</code> / <code>STEP02.blocked</code> を検知し、<code>.md</code> や無関係なファイルは無視する</li>
+    <li>相手の端末に<b>実際に本文が届く</b>ことを確認した</li>
+    <li>司令塔が見つからないとき、通知がキューに積まれることを確認した</li>
+  </ul>
+
+  <p><b>言えないこと。</b></p>
+
+  <ul>
+    <li><b>「トークンが減った」とは言えません。</b>測っていません</li>
+    <li><b>「安定して回っています」とも言えません。</b>作ったのはこの記事を書いた日で、実運用はこれからです</li>
+    <li>検証は使い捨ての端末に対してで、<b>長時間の連続稼働はまだ見ていません</b></li>
+  </ul>
+
+  <p>効果を書きたい気持ちはありますが、書けるのは数字を取ってからです。
+  この判断自体、以前に<a href="/blog/adsense-low-value-content.html">測っていない数字を公開した失敗</a>から来ています。
+  あのとき決めた「公開する数字には標本数を書く」を、ここでも守ります。</p>
+
+  <h2>この記事の要点</h2>
+
+  <ul>
+    <li>AIどうしは<b>直接つながない。間にファイルを置く</b></li>
+    <li><b>1ファイル＝1人が書く。</b>状態はファイルにしかない</li>
+    <li>見張る側を作らない。<b>終わった側が叩き起こす</b></li>
+    <li>Windowsで常駐させるなら、<b>まず <code>stdout</code>/<code>stderr</code> を UTF-8 に</b>。<code>⚠</code> で死ぬ</li>
+    <li>「待つ」処理は<b>待てなくても先へ進める</b>。待ちを必須にすると全部止まる</li>
+  </ul>
+
+  <p>仕組みの話より、後半2つのほうが明日から使えると思います。</p>
+
+  <p style="font-size:13.5px;color:var(--sub)">
+  ※ この記事の内容は、記事公開日に作成・検証したものです。実運用の記録ではありません。
+  効果（トークン消費の増減など）は測定していないため、数値は書いていません。</p>
+
+  <div class="related">
+    <div class="rt">関連するもの</div>
+    <a href="/blog/ai-account-relay.html">🔗 AIに、別のAIへ指示を渡させる</a>——こちらは2アカウント間の受け渡し<br>
+    <a href="/blog/ai-two-seats.html">🛠️ AIを2台同時に走らせるとき、いちばん大事だったこと</a>——分担の考え方<br>
+    <a href="/blog/claude-code-windows.html">🪟 WindowsでClaude Codeを使うと、日本語で3回つまずく</a>——同じ環境で踏んだ別の穴<br>
+    <a href="/blog/">📝 ブログ一覧</a>
+  </div>
+
+  <div class="foot">
+    © D-studyLab ／ <a href="/blog/">ブログ一覧</a> ／ <a href="/about.html">運営者情報</a> ／ <a href="/privacy.html">プライバシーポリシー</a>
+  </div>
+
+</div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc32ae35428c4eb7a7c645b45bf26308"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
